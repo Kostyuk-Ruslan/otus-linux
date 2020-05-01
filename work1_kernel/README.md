@@ -4,12 +4,20 @@ Linux Administrator
    #Домашнее задание 1:#
    #####################
 
-#Текущая версия  ядра на момент обновления
+# Текущая версия  ядра на момент обновления
 
 - uname -a
 
 Вывод :  Linux otuslinux 3.10.0-1127.el7.x86_64 #1 SMP Tue Mar 31 23:36:51 UTC 2020 x86_64 x86_64 x86_64 GNU/Linux
 
+# Делаю снапшот машины на локалхосте на всякий случай 
+
+- vagrant vagrant snapshot save 3-10
+
+# Устанавливаю tmux, что бы сессия не оборвалась
+
+- yum install tmux
+- tmux
 
 # Скачал с сайта https://www.kernel.org/ исходники ядра 5.6.8
 
@@ -25,14 +33,15 @@ Linux Administrator
 # Копируем конфигурацию с текущей версией ядра 3.10 в каталог с исходниками /linux-5.6.8
 
 
-- cp /boot/config-3.10.0-957.12.2.el7.x86_64 /root/linux-5.6.8/.config
+- cp /boot/config-* /root/linux-5.6.8/.config
 
 
 # Устанавливаем недостающие инструменты и пакеты для сборки ядра
 
-- yum install ncurses-devel openssl-devel bc gcc
+- yum install ncurses-devel openssl-devel bc gcc elfutils-libelf-devel  flex bison
 
-# Компилируем ядро и устанавливаем модули
+# Компилируем ядро и устанавливаем модули, make oldconfig ( оставил все по умолчанию )
+
 
 - make oldconfig && make && make install && make modules_install
 
@@ -42,3 +51,4 @@ Linux Administrator
 
 # Перезагужаемся "reboot" и смотрим текущую версию ядра "uname -a"
 
+- Linux otuslinux 5.6.8-1.el7
