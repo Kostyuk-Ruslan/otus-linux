@@ -44,8 +44,8 @@
        - ethtool
        - yum-cron
        - yum-utils
-#       - ncdu
-#       - htop
+       - ncdu
+       - htop
        - lsof
        - lshw
        - iotop
