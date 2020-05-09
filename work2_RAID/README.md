@@ -90,7 +90,7 @@ Vagrant.configure("2") do |config|
 ```
 </details>
 
-  В итоге при поднятии вагранта vagrant up получилась следующая разметка
+  В итоге при поднятии вагранта "vagrant up" получилась следующая разметка
 
 
 
@@ -180,7 +180,7 @@ Consistency Policy : resync
 
 
 <details>
-<summary>Команда<code>cat /proc/mdstat<code</code></summary>
+<summary>Команда<code>cat /proc/mdstat</code></summary>
 
 
 [root@otuslinux ~]# cat /proc/mdstat 
@@ -190,8 +190,17 @@ md0 : active raid10 sde[3] sdd[2] sdc[1] sdb[0]
 
 
 
-
 </details>
+
+
+Создаем в массиве файловую систему ext4 - <code>"mkfs.ext4 /dev/md0"</code> после создаем каталог /storage в которой будут хранится данные
+
+Настраиваем "/etc/fstab" - для автоматического монтирования /storage - после перезагрузки
+
+- <code>dev/md0        /storage    ext4    defaults    1 2</code>
+
+Монтируем массив /dev/md0 в  /storage  - <code>"mount /dev/md0 /storage/"</code>
+
 
 
 
