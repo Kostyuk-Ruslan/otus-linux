@@ -112,7 +112,70 @@ sdf      8:80   0  250M  0 disk
 
  Диски /dev/sdb, /dev/sdc,  /dev/sdd,  /dev/sde  - бдуем делать RAID10  ,   /dev/sdf - для создания gpt раздела и 5 партиций ( задание из Д.З.)
 
+На всякий случай делаю snapshot "vagrant snapshot save 0.0.1"
+
 
 <code>mdadm --create /dev/md0 --level=10 --raid-devices=4 /dev/sd[b-e]</code> - Добавляем диски и создаем RAID 10
+
+<details>
+<summary>Команда RAID10 <code>lsblk</code></summary>
+
+
+[vagrant@otuslinux ~]$ lsblk
+NAME   MAJ:MIN RM  SIZE RO TYPE   MOUNTPOINT
+sda      8:0    0   40G  0 disk   
+└─sda1   8:1    0   40G  0 part   /
+sdb      8:16   0  250M  0 disk   
+└─md0    9:0    0  496M  0 raid10 
+sdc      8:32   0  250M  0 disk   
+└─md0    9:0    0  496M  0 raid10 
+sdd      8:48   0  250M  0 disk   
+└─md0    9:0    0  496M  0 raid10 
+sde      8:64   0  250M  0 disk   
+└─md0    9:0    0  496M  0 raid10 
+sdf      8:80   0  250M  0 disk 
+
+</details>
+
+<details>
+<summary>Дополнительно смотрю вывод командой <code>mdadm --detail /dev/md0</code></summary>
+
+[root@otuslinux ~]# mdadm --detail /dev/md0
+/dev/md0:
+           Version : 1.2
+     Creation Time : Sat May  9 16:46:36 2020
+        Raid Level : raid10
+        Array Size : 507904 (496.00 MiB 520.09 MB)
+     Used Dev Size : 253952 (248.00 MiB 260.05 MB)
+      Raid Devices : 4
+     Total Devices : 4
+       Persistence : Superblock is persistent
+
+       Update Time : Sat May  9 22:41:36 2020
+             State : clean 
+    Active Devices : 4
+   Working Devices : 4
+    Failed Devices : 0
+     Spare Devices : 0
+
+            Layout : near=2
+        Chunk Size : 512K
+
+Consistency Policy : resync
+
+              Name : otuslinux:0  (local to host otuslinux)
+              UUID : 195f9fb2:8cd385a2:8be10879:172d2450
+            Events : 23
+
+    Number   Major   Minor   RaidDevice State
+       0       8       16        0      active sync set-A   /dev/sdb
+       1       8       32        1      active sync set-B   /dev/sdc
+       2       8       48        2      active sync set-A   /dev/sdd
+       3       8       64        3      active sync set-B   /dev/sde
+
+
+</details>
+
+
 
 
