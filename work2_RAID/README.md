@@ -86,10 +86,13 @@ Vagrant.configure("2") do |config|
 ....
     end
 
+</details>
+
+
 #  В итоге при поднятии вагранта vagrant up получилась следующая разметка
 
 
-</details>
+
 
 <summary>Команда  <code>lsblk>
 
