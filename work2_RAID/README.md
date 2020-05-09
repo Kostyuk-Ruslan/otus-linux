@@ -183,13 +183,13 @@ Consistency Policy : resync
 <details>
 <summary>Команда<code>cat /proc/mdstat</code></summary>
 
-
+```
 [root@otuslinux ~]# cat /proc/mdstat 
 Personalities : [raid10] 
 md0 : active raid10 sde[3] sdd[2] sdc[1] sdb[0]
       507904 blocks super 1.2 512K chunks 2 near-copies [4/4] [UUUU]
 
-
+```
 
 </details>
 
