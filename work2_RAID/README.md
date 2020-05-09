@@ -117,6 +117,7 @@ sdf      8:80   0  250M  0 disk
 
 <code>mdadm --create /dev/md0 --level=10 --raid-devices=4 /dev/sd[b-e]</code> - Добавляем диски и создаем RAID 10
 
+
 <details>
 <summary>Команда RAID10 <code>lsblk</code></summary>
 
@@ -160,9 +161,7 @@ sda      8:0    0   40G  0 disk
 
             Layout : near=2
         Chunk Size : 512K
-
 Consistency Policy : resync
-
               Name : otuslinux:0  (local to host otuslinux)
               UUID : 195f9fb2:8cd385a2:8be10879:172d2450
             Events : 23
