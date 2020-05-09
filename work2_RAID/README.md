@@ -86,9 +86,9 @@ Vagrant.configure("2") do |config|
 ....
     end
 
-</details>
 
 ```
+</details>
 
 #  В итоге при поднятии вагранта vagrant up получилась следующая разметка
 
