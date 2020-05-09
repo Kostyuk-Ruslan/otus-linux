@@ -96,6 +96,7 @@ Vagrant.configure("2") do |config|
 
 <details>
 <summary>Команда <code>lsblk</code></summary>
+```
 
 NAME   MAJ:MIN RM  SIZE RO TYPE   MOUNTPOINT
 sda      8:0    0   40G  0 disk   
@@ -105,7 +106,7 @@ sdc      8:32   0  250M  0 disk
 sdd      8:48   0  250M  0 disk   
 sde      8:64   0  250M  0 disk   
 sdf      8:80   0  250M  0 disk 
-
+```
 
 </details>
 
@@ -121,7 +122,7 @@ sdf      8:80   0  250M  0 disk
 <details>
 <summary>Команда RAID10 <code>lsblk</code></summary>
 
-
+```
 [vagrant@otuslinux ~]$ lsblk
 NAME   MAJ:MIN RM  SIZE RO TYPE   MOUNTPOINT
 sda      8:0    0   40G  0 disk   
@@ -135,12 +136,13 @@ sda      8:0    0   40G  0 disk
  sde      8:64   0  250M  0 disk   
  └─md0    9:0    0  496M  0 raid10 
  sdf      8:80   0  250M  0 disk 
-
+```
 </details>
 
 <details>
 <summary>Дополнительно выводим команду <code>mdadm --detail /dev/md0</code></summary>
 
+```
 [root@otuslinux ~]# mdadm --detail /dev/md0
 /dev/md0:
            Version : 1.2
@@ -174,7 +176,7 @@ Consistency Policy : resync
        2       8       48        2      active sync set-A   /dev/sdd
        3       8       64        3      active sync set-B   /dev/sde
 
-
+```
 
 </details>
 
