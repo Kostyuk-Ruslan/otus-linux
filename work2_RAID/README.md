@@ -125,20 +125,20 @@ sdf      8:80   0  250M  0 disk
 NAME   MAJ:MIN RM  SIZE RO TYPE   MOUNTPOINT
 sda      8:0    0   40G  0 disk   
 └─sda1   8:1    0   40G  0 part   /
-sdb      8:16   0  250M  0 disk   
-└─md0    9:0    0  496M  0 raid10 
-sdc      8:32   0  250M  0 disk   
-└─md0    9:0    0  496M  0 raid10 
-sdd      8:48   0  250M  0 disk   
-└─md0    9:0    0  496M  0 raid10 
-sde      8:64   0  250M  0 disk   
-└─md0    9:0    0  496M  0 raid10 
-sdf      8:80   0  250M  0 disk 
+ sdb      8:16   0  250M  0 disk   
+ └─md0    9:0    0  496M  0 raid10 
+ sdc      8:32   0  250M  0 disk   
+ └─md0    9:0    0  496M  0 raid10 
+ sdd      8:48   0  250M  0 disk   
+ └─md0    9:0    0  496M  0 raid10 
+ sde      8:64   0  250M  0 disk   
+ └─md0    9:0    0  496M  0 raid10 
+ sdf      8:80   0  250M  0 disk 
 
 </details>
 
 <details>
-<summary>Дополнительно смотрю вывод командой <code>mdadm --detail /dev/md0</code></summary>
+<summary>Дополнительно выводим команду <code>mdadm --detail /dev/md0</code></summary>
 
 [root@otuslinux ~]# mdadm --detail /dev/md0
 /dev/md0:
@@ -166,7 +166,6 @@ Consistency Policy : resync
               Name : otuslinux:0  (local to host otuslinux)
               UUID : 195f9fb2:8cd385a2:8be10879:172d2450
             Events : 23
-
     Number   Major   Minor   RaidDevice State
        0       8       16        0      active sync set-A   /dev/sdb
        1       8       32        1      active sync set-B   /dev/sdc
