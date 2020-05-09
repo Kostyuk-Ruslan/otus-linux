@@ -95,7 +95,8 @@ Vagrant.configure("2") do |config|
 
 
 <details>
-<summary>Команда  <code>lsblk</code>
+
+<summary>Команда <code>lsblk</code></summary>
 
 NAME   MAJ:MIN RM  SIZE RO TYPE   MOUNTPOINT
 sda      8:0    0   40G  0 disk   
