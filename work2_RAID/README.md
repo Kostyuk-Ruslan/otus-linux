@@ -161,15 +161,19 @@ sda      8:0    0   40G  0 disk
 
             Layout : near=2
         Chunk Size : 512K
+
 Consistency Policy : resync
+
               Name : otuslinux:0  (local to host otuslinux)
               UUID : 195f9fb2:8cd385a2:8be10879:172d2450
             Events : 23
+
     Number   Major   Minor   RaidDevice State
        0       8       16        0      active sync set-A   /dev/sdb
        1       8       32        1      active sync set-B   /dev/sdc
        2       8       48        2      active sync set-A   /dev/sdd
        3       8       64        3      active sync set-B   /dev/sde
+
 
 
 </details>
