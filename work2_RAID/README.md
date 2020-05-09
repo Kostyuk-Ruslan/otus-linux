@@ -107,7 +107,6 @@ sde      8:64   0  250M  0 disk
 sdf      8:80   0  250M  0 disk 
 
 
-```
 </details>
 
 
