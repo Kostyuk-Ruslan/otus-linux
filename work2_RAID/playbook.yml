@@ -72,6 +72,7 @@
  
   - name: "Форматируем в файловую систему ext4"
     shell: "mkfs.ext4 /dev/md0"
+    ignore_errors: yes
     
   - name: "Создаем /storage"
     file:
@@ -91,4 +92,11 @@
 
   - name: "Монтируем рейд массив в /storage"
     shell: mount /dev/md0 /storage/
+    ignore_errors: yes
+    
 
+  - name: "Создаем GPT раздел и 5 партиций"
+    shell: for i in {1..5} ; do sgdisk -n ${i}:0:+10M /dev/sdf; done
+    register: results
+    
+    
