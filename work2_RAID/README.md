@@ -1,58 +1,104 @@
 Linux Administrator 2020
 
    #####################
-   #Домашнее задание 1 #
+   #Домашнее задание 2 #
    #####################
 
-# Текущая версия  ядра на момент обновления
+Для выполнение домашнего задания добавил 5 дисков в вагрантфайл
 
-- uname -a
+<details>
+<summary>Vagrantfile <code>mdadm --detail /dev/md0</code></summary>
 
-Вывод :  Linux otuslinux 3.10.0-1127.el7.x86_64 #1 SMP Tue Mar 31 23:36:51 UTC 2020 x86_64 x86_64 x86_64 GNU/Linux
+```
+# -*- mode: ruby -*-
+# vim: set ft=ruby :
 
-# Делаю снапшот машины на локалхосте на всякий случай 
+MACHINES = {
+  :otuslinux => {
+        :box_name => "centos/7",
+        :ip_addr => '192.168.11.107',
+<------>:disks => {
+<------><------>:sata1 => {
+<------><------><------>:dfile => './sata1.vdi',
+<------><------><------>:size => 250,
+<------><------><------>:port => 1
+<------><------>},
+<------><------>:sata2 => {
+                        :dfile => './sata2.vdi',
+                        :size => 250, # Megabytes
+<------><------><------>:port => 2
+<------><------>},
+                :sata3 => {
+                        :dfile => './sata3.vdi',
+                        :size => 250,
+                        :port => 3
+                },
+                :sata4 => {
+                        :dfile => './sata4.vdi',
+                        :size => 250, # Megabytes
+                        :port => 4
+                }
 
-- vagrant vagrant snapshot save 3-10
+<------>}
 
-# Устанавливаю tmux, что бы сессия не оборвалась
+<------><------>
+  },
 
-- yum install tmux
-- tmux
+}
 
-# Скачал с сайта https://www.kernel.org/ исходники ядра 5.6.8
+Vagrant.configure("2") do |config|
+
+  MACHINES.each do |boxname, boxconfig|
+
+      config.vm.define 'centos' do |box|
+
+          box.vm.box = boxconfig[:box_name]
+          box.vm.host_name = boxname.to_s
+
+          #box.vm.network "forwarded_port", guest: 3260, host: 3260+offset
+
+          box.vm.network "private_network", ip: boxconfig[:ip_addr]
+
+          box.vm.provider :virtualbox do |vb|
+            <-->  vb.customize ["modifyvm", :id, "--memory", "3048"]
+                  needsController = false
+<------><------>  boxconfig[:disks].each do |dname, dconf|
+<------><------><------>  unless File.exist?(dconf[:dfile])
+<------><------><------><------>vb.customize ['createhd', '--filename', dconf[:dfile], '--variant', 'Fixed', '--size', dconf[:size]]
+                                needsController =  true
+                          end
+
+<------><------>  end
+                  if needsController == true
+                     vb.customize ["storagectl", :id, "--name", "SATA", "--add", "sata" ]
+                     boxconfig[:disks].each do |dname, dconf|
+                         vb.customize ['storageattach', :id,  '--storagectl', 'SATA', '--port', dconf[:port], '--device', 0, '--type', 'hdd', '--medium', dconf[:d
+                     end
+                  end
+          end
+         box.vm.provision "ansible" do |ansible|
+            ansible.playbook = "playbook.yml"
+       end
+.......
+       end
+.......
+    end
+....
+    end
+
+#  В итоге при поднятии вагранта vagrant up получилась следующая разметка
 
 
-- cd /root/
-- wget https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-5.6.8.tar.xz
+</details>
 
-# Распоковал данный архив и зашел в него
+<summary>Команда  <code>lsblk>
 
-- cd /root/linux-5.6.8
-
-
-# Копируем конфигурацию с текущей версией ядра 3.10 в каталог с исходниками /linux-5.6.8
+```
 
 
-- cp /boot/config-3.10.0-957.12.2.el7.x86_64 /root/linux-5.6.8/.config
+# Диски /dev/sdb, /dev/sdd  /dev/sde  - бдуем делать RAID10  /dev/sdf - для создания gpt раздела и 5 партиций ( задание из Д.З.)
 
 
-# Устанавливаем недостающие инструменты и пакеты для сборки ядра
-
-- yum install epel-release
-- yum install ncurses-devel openssl-devel bc gcc elfutils-libelf-devel flex bison
+<code>mdadm --create /dev/md0 --level=10 --raid-devices=4 /dev/sd[b-e]</code> - Добавляем диски и создаем RAID 10
 
 
-# Компилируем ядро и устанавливаем модули, make oldconfig ( оставил все по умолчанию )
-
-
-- make oldconfig && make && make install && make modules_install
-
-# После успешной  установки выполняем команду для смены приоритетов загрузки с 1 на 0 ( c 3.10 на  5.6.8 )
-
-- grub2-set-default 0
-
-# Перезагужаемся "reboot" и смотрим текущую версию ядра "uname -a"
-
-- Linux otuslinux 5.6.8-1.el7
-
-# vagrant package --output kernel.box залил на https://yadi.sk/d/9VlMOfijkdv50A
