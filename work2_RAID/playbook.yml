@@ -79,8 +79,16 @@
       recurse: yes
       mode: 0644
 
-  - name: "Добавляем данные в /etc/fstab
+  - name: "Добавляем данные в /etc/fstab"
+    lineinfile: 
+      path: /etc/fstab
+      regexp: ''
+      line: '/dev/md0        /storage    ext4    defaults    1 2'
+    register: results
+    tags: replace
+ 
   
 
-  - name: Монтируем рейд массив в /storage
+  - name: "Монтируем рейд массив в /storage"
     shell: mount /dev/md0 /storage/
+
