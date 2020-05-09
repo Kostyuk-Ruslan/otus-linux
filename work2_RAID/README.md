@@ -94,13 +94,23 @@ Vagrant.configure("2") do |config|
 
 
 
+<details>
+<summary>Команда  <code>lsblk</code>
 
-<summary>Команда  <code>lsblk>
+NAME   MAJ:MIN RM  SIZE RO TYPE   MOUNTPOINT
+sda      8:0    0   40G  0 disk   
+└─sda1   8:1    0   40G  0 part   /
+sdb      8:16   0  250M  0 disk   
+sdc      8:32   0  250M  0 disk   
+sdd      8:48   0  250M  0 disk   
+sde      8:64   0  250M  0 disk   
+sdf      8:80   0  250M  0 disk 
+
 
 ```
+</details>
 
-
-# Диски /dev/sdb, /dev/sdd  /dev/sde  - бдуем делать RAID10  /dev/sdf - для создания gpt раздела и 5 партиций ( задание из Д.З.)
+ Диски /dev/sdb, /dev/sdc,  /dev/sdd,  /dev/sde  - бдуем делать RAID10  ,   /dev/sdf - для создания gpt раздела и 5 партиций ( задание из Д.З.)
 
 
 <code>mdadm --create /dev/md0 --level=10 --raid-devices=4 /dev/sd[b-e]</code> - Добавляем диски и создаем RAID 10
