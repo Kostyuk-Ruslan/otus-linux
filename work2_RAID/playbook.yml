@@ -28,6 +28,7 @@
     yum:
      name:
        - mdadm
+       - gdisk
        - wget
        - mc
        - screen
@@ -65,3 +66,21 @@
      state: latest
 
 
+  - name: "Добавляем диски /dev/sd[b-e] в рейд 10"
+    shell: "mdadm --create /dev/md0 --level=10 --raid-devices=4 /dev/sd[b-e]"
+    ignore_errors: yes
+ 
+  - name: "Форматируем в файловую систему ext4"
+    shell: "mkfs.ext4 /dev/md0"
+    
+  - name: "Создаем /storage"
+    file:
+      dest: /storage
+      recurse: yes
+      mode: 0644
+
+  - name: "Добавляем данные в /etc/fstab
+  
+
+  - name: Монтируем рейд массив в /storage
+    shell: mount /dev/md0 /storage/
