@@ -202,7 +202,34 @@ md0 : active raid10 sde[3] sdd[2] sdc[1] sdb[0]
 
 Монтируем массив /dev/md0 в  /storage  - <code>"mount /dev/md0 /storage/"</code>
 
+Вывел из строя диск используя команду <code>mdadm /dev/md0 --fail /dev/sdc</code>  ==> <code>mdadm /dev/md0 --remove /dev/sdc</code>
+
+Проверяем <code>cat /proc/mdstat</code> и  <code>mdadm --detail /dev/md0</code>
+
+[root@otuslinux /]# cat /proc/mdstat
+Personalities : [raid10] 
+md0 : active raid10 sde[3] sdd[2] sdb[0]
+      507904 blocks super 1.2 512K chunks 2 near-copies [4/3] [U_UU]
+
+-------------------------------------------------------------------------
+
+Number   Major   Minor   RaidDevice State
+       0       8       16        0      active sync set-A   /dev/sdb
+       -       0        0        1      removed
+       2       8       48        2      active sync set-A   /dev/sdd
+       3       8       64        3      active sync set-B   /dev/sde
 
 
+Восстанавливаем диск:  <code>mdadm /dev/md0 --add /dev/sdc</code>
+
+```
+cat /proc/mdstat
+Personalities : [raid10] 
+md0 : active raid10 sdc[4] sde[3] sdd[2] sdb[0]
+      507904 blocks super 1.2 512K chunks 2 near-copies [4/3] [U_UU]
+      [=========>...........]  recovery = 47.4% (120960/253952) finish=0.0min speed=60480K/sec
+```
+
+Происходит ребилд диска "/dev/sdc"
 
 
