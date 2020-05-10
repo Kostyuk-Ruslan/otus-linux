@@ -206,6 +206,8 @@ md0 : active raid10 sde[3] sdd[2] sdc[1] sdb[0]
 
 Проверяем <code>cat /proc/mdstat</code> и  <code>mdadm --detail /dev/md0</code>
 
+
+```
 [root@otuslinux /]# cat /proc/mdstat
 Personalities : [raid10] 
 md0 : active raid10 sde[3] sdd[2] sdb[0]
@@ -219,6 +221,7 @@ Number   Major   Minor   RaidDevice State
        2       8       48        2      active sync set-A   /dev/sdd
        3       8       64        3      active sync set-B   /dev/sde
 
+```
 
 Восстанавливаем диск:  <code>mdadm /dev/md0 --add /dev/sdc</code>
 
