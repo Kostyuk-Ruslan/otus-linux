@@ -7,7 +7,7 @@ Linux Administrator 2020
 Для выполнение домашнего задания добавил 5 дисков в вагрантфайл
 
 <details>
-<summary>Vagrantfile <code>mdadm --detail /dev/md0</code></summary>
+<summary><code>Vagrantfile</code></summary>
 
 ```
 # -*- mode: ruby -*-
