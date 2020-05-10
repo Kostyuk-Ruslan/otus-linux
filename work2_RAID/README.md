@@ -235,4 +235,113 @@ md0 : active raid10 sdc[4] sde[3] sdd[2] sdb[0]
 
 Происходит ребилд диска "/dev/sdc"
 
+Для автоматизации процесса сбора рейда при загрузки системы, создал playbook.yml с коментариями.
+
+<details>
+<code>playbook</code>
+```
+---
+- hosts: centos
+  become: true
+  tasks:
+  - name: Add multiple repositories into the same file (1/2)
+    yum_repository:
+      name: epel
+      description: EPEL YUM repo
+      file: external_repos
+      baseurl: https://download.fedoraproject.org/pub/epel/$releasever/$basearch/
+      gpgcheck: no
+
+
+  - name: install epel-release
+    yum:
+     name:
+      - epel-release
+     state: latest
+    tags: install-packages
+
+  - name: yum update
+    yum:
+      name: '*'
+      state: latest
+
+
+  - name: install packages
+    yum:
+     name:
+       - mdadm
+       - gdisk
+       - wget
+       - mc
+       - screen
+       - tmux
+       - telnet
+       - tcpdump
+       - nano
+       - git
+       - sshpass
+       - rsync
+       - bc
+       - ethtool
+       - yum-utils
+       - ncdu
+       - htop
+       - lsof
+       - lshw
+       - iotop
+       - iftop
+       - atop
+       - bzip2
+       - zip
+       - unzip
+       - bind-utils
+       - sshfs
+       - dmidecode
+       - hdparm
+       - smartmontools
+       - traceroute
+       - net-tools
+       - bmon
+       - vim
+       - cloud-utils-growpart
+
+     state: latest
+
+
+  - name: "Добавляем диски /dev/sd[b-e] в рейд  10"
+    shell: "mdadm --create /dev/md0 --level=10 --raid-devices=4 /dev/sd[b-e]"
+    ignore_errors: yes
+ 
+  - name: "Форматируем в файловую систему  ext4"
+    shell: "mkfs.ext4 /dev/md0"
+    ignore_errors: yes
+    
+  - name: "Создаем /storage"
+    file:
+      dest: /storage
+      recurse: yes
+      mode: 0644
+
+  - name: "Добавляем данные в /etc/fstab"
+    lineinfile: 
+      path: /etc/fstab
+      regexp: ''
+      line: '/dev/md0        /storage    ext4    defaults    1 2'
+    register: results
+    tags: replace
+
+
+  - name: "Монтируем рейд массив в  /storage"
+    shell: mount /dev/md0 /storage/
+    ignore_errors: yes
+
+
+  - name: "Создаем GPT раздел и 5 партиций"
+    shell: for i in {1..5} ; do sgdisk -n ${i}:0:+10M /dev/sdf; done
+    register: results
+
+
+```
+</details>
+
 
