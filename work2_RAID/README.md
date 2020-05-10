@@ -238,9 +238,9 @@ md0 : active raid10 sdc[4] sde[3] sdd[2] sdb[0]
 Для автоматизации процесса сбора рейда при загрузки системы, создал playbook.yml с коментариями.
 
 <details>
-<code>playbook</code>
+<summary><code>playbook</code></summary>
+
 ```
----
 - hosts: centos
   become: true
   tasks:
@@ -339,7 +339,6 @@ md0 : active raid10 sdc[4] sde[3] sdd[2] sdb[0]
   - name: "Создаем GPT раздел и 5 партиций"
     shell: for i in {1..5} ; do sgdisk -n ${i}:0:+10M /dev/sdf; done
     register: results
-
 
 ```
 </details>
