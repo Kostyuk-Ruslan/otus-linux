@@ -235,7 +235,24 @@ md0 : active raid10 sdc[4] sde[3] sdd[2] sdb[0]
 
 Происходит ребилд диска "/dev/sdc"
 
-Для автоматизации процесса сбора рейда при загрузки системы, создал playbook.yml с коментариями.
+
+
+Далее задание из Д.З. создаем GPT раздел - это не тронутый /dev/sdf и создаем 5 партиций с помощью скрипта
+
+-  <code>for i in {1..5} ; do sgdisk -n ${i}:0:+10M /dev/sdf; done </code> - для проверки созданных разделов используем "lsblk"
+
+```
+sdf      8:80   0  250M  0 disk   
+├─sdf1   8:81   0   10M  0 part   
+├─sdf2   8:82   0   10M  0 part   
+├─sdf3   8:83   0   10M  0 part   
+├─sdf4   8:84   0   10M  0 part   
+└─sdf5   8:85   0   10M  0 part
+
+```
+<code>parted /dev/sdf print</code> - Проверяем что раздел gpt
+
+Для автоматизации процесса сбора рейда при загрузки системы, создал playbook.yml с комментариями.
 
 <details>
 <summary><code>playbook</code></summary>
@@ -343,4 +360,4 @@ md0 : active raid10 sdc[4] sde[3] sdd[2] sdb[0]
 ```
 </details>
 
-
+- Выгрузил бокс и залил на VagrantClout ( https://app.vagrantup.com/impkos/boxes/Kostyuk-Rus/versions/2 )
