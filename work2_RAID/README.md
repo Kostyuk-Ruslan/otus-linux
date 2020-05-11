@@ -366,4 +366,16 @@ sdf      8:80   0  250M  0 disk
 ```
 </details>
 
+
+Так же как альтернативный вариант автоматической сборки RAID при загрузки, был отредактирован следующий файл 
+
+Команда:<summary><code>mdadm --detail --scan --verbose | awk '/ARRAY/ {print}'</code></summary>  и занес в 
+
+/etc/mdadm/mdadm.conf
+
+
+<summary><code>DEVICE partitions
+ARRAY /dev/md/0 level=raid10 num-devices=4 metadata=1.2 name=otuslinux:0 UUID=195f9fb2:8cd385a2:8be10879:172d2450</code></summary>
+
+
 - Выгрузил бокс и залил на VagrantClout ( https://app.vagrantup.com/impkos/boxes/Kostyuk-Rus/versions/2 )
