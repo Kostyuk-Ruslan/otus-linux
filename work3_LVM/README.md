@@ -117,12 +117,13 @@ sde                       8:64   0    1G  0 disk
 </details>
 
 
- Диски /dev/sdb, /dev/sdc,  /dev/sdd,  /dev/sde  - бдуем делать RAID10  ,   /dev/sdf - для создания gpt раздела и 5 партиций ( задание из Д.З.)
+Действую по инструкции, установил пакет xfsdump для снятия копии тома
 
 На всякий случай делаю snapshot "vagrant snapshot save 0.0.1"
 
 
-<code>mdadm --create /dev/md0 --level=10 --raid-devices=4 /dev/sd[b-e]</code> - Добавляем диски и создаем RAID 10
+<code>[root@lvm ~]# pvcreate /dev/sdb
+  Physical volume "/dev/sdb" successfully created.</code> - Подготовили временный том
 
 
 <details>
