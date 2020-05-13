@@ -122,12 +122,18 @@ sde                       8:64   0    1G  0 disk
 На всякий случай делаю snapshot "vagrant snapshot save 0.0.1"
 
 
-<code>
+<code>Подготовил временный том</code>
+```
 [root@lvm ~]# pvcreate /dev/sdb
 Physical volume "/dev/sdb" successfully created.
-</code>
 
- Подготовили временный том
+```
+
+
+
+
+
+
 
 
 <details>
