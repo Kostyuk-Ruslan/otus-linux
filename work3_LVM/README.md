@@ -130,6 +130,22 @@ Physical volume "/dev/sdb" successfully created.
 ```
 
 
+<code>Создаем VG и называем его vg_root</code>
+
+```
+[root@lvm ~]# vgcreate vg_root /dev/sdb
+Volume group "vg_root" successfully created
+
+[root@lvm ~]# vgs
+VG         #PV #LV #SN Attr   VSize   VFree  
+VolGroup00   1   2   0 wz--n- <38.97g      0 
+vg_root      1   0   0 wz--n- <10.00g <10.00g
+[root@lvm ~]# 
+        
+
+```
+
+
 
 
 
