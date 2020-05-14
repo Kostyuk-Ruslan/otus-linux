@@ -503,7 +503,41 @@ the device is found by lsof(8) or fuser(1))
 
 После чего обратно монтирую /home ==> mount /home - все 20 файлов на месте.
 
+Итоговый вывод 
 
+<code>Команда "lsblk"</code>
+<details>
+
+```
+[root@lvm home]# lsblk
+NAME                            MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+sda                               8:0    0   40G  0 disk 
+├─sda1                            8:1    0    1M  0 part 
+├─sda2                            8:2    0    1G  0 part /boot
+└─sda3                            8:3    0   39G  0 part 
+  ├─VolGroup00-LogVol00         253:0    0    8G  0 lvm  /
+  ├─VolGroup00-LogVol01         253:1    0  1.5G  0 lvm  [SWAP]
+  ├─VolGroup00-LogVol_Home-real 253:7    0    2G  0 lvm  
+  │ ├─VolGroup00-LogVol_Home    253:9    0    2G  0 lvm  /home
+  │ └─VolGroup00-home_snap      253:10   0    2G  0 lvm  
+  └─VolGroup00-home_snap-cow    253:8    0  128M  0 lvm  
+    └─VolGroup00-home_snap      253:10   0    2G  0 lvm  
+sdb                               8:16   0   10G  0 disk 
+sdc                               8:32   0    2G  0 disk 
+├─vg_var-lv_var_rmeta_0         253:2    0    4M  0 lvm  
+│ └─vg_var-lv_var               253:6    0  952M  0 lvm  /var
+└─vg_var-lv_var_rimage_0        253:3    0  952M  0 lvm  
+  └─vg_var-lv_var               253:6    0  952M  0 lvm  /var
+sdd                               8:48   0    1G  0 disk 
+├─vg_var-lv_var_rmeta_1         253:4    0    4M  0 lvm  
+│ └─vg_var-lv_var               253:6    0  952M  0 lvm  /var
+└─vg_var-lv_var_rimage_1        253:5    0  952M  0 lvm  
+  └─vg_var-lv_var               253:6    0  952M  0 lvm  /var
+sde                               8:64   0    1G  0 disk 
+
+
+```
+</details>
 
 
 
