@@ -444,7 +444,7 @@ cat /etc/fstab
 <code>UUID="ce47b515-97fb-4559-859e-1401cc5bfae4" /home xfs defaults 0 0</code>
 
 
-<code>Команда "lsblk"</code>
+<code>Команда "lsblk" вижу что появился /home</code>
 <details>
 
 ```
@@ -480,8 +480,28 @@ sde                          8:64   0    1G  0 disk
 Далее переходим в /home и создаем файлы <code>touch /home/file{1..20}</code>
 в итоге в каталоге /home создались файлы от  file1 до file20
 
+Создадим снэпшот, назовем его home_snap и выделим ему 100MB <code>lvcreate -L 100MB -s -n home_snap /dev/VolGroup00/LogVol_Home</code>
 
+```
+[root@lvm home]# lvcreate -L 100MB -s -n home_snap /dev/VolGroup00/LogVol_Home
+Rounding up size to full physical extent 128.00 MiB
+Logical volume "home_snap" created.
+```    
+Удаляю файлы с 11 по 20 <code>rm -f /home/file{11..20}</code> и отмонтирую /home, так как буду делать восстановление
 
+Не смог отмонитировать том, так как том еще используется
+
+```
+[root@lvm home]# umount /home
+umount: /home: target is busy.
+(In some cases useful info about processes that use
+the device is found by lsof(8) or fuser(1))
+```                
+Сделал <code>umount -l /home</code> - это сработало
+
+Восстанавливаюсь со снэпшота <code>lvconvert --merge /dev/VolGroup00/home_snap</code>
+
+После чего обратно монтирую /home ==> mount /home - все 20 файлов на месте.
 
 
 
