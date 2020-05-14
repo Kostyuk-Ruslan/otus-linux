@@ -424,6 +424,68 @@ sde                        8:64   0    1G  0 disk
 ----------------------------------------------------------
 
 
+В заключении выделяем том под /home - он будет предназначен для снэпшотов, принцип создания тома исходя из инструкции такой же как и в /var
+
+<code>lvcreate -n LogVol_Home -L 2G /dev/VolGroup00</code> - Создаем логический том LV с названием "LogVol_Home" с созданной нами уже группе "VolGroup00" и выделяем 2GB
+
+Далее создаем фс "xfs" <code>mkfs.xfs /dev/VolGroup00/LogVol_Home</code>
+
+После чего монтируем lvm том в /mnt <code>mount /dev/VolGroup00/LogVol_Home /mnt/</code>
+а далее копирую содержимое /home в /mnt <code>cp -aR /home/* /mnt/</code> после того как убедились, что все скопировано удаляем содержимое /home
+<code>rm -rf /home/*</code>  и отмонтируем /mnt <code>umount /mnt</code>
+
+Монтируем наш LogVol_Home в /home <code>mount /dev/VolGroup00/LogVol_Home /home/</code>  и заносим информацию в /etc/fstab, что бы не размонтировался при перезагрузи
+и последующей загрузки системы.
+
+- <code>echo "`blkid | grep Home | awk '{print $2}'` /home xfs defaults 0 0" >> /etc/fstab</code>- итог у меня получился такой:
+
+cat /etc/fstab
+
+<code>UUID="ce47b515-97fb-4559-859e-1401cc5bfae4" /home xfs defaults 0 0</code>
+
+
+<code>Команда "lsblk"</code>
+<details>
+
+```
+
+[root@lvm home]# lsblk
+NAME                       MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+sda                          8:0    0   40G  0 disk 
+├─sda1                       8:1    0    1M  0 part 
+├─sda2                       8:2    0    1G  0 part /boot
+└─sda3                       8:3    0   39G  0 part 
+  ├─VolGroup00-LogVol00    253:0    0    8G  0 lvm  /
+  ├─VolGroup00-LogVol01    253:1    0  1.5G  0 lvm  [SWAP]
+  └─VolGroup00-LogVol_Home 253:7    0    2G  0 lvm  /home
+sdb                          8:16   0   10G  0 disk 
+sdc                          8:32   0    2G  0 disk 
+├─vg_var-lv_var_rmeta_0    253:2    0    4M  0 lvm  
+│ └─vg_var-lv_var          253:6    0  952M  0 lvm  /var
+└─vg_var-lv_var_rimage_0   253:3    0  952M  0 lvm  
+  └─vg_var-lv_var          253:6    0  952M  0 lvm  /var
+sdd                          8:48   0    1G  0 disk 
+├─vg_var-lv_var_rmeta_1    253:4    0    4M  0 lvm  
+│ └─vg_var-lv_var          253:6    0  952M  0 lvm  /var
+└─vg_var-lv_var_rimage_1   253:5    0  952M  0 lvm  
+  └─vg_var-lv_var          253:6    0  952M  0 lvm  /var
+sde                          8:64   0    1G  0 disk 
+
+
+```
+</details>
+
+Создадим снэпшоти посмотрим как он работает.
+
+Далее переходим в /home и создаем файлы <code>touch /home/file{1..20}</code>
+в итоге в каталоге /home создались файлы от  file1 до file20
+
+
+
+
+
+
+
 
 
 
