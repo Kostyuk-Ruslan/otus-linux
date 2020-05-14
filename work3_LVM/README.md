@@ -540,6 +540,7 @@ sde                               8:64   0    1G  0 disk
 </details>
 
 
+- Выгрузил бокс и залил на VagrantClout ( https://app.vagrantup.com/impkos/boxes/Kostyuk-Rus/versions/3 )
 
 
 
