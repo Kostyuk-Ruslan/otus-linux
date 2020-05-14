@@ -382,10 +382,13 @@ Logical volume "lv_var" created.
 
 <code>UUID="08a85b88-a6c6-43f2-a57b-af953636b98c" /var ext4 defaults 0 0</code>
 
-После перезагружаемся и смотрим, что получилось:
+После перезагружаемся и удаляю временную VG в обратном порядке
 
+1. <code>lvremove /dev/vg_root/lv_root</code> - сперва удаляем LV
+2. <code>vgremove /dev/vg_root</code> -потом  удаляем VG
+3. <code>pvremove /dev/sdb</code> -и в заключении удаляем PV
 
-
+Смотрим что получилось:
 
 <code>Команда "lsblk"</code>
 <details>
@@ -416,6 +419,10 @@ sde                        8:64   0    1G  0 disk
 
 ```
 </details>
+
+Рут уменьшен на 8Gb, а /dev/sdc и /dev/sdd стали mirror
+----------------------------------------------------------
+
 
 
 
