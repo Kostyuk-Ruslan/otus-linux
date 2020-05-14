@@ -158,7 +158,7 @@ Free  PE / Size       2559 / <10.00 GiB
 
 
 <code>Далее вводим команду "lvcreate -n lv_root -l +100%FREE /dev/vg_root"</code>
-Я так понял, тем самым мы создаем логический LVM раздел , называем его "lv_root" и отдаем ему все свободное пространство группы "vg_root"
+Я так понял, тем самым мы создаем логический LVM раздел в группе томов "/dev/vg_root" , называем наш лог. том  "lv_root" и отдаем ему все свободное пространство группы "vg_root"
 
 ```
 [root@lvm ~]# lvcreate -n lv_root -l +100%FREE /dev/vg_root
@@ -341,10 +341,83 @@ sde                       8:64   0    1G  0 disk
 Не перезагружаясь выделяем под /var/ и сделаем "mirror"
 
 ```
-[root@lvm /]# pvcreate /dev/sdc /dev/sdd
+[root@lvm /]# pvcreate /dev/sdc /dev/sdd - Созздаем физический уровень и помечаем диски "/dev/sdc/" и "/dev/sdd", что они будут использоваться для lvm
 Physical volume "/dev/sdc" successfully created.
 Physical volume "/dev/sdd" successfully created.
 ```
+
+Далее создаем группу томов из наших дисков и называем ее "vg_var"
+
+```
+vgcreate vg_var /dev/sdc /dev/sdd
+Volume group "vg_var" successfully created
+```
+
+
+Последний этап состоит в том ,  что бы в группе томов "vg_var"  создать логический том lvm, называю его "lv_var" и выделяем 950МB свободного пространства
+
+```
+[root@lvm /]# lvcreate -L 950M -m1 -n lv_var vg_var
+Rounding up size to full physical extent 952.00 MiB
+Logical volume "lv_var" created.
+```    
+
+После того как у нас создались блочные устройства "/dev/vg_var/lv_var" я могу создать на нем фс "ext4" и переместить туда все содержимое "/var"
+
+
+<code>mkfs.ext4 /dev/vg_var/lv_var</code> - Создаем на нашем нашем блочном устройстве фс "ext4" после чего монтируем ее в "/mnt"
+
+<code>mount /dev/vg_var/lv_var /mnt</code> , а дальше копируем все содержимое /var  в /mnt
+
+<code>cp -aR /var/* /mnt/</code> - заняло примерно 30 секунд
+
+<code>umount /mnt</code> - Отмонтируем  /mnt 
+
+<code>mount /dev/vg_var/lv_var /var</code>  - Монтируем наш lvm том в каталог /var
+
+
+Редактируем fstab c помощью скрипта <code>echo "`blkid | grep var: | awk '{print $2}'` /var ext4 defaults 0 0" >> /etc/fstab </code> - по сути
+скрипт вроде c помощью "echo" добаялет запись в >> самый конец файла /etc/fstab и находит с помощью утилиты "blkid" находит uuid и грепает в нашем случае по каталогу /var/, awk фильтрует строку uuid и дополнительно
+добавляет  /var ext4 defaults 0 0, в итоге у меня получается так:
+
+<code>UUID="08a85b88-a6c6-43f2-a57b-af953636b98c" /var ext4 defaults 0 0</code>
+
+После перезагружаемся и смотрим, что получилось:
+
+
+
+
+<code>Команда "lsblk"</code>
+<details>
+
+```
+
+[root@lvm ~]# lsblk
+NAME                     MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+sda                        8:0    0   40G  0 disk 
+├─sda1                     8:1    0    1M  0 part 
+├─sda2                     8:2    0    1G  0 part /boot
+└─sda3                     8:3    0   39G  0 part 
+  ├─VolGroup00-LogVol00  253:0    0    8G  0 lvm  /
+  └─VolGroup00-LogVol01  253:1    0  1.5G  0 lvm  [SWAP]
+sdb                        8:16   0   10G  0 disk 
+sdc                        8:32   0    2G  0 disk 
+├─vg_var-lv_var_rmeta_0  253:2    0    4M  0 lvm  
+│ └─vg_var-lv_var        253:6    0  952M  0 lvm  /var
+└─vg_var-lv_var_rimage_0 253:3    0  952M  0 lvm  
+  └─vg_var-lv_var        253:6    0  952M  0 lvm  /var
+sdd                        8:48   0    1G  0 disk 
+├─vg_var-lv_var_rmeta_1  253:4    0    4M  0 lvm  
+│ └─vg_var-lv_var        253:6    0  952M  0 lvm  /var
+└─vg_var-lv_var_rimage_1 253:5    0  952M  0 lvm  
+  └─vg_var-lv_var        253:6    0  952M  0 lvm  /var
+sde                        8:64   0    1G  0 disk 
+
+
+```
+</details>
+
+
 
 
 
