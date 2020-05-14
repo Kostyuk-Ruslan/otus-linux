@@ -117,7 +117,8 @@ sde                       8:64   0    1G  0 disk
 </details>
 
 
-Действую по инструкции, установил пакет xfsdump для снятия копии тома
+Действую по инструкции, прежде чем начать, я  установил доп. пакеты "xfsdump" для снятия копии тома и "lvm2"
+
 
 На всякий случай делаю snapshot "vagrant snapshot save 0.0.1"
 
@@ -135,7 +136,7 @@ PV         VG         Fmt  Attr PSize   PFree
 ```
 
 
-<code>Создаем VG и называем его vg_root</code>
+<code>Создаем VG и называем нашу группу "vg_root"</code>
 
 ```
 [root@lvm ~]# vgcreate vg_root /dev/sdb
@@ -148,7 +149,7 @@ VolGroup00   1   2   0 wz--n- <38.97g      0
 [root@lvm ~]#         
 
 ```
-<code>Команда "vgdisplay" покажет свободное пространство в группе vg_root а размере 10 GB </code>
+<code>Команда "vgdisplay" покажет свободное пространство в группе "vg_root" а размере 10 GB </code>
 
 ```
 Free  PE / Size       2559 / <10.00 GiB
@@ -157,7 +158,7 @@ Free  PE / Size       2559 / <10.00 GiB
 
 
 <code>Далее вводим команду "lvcreate -n lv_root -l +100%FREE /dev/vg_root"</code>
-Я так понял, тем самым мы создаем логический LVM раздел , называем его "lv_root" и отдаем ему все свободное пространство группы vg_root 
+Я так понял, тем самым мы создаем логический LVM раздел , называем его "lv_root" и отдаем ему все свободное пространство группы "vg_root"
 
 ```
 [root@lvm ~]# lvcreate -n lv_root -l +100%FREE /dev/vg_root
@@ -176,6 +177,69 @@ LogVol01 VolGroup00 -wi-ao----   1.50g
 Free  PE / Size       0 / 0 
 
 ```
+
+
+
+<details>
+<summary>Команда <code>lsblk</code></summary>
+
+```
+[root@lvm ~]# lsblk
+NAME                    MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+sda                       8:0    0   40G  0 disk 
+├─sda1                    8:1    0    1M  0 part 
+├─sda2                    8:2    0    1G  0 part /boot
+└─sda3                    8:3    0   39G  0 part 
+  ├─VolGroup00-LogVol00 253:0    0 37.5G  0 lvm  /
+  └─VolGroup00-LogVol01 253:1    0  1.5G  0 lvm  [SWAP]
+sdb                       8:16   0   10G  0 disk 
+└─vg_root-lv_root       253:2    0   10G  0 lvm  
+sdc                       8:32   0    2G  0 disk 
+sdd                       8:48   0    1G  0 disk 
+sde                       8:64   0    1G  0 disk 
+[root@lvm ~]# 
+
+
+```
+</details>
+
+
+<code>По инструкции, далее я буду создавать файловую систему "xfs"  и примонтирую ее к  "/mnt"</code>
+
+Набрал команду "lvdisplay"
+
+--- Logical volume ---
+LV Path                /dev/vg_root/lv_root
+
+
+Далее создаем фс  <code>mkfs.xfs /dev/vg_root/lv_root</code>, команда выполнилась успешно, после чего набираю   <code>"mount /dev/vg_root/lv_root /mnt"</code>
+  
+
+<details>
+<summary>Команда <code>lsblk где видно, что том примонтировался к /mnt</code></summary>
+
+```
+[root@lvm ~]# lsblk
+NAME                    MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+sda                       8:0    0   40G  0 disk 
+├─sda1                    8:1    0    1M  0 part 
+├─sda2                    8:2    0    1G  0 part /boot
+└─sda3                    8:3    0   39G  0 part 
+  ├─VolGroup00-LogVol00 253:0    0 37.5G  0 lvm  /
+  └─VolGroup00-LogVol01 253:1    0  1.5G  0 lvm  [SWAP]
+sdb                       8:16   0   10G  0 disk 
+└─vg_root-lv_root       253:2    0   10G  0 lvm  /mnt
+sdc                       8:32   0    2G  0 disk 
+sdd                       8:48   0    1G  0 disk 
+sde                       8:64   0    1G  0 disk 
+[root@lvm ~]# 
+
+
+```
+</details>
+
+
+
 
 
 
