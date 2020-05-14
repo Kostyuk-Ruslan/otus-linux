@@ -254,7 +254,7 @@ sde                       8:64   0    1G  0 disk
 
 <code>Было:</code>
 <details>
-<summary>Команда <code>lsblk где видно, что том примонтировался к /mnt</code></summary>
+<summary>Команда <code>тут корнем является VolGroup00-LogVol0 </code></summary>
 
 ```
 [root@lvm ~]# lsblk
@@ -278,7 +278,7 @@ sde                       8:64   0    1G  0 disk.
 
 
 
-<code>Стало:</code>
+<code>Стало: тут видно что рутом стал vg_root-lv_root</code>
 <details>
 
 ```
@@ -301,8 +301,30 @@ sde                       8:64   0    1G  0 disk
 </details>
 
 
-3. <code>grub2-mkconfig -o /boot/grub2/grub.cfg</code>
+3. <code>grub2-mkconfig -o /boot/grub2/grub.cfg</code> - я так понял, этой командой мы генерируем конфигурационный файл, что  бы система определялась автоматически
+и я смог зайти под новым корнем.
 
+Далее вводим <code>cd /boot ; for i in `ls initramfs-*img`; do dracut -v $i `echo $i|sed "s/initramfs-//g;s/.img//g"` --force; done
+*** Creating image file ***</code>
+
+Для того что бы при загрузке был подмонтирован наш новый root, я в <code>/boot/grub2/grub.cfg</code> заменил <code>rd.lvm.lv=VolGroup00/LogVol00 на rd.lvm.lv=vg_root/lv_root</code>
+
+Перезагрузился, вошел успешно в новом рут томе.
+
+Далее по инструкции нужно уменьшить корневой том до "8GB" , для этого нужно изменить размер старой VG (VolGroup00-LogVol00) и обратно вернуть на него рут.
+
+Для этого удалим старый LV и создадим новый на 8 GB
+
+<code>Набираем "lvdisplay"</code>
+
+```
+--- Logical volume ---
+  LV Path                /dev/VolGroup00/LogVol00
+
+```
+
+1. <code>lvremove /dev/VolGroup00/LogVol00</code> - удаляем наш LV
+2. <code>lvcreate -n VolGroup00/LogVol00 -L 8G /dev/VolGroup00 - Заного создаем на lvm том, называем его VolGroup00/LogVol00 и отдаем ему 8GB пространства
 
 
 
