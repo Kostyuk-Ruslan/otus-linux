@@ -1,0 +1,111 @@
+    1  pvs
+    2  yum install lvm2 xfsdump
+    3  pvcreate /dev/sdb
+    4  pvs
+    5  pvdisplay
+    6  vgcreate vg_root /dev/sdb
+    7  vgdisplay
+    8  vgs
+    9  lvcreate -n lv_root -l +100%FREE /dev/vg_root
+   10  lvs
+   11  lvdisplay
+   12  mkfs.xfs /dev/vg_root/lv_root
+   13  mount /dev/vg_root/lv_root /mnt
+   14  lsblk
+   15  df -h
+   16  history
+   17  xfsdump -J - /dev/VolGroup00/LogVol00 | xfsrestore -J - /mnt
+   18  for i in /proc/ /sys/ /dev/ /run/ /boot/; do mount --bind $i /mnt/$i; done
+   19  chroot /mnt/
+   20  grub2-mkconfig -o /boot/grub2/grub.cfg
+   21  cd /boot ; for i in `ls initramfs-*img`; do dracut -v $i `echo $i|sed "s/initramfs-//g;s/.img//g"` --force; done
+   22  vim /boot/grub2/grub.cfg
+   23  reboot
+   24  exit   
+   25  reboot
+   26  lsblk
+   28  df -hT
+   29  lvremove /dev/VolGroup00/LogVol00
+   30  lvcreate -n VolGroup00/LogVol00 -L 8G /dev/VolGroup00
+   31  lsblk
+   32  mkfs.xfs /dev/VolGroup00/LogVol00
+   33  mount /dev/VolGroup00/LogVol00 /mnt
+   34  lsblk
+   35  xfsdump -J - /dev/vg_root/lv_root | xfsrestore -J - /mnt
+   36  cd /mnt
+   37  ll
+   38  cd
+   39  for i in /proc/ /sys/ /dev/ /run/ /boot/; do mount --bind $i /mnt/$i; done
+   40  chroot /mnt/
+   41  grub2-mkconfig -o /boot/grub2/grub.cfg
+   42  cd /boot ; for i in `ls initramfs-*img`; do dracut -v $i `echo $i|sed "s/initramfs-//g;s/.img//g"` --force; done   
+   43  pvcreate /dev/sdc /dev/sdd
+   44  vgcreate vg_var /dev/sdc /dev/sdd
+   45  vgs
+   46  vgdisplay
+   47  lvcreate -L 950M -m1 -n lv_var vg_var
+   48  lvs
+   49  mkfs.ext4 /dev/vg_var/lv_var
+   50  df -hT
+   51  mount /dev/vg_var/lv_var /mnt
+   52  lsblk
+   53  cp -aR /var/* /mnt/
+   54  cd /mnt 
+   55  ls -la
+   56  umount /mnt
+   57  mount /dev/vg_var/lv_var /var
+   58  lsblk
+   59  echo "`blkid | grep var: | awk '{print $2}'` /var ext4 defaults 0 0" >> /etc/fstab
+   60  cat /etc/fstab
+   61  lsblk
+   62  lvremove /dev/vg_root/lv_root
+   63  vgremove /dev/vg_root
+   64  pvremove /dev/sdb
+   65  pvs
+   66  pvdisplay
+   67  lvcreate -n LogVol_Home -L 2G /dev/VolGroup00
+   68  lvs
+   69  mkfs.xfs /dev/VolGroup00/LogVol_Home
+   70  mount /dev/VolGroup00/LogVol_Home /mnt/
+   71  lsblk
+   72  df -hT
+   73  cp -aR /home/* /mnt/
+   74  cd /mnt
+   75  mc
+   76  rm -rf /home/*
+   77  mc
+   78  umount /mnt
+   79  mount /dev/VolGroup00/LogVol_Home /home/
+   80  lsblk
+   81  mc
+   82  echo "`blkid | grep Home | awk '{print $2}'` /home xfs defaults 0 0" >> /etc/fstab
+   82  cat /etc/fstab
+   83  cd /home
+   84  touch file{1..20}
+   85  ll
+   86  lvcreate -L 100MB -s -n home_snap /dev/VolGroup00/LogVol_Home
+   87  lsblk
+   88  lvdisplay
+   89  lvs
+   90  rm -f /home/file{11..20}
+   91  umount /home
+   92  umount /home
+   93  cd /
+   94  umount -l /home
+   95  lvconvert --merge /dev/VolGroup00/home_snap
+   96  mount /home
+   97  lsblk
+   98  cd /home
+   99  ll
+   100 mc
+   102 reboot
+
+   
+
+
+
+
+
+
+
+   
