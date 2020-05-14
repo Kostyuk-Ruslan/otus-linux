@@ -239,6 +239,71 @@ sde                       8:64   0    1G  0 disk
 </details>
 
 
+Далее копируем всем данные с корневого раздела "/" (/dev/VolGroup00/LogVol00)  в наш созданный "/mnt"
+
+<code>xfsdump -J - /dev/VolGroup00/LogVol00 | xfsrestore -J - /mnt</code> - P.S. классная команда, надо будет ее иметь ввиду
+
+Пошел длинный вывод, но в итоге в конце я получил "xfsrestore: Restore Status: SUCCESS" , Если зайти в "/mnt" то вижу все файлы с корневого раздела.
+
+
+Далее по инструкции переконфигурирую grub, что бы призагрузке системы я смог зайти под новым корнем.
+
+1. <code>for i in /proc/ /sys/ /dev/ /run/ /boot/; do mount --bind $i /mnt/$i; done</code> - Я не особо понимаю, что делает этот скрипт, но похоже он монтирует каталоги 
+в среду /chroot
+2. <code>chroot /mnt/</code> - тут мы запустили chroot c указанием нового корневого каталога
+
+<code>Было:</code>
+<details>
+<summary>Команда <code>lsblk где видно, что том примонтировался к /mnt</code></summary>
+
+```
+[root@lvm ~]# lsblk
+NAME                    MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+sda                       8:0    0   40G  0 disk.
+├─sda1                    8:1    0    1M  0 part.
+├─sda2                    8:2    0    1G  0 part /boot
+└─sda3                    8:3    0   39G  0 part.
+  ├─VolGroup00-LogVol00 253:0    0 37.5G  0 lvm  /
+  └─VolGroup00-LogVol01 253:1    0  1.5G  0 lvm  [SWAP]
+sdb                       8:16   0   10G  0 disk.
+└─vg_root-lv_root       253:2    0   10G  0 lvm  /mnt
+sdc                       8:32   0    2G  0 disk.
+sdd                       8:48   0    1G  0 disk.
+sde                       8:64   0    1G  0 disk.
+[root@lvm ~]#.
+
+
+```
+</details>
+
+
+
+<code>Стало:</code>
+<details>
+
+```
+
+[root@lvm /]# lsblk
+NAME                    MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+sda                       8:0    0   40G  0 disk 
+├─sda1                    8:1    0    1M  0 part 
+├─sda2                    8:2    0    1G  0 part /boot
+└─sda3                    8:3    0   39G  0 part 
+  ├─VolGroup00-LogVol00 253:0    0 37.5G  0 lvm  
+  └─VolGroup00-LogVol01 253:1    0  1.5G  0 lvm  [SWAP]
+sdb                       8:16   0   10G  0 disk 
+└─vg_root-lv_root       253:2    0   10G  0 lvm  /
+sdc                       8:32   0    2G  0 disk 
+sdd                       8:48   0    1G  0 disk 
+sde                       8:64   0    1G  0 disk 
+
+```
+</details>
+
+
+3. <code>grub2-mkconfig -o /boot/grub2/grub.cfg</code>
+
+
 
 
 
