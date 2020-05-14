@@ -127,6 +127,11 @@ sde                       8:64   0    1G  0 disk
 [root@lvm ~]# pvcreate /dev/sdb
 Physical volume "/dev/sdb" successfully created.
 
+[root@lvm ~]# pvs
+PV         VG         Fmt  Attr PSize   PFree 
+/dev/sda3  VolGroup00 lvm2 a--  <38.97g     0 
+==> /dev/sdb              lvm2 ---   10.00g 10.00g
+      
 ```
 
 
@@ -139,9 +144,36 @@ Volume group "vg_root" successfully created
 [root@lvm ~]# vgs
 VG         #PV #LV #SN Attr   VSize   VFree  
 VolGroup00   1   2   0 wz--n- <38.97g      0 
-vg_root      1   0   0 wz--n- <10.00g <10.00g
-[root@lvm ~]# 
-        
+==> vg_root      1   0   0 wz--n- <10.00g <10.00g
+[root@lvm ~]#         
+
+```
+<code>Команда "vgdisplay" покажет свободное пространство в группе vg_root а размере 10 GB </code>
+
+```
+Free  PE / Size       2559 / <10.00 GiB
+
+```
+
+
+<code>Далее вводим команду "lvcreate -n lv_root -l +100%FREE /dev/vg_root"</code>
+Я так понял, тем самым мы создаем логический LVM раздел , называем его "lv_root" и отдаем ему все свободное пространство группы vg_root 
+
+```
+[root@lvm ~]# lvcreate -n lv_root -l +100%FREE /dev/vg_root
+Logical volume "lv_root" created.
+
+[root@lvm ~]# lvs
+LV       VG         Attr       LSize   Pool Origin Data%  Meta%  Move Log Cpy%Sync Convert
+LogVol00 VolGroup00 -wi-ao---- <37.47g                                                    
+LogVol01 VolGroup00 -wi-ao----   1.50g                                                    
+==> lv_root  vg_root    -wi-a----- <10.00g 
+
+```
+<code>Набираю команду "vgdisplay"и вижу, что свободного пространство не осталось, так как все отдали под lvm раздел</code>
+
+```
+Free  PE / Size       0 / 0 
 
 ```
 
