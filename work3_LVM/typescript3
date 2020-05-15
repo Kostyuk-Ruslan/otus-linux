@@ -1,0 +1,525 @@
+Script started on Fri 15 May 2020 08:47:49 AM UTC
+]0;root@lvm:~[?1034h[root@lvm ~]# ll
+total 16
+-rw-------. 1 root root 5763 May 12  2018 anaconda-ks.cfg
+-rw-------. 1 root root 5432 May 12  2018 original-ks.cfg
+-rw-r--r--. 1 root root    0 May 15 08:47 typescript
+]0;root@lvm:~[root@lvm ~]# cd /
+]0;root@lvm:/[root@lvm /]# lvremove /dev/vg_root/lv_root
+Do you really want to remove active logical volume vg_root/lv_root? [y/n]: y
+  Logical volume "lv_root" successfully removed
+]0;root@lvm:/[root@lvm /]# vgremove /dev/vg_root
+  Volume group "vg_root" successfully removed
+]0;root@lvm:/[root@lvm /]# pvremove /dev/sdb
+  Labels on physical volume "/dev/sdb" successfully wiped.
+]0;root@lvm:/[root@lvm /]# lvs
+  LV       VG         Attr       LSize   Pool Origin Data%  Meta%  Move Log Cpy%Sync Convert
+  LogVol00 VolGroup00 -wi-ao----   8.00g                                                    
+  LogVol01 VolGroup00 -wi-ao----   1.50g                                                    
+  lv_var   vg_var     rwi-a-r--- 952.00m                                    100.00          
+]0;root@lvm:/[root@lvm /]# pvs
+  PV         VG         Fmt  Attr PSize    PFree  
+  /dev/sda3  VolGroup00 lvm2 a--   <38.97g <29.47g
+  /dev/sdc   vg_var     lvm2 a--    <2.00g   1.06g
+  /dev/sdd   vg_var     lvm2 a--  1020.00m  64.00m
+]0;root@lvm:/[root@lvm /]# pvdisplay
+  --- Physical volume ---
+  PV Name               /dev/sda3
+  VG Name               VolGroup00
+  PV Size               <39.00 GiB / not usable 30.00 MiB
+  Allocatable           yes 
+  PE Size               32.00 MiB
+  Total PE              1247
+  Free PE               943
+  Allocated PE          304
+  PV UUID               vrrtbx-g480-HcJI-5wLn-4aOf-Olld-rC03AY
+   
+  --- Physical volume ---
+  PV Name               /dev/sdc
+  VG Name               vg_var
+  PV Size               2.00 GiB / not usable 4.00 MiB
+  Allocatable           yes 
+  PE Size               4.00 MiB
+  Total PE              511
+  Free PE               272
+  Allocated PE          239
+  PV UUID               stk2lF-JnjB-3RSn-bndv-BYav-D78h-ns1syW
+   
+  --- Physical volume ---
+  PV Name               /dev/sdd
+  VG Name               vg_var
+  PV Size               1.00 GiB / not usable 4.00 MiB
+  Allocatable           yes 
+  PE Size               4.00 MiB
+  Total PE              255
+  Free PE               16
+  Allocated PE          239
+  PV UUID               YeFZ4A-iMq6-pNCO-yhsx-Beig-PsDh-J68xB6
+   
+]0;root@lvm:/[root@lvm /]# lvcreate -n LogVol_Home -L 2G /dev/VolGroup00
+  Logical volume "LogVol_Home" created.
+]0;root@lvm:/[root@lvm /]# lvs
+  LV          VG         Attr       LSize   Pool Origin Data%  Meta%  Move Log Cpy%Sync Convert
+  LogVol00    VolGroup00 -wi-ao----   8.00g                                                    
+  LogVol01    VolGroup00 -wi-ao----   1.50g                                                    
+  LogVol_Home VolGroup00 -wi-a-----   2.00g                                                    
+  lv_var      vg_var     rwi-a-r--- 952.00m                                    100.00          
+]0;root@lvm:/[root@lvm /]# mkfs.xfs /dev/VolGroup00/LogVol_Home
+meta-data=/dev/VolGroup00/LogVol_Home isize=512    agcount=4, agsize=131072 blks
+         =                       sectsz=512   attr=2, projid32bit=1
+         =                       crc=1        finobt=0, sparse=0
+data     =                       bsize=4096   blocks=524288, imaxpct=25
+         =                       sunit=0      swidth=0 blks
+naming   =version 2              bsize=4096   ascii-ci=0 ftype=1
+log      =internal log           bsize=4096   blocks=2560, version=2
+         =                       sectsz=512   sunit=0 blks, lazy-count=1
+realtime =none                   extsz=4096   blocks=0, rtextents=0
+]0;root@lvm:/[root@lvm /]# mount /dev/VolGroup00/LogVol_Home /mnt/
+]0;root@lvm:/[root@lvm /]# lsblk
+NAME                       MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+sda                          8:0    0   40G  0 disk 
+├─sda1                       8:1    0    1M  0 part 
+├─sda2                       8:2    0    1G  0 part /boot
+└─sda3                       8:3    0   39G  0 part 
+  ├─VolGroup00-LogVol00    253:0    0    8G  0 lvm  /
+  ├─VolGroup00-LogVol01    253:1    0  1.5G  0 lvm  [SWAP]
+  └─VolGroup00-LogVol_Home 253:2    0    2G  0 lvm  /mnt
+sdb                          8:16   0   10G  0 disk 
+sdc                          8:32   0    2G  0 disk 
+├─vg_var-lv_var_rmeta_0    253:3    0    4M  0 lvm  
+│ └─vg_var-lv_var          253:7    0  952M  0 lvm  
+└─vg_var-lv_var_rimage_0   253:4    0  952M  0 lvm  
+  └─vg_var-lv_var          253:7    0  952M  0 lvm  
+sdd                          8:48   0    1G  0 disk 
+├─vg_var-lv_var_rmeta_1    253:5    0    4M  0 lvm  
+│ └─vg_var-lv_var          253:7    0  952M  0 lvm  
+└─vg_var-lv_var_rimage_1   253:6    0  952M  0 lvm  
+  └─vg_var-lv_var          253:7    0  952M  0 lvm  
+sde                          8:64   0    1G  0 disk 
+]0;root@lvm:/[root@lvm /]# cp -aR /home/* /mnt/
+]0;root@lvm:/[root@lvm /]# cd /mnt
+]0;root@lvm:/mnt[root@lvm mnt]# ll
+total 0
+drwx------. 7 vagrant vagrant 154 May 13 10:46 [0m[01;34mvagrant[0m
+]0;root@lvm:/mnt[root@lvm mnt]# cd /
+]0;root@lvm:/[root@lvm /]# ll
+total 20
+lrwxrwxrwx.   1 root    root       7 May 15 08:32 [0m[01;36mbin[0m -> [01;34musr/bin[0m
+dr-xr-xr-x.   5 root    root    4096 May 15 08:39 [01;34mboot[0m
+drwxr-xr-x.  20 root    root    3340 May 15 08:48 [01;34mdev[0m
+drwxr-xr-x.  81 root    root    8192 May 13 11:27 [01;34metc[0m
+drwxr-xr-x.   3 root    root      21 May 12  2018 [01;34mhome[0m
+lrwxrwxrwx.   1 root    root       7 May 15 08:32 [01;36mlib[0m -> [01;34musr/lib[0m
+lrwxrwxrwx.   1 root    root       9 May 15 08:32 [01;36mlib64[0m -> [01;34musr/lib64[0m
+drwxr-xr-x.   2 root    root       6 Apr 11  2018 [01;34mmedia[0m
+drwxr-xr-x.   3 root    root      21 May 15 08:49 [01;34mmnt[0m
+drwxr-xr-x.   3 root    root      38 May 13 10:13 [01;34mopt[0m
+dr-xr-xr-x. 230 root    root       0 May 15  2020 [01;34mproc[0m
+dr-xr-x---.   6 root    root     247 May 15 08:47 [01;34mroot[0m
+drwxr-xr-x.  27 root    root     880 May 15 08:47 [01;34mrun[0m
+lrwxrwxrwx.   1 root    root       8 May 15 08:32 [01;36msbin[0m -> [01;34musr/sbin[0m
+drwxr-xr-x.   2 root    root       6 Apr 11  2018 [01;34msrv[0m
+dr-xr-xr-x.  13 root    root       0 May 13 11:27 [01;34msys[0m
+drwxrwxrwt.  12 root    root    4096 May 15 08:47 [30;42mtmp[0m
+drwxr-xr-x.  13 root    root     155 May 12  2018 [01;34musr[0m
+drwxr-xr-x.   2 vagrant vagrant   62 May 13 10:06 [01;34mvagrant[0m
+drwxr-xr-x.  18 root    root     254 May 13 10:08 [01;34mvar[0m
+]0;root@lvm:/[root@lvm /]# rm -rf /home/*
+]0;root@lvm:/[root@lvm /]# cd /home/
+]0;root@lvm:/home[root@lvm home]# ll
+total 0
+]0;root@lvm:/home[root@lvm home]# cd /
+]0;root@lvm:/[root@lvm /]# umount /mnt
+]0;root@lvm:/[root@lvm /]# mount /dev/VolGroup00/LogVol_Home /home/
+]0;root@lvm:/[root@lvm /]# lsblk
+NAME                       MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+sda                          8:0    0   40G  0 disk 
+├─sda1                       8:1    0    1M  0 part 
+├─sda2                       8:2    0    1G  0 part /boot
+└─sda3                       8:3    0   39G  0 part 
+  ├─VolGroup00-LogVol00    253:0    0    8G  0 lvm  /
+  ├─VolGroup00-LogVol01    253:1    0  1.5G  0 lvm  [SWAP]
+  └─VolGroup00-LogVol_Home 253:2    0    2G  0 lvm  /home
+sdb                          8:16   0   10G  0 disk 
+sdc                          8:32   0    2G  0 disk 
+├─vg_var-lv_var_rmeta_0    253:3    0    4M  0 lvm  
+│ └─vg_var-lv_var          253:7    0  952M  0 lvm  
+└─vg_var-lv_var_rimage_0   253:4    0  952M  0 lvm  
+  └─vg_var-lv_var          253:7    0  952M  0 lvm  
+sdd                          8:48   0    1G  0 disk 
+├─vg_var-lv_var_rmeta_1    253:5    0    4M  0 lvm  
+│ └─vg_var-lv_var          253:7    0  952M  0 lvm  
+└─vg_var-lv_var_rimage_1   253:6    0  952M  0 lvm  
+  └─vg_var-lv_var          253:7    0  952M  0 lvm  
+sde                          8:64   0    1G  0 disk 
+]0;root@lvm:/[root@lvm /]# echo "`blkid | grep Home | awk '{print $2}'` /home xfs defaults 0 0" >> /etc/fstab
+]0;root@lvm:/[root@lvm /]# cat /etc/fstab
+
+#
+# /etc/fstab
+# Created by anaconda on Sat May 12 18:50:26 2018
+#
+# Accessible filesystems, by reference, are maintained under '/dev/disk'
+# See man pages fstab(5), findfs(8), mount(8) and/or blkid(8) for more info
+#
+/dev/mapper/VolGroup00-LogVol00 /                       xfs     defaults        0 0
+UUID=570897ca-e759-4c81-90cf-389da6eee4cc /boot                   xfs     defaults        0 0
+/dev/mapper/VolGroup00-LogVol01 swap                    swap    defaults        0 0
+UUID="4bc62024-33cd-4687-a043-30fb0f43e342" /home xfs defaults 0 0
+]0;root@lvm:/[root@lvm /]# 
+]0;root@lvm:/[root@lvm /]# 
+]0;root@lvm:/[root@lvm /]# 
+]0;root@lvm:/[root@lvm /]# 
+]0;root@lvm:/[root@lvm /]# 
+]0;root@lvm:/[root@lvm /]# 
+]0;root@lvm:/[root@lvm /]# 
+]0;root@lvm:/[root@lvm /]# 
+]0;root@lvm:/[root@lvm /]# 
+]0;root@lvm:/[root@lvm /]# 
+]0;root@lvm:/[root@lvm /]# 
+]0;root@lvm:/[root@lvm /]# cd /home
+]0;root@lvm:/home[root@lvm home]# ll
+total 0
+drwx------. 7 vagrant vagrant 154 May 13 10:46 [0m[01;34mvagrant[0m
+]0;root@lvm:/home[root@lvm home]# touch file{1..20}
+]0;root@lvm:/home[root@lvm home]# ll
+total 0
+-rw-r--r--. 1 root    root      0 May 15 08:51 file1
+-rw-r--r--. 1 root    root      0 May 15 08:51 file10
+-rw-r--r--. 1 root    root      0 May 15 08:51 file11
+-rw-r--r--. 1 root    root      0 May 15 08:51 file12
+-rw-r--r--. 1 root    root      0 May 15 08:51 file13
+-rw-r--r--. 1 root    root      0 May 15 08:51 file14
+-rw-r--r--. 1 root    root      0 May 15 08:51 file15
+-rw-r--r--. 1 root    root      0 May 15 08:51 file16
+-rw-r--r--. 1 root    root      0 May 15 08:51 file17
+-rw-r--r--. 1 root    root      0 May 15 08:51 file18
+-rw-r--r--. 1 root    root      0 May 15 08:51 file19
+-rw-r--r--. 1 root    root      0 May 15 08:51 file2
+-rw-r--r--. 1 root    root      0 May 15 08:51 file20
+-rw-r--r--. 1 root    root      0 May 15 08:51 file3
+-rw-r--r--. 1 root    root      0 May 15 08:51 file4
+-rw-r--r--. 1 root    root      0 May 15 08:51 file5
+-rw-r--r--. 1 root    root      0 May 15 08:51 file6
+-rw-r--r--. 1 root    root      0 May 15 08:51 file7
+-rw-r--r--. 1 root    root      0 May 15 08:51 file8
+-rw-r--r--. 1 root    root      0 May 15 08:51 file9
+drwx------. 7 vagrant vagrant 154 May 13 10:46 [0m[01;34mvagrant[0m
+]0;root@lvm:/home[root@lvm home]# lvcreate -L 100MB -s -n home_snap /dev/VolGroup00/LogVol_Home
+  Rounding up size to full physical extent 128.00 MiB
+  Logical volume "home_snap" created.
+]0;root@lvm:/home[root@lvm home]# lsblk
+NAME                            MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+sda                               8:0    0   40G  0 disk 
+├─sda1                            8:1    0    1M  0 part 
+├─sda2                            8:2    0    1G  0 part /boot
+└─sda3                            8:3    0   39G  0 part 
+  ├─VolGroup00-LogVol00         253:0    0    8G  0 lvm  /
+  ├─VolGroup00-LogVol01         253:1    0  1.5G  0 lvm  [SWAP]
+  ├─VolGroup00-LogVol_Home-real 253:8    0    2G  0 lvm  
+  │ ├─VolGroup00-LogVol_Home    253:2    0    2G  0 lvm  /home
+  │ └─VolGroup00-home_snap      253:10   0    2G  0 lvm  
+  └─VolGroup00-home_snap-cow    253:9    0  128M  0 lvm  
+    └─VolGroup00-home_snap      253:10   0    2G  0 lvm  
+sdb                               8:16   0   10G  0 disk 
+sdc                               8:32   0    2G  0 disk 
+├─vg_var-lv_var_rmeta_0         253:3    0    4M  0 lvm  
+│ └─vg_var-lv_var               253:7    0  952M  0 lvm  
+└─vg_var-lv_var_rimage_0        253:4    0  952M  0 lvm  
+  └─vg_var-lv_var               253:7    0  952M  0 lvm  
+sdd                               8:48   0    1G  0 disk 
+├─vg_var-lv_var_rmeta_1         253:5    0    4M  0 lvm  
+│ └─vg_var-lv_var               253:7    0  952M  0 lvm  
+└─vg_var-lv_var_rimage_1        253:6    0  952M  0 lvm  
+  └─vg_var-lv_var               253:7    0  952M  0 lvm  
+sde                               8:64   0    1G  0 disk 
+]0;root@lvm:/home[root@lvm home]# lsblk
+NAME                            MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+sda                               8:0    0   40G  0 disk 
+├─sda1                            8:1    0    1M  0 part 
+├─sda2                            8:2    0    1G  0 part /boot
+└─sda3                            8:3    0   39G  0 part 
+  ├─VolGroup00-LogVol00         253:0    0    8G  0 lvm  /
+  ├─VolGroup00-LogVol01         253:1    0  1.5G  0 lvm  [SWAP]
+  ├─VolGroup00-LogVol_Home-real 253:8    0    2G  0 lvm  
+  │ ├─VolGroup00-LogVol_Home    253:2    0    2G  0 lvm  /home
+  │ └─VolGroup00-home_snap      253:10   0    2G  0 lvm  
+  └─VolGroup00-home_snap-cow    253:9    0  128M  0 lvm  
+    └─VolGroup00-home_snap      253:10   0    2G  0 lvm  
+sdb                               8:16   0   10G  0 disk 
+sdc                               8:32   0    2G  0 disk 
+├─vg_var-lv_var_rmeta_0         253:3    0    4M  0 lvm  
+│ └─vg_var-lv_var               253:7    0  952M  0 lvm  
+└─vg_var-lv_var_rimage_0        253:4    0  952M  0 lvm  
+  └─vg_var-lv_var               253:7    0  952M  0 lvm  
+sdd                               8:48   0    1G  0 disk 
+├─vg_var-lv_var_rmeta_1         253:5    0    4M  0 lvm  
+│ └─vg_var-lv_var               253:7    0  952M  0 lvm  
+└─vg_var-lv_var_rimage_1        253:6    0  952M  0 lvm  
+  └─vg_var-lv_var               253:7    0  952M  0 lvm  
+sde                               8:64   0    1G  0 disk 
+]0;root@lvm:/home[root@lvm home]# lvdisplay
+  --- Logical volume ---
+  LV Path                /dev/VolGroup00/LogVol01
+  LV Name                LogVol01
+  VG Name                VolGroup00
+  LV UUID                IAjIC6-ScnM-tvH6-7BTy-TN31-hd82-bgDSzd
+  LV Write Access        read/write
+  LV Creation host, time localhost.localdomain, 2018-05-12 18:50:25 +0000
+  LV Status              available
+  # open                 2
+  LV Size                1.50 GiB
+  Current LE             48
+  Segments               1
+  Allocation             inherit
+  Read ahead sectors     auto
+  - currently set to     8192
+  Block device           253:1
+   
+  --- Logical volume ---
+  LV Path                /dev/VolGroup00/LogVol00
+  LV Name                LogVol00
+  VG Name                VolGroup00
+  LV UUID                SykEqg-4v0i-aBmS-Rtlm-9Xss-cg5V-FrI6jX
+  LV Write Access        read/write
+  LV Creation host, time lvm, 2020-05-15 08:31:26 +0000
+  LV Status              available
+  # open                 1
+  LV Size                8.00 GiB
+  Current LE             256
+  Segments               1
+  Allocation             inherit
+  Read ahead sectors     auto
+  - currently set to     8192
+  Block device           253:0
+   
+  --- Logical volume ---
+  LV Path                /dev/VolGroup00/LogVol_Home
+  LV Name                LogVol_Home
+  VG Name                VolGroup00
+  LV UUID                EJNJSS-jz4j-8LdT-52l9-D1Cx-GnxA-shO0t1
+  LV Write Access        read/write
+  LV Creation host, time lvm, 2020-05-15 08:48:49 +0000
+  LV snapshot status     source of
+                         home_snap [active]
+  LV Status              available
+  # open                 1
+  LV Size                2.00 GiB
+  Current LE             64
+  Segments               1
+  Allocation             inherit
+  Read ahead sectors     auto
+  - currently set to     8192
+  Block device           253:2
+   
+  --- Logical volume ---
+  LV Path                /dev/VolGroup00/home_snap
+  LV Name                home_snap
+  VG Name                VolGroup00
+  LV UUID                YRYvj3-hIdH-9NKl-JRMZ-iEQI-V05j-eaxpWO
+  LV Write Access        read/write
+  LV Creation host, time lvm, 2020-05-15 08:51:49 +0000
+  LV snapshot status     active destination for LogVol_Home
+  LV Status              available
+  # open                 0
+  LV Size                2.00 GiB
+  Current LE             64
+  COW-table size         128.00 MiB
+  COW-table LE           4
+  Allocated to snapshot  0.00%
+  Snapshot chunk size    4.00 KiB
+  Segments               1
+  Allocation             inherit
+  Read ahead sectors     auto
+  - currently set to     8192
+  Block device           253:10
+   
+  --- Logical volume ---
+  LV Path                /dev/vg_var/lv_var
+  LV Name                lv_var
+  VG Name                vg_var
+  LV UUID                IXuH0x-Kkur-K8P7-0F4s-5kbq-BaXW-OgW6Tm
+  LV Write Access        read/write
+  LV Creation host, time lvm, 2020-05-15 08:41:43 +0000
+  LV Status              available
+  # open                 0
+  LV Size                952.00 MiB
+  Current LE             238
+  Mirrored volumes       2
+  Segments               1
+  Allocation             inherit
+  Read ahead sectors     auto
+  - currently set to     8192
+  Block device           253:7
+   
+]0;root@lvm:/home[root@lvm home]# rm -f /home/file{11..20}
+]0;root@lvm:/home[root@lvm home]# cd /home/
+]0;root@lvm:/home[root@lvm home]# ll
+total 0
+-rw-r--r--. 1 root    root      0 May 15 08:51 file1
+-rw-r--r--. 1 root    root      0 May 15 08:51 file10
+-rw-r--r--. 1 root    root      0 May 15 08:51 file2
+-rw-r--r--. 1 root    root      0 May 15 08:51 file3
+-rw-r--r--. 1 root    root      0 May 15 08:51 file4
+-rw-r--r--. 1 root    root      0 May 15 08:51 file5
+-rw-r--r--. 1 root    root      0 May 15 08:51 file6
+-rw-r--r--. 1 root    root      0 May 15 08:51 file7
+-rw-r--r--. 1 root    root      0 May 15 08:51 file8
+-rw-r--r--. 1 root    root      0 May 15 08:51 file9
+drwx------. 7 vagrant vagrant 154 May 13 10:46 [0m[01;34mvagrant[0m
+]0;root@lvm:/home[root@lvm home]# cd /
+]0;root@lvm:/[root@lvm /]# umount /home
+]0;root@lvm:/[root@lvm /]# lvconvert --merge /dev/VolGroup00/home_snap
+  Merging of volume VolGroup00/home_snap started.
+  VolGroup00/LogVol_Home: Merged: 100.00%
+]0;root@lvm:/[root@lvm /]# mount /home
+]0;root@lvm:/[root@lvm /]# ll
+total 20
+lrwxrwxrwx.   1 root    root       7 May 15 08:32 [0m[01;36mbin[0m -> [01;34musr/bin[0m
+dr-xr-xr-x.   5 root    root    4096 May 15 08:39 [01;34mboot[0m
+drwxr-xr-x.  20 root    root    3340 May 15 08:52 [01;34mdev[0m
+drwxr-xr-x.  81 root    root    8192 May 13 11:27 [01;34metc[0m
+drwxr-xr-x.   3 root    root     292 May 15 08:51 [01;34mhome[0m
+lrwxrwxrwx.   1 root    root       7 May 15 08:32 [01;36mlib[0m -> [01;34musr/lib[0m
+lrwxrwxrwx.   1 root    root       9 May 15 08:32 [01;36mlib64[0m -> [01;34musr/lib64[0m
+drwxr-xr-x.   2 root    root       6 Apr 11  2018 [01;34mmedia[0m
+drwxr-xr-x.   2 root    root       6 Apr 11  2018 [01;34mmnt[0m
+drwxr-xr-x.   3 root    root      38 May 13 10:13 [01;34mopt[0m
+dr-xr-xr-x. 202 root    root       0 May 15  2020 [01;34mproc[0m
+dr-xr-x---.   6 root    root     247 May 15 08:47 [01;34mroot[0m
+drwxr-xr-x.  28 root    root     920 May 15 08:52 [01;34mrun[0m
+lrwxrwxrwx.   1 root    root       8 May 15 08:32 [01;36msbin[0m -> [01;34musr/sbin[0m
+drwxr-xr-x.   2 root    root       6 Apr 11  2018 [01;34msrv[0m
+dr-xr-xr-x.  13 root    root       0 May 13 11:27 [01;34msys[0m
+drwxrwxrwt.  12 root    root    4096 May 15 08:52 [30;42mtmp[0m
+drwxr-xr-x.  13 root    root     155 May 12  2018 [01;34musr[0m
+drwxr-xr-x.   2 vagrant vagrant   62 May 13 10:06 [01;34mvagrant[0m
+drwxr-xr-x.  18 root    root     254 May 13 10:08 [01;34mvar[0m
+]0;root@lvm:/[root@lvm /]# cd /home/
+]0;root@lvm:/home[root@lvm home]# ll
+total 0
+-rw-r--r--. 1 root    root      0 May 15 08:51 file1
+-rw-r--r--. 1 root    root      0 May 15 08:51 file10
+-rw-r--r--. 1 root    root      0 May 15 08:51 file11
+-rw-r--r--. 1 root    root      0 May 15 08:51 file12
+-rw-r--r--. 1 root    root      0 May 15 08:51 file13
+-rw-r--r--. 1 root    root      0 May 15 08:51 file14
+-rw-r--r--. 1 root    root      0 May 15 08:51 file15
+-rw-r--r--. 1 root    root      0 May 15 08:51 file16
+-rw-r--r--. 1 root    root      0 May 15 08:51 file17
+-rw-r--r--. 1 root    root      0 May 15 08:51 file18
+-rw-r--r--. 1 root    root      0 May 15 08:51 file19
+-rw-r--r--. 1 root    root      0 May 15 08:51 file2
+-rw-r--r--. 1 root    root      0 May 15 08:51 file20
+-rw-r--r--. 1 root    root      0 May 15 08:51 file3
+-rw-r--r--. 1 root    root      0 May 15 08:51 file4
+-rw-r--r--. 1 root    root      0 May 15 08:51 file5
+-rw-r--r--. 1 root    root      0 May 15 08:51 file6
+-rw-r--r--. 1 root    root      0 May 15 08:51 file7
+-rw-r--r--. 1 root    root      0 May 15 08:51 file8
+-rw-r--r--. 1 root    root      0 May 15 08:51 file9
+drwx------. 7 vagrant vagrant 154 May 13 10:46 [0m[01;34mvagrant[0m
+]0;root@lvm:/home[root@lvm home]# lsblk
+NAME                       MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+sda                          8:0    0   40G  0 disk 
+├─sda1                       8:1    0    1M  0 part 
+├─sda2                       8:2    0    1G  0 part /boot
+└─sda3                       8:3    0   39G  0 part 
+  ├─VolGroup00-LogVol00    253:0    0    8G  0 lvm  /
+  ├─VolGroup00-LogVol01    253:1    0  1.5G  0 lvm  [SWAP]
+  └─VolGroup00-LogVol_Home 253:2    0    2G  0 lvm  /home
+sdb                          8:16   0   10G  0 disk 
+sdc                          8:32   0    2G  0 disk 
+├─vg_var-lv_var_rmeta_0    253:3    0    4M  0 lvm  
+│ └─vg_var-lv_var          253:7    0  952M  0 lvm  
+└─vg_var-lv_var_rimage_0   253:4    0  952M  0 lvm  
+  └─vg_var-lv_var          253:7    0  952M  0 lvm  
+sdd                          8:48   0    1G  0 disk 
+├─vg_var-lv_var_rmeta_1    253:5    0    4M  0 lvm  
+│ └─vg_var-lv_var          253:7    0  952M  0 lvm  
+└─vg_var-lv_var_rimage_1   253:6    0  952M  0 lvm  
+  └─vg_var-lv_var          253:7    0  952M  0 lvm  
+sde                          8:64   0    1G  0 disk 
+]0;root@lvm:/home[root@lvm home]# mount /dev/vg_var/lv_var /var
+]0;root@lvm:/home[root@lvm home]# lsblk
+NAME                       MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+sda                          8:0    0   40G  0 disk 
+├─sda1                       8:1    0    1M  0 part 
+├─sda2                       8:2    0    1G  0 part /boot
+└─sda3                       8:3    0   39G  0 part 
+  ├─VolGroup00-LogVol00    253:0    0    8G  0 lvm  /
+  ├─VolGroup00-LogVol01    253:1    0  1.5G  0 lvm  [SWAP]
+  └─VolGroup00-LogVol_Home 253:2    0    2G  0 lvm  /home
+sdb                          8:16   0   10G  0 disk 
+sdc                          8:32   0    2G  0 disk 
+├─vg_var-lv_var_rmeta_0    253:3    0    4M  0 lvm  
+│ └─vg_var-lv_var          253:7    0  952M  0 lvm  /var
+└─vg_var-lv_var_rimage_0   253:4    0  952M  0 lvm  
+  └─vg_var-lv_var          253:7    0  952M  0 lvm  /var
+sdd                          8:48   0    1G  0 disk 
+├─vg_var-lv_var_rmeta_1    253:5    0    4M  0 lvm  
+│ └─vg_var-lv_var          253:7    0  952M  0 lvm  /var
+└─vg_var-lv_var_rimage_1   253:6    0  952M  0 lvm  
+  └─vg_var-lv_var          253:7    0  952M  0 lvm  /var
+sde                          8:64   0    1G  0 disk 
+]0;root@lvm:/home[root@lvm home]# echo "`blkid | grep var: | awk '{print $2}'` /var ext4 defaults 0 0" >> /etc/fstab
+]0;root@lvm:/home[root@lvm home]# lsblk
+NAME                       MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+sda                          8:0    0   40G  0 disk 
+├─sda1                       8:1    0    1M  0 part 
+├─sda2                       8:2    0    1G  0 part /boot
+└─sda3                       8:3    0   39G  0 part 
+  ├─VolGroup00-LogVol00    253:0    0    8G  0 lvm  /
+  ├─VolGroup00-LogVol01    253:1    0  1.5G  0 lvm  [SWAP]
+  └─VolGroup00-LogVol_Home 253:2    0    2G  0 lvm  /home
+sdb                          8:16   0   10G  0 disk 
+sdc                          8:32   0    2G  0 disk 
+├─vg_var-lv_var_rmeta_0    253:3    0    4M  0 lvm  
+│ └─vg_var-lv_var          253:7    0  952M  0 lvm  /var
+└─vg_var-lv_var_rimage_0   253:4    0  952M  0 lvm  
+  └─vg_var-lv_var          253:7    0  952M  0 lvm  /var
+sdd                          8:48   0    1G  0 disk 
+├─vg_var-lv_var_rmeta_1    253:5    0    4M  0 lvm  
+│ └─vg_var-lv_var          253:7    0  952M  0 lvm  /var
+└─vg_var-lv_var_rimage_1   253:6    0  952M  0 lvm  
+  └─vg_var-lv_var          253:7    0  952M  0 lvm  /var
+sde                          8:64   0    1G  0 disk 
+]0;root@lvm:/home[root@lvm home]# cat /etc/fstab
+
+#
+# /etc/fstab
+# Created by anaconda on Sat May 12 18:50:26 2018
+#
+# Accessible filesystems, by reference, are maintained under '/dev/disk'
+# See man pages fstab(5), findfs(8), mount(8) and/or blkid(8) for more info
+#
+/dev/mapper/VolGroup00-LogVol00 /                       xfs     defaults        0 0
+UUID=570897ca-e759-4c81-90cf-389da6eee4cc /boot                   xfs     defaults        0 0
+/dev/mapper/VolGroup00-LogVol01 swap                    swap    defaults        0 0
+UUID="4bc62024-33cd-4687-a043-30fb0f43e342" /home xfs defaults 0 0
+UUID="baf330f6-792e-4aed-ad5c-9311081092db" /var ext4 defaults 0 0
+]0;root@lvm:/home[root@lvm home]# lsblk
+NAME                       MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+sda                          8:0    0   40G  0 disk 
+├─sda1                       8:1    0    1M  0 part 
+├─sda2                       8:2    0    1G  0 part /boot
+└─sda3                       8:3    0   39G  0 part 
+  ├─VolGroup00-LogVol00    253:0    0    8G  0 lvm  /
+  ├─VolGroup00-LogVol01    253:1    0  1.5G  0 lvm  [SWAP]
+  └─VolGroup00-LogVol_Home 253:2    0    2G  0 lvm  /home
+sdb                          8:16   0   10G  0 disk 
+sdc                          8:32   0    2G  0 disk 
+├─vg_var-lv_var_rmeta_0    253:3    0    4M  0 lvm  
+│ └─vg_var-lv_var          253:7    0  952M  0 lvm  /var
+└─vg_var-lv_var_rimage_0   253:4    0  952M  0 lvm  
+  └─vg_var-lv_var          253:7    0  952M  0 lvm  /var
+sdd                          8:48   0    1G  0 disk 
+├─vg_var-lv_var_rmeta_1    253:5    0    4M  0 lvm  
+│ └─vg_var-lv_var          253:7    0  952M  0 lvm  /var
+└─vg_var-lv_var_rimage_1   253:6    0  952M  0 lvm  
+  └─vg_var-lv_var          253:7    0  952M  0 lvm  /var
+sde                          8:64   0    1G  0 disk 
+]0;root@lvm:/home[root@lvm home]# exit
+exit
+
+Script done on Fri 15 May 2020 08:54:26 AM UTC

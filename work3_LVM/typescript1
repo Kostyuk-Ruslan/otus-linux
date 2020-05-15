@@ -1,0 +1,467 @@
+Script started on Fri 15 May 2020 08:13:32 AM UTC
+]0;root@lvm:~[?1034h[root@lvm ~]# [H[2J[root@lvm ~]# 
+]0;root@lvm:~[root@lvm ~]# 
+]0;root@lvm:~[root@lvm ~]# pvs
+  PV         VG         Fmt  Attr PSize   PFree
+  /dev/sda3  VolGroup00 lvm2 a--  <38.97g    0 
+]0;root@lvm:~[root@lvm ~]# pvcreate /dev/sdb
+  Physical volume "/dev/sdb" successfully created.
+]0;root@lvm:~[root@lvm ~]# pvs
+  PV         VG         Fmt  Attr PSize   PFree 
+  /dev/sda3  VolGroup00 lvm2 a--  <38.97g     0 
+  /dev/sdb              lvm2 ---   10.00g 10.00g
+]0;root@lvm:~[root@lvm ~]# pvdisplay
+  --- Physical volume ---
+  PV Name               /dev/sda3
+  VG Name               VolGroup00
+  PV Size               <39.00 GiB / not usable 30.00 MiB
+  Allocatable           yes (but full)
+  PE Size               32.00 MiB
+  Total PE              1247
+  Free PE               0
+  Allocated PE          1247
+  PV UUID               vrrtbx-g480-HcJI-5wLn-4aOf-Olld-rC03AY
+   
+  "/dev/sdb" is a new physical volume of "10.00 GiB"
+  --- NEW Physical volume ---
+  PV Name               /dev/sdb
+  VG Name               
+  PV Size               10.00 GiB
+  Allocatable           NO
+  PE Size               0   
+  Total PE              0
+  Free PE               0
+  Allocated PE          0
+  PV UUID               u64UPq-yfLL-dyzT-h3RY-oXz5-4Fyv-BscB1V
+   
+]0;root@lvm:~[root@lvm ~]# vgcreate vg_root /dev/sdb
+  Volume group "vg_root" successfully created
+]0;root@lvm:~[root@lvm ~]# vgs
+  VG         #PV #LV #SN Attr   VSize   VFree  
+  VolGroup00   1   2   0 wz--n- <38.97g      0 
+  vg_root      1   0   0 wz--n- <10.00g <10.00g
+]0;root@lvm:~[root@lvm ~]# vgdisplay
+  --- Volume group ---
+  VG Name               VolGroup00
+  System ID             
+  Format                lvm2
+  Metadata Areas        1
+  Metadata Sequence No  3
+  VG Access             read/write
+  VG Status             resizable
+  MAX LV                0
+  Cur LV                2
+  Open LV               2
+  Max PV                0
+  Cur PV                1
+  Act PV                1
+  VG Size               <38.97 GiB
+  PE Size               32.00 MiB
+  Total PE              1247
+  Alloc PE / Size       1247 / <38.97 GiB
+  Free  PE / Size       0 / 0   
+  VG UUID               SA8LTU-F2yz-FEV1-RdgT-hw0Z-iRxh-yHFKuU
+   
+  --- Volume group ---
+  VG Name               vg_root
+  System ID             
+  Format                lvm2
+  Metadata Areas        1
+  Metadata Sequence No  1
+  VG Access             read/write
+  VG Status             resizable
+  MAX LV                0
+  Cur LV                0
+  Open LV               0
+  Max PV                0
+  Cur PV                1
+  Act PV                1
+  VG Size               <10.00 GiB
+  PE Size               4.00 MiB
+  Total PE              2559
+  Alloc PE / Size       0 / 0   
+  Free  PE / Size       2559 / <10.00 GiB
+  VG UUID               ChavEj-SVrm-PecN-RJwj-Wth7-EX5V-PHWEum
+   
+]0;root@lvm:~[root@lvm ~]# lvcreate -n lv_root -l +100%FREE /dev/vg_root
+  Logical volume "lv_root" created.
+]0;root@lvm:~[root@lvm ~]# lvs
+  LV       VG         Attr       LSize   Pool Origin Data%  Meta%  Move Log Cpy%Sync Convert
+  LogVol00 VolGroup00 -wi-ao---- <37.47g                                                    
+  LogVol01 VolGroup00 -wi-ao----   1.50g                                                    
+  lv_root  vg_root    -wi-a----- <10.00g                                                    
+]0;root@lvm:~[root@lvm ~]# lvdisplay
+  --- Logical volume ---
+  LV Path                /dev/VolGroup00/LogVol00
+  LV Name                LogVol00
+  VG Name                VolGroup00
+  LV UUID                j6b8IV-KEw3-7bTw-Oqy8-1Ud3-juFC-SJBg12
+  LV Write Access        read/write
+  LV Creation host, time localhost.localdomain, 2018-05-12 18:50:24 +0000
+  LV Status              available
+  # open                 1
+  LV Size                <37.47 GiB
+  Current LE             1199
+  Segments               1
+  Allocation             inherit
+  Read ahead sectors     auto
+  - currently set to     8192
+  Block device           253:0
+   
+  --- Logical volume ---
+  LV Path                /dev/VolGroup00/LogVol01
+  LV Name                LogVol01
+  VG Name                VolGroup00
+  LV UUID                IAjIC6-ScnM-tvH6-7BTy-TN31-hd82-bgDSzd
+  LV Write Access        read/write
+  LV Creation host, time localhost.localdomain, 2018-05-12 18:50:25 +0000
+  LV Status              available
+  # open                 2
+  LV Size                1.50 GiB
+  Current LE             48
+  Segments               1
+  Allocation             inherit
+  Read ahead sectors     auto
+  - currently set to     8192
+  Block device           253:1
+   
+  --- Logical volume ---
+  LV Path                /dev/vg_root/lv_root
+  LV Name                lv_root
+  VG Name                vg_root
+  LV UUID                Mcan4d-ohsH-XglU-Z0G1-W7oU-j2F5-8FR3X1
+  LV Write Access        read/write
+  LV Creation host, time lvm, 2020-05-15 08:14:20 +0000
+  LV Status              available
+  # open                 0
+  LV Size                <10.00 GiB
+  Current LE             2559
+  Segments               1
+  Allocation             inherit
+  Read ahead sectors     auto
+  - currently set to     8192
+  Block device           253:2
+   
+]0;root@lvm:~[root@lvm ~]# mkfs.xfs /dev/vg_root/lv_root
+meta-data=/dev/vg_root/lv_root   isize=512    agcount=4, agsize=655104 blks
+         =                       sectsz=512   attr=2, projid32bit=1
+         =                       crc=1        finobt=0, sparse=0
+data     =                       bsize=4096   blocks=2620416, imaxpct=25
+         =                       sunit=0      swidth=0 blks
+naming   =version 2              bsize=4096   ascii-ci=0 ftype=1
+log      =internal log           bsize=4096   blocks=2560, version=2
+         =                       sectsz=512   sunit=0 blks, lazy-count=1
+realtime =none                   extsz=4096   blocks=0, rtextents=0
+]0;root@lvm:~[root@lvm ~]# mount /dev/vg_root/lv_root /mnt
+]0;root@lvm:~[root@lvm ~]# lsblk
+NAME                    MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+sda                       8:0    0   40G  0 disk 
+├─sda1                    8:1    0    1M  0 part 
+├─sda2                    8:2    0    1G  0 part /boot
+└─sda3                    8:3    0   39G  0 part 
+  ├─VolGroup00-LogVol00 253:0    0 37.5G  0 lvm  /
+  └─VolGroup00-LogVol01 253:1    0  1.5G  0 lvm  [SWAP]
+sdb                       8:16   0   10G  0 disk 
+└─vg_root-lv_root       253:2    0   10G  0 lvm  /mnt
+sdc                       8:32   0    2G  0 disk 
+sdd                       8:48   0    1G  0 disk 
+sde                       8:64   0    1G  0 disk 
+]0;root@lvm:~[root@lvm ~]# df -hT
+Filesystem                      Type      Size  Used Avail Use% Mounted on
+devtmpfs                        devtmpfs  1.5G     0  1.5G   0% /dev
+tmpfs                           tmpfs     1.5G     0  1.5G   0% /dev/shm
+tmpfs                           tmpfs     1.5G  8.6M  1.5G   1% /run
+tmpfs                           tmpfs     1.5G     0  1.5G   0% /sys/fs/cgroup
+/dev/mapper/VolGroup00-LogVol00 xfs        38G  2.2G   36G   6% /
+/dev/sda2                       xfs      1014M   86M  929M   9% /boot
+tmpfs                           tmpfs     303M     0  303M   0% /run/user/1000
+/dev/mapper/vg_root-lv_root     xfs        10G   33M   10G   1% /mnt
+]0;root@lvm:~[root@lvm ~]# xfsdump -J - /dev/VolGroup00/LogVol00 | xfsrestore -J - /mnt
+xfsrestore: using file dump (drive_simple) strategy
+xfsrestore: version 3.1.7 (dump format 3.0)
+xfsdump: using file dump (drive_simple) strategy
+xfsdump: version 3.1.7 (dump format 3.0)
+xfsdump: level 0 dump of lvm:/
+xfsdump: dump date: Fri May 15 08:15:03 2020
+xfsdump: session id: 58a3d112-b86c-4bb4-9d29-cf49e399104e
+xfsdump: session label: ""
+xfsrestore: searching media for dump
+xfsdump: ino map phase 1: constructing initial dump list
+xfsdump: ino map phase 2: skipping (no pruning necessary)
+xfsdump: ino map phase 3: skipping (only one dump stream)
+xfsdump: ino map construction complete
+xfsdump: estimated dump size: 2301933632 bytes
+xfsdump: creating dump session media file 0 (media 0, file 0)
+xfsdump: dumping ino map
+xfsdump: dumping directories
+xfsrestore: examining media file 0
+xfsrestore: dump description: 
+xfsrestore: hostname: lvm
+xfsrestore: mount point: /
+xfsrestore: volume: /dev/mapper/VolGroup00-LogVol00
+xfsrestore: session time: Fri May 15 08:15:03 2020
+xfsrestore: level: 0
+xfsrestore: session label: ""
+xfsrestore: media label: ""
+xfsrestore: file system id: b60e9498-0baa-4d9f-90aa-069048217fee
+xfsrestore: session id: 58a3d112-b86c-4bb4-9d29-cf49e399104e
+xfsrestore: media id: 699f204b-3234-4824-aa53-44a2cb5fd8d4
+xfsrestore: searching media for directory dump
+xfsrestore: reading directories
+xfsdump: dumping non-directory files
+xfsrestore: 12612 directories and 74398 entries processed
+xfsrestore: directory post-processing
+xfsrestore: restoring non-directory files
+xfsdump: ending media file
+xfsdump: media file size 2241772608 bytes
+xfsdump: dump size (non-dir files) : 2200315144 bytes
+xfsdump: dump complete: 150 seconds elapsed
+xfsdump: Dump Status: SUCCESS
+xfsrestore: restore complete: 153 seconds elapsed
+xfsrestore: Restore Status: SUCCESS
+]0;root@lvm:~[root@lvm ~]# for i in /proc/ /sys/ /dev/ /run/ /boot/; do mount --bind $i /mnt/$i; done
+]0;root@lvm:~[root@lvm ~]# chroot /mnt/
+]0;root@lvm:/[?1034h[root@lvm /]# lsblk
+NAME                    MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+sda                       8:0    0   40G  0 disk 
+├─sda1                    8:1    0    1M  0 part 
+├─sda2                    8:2    0    1G  0 part /boot
+└─sda3                    8:3    0   39G  0 part 
+  ├─VolGroup00-LogVol00 253:0    0 37.5G  0 lvm  
+  └─VolGroup00-LogVol01 253:1    0  1.5G  0 lvm  [SWAP]
+sdb                       8:16   0   10G  0 disk 
+└─vg_root-lv_root       253:2    0   10G  0 lvm  /
+sdc                       8:32   0    2G  0 disk 
+sdd                       8:48   0    1G  0 disk 
+sde                       8:64   0    1G  0 disk 
+]0;root@lvm:/[root@lvm /]# grub2-mkconfig -o /boot/grub2/grub.cfg
+Generating grub configuration file ...
+Found linux image: /boot/vmlinuz-3.10.0-1127.el7.x86_64
+Found initrd image: /boot/initramfs-3.10.0-1127.el7.x86_64.img
+Found linux image: /boot/vmlinuz-3.10.0-862.2.3.el7.x86_64
+Found initrd image: /boot/initramfs-3.10.0-862.2.3.el7.x86_64.img
+done
+]0;root@lvm:/[root@lvm /]# cd /boot ; for i in `ls initramfs-*img`; do dracut -v $i `echo $i|sed "s/initramfs-//g;s/.img//g"` --force; done
+Executing: /sbin/dracut -v initramfs-3.10.0-1127.el7.x86_64.img 3.10.0-1127.el7.x86_64 --force
+dracut module 'busybox' will not be installed, because command 'busybox' could not be found!
+dracut module 'crypt' will not be installed, because command 'cryptsetup' could not be found!
+dracut module 'dmraid' will not be installed, because command 'dmraid' could not be found!
+dracut module 'dmsquash-live-ntfs' will not be installed, because command 'ntfs-3g' could not be found!
+dracut module 'multipath' will not be installed, because command 'multipath' could not be found!
+dracut module 'busybox' will not be installed, because command 'busybox' could not be found!
+dracut module 'crypt' will not be installed, because command 'cryptsetup' could not be found!
+dracut module 'dmraid' will not be installed, because command 'dmraid' could not be found!
+dracut module 'dmsquash-live-ntfs' will not be installed, because command 'ntfs-3g' could not be found!
+dracut module 'multipath' will not be installed, because command 'multipath' could not be found!
+*** Including module: bash ***
+*** Including module: nss-softokn ***
+*** Including module: i18n ***
+*** Including module: drm ***
+*** Including module: plymouth ***
+*** Including module: dm ***
+Skipping udev rule: 64-device-mapper.rules
+Skipping udev rule: 60-persistent-storage-dm.rules
+Skipping udev rule: 55-dm.rules
+*** Including module: kernel-modules ***
+Omitting driver floppy
+*** Including module: lvm ***
+Skipping udev rule: 64-device-mapper.rules
+Skipping udev rule: 56-lvm.rules
+Skipping udev rule: 60-persistent-storage-lvm.rules
+*** Including module: qemu ***
+*** Including module: resume ***
+*** Including module: rootfs-block ***
+*** Including module: terminfo ***
+*** Including module: udev-rules ***
+Skipping udev rule: 40-redhat-cpu-hotplug.rules
+Skipping udev rule: 91-permissions.rules
+*** Including module: biosdevname ***
+*** Including module: systemd ***
+*** Including module: usrmount ***
+*** Including module: base ***
+*** Including module: fs-lib ***
+*** Including module: shutdown ***
+*** Including modules done ***
+*** Installing kernel module dependencies and firmware ***
+*** Installing kernel module dependencies and firmware done ***
+*** Resolving executable dependencies ***
+*** Resolving executable dependencies done***
+*** Hardlinking files ***
+*** Hardlinking files done ***
+*** Stripping files ***
+*** Stripping files done ***
+*** Generating early-microcode cpio image contents ***
+*** No early-microcode cpio image needed ***
+*** Store current command line parameters ***
+*** Creating image file ***
+*** Creating image file done ***
+*** Creating initramfs image file '/boot/initramfs-3.10.0-1127.el7.x86_64.img' done ***
+Executing: /sbin/dracut -v initramfs-3.10.0-862.2.3.el7.x86_64.img 3.10.0-862.2.3.el7.x86_64 --force
+dracut module 'busybox' will not be installed, because command 'busybox' could not be found!
+dracut module 'crypt' will not be installed, because command 'cryptsetup' could not be found!
+dracut module 'dmraid' will not be installed, because command 'dmraid' could not be found!
+dracut module 'dmsquash-live-ntfs' will not be installed, because command 'ntfs-3g' could not be found!
+dracut module 'multipath' will not be installed, because command 'multipath' could not be found!
+dracut module 'busybox' will not be installed, because command 'busybox' could not be found!
+dracut module 'crypt' will not be installed, because command 'cryptsetup' could not be found!
+dracut module 'dmraid' will not be installed, because command 'dmraid' could not be found!
+dracut module 'dmsquash-live-ntfs' will not be installed, because command 'ntfs-3g' could not be found!
+dracut module 'multipath' will not be installed, because command 'multipath' could not be found!
+*** Including module: bash ***
+*** Including module: nss-softokn ***
+*** Including module: i18n ***
+*** Including module: drm ***
+*** Including module: plymouth ***
+*** Including module: dm ***
+Skipping udev rule: 64-device-mapper.rules
+Skipping udev rule: 60-persistent-storage-dm.rules
+Skipping udev rule: 55-dm.rules
+*** Including module: kernel-modules ***
+Omitting driver floppy
+*** Including module: lvm ***
+Skipping udev rule: 64-device-mapper.rules
+Skipping udev rule: 56-lvm.rules
+Skipping udev rule: 60-persistent-storage-lvm.rules
+*** Including module: qemu ***
+*** Including module: resume ***
+*** Including module: rootfs-block ***
+*** Including module: terminfo ***
+*** Including module: udev-rules ***
+Skipping udev rule: 40-redhat-cpu-hotplug.rules
+Skipping udev rule: 91-permissions.rules
+*** Including module: biosdevname ***
+*** Including module: systemd ***
+*** Including module: usrmount ***
+*** Including module: base ***
+*** Including module: fs-lib ***
+*** Including module: shutdown ***
+*** Including modules done ***
+*** Installing kernel module dependencies and firmware ***
+*** Installing kernel module dependencies and firmware done ***
+*** Resolving executable dependencies ***
+*** Resolving executable dependencies done***
+*** Hardlinking files ***
+*** Hardlinking files done ***
+*** Stripping files ***
+*** Stripping files done ***
+*** Generating early-microcode cpio image contents ***
+*** No early-microcode cpio image needed ***
+*** Store current command line parameters ***
+*** Creating image file ***
+*** Creating image file done ***
+*** Creating initramfs image file '/boot/initramfs-3.10.0-862.2.3.el7.x86_64.img' done ***
+]0;root@lvm:/boot[root@lvm boot]# vim /boot/grub2/grub.cfg 
+[?1049h[?1h=[2;1H▽[6n[2;1H  [1;1H]11;?[1;35r[?12;25h[?12l[?25h[27m[m[H[2J[?25l[35;1H"/boot/grub2/grub.cfg" 142L, 4590C[>c[1;1H[34m#
+# DO NOT EDIT THIS FILE
+#
+# It is automatically generated by grub2-mkconfig using templates
+# from /etc/grub.d and settings from /etc/default/grub
+#
+
+### BEGIN /etc/grub.d/00_header ###[m
+set pager=[31m1[m
+
+if [32m[ -s $prefix/grubenv ][m[34m; then[m
+  load_env
+fi
+if [32m[ "${next_entry}" ][m [34m; then[m
+   set default=[31m"${next_entry}"[m
+   set next_entry=
+   save_env next_entry
+   set boot_once=[33mtrue[m
+else
+   set default=[31m"${saved_entry}"[m
+fi
+
+if [32m[ x"${feature_menuentry_id}" = xy ][m[34m; then[m
+  menuentry_id_option=[31m"--id"[m
+else
+  menuentry_id_option=[31m""[m
+fi
+
+export menuentry_id_option
+
+if [32m[ "${prev_saved_entry}" ][m[34m; then[m
+  set saved_entry=[31m"${prev_saved_entry}"[m
+  save_env saved_entry
+  set prev_saved_entry=[35;145H1,1[11CTop[1;1H[?12l[?25h[?25l[35;1H[K[35;1H/[?12l[?25hVolGroup00/LogVol00[?25l[?12l[?25h[?25l[35;12H[K[35;1H[27m[m[H[2J[2;1H[34m### BEGIN /etc/grub.d/10_linux ###[m
+menuentry 'CentOS Linux (3.10.0-1127.el7.x86_64) 7 (Core)' --class centos --class gnu-linux --class gnu --class os --unrestricted $menuentry_id_option 'gnulinux-33[4;1H.10.0-1127.el7.x86_64-advanced-96a96eae-f744-4a47-8c7b-890790b54521' {[5;9Hload_video[6;9Hset gfxpayload=[31mkeep[m[7;9Hinsmod gzio[8;9Hinsmod part_msdos[9;9Hinsmod xfs[10;9Hset root=[31m'hd0,msdos2'[m[11;9Hif [32m[ x$feature_platform_search_hint = xy ][m[34m; then[m[12;11Hsearch --no-floppy --fs-uuid --set=[31mroot --hint-bios=hd0,msdos2 --hint-efi=hd0,msdos2 --hint-baremetal=ahci0,msdos2  570897ca-e759-4c81-90cf-389da6eee4cc[m[13;9Helse[14;11Hsearch --no-floppy --fs-uuid --set=[31mroot 570897ca-e759-4c81-90cf-389da6eee4cc[m[15;9Hfi[16;9Hlinux16 /vmlinuz-3.10.0-1127.el7.x86_64 root=[31m/dev/mapper/vg_root-lv_root ro no_timer_check console=tty0 console=ttyS0,115200n8 net.ifnames=0 biosdevname=00[17;1H elevator=noop crashkernel=auto rd.lvm.lv=[m[30m[43mVolGroup00[m[31m/LogVol00 rd.lvm.lv=[m[30m[43mVolGroup00[m[31m/LogVol01 rhgb quiet [m[18;9Hinitrd16 /initramfs-3.10.0-1127.el7.x86_64.img
+}
+menuentry 'CentOS Linux (3.10.0-862.2.3.el7.x86_64) 7 (Core)' --class centos --class gnu-linux --class gnu --class os --unrestricted $menuentry_id_option 'gnulinuu[21;1Hx-3.10.0-862.2.3.el7.x86_64-advanced-96a96eae-f744-4a47-8c7b-890790b54521' {[22;9Hload_video[23;9Hset gfxpayload=[31mkeep[m[24;9Hinsmod gzio[25;9Hinsmod part_msdos[26;9Hinsmod xfs[27;9Hset root=[31m'hd0,msdos2'[m[28;9Hif [32m[ x$feature_platform_search_hint = xy ][m[34m; then[m[29;11Hsearch --no-floppy --fs-uuid --set=[31mroot --hint-bios=hd0,msdos2 --hint-efi=hd0,msdos2 --hint-baremetal=ahci0,msdos2  570897ca-e759-4c81-90cf-389da6eee4cc[m[30;9Helse[31;11Hsearch --no-floppy --fs-uuid --set=[31mroot 570897ca-e759-4c81-90cf-389da6eee4cc[m[32;9Hfi[33;9Hlinux16 /vmlinuz-3.10.0-862.2.3.el7.x86_64 root=[31m/dev/mapper/vg_root-lv_root ro no_timer_check console=tty0 console=ttyS0,115200n8 net.ifnames=0 biosdevnamm[34;1He=0 elevator=noop crashkernel=auto rd.lvm.lv=[m[30m[43mVolGroup00[m[31m/LogVol00 rd.lvm.lv=[m[30m[43mVolGroup00[m[31m/LogVol01 rhgb quiet [m[35;145H100,198-205   75%[17;43H[?12l[?25h[?25l[35;1H[1m-- INSERT --[m[35;145H[K[35;145H100,198-205   75%[17;43H[?12l[?25h[?25l[35;145H99,4-11    [15;11H[?12l[?25h[?25l[35;145H100,198-205[17;43H[?12l[?25h[?25l[35;147H1,48-55  [18;55H[?12l[?25h[?25l[35;147H0,198-205[17;43H[?12l[?25h[?25l[35;145H99,4-11    [15;11H[?12l[?25h[?25l[35;145H100,198-205[17;43H[?12l[?25h[?25l[35;145H99,4-11    [15;11H[?12l[?25h[?25l[35;148H3-10[15;10H[?12l[?25h[?25l[35;148H2-9 [15;9H[?12l[?25h[?25l[35;145H100,2-9[16;9H[?12l[?25h[?25l[35;149H3-10[16;10H[?12l[?25h[?25l[35;149H4-11[16;11H[?12l[?25h[?25l[35;149H5-12[16;12H[?12l[?25h[?25l[35;149H6-13[16;13H[?12l[?25h[?25l[35;149H7-14[16;14H[?12l[?25h[?25l[35;149H8-15[16;15H[?12l[?25h[?25l[35;149H9-16[16;16H[?12l[?25h[?25l[35;149H10-17[16;17H[?12l[?25h[?25l[35;150H1-18[16;18H[?12l[?25h[?25l[35;150H2-19[16;19H[?12l[?25h[?25l[35;150H3-20[16;20H[?12l[?25h[?25l[35;150H4-21[16;21H[?12l[?25h[?25l[35;150H5-22[16;22H[?12l[?25h[?25l[35;150H6-23[16;23H[?12l[?25h[?25l[35;150H7-24[16;24H[?12l[?25h[?25l[35;150H8-25[16;25H[?12l[?25h[?25l[35;150H9-26[16;26H[?12l[?25h[?25l[35;149H20-27[16;27H[?12l[?25h[?25l[35;150H1-28[16;28H[?12l[?25h[?25l[35;150H2-29[16;29H[?12l[?25h[?25l[35;150H3-30[16;30H[?12l[?25h[?25l[35;150H4-31[16;31H[?12l[?25h[?25l[35;150H5-32[16;32H[?12l[?25h[?25l[35;150H6-33[16;33H[?12l[?25h[?25l[35;150H7-34[16;34H[?12l[?25h[?25l[35;150H8-35[16;35H[?12l[?25h[?25l[35;150H9-36[16;36H[?12l[?25h[?25l[35;149H30-37[16;37H[?12l[?25h[?25l[35;150H1-38[16;38H[?12l[?25h[?25l[35;150H2-39[16;39H[?12l[?25h[?25l[35;150H3-40[16;40H[?12l[?25h[?25l[35;149H259-266[17;104H[?12l[?25h[?25l[35;151H8-265[17;103H[?12l[?25h[?25l[35;151H7-264[17;102H[?12l[?25h[?25l[35;151H6-263[17;101H[?12l[?25h[?25l[35;151H4-261[17;99H[?12l[?25h[?25l[35;151H3-260[17;98H[?12l[?25h[?25l[35;151H2-259[17;97H[?12l[?25h[?25l[35;151H1-258[17;96H[?12l[?25h[?25l[35;151H0-257[17;95H[?12l[?25h[?25l[35;150H49-256[17;94H[?12l[?25h[?25l[35;151H8-255[17;93H[?12l[?25h[?25l[35;151H7-254[17;92H[?12l[?25h[?25l[35;151H6-253[17;91H[?12l[?25h[?25l[35;151H5-252[17;90H[?12l[?25h[?25l[35;151H4-251[17;89H[?12l[?25h[?25l[35;151H3-250[17;88H[?12l[?25h[?25l[35;151H2-249[17;87H[?12l[?25h[?25l[35;151H1-248[17;86H[?12l[?25h[?25l[35;151H0-247[17;85H[?12l[?25h[?25l[35;150H39-246[17;84H[?12l[?25h[?25l[35;151H8-245[17;83H[?12l[?25h[?25l[35;151H7-244[17;82H[?12l[?25h[?25l[35;151H6-243[17;81H[?12l[?25h[?25l[35;151H5-242[17;80H[?12l[?25h[?25l[35;151H4-241[17;79H[?12l[?25h[?25l[35;151H3-240[17;78H[?12l[?25h[?25l[35;151H2-239[17;77H[?12l[?25h[?25l[35;151H1-238[17;76H[?12l[?25h[?25l[35;151H0-237[17;75H[?12l[?25h[?25l[35;150H29-236[17;74H[?12l[?25h[?25l[35;151H8-235[17;73H[?12l[?25h[?25l[35;151H7-234[17;72H[?12l[?25h[?25l[35;151H6-233[17;71H[?12l[?25h[?25l[35;151H5-232[17;70H[?12l[?25h[?25l[35;151H4-231[17;69H[?12l[?25h[?25l[35;151H3-230[17;68H[?12l[?25h[?25l[35;151H2-229[17;67H[?12l[?25h[?25l[35;151H1-228[17;66H[?12l[?25h[?25l[35;151H0-227[17;65H[?12l[?25h[?25l[35;150H19-226[17;64H[?12l[?25h[?25l[35;151H8-225[17;63H[?12l[?25h[?25l[35;151H7-224[17;62H[?12l[?25h[?25l[31mi rd.lvm.lv=[m[30m[43mVolGroup00[m[31m/LogVol01 rhgb quiet [m[35;151H8-225[17;63H[?12l[?25h[?25l[31m rd.lvm.lv=[m[30m[43mVolGroup0[m[1C[31m/LogVol01 rhgb quiet [m[17;104H[K[35;151H7-224[17;62H[?12l[?25h[?25l[31m rd.lvm.lv=[m[30m[43mVolGroup0[m[1C[31m/LogVol01 rhgb quiet [m[17;103H[K[35;151H6-223[17;61H[?12l[?25h[?25l[31m rd.lvm.lv=[m[30m[43mVolGroup0[m[1C[31m/LogVol01 rhgb quiet [m[17;102H[K[35;151H5-222[17;60H[?12l[?25h[?25l[31m rd.lvm.lv=[m[30m[43mVolGroup0[m[1C[31m/LogVol01 rhgb quiet [m[17;101H[K[35;151H4-221[17;59H[?12l[?25h[?25l[31m rd.lvm.lv=[m[30m[43mVolGroup0[m[1C[31m/LogVol01 rhgb quiet [m[17;100H[K[35;151H3-220[17;58H[?12l[?25h[?25l[31m rd.lvm.lv=[m[30m[43mVolGroup0[m[1C[31m/LogVol01 rhgb quiet [m[17;99H[K[35;151H2-219[17;57H[?12l[?25h[?25l[31m rd.lvm.lv=[m[30m[43mVolGroup0[m[1C[31m/LogVol01 rhgb quiet [m[17;98H[K[35;151H1-218[17;56H[?12l[?25h[?25l[31m rd.lvm.lv=[m[30m[43mVolGroup0[m[1C[31m/LogVol01 rhgb quiet [m[17;97H[K[35;151H0-217[17;55H[?12l[?25h[?25l[31m rd.lvm.lv=[m[30m[43mVolGroup0[m[1C[31m/LogVol01 rhgb quiet [m[17;96H[K[35;150H09-216[17;54H[?12l[?25h[?25l[31m rd.lvm.lv=[m[30m[43mVolGroup0[m[1C[31m/LogVol01 rhgb quiet [m[17;95H[K[35;151H8-215[17;53H[?12l[?25h[?25l[17;43H[31mVolGroup0 rd.lvm.lv=[m[30m[43mVolGroup0[m[1C[31m/LogVol01 rhgb quiet [m[17;94H[K[35;151H7-214[17;52H[?12l[?25h[?25l[31m rd.lvm.lv=[m[30m[43mVolGroup0[m[1C[31m/LogVol01 rhgb quiet [m[17;93H[K[35;151H6-213[17;51H[?12l[?25h[?25l[31m rd.lvm.lv=[m[30m[43mVolGroup0[m[1C[31m/LogVol01 rhgb quiet [m[17;92H[K[35;151H5-212[17;50H[?12l[?25h[?25l[31m rd.lvm.lv=[m[30m[43mVolGroup0[m[1C[31m/LogVol01 rhgb quiet [m[17;91H[K[35;151H4-211[17;49H[?12l[?25h[?25l[31m rd.lvm.lv=[m[30m[43mVolGroup0[m[1C[31m/LogVol01 rhgb quiet [m[17;90H[K[35;151H3-210[17;48H[?12l[?25h[?25l[31m rd.lvm.lv=[m[30m[43mVolGroup0[m[1C[31m/LogVol01 rhgb quiet [m[17;89H[K[35;151H2-209[17;47H[?12l[?25h[?25l[31m rd.lvm.lv=[m[30m[43mVolGroup0[m[1C[31m/LogVol01 rhgb quiet [m[17;88H[K[35;151H1-208[17;46H[?12l[?25h[?25l[31m rd.lvm.lv=[m[30m[43mVolGroup0[m[1C[31m/LogVol01 rhgb quiet [m[17;87H[K[35;151H0-207[17;45H[?12l[?25h[?25l[31m rd.lvm.lv=[m[30m[43mVolGroup0[m[1C[31m/LogVol01 rhgb quiet [m[17;86H[K[35;149H199-206[17;44H[?12l[?25h[?25l[31m rd.lvm.lv=[m[30m[43mVolGroup0[m[1C[31m/LogVol01 rhgb quiet [m[17;85H[K[35;151H8-205[17;43H[?12l[?25h[?25l[31mvg_root/lv_root rd.lvm.lv=[m[30m[43mVolGroup00[m[31m/LogVol01 rhgb quiet [m[35;149H213-220[17;58H[?12l[?25h[?25l[35;147H1,48-55  [18;55H[?12l[?25h[?25l[4;70H[46m{[19;1H}[m[35;147H2,2    [19;2H[?12l[?25h[?25l[4;70H{[19;1H}[35;147H3[20;2H[?12l[?25h[?25l[35;147H4,1[22;1H[?12l[?25h[?25l[35;147H5[23;1H[?12l[?25h[?25l[35;147H6[24;1H[?12l[?25h[?25l[35;147H7[25;1H[?12l[?25h[?25l[35;147H8[26;1H[?12l[?25h[?25l[35;147H9[27;1H[?12l[?25h[?25l[35;146H10[28;1H[?12l[?25h[?25l[35;147H1[29;1H[?12l[?25h[?25l[35;147H2[30;1H[?12l[?25h[?25l[35;147H3[31;1H[?12l[?25h[?25l[35;147H4[32;1H[?12l[?25h[?25l[35;149H2-9[32;9H[?12l[?25h[?25l[35;147H5[33;9H[?12l[?25h[?25l[35;149H3-10[33;10H[?12l[?25h[?25l[35;149H4-11[33;11H[?12l[?25h[?25l[35;149H5-12[33;12H[?12l[?25h[?25l[35;149H6-13[33;13H[?12l[?25h[?25l[35;149H7-14[33;14H[?12l[?25h[?25l[35;149H8-15[33;15H[?12l[?25h[?25l[35;149H9-16[33;16H[?12l[?25h[?25l[35;149H10-17[33;17H[?12l[?25h[?25l[35;150H1-18[33;18H[?12l[?25h[?25l[35;150H2-19[33;19H[?12l[?25h[?25l[35;150H3-20[33;20H[?12l[?25h[?25l[35;150H4-21[33;21H[?12l[?25h[?25l[35;150H5-22[33;22H[?12l[?25h[?25l[35;150H6-23[33;23H[?12l[?25h[?25l[35;150H7-24[33;24H[?12l[?25h[?25l[35;150H8-25[33;25H[?12l[?25h[?25l[35;150H9-26[33;26H[?12l[?25h[?25l[35;149H20-27[33;27H[?12l[?25h[?25l[35;150H1-28[33;28H[?12l[?25h[?25l[35;150H2-29[33;29H[?12l[?25h[?25l[35;150H3-30[33;30H[?12l[?25h[?25l[35;150H4-31[33;31H[?12l[?25h[?25l[35;150H5-32[33;32H[?12l[?25h[?25l[35;150H6-33[33;33H[?12l[?25h[?25l[35;150H7-34[33;34H[?12l[?25h[?25l[35;150H8-35[33;35H[?12l[?25h[?25l[35;150H9-36[33;36H[?12l[?25h[?25l[35;149H30-37[33;37H[?12l[?25h[?25l[35;150H1-38[33;38H[?12l[?25h[?25l[35;150H2-39[33;39H[?12l[?25h[?25l[35;150H3-40[33;40H[?12l[?25h[?25l[35;150H4-41[33;41H[?12l[?25h[?25l[35;150H5-42[33;42H[?12l[?25h[?25l[35;150H6-43[33;43H[?12l[?25h[?25l[35;150H7-44[33;44H[?12l[?25h[?25l[35;150H8-45[33;45H[?12l[?25h[?25l[35;150H9-46[33;46H[?12l[?25h[?25l[35;149H40-47[33;47H[?12l[?25h[?25l[35;150H1-48[33;48H[?12l[?25h[?25l[35;150H2-49[33;49H[?12l[?25h[?25l[35;150H3-50[33;50H[?12l[?25h[?25l[35;150H4-51[33;51H[?12l[?25h[?25l[35;149H262-269[34;107H[?12l[?25h[?25l[35;151H1-268[34;106H[?12l[?25h[?25l[35;151H0-267[34;105H[?12l[?25h[?25l[35;150H59-266[34;104H[?12l[?25h[?25l[35;151H8-265[34;103H[?12l[?25h[?25l[35;151H7-264[34;102H[?12l[?25h[?25l[35;151H6-263[34;101H[?12l[?25h[?25l[35;151H5-262[34;100H[?12l[?25h[?25l[35;151H4-261[34;99H[?12l[?25h[?25l[35;151H3-260[34;98H[?12l[?25h[?25l[35;151H2-259[34;97H[?12l[?25h[?25l[35;151H1-258[34;96H[?12l[?25h[?25l[35;151H0-257[34;95H[?12l[?25h[?25l[35;150H49-256[34;94H[?12l[?25h[?25l[35;151H8-255[34;93H[?12l[?25h[?25l[35;151H7-254[34;92H[?12l[?25h[?25l[35;151H6-253[34;91H[?12l[?25h[?25l[35;151H5-252[34;90H[?12l[?25h[?25l[35;151H4-251[34;89H[?12l[?25h[?25l[35;151H3-250[34;88H[?12l[?25h[?25l[35;151H2-249[34;87H[?12l[?25h[?25l[35;151H1-248[34;86H[?12l[?25h[?25l[35;151H0-247[34;85H[?12l[?25h[?25l[35;150H39-246[34;84H[?12l[?25h[?25l[35;151H8-245[34;83H[?12l[?25h[?25l[35;151H7-244[34;82H[?12l[?25h[?25l[35;151H6-243[34;81H[?12l[?25h[?25l[35;151H5-242[34;80H[?12l[?25h[?25l[35;151H4-241[34;79H[?12l[?25h[?25l[35;151H3-240[34;78H[?12l[?25h[?25l[35;151H2-239[34;77H[?12l[?25h[?25l[35;151H1-238[34;76H[?12l[?25h[?25l[35;151H0-237[34;75H[?12l[?25h[?25l[35;150H29-236[34;74H[?12l[?25h[?25l[35;151H8-235[34;73H[?12l[?25h[?25l[35;151H7-234[34;72H[?12l[?25h[?25l[35;151H6-233[34;71H[?12l[?25h[?25l[35;151H5-232[34;70H[?12l[?25h[?25l[35;151H4-231[34;69H[?12l[?25h[?25l[35;151H3-230[34;68H[?12l[?25h[?25l[35;151H2-229[34;67H[?12l[?25h[?25l[35;151H1-228[34;66H[?12l[?25h[?25l[35;151H0-227[34;65H[?12l[?25h[?25l[31m rd.lvm.lv=[m[30m[43mVolGroup0[m[1C[31m/LogVol01 rhgb quiet [m[34;106H[K[35;150H19-226[34;64H[?12l[?25h[?25l[31m rd.lvm.lv=[m[30m[43mVolGroup0[m[1C[31m/LogVol01 rhgb quiet [m[34;105H[K[35;151H8-225[34;63H[?12l[?25h[?25l[31m rd.lvm.lv=[m[30m[43mVolGroup0[m[1C[31m/LogVol01 rhgb quiet [m[34;104H[K[35;151H7-224[34;62H[?12l[?25h[?25l[31m rd.lvm.lv=[m[30m[43mVolGroup0[m[1C[31m/LogVol01 rhgb quiet [m[34;103H[K[35;151H6-223[34;61H[?12l[?25h[?25l[31m rd.lvm.lv=[m[30m[43mVolGroup0[m[1C[31m/LogVol01 rhgb quiet [m[34;102H[K[35;151H5-222[34;60H[?12l[?25h[?25l[31m rd.lvm.lv=[m[30m[43mVolGroup0[m[1C[31m/LogVol01 rhgb quiet [m[34;101H[K[35;151H4-221[34;59H[?12l[?25h[?25l[31m rd.lvm.lv=[m[30m[43mVolGroup0[m[1C[31m/LogVol01 rhgb quiet [m[34;100H[K[35;151H3-220[34;58H[?12l[?25h[?25l[31m rd.lvm.lv=[m[30m[43mVolGroup0[m[1C[31m/LogVol01 rhgb quiet [m[34;99H[K[35;151H2-219[34;57H[?12l[?25h[?25l[31m rd.lvm.lv=[m[30m[43mVolGroup0[m[1C[31m/LogVol01 rhgb quiet [m[34;98H[K[35;151H1-218[34;56H[?12l[?25h[?25l[34;46H[31mVolGroup0 rd.lvm.lv=[m[30m[43mVolGroup0[m[1C[31m/LogVol01 rhgb quiet [m[34;97H[K[35;151H0-217[34;55H[?12l[?25h[?25l[31m rd.lvm.lv=[m[30m[43mVolGroup0[m[1C[31m/LogVol01 rhgb quiet [m[34;96H[K[35;150H09-216[34;54H[?12l[?25h[?25l[31m rd.lvm.lv=[m[30m[43mVolGroup0[m[1C[31m/LogVol01 rhgb quiet [m[34;95H[K[35;151H8-215[34;53H[?12l[?25h[?25l[31m rd.lvm.lv=[m[30m[43mVolGroup0[m[1C[31m/LogVol01 rhgb quiet [m[34;94H[K[35;151H7-214[34;52H[?12l[?25h[?25l[31m rd.lvm.lv=[m[30m[43mVolGroup0[m[1C[31m/LogVol01 rhgb quiet [m[34;93H[K[35;151H6-213[34;51H[?12l[?25h[?25l[31m rd.lvm.lv=[m[30m[43mVolGroup0[m[1C[31m/LogVol01 rhgb quiet [m[34;92H[K[35;151H5-212[34;50H[?12l[?25h[?25l[31m rd.lvm.lv=[m[30m[43mVolGroup0[m[1C[31m/LogVol01 rhgb quiet [m[34;91H[K[35;151H4-211[34;49H[?12l[?25h[?25l[31m rd.lvm.lv=[m[30m[43mVolGroup0[m[1C[31m/LogVol01 rhgb quiet [m[34;90H[K[35;151H3-210[34;48H[?12l[?25h[?25l[31m rd.lvm.lv=[m[30m[43mVolGroup0[m[1C[31m/LogVol01 rhgb quiet [m[34;89H[K[35;151H2-209[34;47H[?12l[?25h[?25l[31m rd.lvm.lv=[m[30m[43mVolGroup0[m[1C[31m/LogVol01 rhgb quiet [m[34;88H[K[35;151H1-208[34;46H[?12l[?25h[?25l[31mvg_root/lv_root rd.lvm.lv=[m[30m[43mVolGroup00[m[31m/LogVol01 rhgb quiet [m[35;150H16-223[34;61H[?12l[?25h[35;1H[K[34;60H[?25l[35;145H115,215-222   75%[34;60H[?12l[?25h[?25l
+"grub2/grub.cfg"[35;145H[K[35;18H142L, 4582C written
+[?1l>[?12l[?25h[?1049l]0;root@lvm:/boot[root@lvm boot]# exit
+exit
+]0;root@lvm:~[root@lvm ~]# mc
+[?1049h[1;35r[4l[35;1H(B[m[37m[40m(B[m[39;49m[K[?1049l[?1001s[?1002h[?1015h7[?47h]0;mc [root@lvm]:~>]0;mc [root@lvm]:~>[?1049h[1;35r[4l[?1h=(B[m[39m[49m[1;35r[H[2J[2;1H[37m[44m┌<─[30m[47m ~ [37m[44m─────────────────────────────────────────────────────────────────────.[^]>┐
+│[79C│
+│[30m[46m/..                                                       │UP--DIR│May 13 10:16[37m[44m│
+│[1m[37m[44m/.cache                                                   (B[m[37m[44m│[1m[37m[44m     16(B[m[37m[44m│[1m[37m[44mMay 15 07:03(B[m[37m[44m│
+│[1m[37m[44m/.config                                                  (B[m[37m[44m│[1m[37m[44m     16(B[m[37m[44m│[1m[37m[44mMay 15 07:03(B[m[37m[44m│
+│[1m[37m[44m/.local                                                   (B[m[37m[44m│[1m[37m[44m     19(B[m[37m[44m│[1m[37m[44mMay 15 07:03(B[m[37m[44m│
+│[1m[37m[44m/.pki                                                     (B[m[37m[44m│[1m[37m[44m     19(B[m[37m[44m│[1m[37m[44mMay 13 10:28(B[m[37m[44m│
+│ .bash_history                                            │     77│May 15 07:05│
+│ .bash_logout                                             │     18│Dec 29  2013│
+│ .bash_profile                                            │    176│Dec 29  2013│
+│ .bashrc                                                  │    176│Dec 29  2013│
+│ .cshrc                                                   │    100│Dec 29  2013│
+│ .tcshrc                                                  │    129│Dec 29  2013│
+│ anaconda-ks.cfg                                          │   5763│May 12  2018│
+│ original-ks.cfg                                          │   5432│May 12  2018│
+│ typescript                                               │  32768│May 15 08:22│
+│                                                          │       │            │
+│                                                          │       │            │
+│                                                          │       │            │
+│                                                          │       │            │
+│                                                          │       │            │
+│                                                          │       │            │
+│                                                          │       │            │
+│                                                          │       │            │
+│                                                          │       │            │
+│                                                          │       │            │
+│                                                          │       │            │
+│                                                          │       │            │
+├[79C┤
+│[79C│
+└─────────────────────────────────────────────────────────────── 35G/37G (94%) ─┘
+[39m[49mHint: FTP is built in the Midnight Commander, check the File/FTP link menu.
+
+[1m[37m[40m 1(B[m[30m[46mHelp          [1m[37m[40m 2(B[m[30m[46mMenu          [1m[37m[40m 3(B[m[30m[46mView          [1m[37m[40m 4(B[m[30m[46mEdit          [1m[37m[40m 5(B[m[30m[46mCopy           [1m[37m[40m 6(B[m[30m[46mRenMov        [1m[37m[40m 7(B[m[30m[46mMkdir         [1m[37m[40m 8(B[m[30m[46mDelete        [1m[37m[40m 9(B[m[30m[46mPullDn        [1m[37m[40m10(B[m[30m[46mQuit[K[33;162H]0;mc [root@lvm]:~>]0;mc [root@lvm]:~>[1;1H  Left     File     Command     Options     Right[K[2;82H[37m[44m┌<─ ~ ─────────────────────────────────────────────────────────────────────.[^]>┐[3;2H[1m[33m[44m'n                         Name                           (B[m[37m[44m│[1m[33m[44m Size  (B[m[37m[44m│[1m[33m[44mModify time (B[m[37m[44m││[1m[33m[44m'n                         Name                           (B[m[37m[44m│[1m[33m[44m Size  (B[m[37m[44m│[1m[33m[44mModify time (B[m[37m[44m│[4;82H│[1m[37m[44m/..                                                       (B[m[37m[44m│[1m[37m[44mUP--DIR(B[m[37m[44m│[1m[37m[44mMay 13 10:16(B[m[37m[44m│[5;82H│[1m[37m[44m/.cache                                                   (B[m[37m[44m│[1m[37m[44m     16(B[m[37m[44m│[1m[37m[44mMay 15 07:03(B[m[37m[44m│[6;82H│[1m[37m[44m/.config                                                  (B[m[37m[44m│[1m[37m[44m     16(B[m[37m[44m│[1m[37m[44mMay 15 07:03(B[m[37m[44m│[7;82H│[1m[37m[44m/.local                                                   (B[m[37m[44m│[1m[37m[44m     19(B[m[37m[44m│[1m[37m[44mMay 15 07:03(B[m[37m[44m│[8;82H│[1m[37m[44m/.pki                                                     (B[m[37m[44m│[1m[37m[44m     19(B[m[37m[44m│[1m[37m[44mMay 13 10:28(B[m[37m[44m│[9;82H│ .bash_history                                            │     77│May 15 07:05│[10;82H│ .bash_logout                                             │     18│Dec 29  2013│[11;82H│ .bash_profile                                            │    176│Dec 29  2013│[12;82H│ .bashrc                                                  │    176│Dec 29  2013│[13;82H│ .cshrc                                                   │    100│Dec 29  2013│[14;82H│ .tcshrc                                                  │    129│Dec 29  2013│[15;82H│ anaconda-ks.cfg                                          │   5763│May 12  2018│[16;82H│ original-ks.cfg                                          │   5432│May 12  2018│[17;82H│ typescript                                               │  32768│May 15 08:22│[18;82H│                                                          │       │            │[19;82H│                                                          │       │            │[20;82H│                                                          │       │            │[21;82H│                                                          │       │            │[22;82H│                                                          │       │            │[23;82H│                                                          │       │            │[24;82H│                                                          │       │            │[25;82H│                                                          │       │            │[26;82H│                                                          │       │            │[27;82H│                                                          │       │            │[28;82H│                                                          │       │            │[29;82H│                                                          │       │            │[30;2H───────────────────────────────────────────────────────────────────────────────┤├───────────────────────────────────────────────────────────────────────────────┤[31;2HUP--DIR                                                                        ││UP--DIR                                                                        │[32;82H└─────────────────────────────────────────────────────────────── 35G/37G (94%) ─┘[34;159H[39m[49m[1K [37m[44m[^][34;1H[39m[49m[root@lvm ~]#[146C[34;15H[10;54H[30m[47m                                                        [11;54H ┌──────────────[34m The Midnight Commander [30m──────────────┐ [12;54H │ Do you really want to quit the Midnight Commander? │ [13;54H ├────────────────────────────────────────────────────┤ [14;54H │                  [46m[ [34mY[30mes ][47m  [ [34mN[30mo ]                   │ [15;54H └────────────────────────────────────────────────────┘ [16;54H                                                        [14;76H[33;7H[39m[49mNeed to quote a character?  Use Control-q and the character.[K[33;162H[1;1H[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K[1;162H[?1015l[?1002l[?1001r[?1l>[35;1H(B[m[39;49m[K[?1049l[?47l8[m[39;49m
+]0;root@lvm:~[root@lvm ~]# 
+]0;root@lvm:~[root@lvm ~]# exit
+exit
+
+Script done on Fri 15 May 2020 08:22:43 AM UTC
