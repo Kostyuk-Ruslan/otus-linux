@@ -34,12 +34,43 @@ cd /root - перейдем в домашний каталог "root"
 
 <code>wget -O War_and_Peace.txt http://www.gutenberg.org/ebooks/2600.txt.utf-8  - скачиваем файл с помощью "wget"</code>
 
+<details>
+<summary>Команда<code>lsblk</code></summary>
 
-lsblk
+```
+
+NAME   MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+sda      8:0    0   40G  0 disk 
+└─sda1   8:1    0   40G  0 part /
+sdb      8:16   0  250M  0 disk 
+├─sdb1   8:17   0  240M  0 part 
+└─sdb9   8:25   0    8M  0 part 
+sdc      8:32   0  250M  0 disk 
+sdd      8:48   0  250M  0 disk 
+sde      8:64   0  250M  0 disk 
+sdf      8:80   0  250M  0 disk 
+```
+</details>
 
 
 
-df -hT
+<details>
+<summary>Команда<code>df -hT</code></summary>
+```
+Filesystem     Type      Size  Used Avail Use% Mounted on
+devtmpfs       devtmpfs  1.4G     0  1.4G   0% /dev
+tmpfs          tmpfs     1.4G     0  1.4G   0% /dev/shm
+tmpfs          tmpfs     1.4G  8.6M  1.4G   1% /run
+tmpfs          tmpfs     1.4G     0  1.4G   0% /sys/fs/cgroup
+/dev/sda1      xfs        40G  4.8G   36G  12% /
+tmpfs          tmpfs     283M     0  283M   0% /run/user/1000
+pool0          zfs       112M  128K  112M   1% /pool0
+pool0/data     zfs       112M  128K  112M   1% /pool0/data
+pool0/files    zfs       112M  128K  112M   1% /pool0/files
+pool0/media    zfs       112M  128K  112M   1% /pool0/media
+pool0/top      zfs       112M  128K  112M   1% /pool0/top
+```
+</details>
 
 
 Копируем файл на каждую из созданным фс (zfs)
