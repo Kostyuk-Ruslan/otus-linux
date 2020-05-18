@@ -1,97 +1,116 @@
 Linux Administrator 2020
 
    #####################
-   #Домашнее задание 3 #
+   #Домашнее задание ZFS #
    #####################
 
-Для выполнение домашнего задания добавил 5 дисков в вагрантфайл
+Домашнее задание: 
+
+Задание №1 ==> typescript1
+
+Задание №2 ==> typescript2
+
+Задание №3 ==> typescript3
+
+
+Задание №1 создать 4 файловых системы на каждой применить свой алгоритм сжатия:
+
+zpool create -f pool0 /dev/sdb - Создаем общий пул и называем его pool0
+
+Далее  создаем 4 фс:
+
+
+- zfs create pool0/data - Назвал "data"
+
+- zfs create pool0/files - Назвал "files"
+
+- zfs create pool0/media - Назвал "media"
+
+- zfs create pool0/top   - Назвал "top"
+
+далее скачиваем файл который который расположен в каждой фс
+
+cd /root - перейдем в домашний каталог "root"
+
+<code>wget -O War_and_Peace.txt http://www.gutenberg.org/ebooks/2600.txt.utf-8  - скачиваем файл с помощью "wget"</code>
+
+
+lsblk
+
+
+
+df -hT
+
+
+Копируем файл на каждую из созданным фс (zfs)
+
+<code>- cp War_and_Peace.txt /pool0/data/</code>
+
+<code>- cp War_and_Peace.txt /pool0/files/</code>
+
+<code>- cp War_and_Peace.txt /pool0/media/</code>
+
+<code>- cp War_and_Peace.txt /pool0/top/</code>
+
+Проверяем все ли на месте
+
+cd /pool0/data
+
+ll
+
+Далее выполняю компрессию/сжатие на каждую из фc c раздным алгоритмом сжатия
+
+
+<code>-  zfs set compression=gzip-9 pool0/data</code>
+<code>-  zfs set compression=zle pool0/files</code>
+<code>-  zfs set compression=lzjb pool0/media</code>
+<code>-  zfs set compression=lz4 pool0/top</code>
+
+
+Смотрим итог:
 
 <details>
-<summary><code>Vagrantfile</code></summary>
+<summary>Команда<code>zfs get compression,compressratio</code><summary>
 
 ```
-# -*- mode: ruby -*-
-# vim: set ft=ruby :
-home = ENV['HOME']
-ENV["LC_ALL"] = "en_US.UTF-8"
-
-MACHINES = {
-  :lvm => {
-        :box_name => "centos/7",
-        :box_version => "1804.02",
-        :ip_addr => '192.168.11.101',
-    :disks => {
-        :sata1 => {
-            :dfile => home + '/VirtualBox VMs/sata1.vdi',
-            :size => 10240,
-            :port => 1
-        },
-        :sata2 => {
-            :dfile => home + '/VirtualBox VMs/sata2.vdi',
-            :size => 2048, # Megabytes
-            :port => 2
-        },
-        :sata3 => {
-            :dfile => home + '/VirtualBox VMs/sata3.vdi',
-            :size => 1024, # Megabytes
-            :port => 3
-        },
-        :sata4 => {
-            :dfile => home + '/VirtualBox VMs/sata4.vdi',
-            :size => 1024,
-            :port => 4
-        }
-    }
-  },
-}
-
-Vagrant.configure("2") do |config|
-
-    config.vm.box_version = "1804.02"
-    MACHINES.each do |boxname, boxconfig|
-..
-        config.vm.define boxname do |box|
-..
-            box.vm.box = boxconfig[:box_name]
-            box.vm.host_name = boxname.to_s
-..
-            #box.vm.network "forwarded_port", guest: 3260, host: 3260+offset
-..
-            box.vm.network "private_network", ip: boxconfig[:ip_addr]
-..
-            box.vm.provider :virtualbox do |vb|
-                    vb.customize ["modifyvm", :id, "--memory", "3256"]
-                    needsController = false
-            boxconfig[:disks].each do |dname, dconf|
-                unless File.exist?(dconf[:dfile])
-                  vb.customize ['createhd', '--filename', dconf[:dfile], '--variant', 'Fixed', '--size', dconf[:size]]
-                                  needsController =  true
-                            end
-..
-            end
-                    if needsController == true
-                       vb.customize ["storagectl", :id, "--name", "SATA", "--add", "sata" ]
-                       boxconfig[:disks].each do |dname, dconf|
-                           vb.customize ['storageattach', :id,  '--storagectl', 'SATA', '--port', dconf[:port], '--device', 0, '--type', 'hdd', '--medium', dconf[
-                       end
-                    end
-            end
-
-            box.vm.provision "ansible" do |ansible|
-             ansible.compatibility_mode = "2.0"
-               ansible.playbook = "playbook.yml"
-       end
-
-       end
-
-    end                                                                                                                                                            
-    end
-
+NAME         PROPERTY       VALUE     SOURCE
+pool0        compression    off       default
+pool0        compressratio  1.08x     -
+pool0/data   compression    gzip-9    local
+pool0/data   compressratio  1.08x     -
+pool0/files  compression    zle       local
+pool0/files  compressratio  1.08x     -
+pool0/media  compression    lzjb      local
+pool0/media  compressratio  1.07x     -
+pool0/top    compression    lz4       local
+pool0/top    compressratio  1.08x     -
 
 ```
 </details>
 
-  В итоге при поднятии вагранта "vagrant up" получилась следующая разметка
+Лучше компрессируют lz4,zle,gzip-9
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
