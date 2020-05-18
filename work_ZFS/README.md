@@ -15,18 +15,18 @@ Linux Administrator 2020
 
 Задание №1 создать 4 файловых системы на каждой применить свой алгоритм сжатия:
 
-zpool create -f pool0 /dev/sdb - Создаем общий пул и называем его pool0
+<code>zpool create -f pool0 /dev/sdb</code> - Создаем общий пул и называем его pool0
 
 Далее  создаем 4 фс:
 
 
-- zfs create pool0/data - Назвал "data"
+<code>- zfs create pool0/data - Назвал "data"</code>
 
-- zfs create pool0/files - Назвал "files"
+<code>- zfs create pool0/files - Назвал "files"</code>
 
-- zfs create pool0/media - Назвал "media"
+<code>- zfs create pool0/media - Назвал "media"</code>
 
-- zfs create pool0/top   - Назвал "top"
+<code>- zfs create pool0/top   - Назвал "top"</code>
 
 далее скачиваем файл который который расположен в каждой фс
 
@@ -70,7 +70,7 @@ ll
 Смотрим итог:
 
 <details>
-<summary>Команда<code>zfs get compression,compressratio</code><summary>
+<summary>Команда<code>zfs get compression,compressratio</code></summary>
 
 ```
 NAME         PROPERTY       VALUE     SOURCE
