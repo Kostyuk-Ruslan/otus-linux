@@ -1,0 +1,235 @@
+Script started on Mon 18 May 2020 10:47:35 PM UTC
+]0;root@zfs:~[?1034h[root@zfs ~]# lsblk
+NAME   MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+sda      8:0    0   40G  0 disk 
+└─sda1   8:1    0   40G  0 part /
+sdb      8:16   0  250M  0 disk 
+sdc      8:32   0  250M  0 disk 
+sdd      8:48   0  250M  0 disk 
+sde      8:64   0  250M  0 disk 
+sdf      8:80   0  250M  0 disk 
+]0;root@zfs:~[root@zfs ~]# df -hT
+Filesystem     Type      Size  Used Avail Use% Mounted on
+devtmpfs       devtmpfs  1.4G     0  1.4G   0% /dev
+tmpfs          tmpfs     1.4G     0  1.4G   0% /dev/shm
+tmpfs          tmpfs     1.4G  8.6M  1.4G   1% /run
+tmpfs          tmpfs     1.4G     0  1.4G   0% /sys/fs/cgroup
+/dev/sda1      xfs        40G  5.8G   35G  15% /
+tmpfs          tmpfs     283M     0  283M   0% /run/user/0
+tmpfs          tmpfs     283M     0  283M   0% /run/user/1000
+]0;root@zfs:~[root@zfs ~]# zpool import -d ${PWD}/zpoolexport/
+   pool: otus
+     id: 6554193320433390805
+  state: UNAVAIL
+status: The pool can only be accessed in read-only mode on this system. It
+	cannot be accessed in read-write mode because it uses the following
+	feature(s) not supported on this system:
+	org.zfsonlinux:project_quota (space/object accounting based on project ID.)
+	com.delphix:spacemap_v2 (Space maps representing large segments are more efficient.)
+action: The pool cannot be imported in read-write mode. Import the pool with
+	"-o readonly=on", access the pool on a system that supports the
+	required feature(s), or recreate the pool from backup.
+ config:
+
+	otus                         UNAVAIL  unsupported feature(s)
+	  mirror-0                   ONLINE
+	    /root/zpoolexport/filea  ONLINE
+	    /root/zpoolexport/fileb  ONLINE
+]0;root@zfs:~[root@zfs ~]# zpool import -d ${PWD}/zpoolexport/ otus -o readonly=on
+]0;root@zfs:~[root@zfs ~]# df -hT
+Filesystem     Type      Size  Used Avail Use% Mounted on
+devtmpfs       devtmpfs  1.4G     0  1.4G   0% /dev
+tmpfs          tmpfs     1.4G     0  1.4G   0% /dev/shm
+tmpfs          tmpfs     1.4G  8.6M  1.4G   1% /run
+tmpfs          tmpfs     1.4G     0  1.4G   0% /sys/fs/cgroup
+/dev/sda1      xfs        40G  5.8G   35G  15% /
+tmpfs          tmpfs     283M     0  283M   0% /run/user/0
+tmpfs          tmpfs     283M     0  283M   0% /run/user/1000
+otus           zfs       350M     0  350M   0% /otus
+otus/hometask2 zfs       352M  1.9M  350M   1% /otus/hometask2
+]0;root@zfs:~[root@zfs ~]# lsblk
+NAME   MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+sda      8:0    0   40G  0 disk 
+└─sda1   8:1    0   40G  0 part /
+sdb      8:16   0  250M  0 disk 
+sdc      8:32   0  250M  0 disk 
+sdd      8:48   0  250M  0 disk 
+sde      8:64   0  250M  0 disk 
+sdf      8:80   0  250M  0 disk 
+]0;root@zfs:~[root@zfs ~]# zpool list
+NAME   SIZE  ALLOC   FREE  EXPANDSZ   FRAG    CAP  DEDUP  HEALTH  ALTROOT
+otus   480M  2.11M   478M         -     0%     0%  1.00x  ONLINE  -
+]0;root@zfs:~[root@zfs ~]# zpool list[K[K[K[Kstatus
+  pool: otus
+ state: ONLINE
+  scan: none requested
+config:
+
+	NAME                         STATE     READ WRITE CKSUM
+	otus                         ONLINE       0     0     0
+	  mirror-0                   ONLINE       0     0     0
+	    /root/zpoolexport/filea  ONLINE       0     0     0
+	    /root/zpoolexport/fileb  ONLINE       0     0     0
+
+errors: No known data errors
+]0;root@zfs:~[root@zfs ~]# df -h
+Filesystem      Size  Used Avail Use% Mounted on
+devtmpfs        1.4G     0  1.4G   0% /dev
+tmpfs           1.4G     0  1.4G   0% /dev/shm
+tmpfs           1.4G  8.6M  1.4G   1% /run
+tmpfs           1.4G     0  1.4G   0% /sys/fs/cgroup
+/dev/sda1        40G  5.8G   35G  15% /
+tmpfs           283M     0  283M   0% /run/user/0
+tmpfs           283M     0  283M   0% /run/user/1000
+otus            350M     0  350M   0% /otus
+otus/hometask2  352M  1.9M  350M   1% /otus/hometask2
+]0;root@zfs:~[root@zfs ~]# zfs get recordsize 
+NAME            PROPERTY    VALUE    SOURCE
+otus            recordsize  128K     local
+otus/hometask2  recordsize  128K     inherited from otus
+]0;root@zfs:~[root@zfs ~]# zfs get compression,compressratio
+NAME            PROPERTY       VALUE     SOURCE
+otus            compression    zle       local
+otus            compressratio  1.00x     -
+otus/hometask2  compression    zle       inherited from otus
+otus/hometask2  compressratio  1.00x     -
+]0;root@zfs:~[root@zfs ~]# zfs get checksum
+NAME            PROPERTY  VALUE      SOURCE
+otus            checksum  sha256     local
+otus/hometask2  checksum  sha256     inherited from otus
+]0;root@zfs:~[root@zfs ~]# zfs get all
+NAME            PROPERTY              VALUE                  SOURCE
+otus            type                  filesystem             -
+otus            creation              Fri May 15  4:00 2020  -
+otus            used                  2.03M                  -
+otus            available             350M                   -
+otus            referenced            24K                    -
+otus            compressratio         1.00x                  -
+otus            mounted               yes                    -
+otus            quota                 none                   default
+otus            reservation           none                   default
+otus            recordsize            128K                   local
+otus            mountpoint            /otus                  default
+otus            sharenfs              off                    default
+otus            checksum              sha256                 local
+otus            compression           zle                    local
+otus            atime                 on                     default
+otus            devices               on                     default
+otus            exec                  on                     default
+otus            setuid                on                     default
+otus            readonly              on                     temporary
+otus            zoned                 off                    default
+otus            snapdir               hidden                 default
+otus            aclinherit            restricted             default
+otus            createtxg             1                      -
+otus            canmount              on                     default
+otus            xattr                 on                     default
+otus            copies                1                      default
+otus            version               5                      -
+otus            utf8only              off                    -
+otus            normalization         none                   -
+otus            casesensitivity       sensitive              -
+otus            vscan                 off                    default
+otus            nbmand                off                    default
+otus            sharesmb              off                    default
+otus            refquota              none                   default
+otus            refreservation        none                   default
+otus            guid                  14592242904030363272   -
+otus            primarycache          all                    default
+otus            secondarycache        all                    default
+otus            usedbysnapshots       0B                     -
+otus            usedbydataset         24K                    -
+otus            usedbychildren        2.01M                  -
+otus            usedbyrefreservation  0B                     -
+otus            logbias               latency                default
+otus            dedup                 off                    default
+otus            mlslabel              none                   default
+otus            sync                  standard               default
+otus            dnodesize             legacy                 default
+otus            refcompressratio      1.00x                  -
+otus            written               24K                    -
+otus            logicalused           1019K                  -
+otus            logicalreferenced     12K                    -
+otus            volmode               default                default
+otus            filesystem_limit      none                   default
+otus            snapshot_limit        none                   default
+otus            filesystem_count      none                   default
+otus            snapshot_count        none                   default
+otus            snapdev               hidden                 default
+otus            acltype               off                    default
+otus            context               none                   default
+otus            fscontext             none                   default
+otus            defcontext            none                   default
+otus            rootcontext           none                   default
+otus            relatime              off                    default
+otus            redundant_metadata    all                    default
+otus            overlay               off                    default
+otus/hometask2  type                  filesystem             -
+otus/hometask2  creation              Fri May 15  4:18 2020  -
+otus/hometask2  used                  1.88M                  -
+otus/hometask2  available             350M                   -
+otus/hometask2  referenced            1.88M                  -
+otus/hometask2  compressratio         1.00x                  -
+otus/hometask2  mounted               yes                    -
+otus/hometask2  quota                 none                   default
+otus/hometask2  reservation           none                   default
+otus/hometask2  recordsize            128K                   inherited from otus
+otus/hometask2  mountpoint            /otus/hometask2        default
+otus/hometask2  sharenfs              off                    default
+otus/hometask2  checksum              sha256                 inherited from otus
+otus/hometask2  compression           zle                    inherited from otus
+otus/hometask2  atime                 on                     default
+otus/hometask2  devices               on                     default
+otus/hometask2  exec                  on                     default
+otus/hometask2  setuid                on                     default
+otus/hometask2  readonly              on                     temporary
+otus/hometask2  zoned                 off                    default
+otus/hometask2  snapdir               hidden                 default
+otus/hometask2  aclinherit            restricted             default
+otus/hometask2  createtxg             216                    -
+otus/hometask2  canmount              on                     default
+otus/hometask2  xattr                 on                     default
+otus/hometask2  copies                1                      default
+otus/hometask2  version               5                      -
+otus/hometask2  utf8only              off                    -
+otus/hometask2  normalization         none                   -
+otus/hometask2  casesensitivity       sensitive              -
+otus/hometask2  vscan                 off                    default
+otus/hometask2  nbmand                off                    default
+otus/hometask2  sharesmb              off                    default
+otus/hometask2  refquota              none                   default
+otus/hometask2  refreservation        none                   default
+otus/hometask2  guid                  3809416093691379248    -
+otus/hometask2  primarycache          all                    default
+otus/hometask2  secondarycache        all                    default
+otus/hometask2  usedbysnapshots       0B                     -
+otus/hometask2  usedbydataset         1.88M                  -
+otus/hometask2  usedbychildren        0B                     -
+otus/hometask2  usedbyrefreservation  0B                     -
+otus/hometask2  logbias               latency                default
+otus/hometask2  dedup                 off                    default
+otus/hometask2  mlslabel              none                   default
+otus/hometask2  sync                  standard               default
+otus/hometask2  dnodesize             legacy                 default
+otus/hometask2  refcompressratio      1.00x                  -
+otus/hometask2  written               1.88M                  -
+otus/hometask2  logicalused           963K                   -
+otus/hometask2  logicalreferenced     963K                   -
+otus/hometask2  volmode               default                default
+otus/hometask2  filesystem_limit      none                   default
+otus/hometask2  snapshot_limit        none                   default
+otus/hometask2  filesystem_count      none                   default
+otus/hometask2  snapshot_count        none                   default
+otus/hometask2  snapdev               hidden                 default
+otus/hometask2  acltype               off                    default
+otus/hometask2  context               none                   default
+otus/hometask2  fscontext             none                   default
+otus/hometask2  defcontext            none                   default
+otus/hometask2  rootcontext           none                   default
+otus/hometask2  relatime              off                    default
+otus/hometask2  redundant_metadata    all                    default
+otus/hometask2  overlay               off                    default
+]0;root@zfs:~[root@zfs ~]# exit
+exit
+
+Script done on Mon 18 May 2020 10:49:50 PM UTC

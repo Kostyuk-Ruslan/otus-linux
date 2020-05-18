@@ -1,0 +1,193 @@
+Script started on Mon 18 May 2020 03:03:50 PM UTC
+]0;root@zfs:~[?1034h[root@zfs ~]# zpool -list
+unrecognized command '-list'
+usage: zpool command args ...
+where 'command' is one of the following:
+
+	version
+
+	create [-fnd] [-o property=value] ... 
+	    [-O file-system-property=value] ... 
+	    [-m mountpoint] [-R root] <pool> <vdev> ...
+	destroy [-f] <pool>
+
+	add [-fgLnP] [-o property=value] <pool> <vdev> ...
+	remove [-nps] <pool> <device> ...
+
+	labelclear [-f] <vdev>
+
+	checkpoint [--discard] <pool> ...
+
+	list [-gHLpPv] [-o property[,...]] [-T d|u] [pool] ... 
+	    [interval [count]]
+	iostat [[[-c [script1,script2,...][-lq]]|[-rw]] [-T d | u] [-ghHLpPvy]
+	    [[pool ...]|[pool vdev ...]|[vdev ...]] [[-n] interval [count]]
+	status [-c [script1,script2,...]] [-igLpPstvxD]  [-T d|u] [pool] ... 
+	    [interval [count]]
+
+	online [-e] <pool> <device> ...
+	offline [-f] [-t] <pool> <device> ...
+	clear [-nF] <pool> [device]
+	reopen [-n] <pool>
+
+	attach [-f] [-o property=value] <pool> <device> <new-device>
+	detach <pool> <device>
+	replace [-f] [-o property=value] <pool> <device> [new-device]
+	split [-gLnPl] [-R altroot] [-o mntopts]
+	    [-o property=value] <pool> <newpool> [<device> ...]
+
+	initialize [-c | -s] <pool> [<device> ...]
+	resilver <pool> ...
+	scrub [-s | -p] <pool> ...
+	trim [-d] [-r <rate>] [-c | -s] <pool> [<device> ...]
+
+	import [-d dir] [-D]
+	import [-o mntopts] [-o property=value] ... 
+	    [-d dir | -c cachefile] [-D] [-l] [-f] [-m] [-N] [-R root] [-F [-n]] -a
+	import [-o mntopts] [-o property=value] ... 
+	    [-d dir | -c cachefile] [-D] [-l] [-f] [-m] [-N] [-R root] [-F [-n]]
+	    [--rewind-to-checkpoint] <pool | id> [newpool]
+	export [-af] <pool> ...
+	upgrade
+	upgrade -v
+	upgrade [-V version] <-a | pool ...>
+	reguid <pool>
+
+	history [-il] [<pool>] ...
+	events [-vHf [pool] | -c]
+
+	get [-Hp] [-o "all" | field[,...]] <"all" | property[,...]> <pool> ...
+	set <property=value> <pool> 
+	sync [pool] ...
+]0;root@zfs:~[root@zfs ~]# zpool -list[1Plist
+no pools available
+]0;root@zfs:~[root@zfs ~]# zpool list[K[K[K[Kstatus
+no pools available
+]0;root@zfs:~[root@zfs ~]# lsblk
+NAME   MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+sda      8:0    0   40G  0 disk 
+└─sda1   8:1    0   40G  0 part /
+sdb      8:16   0  250M  0 disk 
+sdc      8:32   0  250M  0 disk 
+sdd      8:48   0  250M  0 disk 
+sde      8:64   0  250M  0 disk 
+sdf      8:80   0  250M  0 disk 
+]0;root@zfs:~[root@zfs ~]# zpool create -f pool0 /dev/sdb
+]0;root@zfs:~[root@zfs ~]# lsblk
+NAME   MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+sda      8:0    0   40G  0 disk 
+└─sda1   8:1    0   40G  0 part /
+sdb      8:16   0  250M  0 disk 
+├─sdb1   8:17   0  240M  0 part 
+└─sdb9   8:25   0    8M  0 part 
+sdc      8:32   0  250M  0 disk 
+sdd      8:48   0  250M  0 disk 
+sde      8:64   0  250M  0 disk 
+sdf      8:80   0  250M  0 disk 
+]0;root@zfs:~[root@zfs ~]# zpool list
+NAME    SIZE  ALLOC   FREE  CKPOINT  EXPANDSZ   FRAG    CAP  DEDUP    HEALTH  ALTROOT
+pool0   224M  94.5K   224M        -         -     3%     0%  1.00x    ONLINE  -
+]0;root@zfs:~[root@zfs ~]# zfs create pool0/data
+]0;root@zfs:~[root@zfs ~]# zfs create pool0/files
+]0;root@zfs:~[root@zfs ~]# zfs create pool0/media
+]0;root@zfs:~[root@zfs ~]# zfs create pool0/top
+]0;root@zfs:~[root@zfs ~]# df -hT
+Filesystem     Type      Size  Used Avail Use% Mounted on
+devtmpfs       devtmpfs  1.4G     0  1.4G   0% /dev
+tmpfs          tmpfs     1.4G     0  1.4G   0% /dev/shm
+tmpfs          tmpfs     1.4G  8.6M  1.4G   1% /run
+tmpfs          tmpfs     1.4G     0  1.4G   0% /sys/fs/cgroup
+/dev/sda1      xfs        40G  4.8G   36G  12% /
+tmpfs          tmpfs     283M     0  283M   0% /run/user/1000
+pool0          zfs       112M  128K  112M   1% /pool0
+pool0/data     zfs       112M  128K  112M   1% /pool0/data
+pool0/files    zfs       112M  128K  112M   1% /pool0/files
+pool0/media    zfs       112M  128K  112M   1% /pool0/media
+pool0/top      zfs       112M  128K  112M   1% /pool0/top
+]0;root@zfs:~[root@zfs ~]# cd
+]0;root@zfs:~[root@zfs ~]# get -O War_and_Peace.txt http://www.gutenberg.org/ebooks/2600.txt.utf-8[C[C[C[C[C[C[C[C[C[C[C[C[C[C[1@w
+--2020-05-18 15:05:43--  http://www.gutenberg.org/ebooks/2600.txt.utf-8
+Resolving www.gutenberg.org (www.gutenberg.org)... 152.19.134.47, 2610:28:3090:3000:0:bad:cafe:47
+Connecting to www.gutenberg.org (www.gutenberg.org)|152.19.134.47|:80... connected.
+HTTP request sent, awaiting response... 
+
+302 Found
+Location: http://www.gutenberg.org/cache/epub/2600/pg2600.txt [following]
+--2020-05-18 15:06:05--  http://www.gutenberg.org/cache/epub/2600/pg2600.txt
+Reusing existing connection to www.gutenberg.org:80.
+HTTP request sent, awaiting response... ^C
+]0;root@zfs:~[root@zfs ~]# ll
+total 20
+-rw-------. 1 root root 5570 Apr 30 22:09 anaconda-ks.cfg
+-rw-------. 1 root root 5300 Apr 30 22:09 original-ks.cfg
+-rw-r--r--. 1 root root 4096 May 18 15:05 typescript
+-rw-r--r--. 1 root root    0 May 18 15:05 War_and_Peace.txt
+]0;root@zfs:~[root@zfs ~]# ll[Krm War_and_Peace.txt 
+rm: remove regular empty file ‘War_and_Peace.txt’? y
+]0;root@zfs:~[root@zfs ~]# rm War_and_Peace.txt [C[C[C[C[C[C[C[C[C[C[C[C[C[Cll[Kwget -O War_and_Peace.txt http://www.gutenberg.org/ebooks/2600.txt.utf-8
+--2020-05-18 15:06:26--  http://www.gutenberg.org/ebooks/2600.txt.utf-8
+Resolving www.gutenberg.org (www.gutenberg.org)... 152.19.134.47, 2610:28:3090:3000:0:bad:cafe:47
+Connecting to www.gutenberg.org (www.gutenberg.org)|152.19.134.47|:80... connected.
+HTTP request sent, awaiting response... 302 Found
+Location: http://www.gutenberg.org/cache/epub/2600/pg2600.txt [following]
+--2020-05-18 15:06:32--  http://www.gutenberg.org/cache/epub/2600/pg2600.txt
+Reusing existing connection to www.gutenberg.org:80.
+HTTP request sent, awaiting response... 200 OK
+Length: 1209374 (1.2M) [text/plain]
+Saving to: ‘War_and_Peace.txt’
+
+ 0% [                                                                                                                           ] 0           --.-K/s               3% [===>                                                                                                                       ] 43,999       154KB/s             11% [=============>                                                                                                             ] 142,463      242KB/s             35% [==========================================>                                                                                ] 426,271      496KB/s             73% [========================================================================================>                                  ] 883,799      828KB/s             100%[==========================================================================================================================>] 1,209,374   1.02MB/s   in 1.1s   
+
+2020-05-18 15:06:35 (1.02 MB/s) - ‘War_and_Peace.txt’ saved [1209374/1209374]
+
+]0;root@zfs:~[root@zfs ~]# ll
+total 1204
+-rw-------. 1 root root    5570 Apr 30 22:09 anaconda-ks.cfg
+-rw-------. 1 root root    5300 Apr 30 22:09 original-ks.cfg
+-rw-r--r--. 1 root root    4096 May 18 15:05 typescript
+-rw-r--r--. 1 root root 1209374 May  6  2016 War_and_Peace.txt
+]0;root@zfs:~[root@zfs ~]# zfs set compression=gzip pool0/data
+]0;root@zfs:~[root@zfs ~]# zfs set compression=zle pool0/files
+]0;root@zfs:~[root@zfs ~]# zfs set compression=lzjb pool0/media
+]0;root@zfs:~[root@zfs ~]# zfs set compression=lz4 pool0/top
+]0;root@zfs:~[root@zfs ~]# cd /pool0/data/
+]0;root@zfs:/pool0/data[root@zfs data]# kll[K[K[Kll
+total 0
+]0;root@zfs:/pool0/data[root@zfs data]# cp War_and_Peace.txt /pool0/data/[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cll[K[K[Kcd
+]0;root@zfs:~[root@zfs ~]# cp War_and_Peace.txt /pool0/data/
+]0;root@zfs:~[root@zfs ~]# cp War_and_Peace.txt /pool0/data/[K[K[K[K[Kg[Kfiles/
+]0;root@zfs:~[root@zfs ~]# cp War_and_Peace.txt /pool0/files/[K[K[K[K[K[Kmedia/
+]0;root@zfs:~[root@zfs ~]# cp War_and_Peace.txt /pool0/media/[K[K[K[K[K[Ktop/
+]0;root@zfs:~[root@zfs ~]# cp War_and_Peace.txt /pool0/top/media/files/[1Pdata/[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cd[Kllcd /pool0/data/zfs set compression=lz4 pool0/top[C[C[C[C[C[C[C[C[C[C[C[C[C[C[18Pcd /pool0/data/
+]0;root@zfs:/pool0/data[root@zfs data]# ll
+total 1184
+-rw-r--r--. 1 root root 1209374 May 18 15:07 War_and_Peace.txt
+]0;root@zfs:/pool0/data[root@zfs data]# zfs get compression,compressratio
+NAME         PROPERTY       VALUE     SOURCE
+pool0        compression    off       default
+pool0        compressratio  1.08x     -
+pool0/data   compression    gzip      local
+pool0/data   compressratio  1.08x     -
+pool0/files  compression    zle       local
+pool0/files  compressratio  1.08x     -
+pool0/media  compression    lzjb      local
+pool0/media  compressratio  1.07x     -
+pool0/top    compression    lz4       local
+pool0/top    compressratio  1.08x     -
+]0;root@zfs:/pool0/data[root@zfs data]# zfs get compression,compressratio[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cll[Kcd /pool0/data/p War_and_Peace.txt /pool0/top/media/files/[1Pdata/[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cd[Kllcd /pool0/data/zfs set compression=lz4 pool0/topjb pool0/media[1Pzle pool0/filesgzip pool0/data- pool0/data9 pool0/data
+]0;root@zfs:/pool0/data[root@zfs data]# zfs set compression=gzip-9 pool0/data[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[4Pget compression,compressratio[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cll[Kcd /pool0/data/p War_and_Peace.txt /pool0/top/media/files/[1Pdata/[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cd[Kllcd /pool0/data/zfs set compression=lz4 pool0/topjb pool0/media[1Pzle pool0/filesgzip pool0/data[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cll[Kwget -O War_and_Peace.txt http://www.gutenberg.org/ebooks/2600.txt.utf-8[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Crm War_and_Peace.txt [K[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cll[Kwget -O War_and_Peace.txt http://www.gutenberg.org/ebooks/2600.txt.utf-8[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Ccd[Kdf -hTzfs create pool0/topmediafiles[1Pdata[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[11Ppool list[5Plsblkzpool list[K[K[K[K[K[K[K[K[K[Kzfs get compression,compressratio
+NAME         PROPERTY       VALUE     SOURCE
+pool0        compression    off       default
+pool0        compressratio  1.08x     -
+pool0/data   compression    gzip-9    local
+pool0/data   compressratio  1.08x     -
+pool0/files  compression    zle       local
+pool0/files  compressratio  1.08x     -
+pool0/media  compression    lzjb      local
+pool0/media  compressratio  1.07x     -
+pool0/top    compression    lz4       local
+pool0/top    compressratio  1.08x     -
+]0;root@zfs:/pool0/data[root@zfs data]# exit
+exit
+
+Script done on Mon 18 May 2020 03:10:18 PM UTC

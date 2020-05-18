@@ -1,0 +1,90 @@
+Script started on Mon 18 May 2020 11:29:35 PM UTC
+]0;root@zfs:~[?1034h[root@zfs ~]# ll
+total 5324
+-rw-------. 1 root root    5570 Apr 30 22:09 anaconda-ks.cfg
+-rw-------. 1 root root    5300 Apr 30 22:09 original-ks.cfg
+-rw-r--r--. 1 root root 5432736 May 19  2020 otus_task2.file
+-rw-r--r--. 1 root root       0 May 18 23:29 typescript
+]0;root@zfs:~[root@zfs ~]# zpool create -f pool0 /dev/sdb
+]0;root@zfs:~[root@zfs ~]# zfs create pool0/data
+]0;root@zfs:~[root@zfs ~]# zpool list
+NAME    SIZE  ALLOC   FREE  CKPOINT  EXPANDSZ   FRAG    CAP  DEDUP    HEALTH  ALTROOT
+pool0   224M   164K   224M        -         -     3%     0%  1.00x    ONLINE  -
+]0;root@zfs:~[root@zfs ~]# zpool list[K[K[K[Kstatus
+  pool: pool0
+ state: ONLINE
+  scan: none requested
+config:
+
+	NAME        STATE     READ WRITE CKSUM
+	pool0       ONLINE       0     0     0
+	  sdb       ONLINE       0     0     0
+
+errors: No known data errors
+]0;root@zfs:~[root@zfs ~]# df -hT
+Filesystem     Type      Size  Used Avail Use% Mounted on
+devtmpfs       devtmpfs  1.4G     0  1.4G   0% /dev
+tmpfs          tmpfs     1.4G     0  1.4G   0% /dev/shm
+tmpfs          tmpfs     1.4G  8.6M  1.4G   1% /run
+tmpfs          tmpfs     1.4G     0  1.4G   0% /sys/fs/cgroup
+/dev/sda1      xfs        40G  4.8G   36G  13% /
+tmpfs          tmpfs     283M     0  283M   0% /run/user/1000
+pool0          zfs       112M  128K  112M   1% /pool0
+pool0/data     zfs       112M  128K  112M   1% /pool0/data
+]0;root@zfs:~[root@zfs ~]# ll
+total 5324
+-rw-------. 1 root root    5570 Apr 30 22:09 anaconda-ks.cfg
+-rw-------. 1 root root    5300 Apr 30 22:09 original-ks.cfg
+-rw-r--r--. 1 root root 5432736 May 19  2020 otus_task2.file
+-rw-r--r--. 1 root root       0 May 18 23:29 typescript
+]0;root@zfs:~[root@zfs ~]# zfs receive pool0/data < otus_task2.file
+cannot receive new filesystem stream: destination 'pool0/data' exists
+must specify -F to overwrite it
+]0;root@zfs:~[root@zfs ~]# zfs receive pool0/data < otus_task2.file -F
+]0;root@zfs:~[root@zfs ~]# lsblk
+NAME   MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+sda      8:0    0   40G  0 disk 
+└─sda1   8:1    0   40G  0 part /
+sdb      8:16   0  250M  0 disk 
+├─sdb1   8:17   0  240M  0 part 
+└─sdb9   8:25   0    8M  0 part 
+sdc      8:32   0  250M  0 disk 
+sdd      8:48   0  250M  0 disk 
+sde      8:64   0  250M  0 disk 
+sdf      8:80   0  250M  0 disk 
+]0;root@zfs:~[root@zfs ~]# df -h
+Filesystem      Size  Used Avail Use% Mounted on
+devtmpfs        1.4G     0  1.4G   0% /dev
+tmpfs           1.4G     0  1.4G   0% /dev/shm
+tmpfs           1.4G  8.6M  1.4G   1% /run
+tmpfs           1.4G     0  1.4G   0% /sys/fs/cgroup
+/dev/sda1        40G  4.8G   36G  13% /
+tmpfs           283M     0  283M   0% /run/user/1000
+pool0           109M  128K  109M   1% /pool0
+pool0/data      112M  3.8M  109M   4% /pool0/data
+]0;root@zfs:~[root@zfs ~]# cd /pool0/data/
+]0;root@zfs:/pool0/data[root@zfs data]# ll
+total 3472
+-rw-r--r--. 1 root    root          0 May 15 06:46 10M.file
+-rw-r--r--. 1 root    root     727040 May 15 07:08 [0m[01;31mcinderella.tar[0m
+-rw-r--r--. 1 root    root         65 May 15 06:39 for_examaple.txt
+-rw-r--r--. 1 root    root          0 May 15 06:39 homework4.txt
+-rw-r--r--. 1 root    root     309987 May 15 06:39 Limbo.txt
+-rw-r--r--. 1 root    root     509836 May 15 06:39 Moby_Dick.txt
+drwxr-xr-x. 3 vagrant vagrant       4 Dec 18  2017 [01;34mtask1[0m
+-rw-r--r--. 1 root    root    1209374 May  6  2016 War_and_Peace.txt
+-rw-r--r--. 1 root    root     398635 May 15 06:45 world.sql
+]0;root@zfs:/pool0/data[root@zfs data]# find data/ -iname secret_message
+find: ‘data/’: No such file or directory
+]0;root@zfs:/pool0/data[root@zfs data]# find data/ -iname secret_message[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Kcd ../
+]0;root@zfs:/pool0[root@zfs pool0]# ll
+total 2
+drwxr-xr-x. 3 root root 11 May 15 07:08 [0m[01;34mdata[0m
+]0;root@zfs:/pool0[root@zfs pool0]# find data/ -iname secret_message
+data/task1/file_mess/secret_message
+]0;root@zfs:/pool0[root@zfs pool0]# cat /dev/[K[K[K[K[Kdata/task1/file_mess/sece[Kret_message 
+https://github.com/sindresorhus/awesome
+]0;root@zfs:/pool0[root@zfs pool0]# exit
+exit
+
+Script done on Mon 18 May 2020 11:31:34 PM UTC

@@ -27,7 +27,7 @@
   - name: add zfs rpm package for <7.3 systems
     yum:
       name: http://download.zfsonlinux.org/epel/zfs-release.el7.noarch.rpm
-    state: present
+      state: present
 
 
   - name: install packages
