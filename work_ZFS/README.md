@@ -134,10 +134,10 @@ pool0/top    compressratio  1.08x     -
 
 Пытаюсь импортировать данный архив 
 
-zpool import -d ${PWD}/zpoolexport/
+<code>zpool import -d ${PWD}/zpoolexport/</code>
 
 
-zpool import -d ${PWD}/zpoolexport/ otus -o readonly=on
+<code>zpool import -d ${PWD}/zpoolexport/ otus -o readonly=on</code>
 
 
 <code>df -h</code>
@@ -158,7 +158,7 @@ otus/hometask2  352M  1.9M  350M   1% /otus/hometask2
 
 
 
-<code>zpool list - размер хранилища   - здесь Видно (размер хранилища)</code>
+<code>zpool list - размер хранилища   - здесь Видно (тип pool mirror-0)</code>
 ```
 
 
@@ -177,7 +177,7 @@ config:
 
 ```
 
-<code>zpool status - тип pool  - здесь смотрим (тип pool)</code>
+<code>zpool status - тип pool  - здесь смотрим (размер хранилища )</code>
 ```
 
 NAME   SIZE  ALLOC   FREE  EXPANDSZ   FRAG    CAP  DEDUP  HEALTH  ALTROOT
@@ -186,7 +186,7 @@ otus   480M  2.11M   478M         -     0%     0%  1.00x  ONLINE  -
 
 
 
-<code>zfs get recordsize - (значение recordsize)</code>
+<code>zfs get recordsize - (значение recordsize 128K)</code>
 ```
 
 NAME            PROPERTY    VALUE    SOURCE
@@ -194,7 +194,7 @@ otus            recordsize  128K     local
 otus/hometask2  recordsize  128K     inherited from otus
 ```
 
-<code>zfs get compression,compressratio - (тут показано какой алгоритм сжатия применен)</code>
+<code>zfs get compression,compressratio - (тут показано какой алгоритм сжатия применен zle)</code>
 ```
 
 NAME            PROPERTY       VALUE     SOURCE
@@ -204,7 +204,7 @@ otus/hometask2  compression    zle       inherited from otus
 otus/hometask2  compressratio  1.00x     -
 ```
 
-<code>zfs get checksum - ( Контрольная сумма )</code>
+<code>zfs get checksum - ( Контрольная сумма sha256 )</code>
 ```
 
 NAME            PROPERTY  VALUE      SOURCE
