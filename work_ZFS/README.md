@@ -77,13 +77,13 @@ pool0/top      zfs       112M  128K  112M   1% /pool0/top
 
 Копируем файл на каждую из созданным фс (zfs)
 
-<code>- cp War_and_Peace.txt /pool0/data/</code>
+<code> - cp War_and_Peace.txt /pool0/data/</code>
 
-<code>- cp War_and_Peace.txt /pool0/files/</code>
+<code> - cp War_and_Peace.txt /pool0/files/</code>
 
-<code>- cp War_and_Peace.txt /pool0/media/</code>
+<code> - cp War_and_Peace.txt /pool0/media/</code>
 
-<code>- cp War_and_Peace.txt /pool0/top/</code>
+<code> - cp War_and_Peace.txt /pool0/top/</code>
 
 Проверяем все ли на месте
 
@@ -94,10 +94,13 @@ ll
 Далее выполняю компрессию/сжатие на каждую из фc c раздным алгоритмом сжатия
 
 
-<code>-  zfs set compression=gzip-9 pool0/data</code>
-<code>-  zfs set compression=zle pool0/files</code>
-<code>-  zfs set compression=lzjb pool0/media</code>
-<code>-  zfs set compression=lz4 pool0/top</code>
+<code> -  zfs set compression=gzip-9 pool0/data</code>
+
+<code> -  zfs set compression=zle pool0/files</code>
+
+<code> -  zfs set compression=lzjb pool0/media</code>
+
+<code> -  zfs set compression=lz4 pool0/top</code>
 
 
 Смотрим итог:
