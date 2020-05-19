@@ -23,10 +23,20 @@
       name: '*'
       state: latest
 
+  - name: stop and disable firewalld
+    systemd:
+        name: firewalld
+        state: started
+        enabled: yes
+    ignore_errors: yes
+    tags: services
+
+
 
   - name: install packages
     yum:
      name:
+       - autofs
        - nfs-utils
        - xfsdump
        - lvm2
