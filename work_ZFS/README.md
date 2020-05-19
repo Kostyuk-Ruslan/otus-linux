@@ -348,3 +348,65 @@ otus/hometask2  overlay               off                    default
 ```
 
 
+Задание №3 Скопировал файл из удаленной директории. https://drive.google.com/file/d/1gH8gCL9y7Nd5Ti3IRmplZPF1XjzxeRAG/view?usp=sharing на вм
+
+
+Первым делом, что бы локально восстановить файл с помощью zfs receive, необходимо создать пул и фс (zfs)
+
+<code> - zpool create -f pool0 /dev/sdb - (создаем пул pool0 из /dev/sdb)</code>
+
+<code> - zfs create pool0/data - (создаем фс "data")</code>
+
+<code>zfs receive pool0/data < otus_task2.file</code>
+cannot receive new filesystem stream: destination 'pool0/data' exists
+must specify -F to overwrite it
+Столкнулся с ошибкой
+
+<code>zfs receive pool0/data < otus_task2.file -F</code> - проделал тоже самое  еще раз с ключом "-F"
+
+
+
+смонтировался 
+
+<code>df -hT</code>
+```
+
+Filesystem     Type      Size  Used Avail Use% Mounted on
+devtmpfs       devtmpfs  1.4G     0  1.4G   0% /dev
+tmpfs          tmpfs     1.4G     0  1.4G   0% /dev/shm
+tmpfs          tmpfs     1.4G  8.6M  1.4G   1% /run
+tmpfs          tmpfs     1.4G     0  1.4G   0% /sys/fs/cgroup
+/dev/sda1      xfs        40G  4.8G   36G  13% /
+tmpfs          tmpfs     283M     0  283M   0% /run/user/1000
+pool0          zfs       112M  128K  112M   1% /pool0
+pool0/data     zfs       112M  128K  112M   1% /pool0/data
+```
+
+
+cd /pool0/data - переходим в "data"
+
+<code>ll</code>
+
+```
+total 3472
+-rw-r--r--. 1 root    root          0 May 15 06:46 10M.file
+-rw-r--r--. 1 root    root     727040 May 15 07:08 mcinderella.tar
+-rw-r--r--. 1 root    root         65 May 15 06:39 for_examaple.txt
+-rw-r--r--. 1 root    root          0 May 15 06:39 homework4.txt
+-rw-r--r--. 1 root    root     309987 May 15 06:39 Limbo.txt
+-rw-r--r--. 1 root    root     509836 May 15 06:39 Moby_Dick.txt
+drwxr-xr-x. 3 vagrant vagrant       4 Dec 18  2017 task1
+-rw-r--r--. 1 root    root    1209374 May  6  2016 War_and_Peace.txt
+-rw-r--r--. 1 root    root     398635 May 15 06:45 world.sql
+```
+
+Далее по заданию нужно найти файл "secret_message"
+find data/ -iname secret_message - find'ом ищим файлс ключом i не учитываем регистр
+data/task1/file_mess/secret_message - нашелся файл
+
+cat secret_message - смотрим
+https://github.com/sindresorhus/awesome  - ссылка на "awesome"
+
+
+
+
