@@ -56,6 +56,7 @@ sdf      8:80   0  250M  0 disk
 
 <details>
 <summary>Команда<code>df -hT</code></summary>
+
 ```
 Filesystem     Type      Size  Used Avail Use% Mounted on
 devtmpfs       devtmpfs  1.4G     0  1.4G   0% /dev
@@ -69,6 +70,7 @@ pool0/data     zfs       112M  128K  112M   1% /pool0/data
 pool0/files    zfs       112M  128K  112M   1% /pool0/files
 pool0/media    zfs       112M  128K  112M   1% /pool0/media
 pool0/top      zfs       112M  128K  112M   1% /pool0/top
+
 ```
 </details>
 
