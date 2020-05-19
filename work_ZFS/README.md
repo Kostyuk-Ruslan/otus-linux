@@ -401,7 +401,7 @@ drwxr-xr-x. 3 vagrant vagrant       4 Dec 18  2017 task1
 ```
 
 Далее по заданию нужно найти файл "secret_message"
-find data/ -iname secret_message - find'ом ищим файлс ключом i не учитываем регистр
+<code>find data/ -iname secret_message</code> - find'ом ищим файлс ключом i не учитываем регистр
 data/task1/file_mess/secret_message - нашелся файл
 
 cat secret_message - смотрим
