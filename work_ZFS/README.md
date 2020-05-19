@@ -158,7 +158,7 @@ otus/hometask2  352M  1.9M  350M   1% /otus/hometask2
 
 
 
-<code>zpool list - размер хранилища   - здесь Видно (тип pool mirror-0)</code>
+<code>zpool list - здесь Видно (тип pool mirror-0)</code>
 ```
 
 
@@ -177,7 +177,7 @@ config:
 
 ```
 
-<code>zpool status - тип pool  - здесь смотрим (размер хранилища )</code>
+<code>zpool status  - здесь смотрим (размер хранилища )</code>
 ```
 
 NAME   SIZE  ALLOC   FREE  EXPANDSZ   FRAG    CAP  DEDUP  HEALTH  ALTROOT
