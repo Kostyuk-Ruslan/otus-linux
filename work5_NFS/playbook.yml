@@ -1,0 +1,69 @@
+---
+- hosts: all
+  become: true
+  tasks:
+  - name: Add multiple repositories into the same file (1/2)
+    yum_repository:
+      name: epel
+      description: EPEL YUM repo
+      file: external_repos
+      baseurl: https://download.fedoraproject.org/pub/epel/$releasever/$basearch/
+      gpgcheck: no
+
+
+  - name: install epel-release
+    yum:
+     name:
+      - epel-release
+     state: latest
+    tags: install-packages
+
+  - name: yum update
+    yum:
+      name: '*'
+      state: latest
+
+
+  - name: install packages
+    yum:
+     name:
+       - nfs-utils
+       - xfsdump
+       - lvm2
+       - mdadm
+       - gdisk
+       - wget
+       - mc
+       - screen
+       - tmux
+       - telnet
+       - tcpdump
+       - nano
+       - git
+       - sshpass
+       - rsync
+       - bc
+       - ethtool
+       - yum-utils
+       - ncdu
+       - htop
+       - lsof
+       - lshw
+       - iotop
+       - iftop
+       - atop
+       - bzip2
+       - zip
+       - unzip
+       - bind-utils
+       - sshfs
+       - dmidecode
+       - hdparm
+       - smartmontools
+       - traceroute
+       - net-tools
+       - bmon
+       - vim
+       - cloud-utils-growpart
+
+     state: latest
