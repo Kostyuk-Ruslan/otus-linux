@@ -70,9 +70,9 @@ end
 /mnt/upload
 ```
 
-<code>touch {1,2,3,4,5}</code> - создаемв нашей директории ряд файлов
+<code>touch {1,2,3,4,5}</code> - Cоздаем в нашей директории ряд файлов
 
-<code>ll</code> 
+
 ```
 [root@nfs-server upload]# ll
 total 0
@@ -90,7 +90,7 @@ total 0
 
 <code>/mnt/upload 192.168.50.12(sync,rw,no_root_squash)</code>
 
-- "/mnt/upload" наша расшаренный каталог с файлами
+- "/mnt/upload" наш расшаренный каталог с файлами
 
 - "192.168.50.12" - ip которому разрешено цеплятся к нашему серверу, в данном случае наш клиент ( я так понял можно ставить и всю сеть и вообще *)
 
@@ -100,12 +100,12 @@ total 0
 
 - "no_root_squash" - да я знаю знаю, что это не секьюрно, но в рамках теста да бы не напрягаться сделал no_root-squash ( Обещаю на продакшене так не делать ! )
 
-После чего смотрю свои изменение командой <code>exportfs -s</code> - ошибок не выдало, выдал результат.
+После чего смотрю свои изменения командой <code>exportfs -s</code> - ошибок не выдало, выдал результат.
 
 <code>/mnt/upload  192.168.50.12(sync,wdelay,hide,no_subtree_check,sec=sys,rw,secure,no_root_squash,no_all_squash)</code>
 
 
-На [клиенте] "vm-2" - nfs-client (192.168.50.12) пробовал в ручную примонировать шару, но столкнулся с ошибкой:
+На [клиенте] "vm-2" - nfs-client (192.168.50.12) пробовал в ручную примонтировать шару, но столкнулся с ошибкой:
 
 
 <details>
@@ -122,9 +122,9 @@ mount.nfs: mount(2): No route to host
 
 Тут скорее всего нужно настроить "firewalld"
 
-Переходим к настройке "firewalld" на [сервере], ввиду того, что в задаче стоит требование по "UDP"
+Переходим к настройке "firewalld" на [сервере], ввиду того, что в задаче стоит требование по "UDP" то и порты добавляем "udp"
 
-Порты частично посмотрел и гугла, частично мне выдал "netstat"
+Порты частично посмотрел из гугла, частично мне выдал "netstat"
 
 ```
 firewall-cmd --permanent --zone=public --add-service=nfs
@@ -172,8 +172,6 @@ tmpfs                      182M     0  182M   0% /run/user/1000
 Заходим на нашу шару и видим в ней наши файлы
 
 <code>cd /storage</code>
-
-<code>ll</code>
 
 ```
 [root@nfs-client storage]# ll
@@ -268,6 +266,7 @@ tmpfs on /run/user/1000 type tmpfs (rw,nosuid,nodev,relatime,size=185752k,mode=7
 ```
 </details>
 
+Вроде не отвалилось.
 
 Далее проверяем запись, перехожу в наш примапленный каталог cd /storage и пытаюсь создать файлы "123" , "1234"
 
@@ -275,7 +274,6 @@ tmpfs on /run/user/1000 type tmpfs (rw,nosuid,nodev,relatime,size=185752k,mode=7
 
 <code> > 1234 </code>
 
-<code>Вывод ll</code>
 
 ```
 [root@nfs-client storage]# ll
