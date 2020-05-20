@@ -120,6 +120,7 @@ mount.nfs: mount(2): No route to host
 
 Порты частично посмотрел и гугла, частично мне выдал "netstat"
 
+```
 firewall-cmd --permanent --zone=public --add-service=nfs
 firewall-cmd --permanent --zone=public --add-service=mountd
 firewall-cmd --permanent --zone=public --add-service=rpc-bind
@@ -132,6 +133,7 @@ firewall-cmd —permanent —add-port=46666/udp
 firewall-cmd —permanent —add-port=42955/udp
 firewall-cmd —permanent —add-port=875/udp
 firewall-cmd --reload
+```
 
 [На клиенте] 
 
