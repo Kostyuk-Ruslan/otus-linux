@@ -135,18 +135,33 @@ firewall-cmd —permanent —add-port=875/udp
 firewall-cmd --reload
 ```
 
+
+
 [На клиенте] 
 
 Создаю каталог для для точки монтирования nfs
 
-mkdir /storage
+<code>mkdir /storage</code>
 
 в ручную пытаюсь примонтировать шару upload
 
-mount -v -t nfs 192.168.50.11:/mnt/upload/ /storage - ошибок не выдал
+<code>mount -v -t nfs 192.168.50.11:/mnt/upload/ /storage</code> - ошибок не выдал
 
-Резульат df -h
+<details>
+<summary><code>Результат df -h</code></summary>
 
+```
+[root@nfs-client /]# df -h
+Filesystem                 Size  Used Avail Use% Mounted on
+devtmpfs                   900M     0  900M   0% /dev
+tmpfs                      907M     0  907M   0% /dev/shm
+tmpfs                      907M  8.5M  899M   1% /run
+tmpfs                      907M     0  907M   0% /sys/fs/cgroup
+/dev/sda1                   40G  3.8G   37G  10% /
+192.168.50.11:/mnt/upload   40G  3.8G   37G  10% /storage
+tmpfs                      182M     0  182M   0% /run/user/1000
+```
+</details>
 
 Заходим на нашу шару и видим в ней наши файлы
 
@@ -166,11 +181,60 @@ cat /etc/fstab
 
 и перезагружаем стенд - клиент, после перезагрузки проверяем что  все работает и ничего не отвалилось
 
-df -h
+<details>
+<summary><code>df -h</code></summary>
 
-mount
+```
+[root@nfs-client /]# df -h
+Filesystem                 Size  Used Avail Use% Mounted on
+devtmpfs                   900M     0  900M   0% /dev
+tmpfs                      907M     0  907M   0% /dev/shm
+tmpfs                      907M  8.5M  899M   1% /run
+tmpfs                      907M     0  907M   0% /sys/fs/cgroup
+/dev/sda1                   40G  3.8G   37G  10% /
+192.168.50.11:/mnt/upload   40G  3.8G   37G  10% /storage
+tmpfs                      182M     0  182M   0% /run/user/1000
+```
+</details>
 
 
+<details>
+<summary><code>mount</code></summary>
+
+```
+[root@nfs-client /]# mount
+sysfs on /sys type sysfs (rw,nosuid,nodev,noexec,relatime)
+proc on /proc type proc (rw,nosuid,nodev,noexec,relatime)
+devtmpfs on /dev type devtmpfs (rw,nosuid,size=921340k,nr_inodes=230335,mode=755)
+securityfs on /sys/kernel/security type securityfs (rw,nosuid,nodev,noexec,relatime)
+tmpfs on /dev/shm type tmpfs (rw,nosuid,nodev)
+devpts on /dev/pts type devpts (rw,nosuid,noexec,relatime,gid=5,mode=620,ptmxmode=000)
+tmpfs on /run type tmpfs (rw,nosuid,nodev,mode=755)
+tmpfs on /sys/fs/cgroup type tmpfs (ro,nosuid,nodev,noexec,mode=755)
+cgroup on /sys/fs/cgroup/systemd type cgroup (rw,nosuid,nodev,noexec,relatime,xattr,release_agent=/usr/lib/systemd/systemd-cgroups-agent,name=systemd)
+pstore on /sys/fs/pstore type pstore (rw,nosuid,nodev,noexec,relatime)
+cgroup on /sys/fs/cgroup/net_cls,net_prio type cgroup (rw,nosuid,nodev,noexec,relatime,net_prio,net_cls)
+cgroup on /sys/fs/cgroup/freezer type cgroup (rw,nosuid,nodev,noexec,relatime,freezer)
+cgroup on /sys/fs/cgroup/perf_event type cgroup (rw,nosuid,nodev,noexec,relatime,perf_event)
+cgroup on /sys/fs/cgroup/pids type cgroup (rw,nosuid,nodev,noexec,relatime,pids)
+cgroup on /sys/fs/cgroup/cpu,cpuacct type cgroup (rw,nosuid,nodev,noexec,relatime,cpuacct,cpu)
+cgroup on /sys/fs/cgroup/devices type cgroup (rw,nosuid,nodev,noexec,relatime,devices)
+cgroup on /sys/fs/cgroup/blkio type cgroup (rw,nosuid,nodev,noexec,relatime,blkio)
+cgroup on /sys/fs/cgroup/memory type cgroup (rw,nosuid,nodev,noexec,relatime,memory)
+cgroup on /sys/fs/cgroup/cpuset type cgroup (rw,nosuid,nodev,noexec,relatime,cpuset)
+cgroup on /sys/fs/cgroup/hugetlb type cgroup (rw,nosuid,nodev,noexec,relatime,hugetlb)
+configfs on /sys/kernel/config type configfs (rw,relatime)
+/dev/sda1 on / type xfs (rw,relatime,attr2,inode64,noquota)
+mqueue on /dev/mqueue type mqueue (rw,relatime)
+hugetlbfs on /dev/hugepages type hugetlbfs (rw,relatime)
+debugfs on /sys/kernel/debug type debugfs (rw,relatime)
+systemd-1 on /proc/sys/fs/binfmt_misc type autofs (rw,relatime,fd=36,pgrp=1,timeout=0,minproto=5,maxproto=5,direct,pipe_ino=11206)
+sunrpc on /var/lib/nfs/rpc_pipefs type rpc_pipefs (rw,relatime)
+192.168.50.11:/mnt/upload on /storage type nfs (rw,noatime,vers=3,rsize=32768,wsize=32768,namlen=255,hard,proto=udp,timeo=11,retrans=3,sec=sys,mountaddr=192.168.50.11,mountvers=3,mountport=20048,mountproto=udp,local_lock=none,addr=192.168.50.11)
+tmpfs on /run/user/1000 type tmpfs (rw,nosuid,nodev,relatime,size=185752k,mode=700,uid=1000,gid=1000)
+
+```
+</details>
 
 
 Далее проверяем запись, перехожу в наш примапленный каталог cd /storage
