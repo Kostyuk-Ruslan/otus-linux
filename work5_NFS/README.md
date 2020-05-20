@@ -1,97 +1,214 @@
 Linux Administrator 2020
 
-   #####################
-   #Домашнее задание 3 #
-   #####################
+   #########################
+   #Домашнее задание 4 NFS #
+   #########################
 
-Для выполнение домашнего задания добавил 5 дисков в вагрантфайл
+
+
+
+Для выполнение домашнего задания я использовал следующий вагрант файл
 
 <details>
 <summary><code>Vagrantfile</code></summary>
 
 ```
 # -*- mode: ruby -*-
-# vim: set ft=ruby :
+# vi: set ft=ruby :
 home = ENV['HOME']
 ENV["LC_ALL"] = "en_US.UTF-8"
 
-MACHINES = {
-  :lvm => {
-        :box_name => "centos/7",
-        :box_version => "1804.02",
-        :ip_addr => '192.168.11.101',
-    :disks => {
-        :sata1 => {
-            :dfile => home + '/VirtualBox VMs/sata1.vdi',
-            :size => 10240,
-            :port => 1
-        },
-        :sata2 => {
-            :dfile => home + '/VirtualBox VMs/sata2.vdi',
-            :size => 2048, # Megabytes
-            :port => 2
-        },
-        :sata3 => {
-            :dfile => home + '/VirtualBox VMs/sata3.vdi',
-            :size => 1024, # Megabytes
-            :port => 3
-        },
-        :sata4 => {
-            :dfile => home + '/VirtualBox VMs/sata4.vdi',
-            :size => 1024,
-            :port => 4
-        }
-    }
-  },
-}
+Vagrant.configure(2) do |config|
+ config.vm.define "vm-1" do |subconfig|
+ subconfig.vm.box = "centos/7"
+ subconfig.vm.hostname="nfs-server"
+ subconfig.vm.network :private_network, ip: "192.168.50.11"
+ subconfig.vm.provider "virtualbox" do |vb|
+ vb.memory = "2024"
+ vb.cpus = "1"
+ end
+ end
 
-Vagrant.configure("2") do |config|
 
-    config.vm.box_version = "1804.02"
-    MACHINES.each do |boxname, boxconfig|
-..
-        config.vm.define boxname do |box|
-..
-            box.vm.box = boxconfig[:box_name]
-            box.vm.host_name = boxname.to_s
-..
-            #box.vm.network "forwarded_port", guest: 3260, host: 3260+offset
-..
-            box.vm.network "private_network", ip: boxconfig[:ip_addr]
-..
-            box.vm.provider :virtualbox do |vb|
-                    vb.customize ["modifyvm", :id, "--memory", "3256"]
-                    needsController = false
-            boxconfig[:disks].each do |dname, dconf|
-                unless File.exist?(dconf[:dfile])
-                  vb.customize ['createhd', '--filename', dconf[:dfile], '--variant', 'Fixed', '--size', dconf[:size]]
-                                  needsController =  true
-                            end
-..
-            end
-                    if needsController == true
-                       vb.customize ["storagectl", :id, "--name", "SATA", "--add", "sata" ]
-                       boxconfig[:disks].each do |dname, dconf|
-                           vb.customize ['storageattach', :id,  '--storagectl', 'SATA', '--port', dconf[:port], '--device', 0, '--type', 'hdd', '--medium', dconf[
-                       end
-                    end
-            end
-
-            box.vm.provision "ansible" do |ansible|
-             ansible.compatibility_mode = "2.0"
-               ansible.playbook = "playbook.yml"
-       end
-
-       end
-
-    end                                                                                                                                                            
+ config.vm.define "vm-2" do |subconfig|
+ subconfig.vm.box = "centos/7"
+ subconfig.vm.hostname="nfs-client"
+ subconfig.vm.network :private_network, ip: "192.168.50.12"
+ subconfig.vm.provider "virtualbox" do |vb|
+ vb.memory = "2024"
+ vb.cpus = "1"
+ end
+ end
+ config.vm.provision "ansible" do |ansible|
+ ansible.compatibility_mode = "2.0"
+ ansible.playbook = "playbook.yml"
     end
+end
 
 
 ```
 </details>
 
-  В итоге при поднятии вагранта "vagrant up" получилась следующая разметка
+ - Вагрант файл поднимает 2 виртуалки: 
+   "vm-1" - nfs-server (192.168.50.11) 
+   "vm-2" - nfs-client (192.168.50.12)
+Сразу проверил между ними пинг, пинг есть с одной и с другой стороны
+И поверх provision сразу на 2 виртуалки playbook с установкой необходимого софта в частности "nfs-utils" и доп. запускает и ставит в автозагрузку firewalld, что бы не запускать руками
+
+а так я обычно использую команду <code>"systemctl enable firealld --now"</code> (сразу стартует и ставить в автозапуск демона)
+
+Запускаем  nfs-server ==> vagrant up vm-1 [ на сервере nfs]
+
+Решил что основой для шары будет каталог "/mnt", внутри создал каталог "upload" ==>  mkdir upload  и там же для теста 5 файлов
+
+<code>touch {1,2,3,4,5}</code>
+
+ll
+
+
+
+Далее перехожу к настройки nfs сервера, перехожу в mcedit /etc/exports и добавляю следующую строку:
+
+/mnt/upload 192.168.50.12(sync,rw,no_root_squash)
+
+/mnt/upload наша расшаренный каталог с файлами
+192.168.50.12 - ip которому разрешено цеплятся к нашему серверу, в данном случае наш клиент ( я так понял можно ставить и всю сеть и вообще *)
+sync - выбрал синхронный режим, так исходя из видеокурса он мне показался наиболее надежным, в принципе для теста я так понял особо и не важно sync или async
+rw - чтение/запись
+no_root_squash - да я знаю знаю, что это не секьюрно, но в рамках теста да бы не напрягаться сделал no_root-squash ( Обещаю на продакшене так не делать ! )
+
+После чего смотрю свои изменение командой exportfs -s - ошибок не выдало, выдал результат.
+
+/mnt/upload  192.168.50.12(sync,wdelay,hide,no_subtree_check,sec=sys,rw,secure,no_root_squash,no_all_squash)
+
+На [клиенте] "vm-2" - nfs-client (192.168.50.12) пробовал в ручную примонировать шапру, но столкнулся с ошибкой:
+
+mount -v -t nfs 192.168.50.11:/mnt/upload/ /storage
+Вывод:
+mount.nfs: timeout set for Wed May 20 11:13:41 2020
+mount.nfs: trying text-based options 'vers=4.1,addr=192.168.50.11,clientaddr=192.168.50.12'
+mount.nfs: mount(2): No route to host
+
+Тут скорее всего нужно настроить "firewalld"
+
+Переходим к настройке "firewalld" на [сервере], ввиду того, что в задаче стоит требование по "UDP"
+
+Порты частично посмотрел и гугла, частично мне выдал "netstat"
+
+firewall-cmd --permanent --zone=public --add-service=nfs
+firewall-cmd --permanent --zone=public --add-service=mountd
+firewall-cmd --permanent --zone=public --add-service=rpc-bind
+
+firewall-cmd —permanent —add-port=111/udp
+firewall-cmd —permanent —add-port=54302/udp
+firewall-cmd —permanent —add-port=20048/udp
+firewall-cmd —permanent —add-port=2049/udp
+firewall-cmd —permanent —add-port=46666/udp
+firewall-cmd —permanent —add-port=42955/udp
+firewall-cmd —permanent —add-port=875/udp
+firewall-cmd --reload
+
+[На клиенте] 
+
+Создаю каталог для для точки монтирования nfs
+
+mkdir /storage
+
+в ручную пытаюсь примонтировать шару upload
+
+mount -v -t nfs 192.168.50.11:/mnt/upload/ /storage - ошибок не выдал
+
+Резульат df -h
+
+
+Заходим на нашу шару и видим в ней наши файлы
+
+cd /storage
+
+ll
+
+
+Далее что бы сделать автоматический mount, мой выбор встал на /etc/fstab вместо autofs
+
+echo "192.168.50.11:/mnt/upload /storage nfs vers=3,proto=udp,noatime 0 0" >> /etc/fstab
+
+proto - протокол используем UDP
+vers=3 - используем NFSv3
+
+cat /etc/fstab
+
+и перезагружаем стенд - клиент, после перезагрузки проверяем что  все работает и ничего не отвалилось
+
+df -h
+
+mount
+
+
+
+
+Далее проверяем запись, перехожу в наш примапленный каталог cd /storage
+
+> 123
+> 1234
+
+Вывод ll
+
+
+Все пишет.
+
+
+
+Доп. задача *
+По поводу задачи с kerberos, я керберос не знаю от слова совсем, я его непонимаю, непонимаю....  как это хреновина со своими билетами работает (
+Я так понял для доп. задания нужно поднимать домен для работы с кереберосом, но домена у меня так такого нет. Всегда сторонился кербероса, так как я его совсем непонимаю, он запутанный.
+Я вся документация которую я встречал, в которую пытался вникнуть -  это был какой то научно-техническо-фантастический ад.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
