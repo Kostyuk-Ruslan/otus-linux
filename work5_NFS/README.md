@@ -96,15 +96,22 @@ total 0
 
 После чего смотрю свои изменение командой <code>exportfs -s</code> - ошибок не выдало, выдал результат.
 
-/mnt/upload  192.168.50.12(sync,wdelay,hide,no_subtree_check,sec=sys,rw,secure,no_root_squash,no_all_squash)
+<code>/mnt/upload  192.168.50.12(sync,wdelay,hide,no_subtree_check,sec=sys,rw,secure,no_root_squash,no_all_squash)</code>
+
 
 На [клиенте] "vm-2" - nfs-client (192.168.50.12) пробовал в ручную примонировать шапру, но столкнулся с ошибкой:
 
-mount -v -t nfs 192.168.50.11:/mnt/upload/ /storage
+
+<details>
+<summary><code>mount -v -t nfs 192.168.50.11:/mnt/upload/ /storage</code></summary>
+```
 Вывод:
 mount.nfs: timeout set for Wed May 20 11:13:41 2020
 mount.nfs: trying text-based options 'vers=4.1,addr=192.168.50.11,clientaddr=192.168.50.12'
 mount.nfs: mount(2): No route to host
+```
+</details>
+
 
 Тут скорее всего нужно настроить "firewalld"
 
