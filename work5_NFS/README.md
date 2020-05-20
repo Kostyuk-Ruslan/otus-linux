@@ -183,6 +183,27 @@ total 0
 -rw-r--r-- 1 root root 0 May 20 14:15 5
 ```
 
+Посмотрим список правил
+
+```
+[root@nfs-server ~]# firewall-cmd --list-all
+public (active)
+target: default
+icmp-block-inversion: no
+interfaces: eth0 eth1
+sources: 
+services: dhcpv6-client mountd nfs rpc-bind ssh
+ports: 111/tcp 54302/tcp 20048/tcp 2049/tcp 875/tcp 111/udp 875/udp 54302/udp 20048/udp 2049/udp
+protocols: 
+masquerade: no
+forward-ports: 
+source-ports: 
+icmp-blocks: 
+rich rules: 
+```                        
+
+
+
 Далее что бы сделать автоматический mount, мой выбор встал на /etc/fstab вместо autofs
 
 <code>echo "192.168.50.11:/mnt/upload /storage nfs vers=3,proto=udp,noatime 0 0" >> /etc/fstab</code>
