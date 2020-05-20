@@ -104,6 +104,7 @@ total 0
 
 <details>
 <summary><code>mount -v -t nfs 192.168.50.11:/mnt/upload/ /storage</code></summary>
+
 ```
 Вывод:
 mount.nfs: timeout set for Wed May 20 11:13:41 2020
