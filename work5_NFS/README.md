@@ -64,6 +64,12 @@ end
 
 Решил что основой для шары будет каталог "/mnt", внутри создал каталог "upload" ==>  <code>mkdir upload</code>  и там же для теста создаем 5 файлов
 
+<code>pwd</code>
+
+```
+/mnt/upload
+```
+
 <code>touch {1,2,3,4,5}</code>
 
 <code>ll</code> 
