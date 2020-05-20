@@ -289,6 +289,32 @@ total 0
 
 Запись прошла успешно.
 
+[На сервере]  - видим, что клиент примаплен
+
+```
+[root@nfs-server ~]# showmount
+Hosts on nfs-server:
+192.168.50.12
+```
+
+
+```
+[root@nfs-server ~]# nfsstat 
+Server rpc stats:
+calls      badcalls   badclnt    badauth    xdrcall
+220        0          0          0          0       
+
+Server nfs v3:
+null         getattr      setattr      lookup       access       readlink     
+13        6% 108      56% 0         0% 9         4% 18        9% 0         0% 
+read         write        create       mkdir        symlink      mknod        
+0         0% 0         0% 7         3% 0         0% 0         0% 0         0% 
+remove       rmdir        rename       link         readdir      readdirplus  
+0         0% 0         0% 0         0% 0         0% 0         0% 12        6% 
+fsstat       fsinfo       pathconf     commit       
+9         4% 10        5% 5         2% 0         0% 
+```
+
 
 
 Доп. задача *
