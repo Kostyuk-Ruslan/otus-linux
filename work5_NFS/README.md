@@ -249,6 +249,7 @@ tmpfs on /run/user/1000 type tmpfs (rw,nosuid,nodev,relatime,size=185752k,mode=7
 Далее проверяем запись, перехожу в наш примапленный каталог cd /storage и пытаюсь создать файлы "123" , "1234"
 
 <code> > 123 </code>
+
 <code> > 1234 </code>
 
 <code>Вывод ll</code>
