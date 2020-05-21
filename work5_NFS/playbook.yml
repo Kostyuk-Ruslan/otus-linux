@@ -78,9 +78,88 @@
        - cloud-utils-growpart
 
      state: latest
+ 
+  - name: Create a directory if it does not exist
+    file:
+      path: /mnt/upload
+      state: directory
+      mode: '0755'
+
+  - name: add exports
+    lineinfile: dest=/etc/exports
+      regexp=''
+      insertafter=EOF
+      line='/mnt/upload 192.168.50.12(sync,rw,no_root_squash)' 
+
+  - name: "Выполняем exportfs"
+    shell: "exportfs"
+    ignore_errors: yes 
+
+  - name: "firewalld public nfs"
+    firewalld:
+      zone: public
+      service: nfs
+      permanent: yes
+      state: enabled
+
+  - name: "firewalld public mountd"
+    firewalld:
+      zone: public
+      service: mountd
+      permanent: yes
+      state: enabled
+
+  - name: "firewalld public rpc-bind"
+    firewalld:
+      zone: public
+      service: rpc-bind
+      permanent: yes
+      state: enabled
 
 
-  - firewalld:
-    port: 111,54302,20048/udp
-    permanent: yes
-    state: enabled
+  - name: "firewalld 111 udp"
+    firewalld:
+      port: 111/udp
+      permanent: yes
+      state: enabled
+
+  - name: "firewalld 2049 udp"
+    firewalld:
+      port: 2049/udp
+      permanent: yes
+      state: enabled
+
+
+  - name: "firewalld 54302 udp"
+    firewalld:
+      port: 54302/udp
+      permanent: yes
+      state: enabled
+
+  - name: "firewalld 20048 udp"
+    firewalld:
+      port: 20048/udp
+      permanent: yes
+      state: enabled
+
+  - name: "firewalld 46666 udp"
+    firewalld:
+      port: 46666/udp
+      permanent: yes
+      state: enabled
+
+  - name: "firewalld 42955 udp"
+    firewalld:
+      port: 42955/udp
+      permanent: yes
+      state: enabled
+
+  - name: "firewalld 875 udp"
+    firewalld:
+      port: 875/udp
+      permanent: yes
+      state: enabled
+
+  - name: "firewalld reload"
+    shell: "firewall-cmd --reload"
+    ignore_errors: yes 

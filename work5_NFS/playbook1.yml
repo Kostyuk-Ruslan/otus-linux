@@ -23,7 +23,7 @@
       name: '*'
       state: latest
 
-  - name: stop and disable firewalld
+  - name: start and enable firewalld
     systemd:
         name: firewalld
         state: started
@@ -77,3 +77,19 @@
        - cloud-utils-growpart
 
      state: latest
+
+ 
+  - name: Create a directory /storage
+    file:
+      path: /storage
+      state: directory
+      mode: '0755'
+
+  - name: "Добавляем данные в /etc/fstab"
+    lineinfile:
+      path: /etc/fstab
+      regexp: ''
+      line: '192.168.50.11:/mnt/upload /storage nfs vers=3,proto=udp,noatime 0 0'
+    register: results
+    tags: replace
+    
