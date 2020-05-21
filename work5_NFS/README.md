@@ -151,7 +151,7 @@ icmp-block-inversion: no
 interfaces: eth0 eth1
 sources: 
 services: dhcpv6-client mountd nfs rpc-bind ssh
-ports: 111/tcp 54302/tcp 20048/tcp 2049/tcp 875/tcp 111/udp 875/udp 54302/udp 20048/udp 2049/udp
+ports: 111/udp 875/udp 54302/udp 20048/udp 2049/udp
 protocols: 
 masquerade: no
 forward-ports: 

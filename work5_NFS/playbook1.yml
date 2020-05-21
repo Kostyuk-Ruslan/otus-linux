@@ -1,5 +1,5 @@
 ---
-- hosts: vm-1
+- hosts: vm-2
   become: true
   tasks:
   - name: Add multiple repositories into the same file (1/2)
@@ -23,7 +23,7 @@
       name: '*'
       state: latest
 
-  - name: start and enable firewalld
+  - name: stop and disable firewalld
     systemd:
         name: firewalld
         state: started
@@ -36,7 +36,6 @@
   - name: install packages
     yum:
      name:
-       - nc
        - autofs
        - nfs-utils
        - xfsdump
@@ -78,9 +77,3 @@
        - cloud-utils-growpart
 
      state: latest
-
-
-  - firewalld:
-    port: 111,54302,20048/udp
-    permanent: yes
-    state: enabled
