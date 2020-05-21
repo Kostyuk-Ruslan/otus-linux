@@ -337,6 +337,55 @@ fsstat       fsinfo       pathconf     commit
 ```
 
 
+В конце добавил автоматизацию, которая с помощью плейбука поднимает NFS c настройками на стороне сервера и клиента:
+
+Новый vagrantfile с двумя плебуками ( плейбуки можно посмотреть на гитхабе )
+
+
+<details>
+<summary><code>Vagrantfile</code></summary>
+
+```
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+home = ENV['HOME']
+ENV["LC_ALL"] = "en_US.UTF-8"
+
+Vagrant.configure(2) do |config|
+ config.vm.define "vm-1" do |subconfig|
+ subconfig.vm.box = "centos/7"
+ subconfig.vm.hostname="nfs-server"
+ subconfig.vm.network :private_network, ip: "192.168.50.11"
+ subconfig.vm.provider "virtualbox" do |vb|
+ vb.memory = "2024"
+ vb.cpus = "1"
+ end
+ end
+ config.vm.provision "ansible" do |ansible|
+ ansible.compatibility_mode = "2.0"
+ ansible.playbook = "playbook.yml"
+end.
+.
+ config.vm.define "vm-2" do |subconfig|
+ subconfig.vm.box = "centos/7"
+ subconfig.vm.hostname="nfs-client"
+ subconfig.vm.network :private_network, ip: "192.168.50.12"
+ subconfig.vm.provider "virtualbox" do |vb|
+ vb.memory = "2024"
+ vb.cpus = "1"
+ end
+ end
+ config.vm.provision "ansible" do |ansible|
+ ansible.compatibility_mode = "2.0"
+ ansible.playbook = "playbook1.yml"
+   end
+end
+
+```
+</details>
+
+
+
 
 Доп. задача *
 По поводу задачи с kerberos, я керберос не знаю от слова совсем, я его непонимаю, непонимаю....  как это хреновина со своими билетами работает (
