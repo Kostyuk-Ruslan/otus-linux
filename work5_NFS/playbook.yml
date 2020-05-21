@@ -1,5 +1,5 @@
 ---
-- hosts: all
+- hosts: nfs-server
   become: true
   tasks:
   - name: Add multiple repositories into the same file (1/2)
@@ -23,7 +23,7 @@
       name: '*'
       state: latest
 
-  - name: stop and disable firewalld
+  - name: start and enable firewalld
     systemd:
         name: firewalld
         state: started
