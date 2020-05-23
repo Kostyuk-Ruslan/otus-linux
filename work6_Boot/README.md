@@ -242,5 +242,53 @@ menuentry 'CentOS Linux (3.10.0-1127.el7.x86_64) 7 (Core)' --class centos --clas
 <summary><code>Добавить модуль в initrd</code></summary>
 
 
+Переходим в каталог "cd /usr/lib/dracut/modules.d" и видим там много модулей
+создаем каталог "mkdir 01test"
+
+и помещаем туда два скрипта с гитхаба "https://gist.github.com/lalbrekht/"
+
+<summary><code>module-setup.sh</summary></code>
+
+```
+#!/bin/bash
+
+check() {
+    return 0
+}
+
+depends() {
+    return 0
+}
+
+install() {
+    inst_hook cleanup 00 "${moddir}/test.sh"
+}
+
+```
+
+<summary><code>test.sh</summary></code>
+
+```
+#!/bin/bash
+
+exec 0<>/dev/console 1<>/dev/console 2<>/dev/console
+cat <<'msgend'
+Hello! You are in dracut module!
+ ___________________
+< I'm dracut module >
+ -------------------
+   \
+    \
+        .--.
+       |o_o |
+       |:_/ |
+      //   \ \
+     (|     | )
+    /'\_   _/`\
+    \___)=(___/
+msgend
+sleep 10
+echo " continuing...."
 
 
+```
