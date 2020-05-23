@@ -17,7 +17,7 @@ Linux Administrator 2020
 <details>
 <summary><code>Попасть в систему без пароля несколькими способами</code></summary>
 
-```
+
 Спасибо 1.
 
 Вышло данное окно:
@@ -34,7 +34,6 @@ Linux Administrator 2020
 
 
 
-```
 </details>
 
 
