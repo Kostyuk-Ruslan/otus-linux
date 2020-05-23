@@ -18,7 +18,7 @@ Linux Administrator 2020
 <summary><code>Попасть в систему без пароля несколькими способами</code></summary>
 
 
-Спасибо 1.
+Способ 1.
 
 Вышло данное окно:
 
@@ -192,7 +192,49 @@ menuentry 'CentOS Linux (3.10.0-1127.el7.x86_64) 7 (Core)' --class centos --clas
 
 [root@ms001-otus01 ~]# mkinitrd -f -v /boot/initramfs-$(uname -r).img $(uname -r) - пошел длинный вывод, в конце выдал
 
+<code>
 *** Created microcode section ***
 *** Creating image file done ***
 *** Creating initramfs image file '/boot/initramfs-3.10.0-1127.el7.x86_64.img' done ***
+</code>
+
+И перезагружаемся "reboot"
+
+после перезагрузки видим новое имя VG
+
+[root@ms001-otus01 ~]# vgs
+  VG       #PV #LV #SN Attr   VSize   VFree
+  OtusRoot   1   2   0 wz--n- <69.00g    0 
+[root@ms001-otus01 ~]# vgdisplay
+  --- Volume group ---
+  VG Name               OtusRoot
+  System ID             
+  Format                lvm2
+  Metadata Areas        1
+  Metadata Sequence No  6
+  VG Access             read/write
+  VG Status             resizable
+  MAX LV                0
+  Cur LV                2
+  Open LV               2
+  Max PV                0
+  Cur PV                1
+  Act PV                1
+  VG Size               <69.00 GiB
+  PE Size               4.00 MiB
+  Total PE              17663
+  Alloc PE / Size       17663 / <69.00 GiB
+  Free  PE / Size       0 / 0   
+  VG UUID               3iG60l-uthZ-riT5-EHPF-6FQR-PrST-ekLMof
+
+Имя поменялось.
+</details>
+
+
+
+<details>
+<summary><code>Добавить модуль в initrd</code></summary>
+
+
+
 
