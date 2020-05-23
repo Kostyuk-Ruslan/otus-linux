@@ -9,7 +9,7 @@ Linux Administrator 2020
 
 Для выполнение домашнего задания я использовал виртуальную машину "ms001-otus01" на ESXI 5.5, предварительно сделав снапшот
 
-<p align="center"><img src="
+<p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/work6_Boot/photo/1.JPG"></p>
 
 
 
