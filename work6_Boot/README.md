@@ -58,11 +58,20 @@ Linux Administrator 2020
 Попытался сделать reboot, но не получилось, поэтому сделал жесткий reset вм. ( возможно надо было выйти из chroot)
 После перезагрузки успешно вошел в систему под новым паролем рута.
 
+Способ 3.
+
+По аналогии с первым заданием дожидаемся окна выбора ядер и жмем "e"
+
+Далее пишем после "linux16" ==>  rw init=/sysroot/bin/sh и жмем Ctrl+X
 
 
+<p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/work6_Boot/photo/7.JPG"></p>
 
+и нажал "Ctrl + X"
 
+<p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/work6_Boot/photo/8.JPG"></p>
 
+Тут перезагрузка сработала, после того как вышел из "chroot" удачно вошел в систему с новым 3-им паролем.
 
 
 </details>
