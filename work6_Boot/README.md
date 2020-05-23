@@ -247,6 +247,7 @@ menuentry 'CentOS Linux (3.10.0-1127.el7.x86_64) 7 (Core)' --class centos --clas
 
 и помещаем туда два скрипта с гитхаба "https://gist.github.com/lalbrekht/"
 
+<details
 <summary><code>module-setup.sh</summary></code>
 
 ```
@@ -265,6 +266,7 @@ install() {
 }
 
 ```
+</details>
 
 <summary><code>test.sh</summary></code>
 
