@@ -154,6 +154,16 @@ UUID=b530bedb-abb3-4a79-a738-bb426988f479 /boot                   xfs     defaul
 ```
 
 
+[root@ms001-otus01 ~]# vim /etc/default/grub
 
+```
+GRUB_TIMEOUT=5
+GRUB_DISTRIBUTOR="$(sed 's, release .*$,,g' /etc/system-release)"
+GRUB_DEFAULT=saved
+GRUB_DISABLE_SUBMENU=true
+GRUB_TERMINAL_OUTPUT="console"
+GRUB_CMDLINE_LINUX="crashkernel=auto rd.lvm.lv=OtusRoot/root rd.lvm.lv=OtusRoot/swap rhgb quiet"
+GRUB_DISABLE_RECOVERY="true"
+```
 
 
