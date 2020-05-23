@@ -193,9 +193,13 @@ menuentry 'CentOS Linux (3.10.0-1127.el7.x86_64) 7 (Core)' --class centos --clas
 [root@ms001-otus01 ~]# mkinitrd -f -v /boot/initramfs-$(uname -r).img $(uname -r) - пошел длинный вывод, в конце выдал
 
 <code>
+
 *** Created microcode section ***
+
 *** Creating image file done ***
+
 *** Creating initramfs image file '/boot/initramfs-3.10.0-1127.el7.x86_64.img' done ***
+
 </code>
 
 И перезагружаемся "reboot"
@@ -205,6 +209,7 @@ menuentry 'CentOS Linux (3.10.0-1127.el7.x86_64) 7 (Core)' --class centos --clas
 [root@ms001-otus01 ~]# vgs
   VG       #PV #LV #SN Attr   VSize   VFree
   OtusRoot   1   2   0 wz--n- <69.00g    0 
+
 [root@ms001-otus01 ~]# vgdisplay
   --- Volume group ---
   VG Name               OtusRoot
