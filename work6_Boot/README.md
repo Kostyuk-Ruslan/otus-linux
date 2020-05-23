@@ -190,7 +190,7 @@ menuentry 'CentOS Linux (3.10.0-1127.el7.x86_64) 7 (Core)' --class centos --clas
 
 Пересоздаем inird  для нового имени OtusRoot
 
-[root@ms001-otus01 ~]# mkinitrd -f -v /boot/initramfs-$(uname -r).img $(uname -r) - пошел длинный вывод, в конце выдал
+<code>[root@ms001-otus01 ~]# mkinitrd -f -v /boot/initramfs-$(uname -r).img $(uname -r)</code> - пошел длинный вывод, в конце выдал
 
 <code>
 
@@ -206,6 +206,7 @@ menuentry 'CentOS Linux (3.10.0-1127.el7.x86_64) 7 (Core)' --class centos --clas
 
 после перезагрузки видим новое имя VG
 
+```
 [root@ms001-otus01 ~]# vgs
   VG       #PV #LV #SN Attr   VSize   VFree
   OtusRoot   1   2   0 wz--n- <69.00g    0 
@@ -231,7 +232,7 @@ menuentry 'CentOS Linux (3.10.0-1127.el7.x86_64) 7 (Core)' --class centos --clas
   Alloc PE / Size       17663 / <69.00 GiB
   Free  PE / Size       0 / 0   
   VG UUID               3iG60l-uthZ-riT5-EHPF-6FQR-PrST-ekLMof
-
+```
 Имя поменялось.
 </details>
 
