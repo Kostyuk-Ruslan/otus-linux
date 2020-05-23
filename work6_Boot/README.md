@@ -11,7 +11,7 @@ Linux Administrator 2020
 
 <p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/work6_Boot/photo/1.JPG"></p>
 
-Перезагрузил систему, дождася окна выбора ядер и нажал "-e"
+Перезагрузил систему, дождался окна выбора ядер и нажал "-e"
 
 
 <details>
@@ -71,11 +71,65 @@ Linux Administrator 2020
 
 <p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/work6_Boot/photo/8.JPG"></p>
 
+- Команда "mount" показал, что мы в систему уже в режиме "Read-Write" удобно )
+
+
 Тут перезагрузка сработала, после того как вышел из "chroot" удачно вошел в систему с новым 3-им паролем.
 
 
 </details>
 
+
+<details>
+<summary><code>Установить систему с LVM, после чего переименовать VG</code></summary>
+
+Установил систему с образа "CentOS7"на виртуалку в итоге получилось следующая размерка:
+
+
+```
+
+[root@ms001-otus01 ~]# lsblk
+NAME            MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+fd0               2:0    1    4K  0 disk 
+sda               8:0    0   70G  0 disk 
+├─sda1            8:1    0    1G  0 part /boot
+└─sda2            8:2    0   69G  0 part 
+  ├─centos-root 253:0    0   67G  0 lvm  /
+  └─centos-swap 253:1    0    2G  0 lvm  [SWAP]
+sr0              11:0    1 1024M  0 rom  
+[root@ms001-otus01 ~]# 
+
+доп. информация
+
+[root@ms001-otus01 ~]# vgs
+  VG     #PV #LV #SN Attr   VSize   VFree
+  centos   1   2   0 wz--n- <69.00g    0 
+[root@ms001-otus01 ~]# vgdisplay
+  --- Volume group ---
+  VG Name               centos
+  System ID             
+  Format                lvm2
+  Metadata Areas        1
+  Metadata Sequence No  5
+  VG Access             read/write
+  VG Status             resizable
+  MAX LV                0
+  Cur LV                2
+  Open LV               2
+  Max PV                0
+  Cur PV                1
+  Act PV                1
+  VG Size               <69.00 GiB
+  PE Size               4.00 MiB
+  Total PE              17663
+  Alloc PE / Size       17663 / <69.00 GiB
+  Free  PE / Size       0 / 0   
+  VG UUID               3iG60l-uthZ-riT5-EHPF-6FQR-PrST-ekLMof
+   
+[root@ms001-otus01 ~]# 
+
+
+```
 
 
 
