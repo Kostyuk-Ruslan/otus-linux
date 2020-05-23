@@ -320,4 +320,30 @@ echo " continuing...."
 test - загружен наш модуль test
 ```
 
+Далее я решил отредактировать файл grub.cfg
+
+через vim зашел в /boot/grub2/grub.cfg - поиском нашел "rhgb quiet" и убрал их ( они шли после /swap)  и сохранил
+
+# BEGIN /etc/grub.d/10_linux ###
+nuentry 'CentOS Linux (3.10.0-1127.el7.x86_64) 7 (Core)' --class centos --class gnu-linux --class gnu --class os --unrestricted $menuentry_id_option 'gnulinux-3.
+.0-862.el7.x86_64-advanced-9126d604-c54d-4b60-865b-424e3e820f50' {
+      load_video
+      set gfxpayload=keep
+      insmod gzio
+      insmod part_msdos
+      insmod xfs
+      set root='hd0,msdos1'
+      if [ x$feature_platform_search_hint = xy ]; then
+        search --no-floppy --fs-uuid --set=root --hint-bios=hd0,msdos1 --hint-efi=hd0,msdos1 --hint-baremetal=ahci0,msdos1 --hint='hd0,msdos1'  b530bedb-abb3-4a7
+a738-bb426988f479
+      else
+        search --no-floppy --fs-uuid --set=root b530bedb-abb3-4a79-a738-bb426988f479
+      fi
+      linux16 /vmlinuz-3.10.0-1127.el7.x86_64 root=/dev/mapper/OtusRoot-root ro crashkernel=auto rd.lvm.lv=OtusRoot/root rd.lvm.lv=OtusRoot/swap rhgb quiet LANG=
+_US.UTF-8
+      initrd16 /initramfs-3.10.0-1127.el7.x86_64.img
+
+Перезагрузил вм, в процессе загрузки увидел пингвина ))
+
+<p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/work6_Boot/photo/9.JPG"></p>
 
