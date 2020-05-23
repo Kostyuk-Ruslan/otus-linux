@@ -138,7 +138,7 @@ Volume group "centos" successfully renamed to "OtusRoot"
 [root@ms001-otus01 ~]# 
  
 ```   
-Правим  " vim /etc/fstab"
+Правим  " vim /etc/fstab" - меняем "centos" на "OtusRoot
 
 ```
 #
@@ -154,7 +154,7 @@ UUID=b530bedb-abb3-4a79-a738-bb426988f479 /boot                   xfs     defaul
 ```
 
 
-[root@ms001-otus01 ~]# vim /etc/default/grub
+[root@ms001-otus01 ~]# vim /etc/default/grub - меняем "centos" на "OtusRoot"
 
 ```
 GRUB_TIMEOUT=5
@@ -166,4 +166,33 @@ GRUB_CMDLINE_LINUX="crashkernel=auto rd.lvm.lv=OtusRoot/root rd.lvm.lv=OtusRoot/
 GRUB_DISABLE_RECOVERY="true"
 ```
 
+
+[root@ms001-otus01 ~]# vim /boot/grub2/grub.cfg - меняем "centos" на "OtusRoot"
+
+```
+
+### BEGIN /etc/grub.d/10_linux ###
+menuentry 'CentOS Linux (3.10.0-1127.el7.x86_64) 7 (Core)' --class centos --class gnu-linux --class gnu --class os --unrestricted $menuentry_id_option 'gnulinux-3.10.0-862.el7.x86_64-advanced-9126d604-c54d-4b60-865b-424e3e820f50' {
+        load_video
+        set gfxpayload=keep
+        insmod gzio
+        insmod part_msdos
+        insmod xfs
+        set root='hd0,msdos1'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd0,msdos1 --hint-efi=hd0,msdos1 --hint-baremetal=ahci0,msdos1 --hint='hd0,msdos1'  b530bedb-abb3-4a79-a738-bb426988f479
+        else
+          search --no-floppy --fs-uuid --set=root b530bedb-abb3-4a79-a738-bb426988f479
+        fi        linux16 /vmlinuz-3.10.0-1127.el7.x86_64 root=/dev/mapper/OtusRoot-root ro crashkernel=auto rd.lvm.lv=OtusRoot/root rd.lvm.lv=OtusRoot/swap rhgb quiet LANG=en_US.UTF-8
+        initrd16 /initramfs-3.10.0-1127.el7.x86_64.img
+
+```
+
+Пересоздаем inird  для нового имени OtusRoot
+
+[root@ms001-otus01 ~]# mkinitrd -f -v /boot/initramfs-$(uname -r).img $(uname -r) - пошел длинный вывод, в конце выдал
+
+*** Created microcode section ***
+*** Creating image file done ***
+*** Creating initramfs image file '/boot/initramfs-3.10.0-1127.el7.x86_64.img' done ***
 
