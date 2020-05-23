@@ -28,12 +28,24 @@ Linux Administrator 2020
 
 <p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/work6_Boot/photo/3.JPG"></p>
 
-и монтируем корневую файловую систему в режиме Read-write
+попали в рутовую файловую систему, проверил файлы, все на месте, я так понял мы посоденились в режиме RO
+перементируем  корневую файловую систему в режиме Read-write
 
 <p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/work6_Boot/photo/4.JPG"></p>
+
+После чего набрал команду <code>passwd</code> и ввел свой пароль и "reboot" после перезагрузки я успешно вошел в систему под своим новым паролем.
+
+
+Способ 2.
 
 
 
 </details>
+
+
+
+
+
+
 
 
