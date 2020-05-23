@@ -247,8 +247,8 @@ menuentry 'CentOS Linux (3.10.0-1127.el7.x86_64) 7 (Core)' --class centos --clas
 
 и помещаем туда два скрипта с гитхаба "https://gist.github.com/lalbrekht/"
 
-<details
-<summary><code>module-setup.sh</summary></code>
+
+<summary><code>module-setup.sh</summary></code> - уст. самого модуля и вызывает test.sh 
 
 ```
 #!/bin/bash
@@ -266,9 +266,9 @@ install() {
 }
 
 ```
-</details>
 
-<summary><code>test.sh</summary></code>
+<details>
+<summary><code>test.sh</summary></code> - тот скрипт который вызывается, рисует пингвина )
 
 ```
 #!/bin/bash
@@ -294,3 +294,26 @@ echo " continuing...."
 
 
 ```
+
+</details>
+
+Пересобираем "initrd" от текущей версии ядра
+
+<code>[root@ms001-otus01 01test]# mkinitrd -f -v /boot/initramfs-$(uname -r).img $(uname -r) </code>
+Пошел длинный вывод, в конце выдал:
+
+```
+*** Created microcode section ***
+*** Creating image file done ***
+*** Creating initramfs image file '/boot/initramfs-3.10.0-1127.el7.x86_64.img' done ***
+```
+Команду "dracut -f -v"  - применять не стал.
+
+Далее смотрим какие модули загружены:
+
+```
+[root@ms001-otus01 01test]# lsinitrd -m /boot/initramfs-$(uname -r).img | grep test
+test - загружен наш модуль test
+```
+
+
