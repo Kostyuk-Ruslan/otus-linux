@@ -38,6 +38,23 @@ Linux Administrator 2020
 
 Способ 2.
 
+По аналогии с первым заданием дожидаемся окна выбора ядер и жмем "e"
+
+Далее пишем после "linux16" ==>  rd.break и жмем Ctrl+X
+
+<p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/work6_Boot/photo/5.JPG"></p>
+
+Попадаем в аварийный режим (emergency mode)
+
+<p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/work6_Boot/photo/6.JPG"></p>
+
+1. Перемонтируем корневую файловую систему в 
+
+
+
+
+
+
 
 
 </details>
