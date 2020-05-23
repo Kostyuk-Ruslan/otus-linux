@@ -130,8 +130,28 @@ sr0              11:0    1 1024M  0 rom
 
 
 ```
+ Далее меняем имя vgs <code>vgrename centos OtusRoot</code>
 
+``` 
+[root@ms001-otus01 ~]# vgrename centos OtusRoot
+Volume group "centos" successfully renamed to "OtusRoot"
+[root@ms001-otus01 ~]# 
+ 
+```   
+Правим  " vim /etc/fstab"
 
+```
+#
+# /etc/fstab
+# Created by anaconda on Thu May 17 18:50:10 2018
+#
+# Accessible filesystems, by reference, are maintained under '/dev/disk'
+# See man pages fstab(5), findfs(8), mount(8) and/or blkid(8) for more info
+#
+/dev/mapper/OtusRoot-root /                       xfs     defaults        0 0
+UUID=b530bedb-abb3-4a79-a738-bb426988f479 /boot                   xfs     defaults        0 0
+/dev/mapper/OtusRoot-swap swap                    swap    defaults        0 0
+```
 
 
 
