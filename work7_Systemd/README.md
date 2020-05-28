@@ -92,8 +92,6 @@ LINE=OTUS
 
 [Unit]
 Description=unit egrep Kostyuk_Ruslan
-After=network.target sshd-keygen.service
-Wants=sshd-k
 
 [Service]
 Type=notify
@@ -112,10 +110,69 @@ WantedBy=multi-user.target
 </details>
 
 
-- log_otus.timer
 
 
 
+<details>
+<summary><code>log_otus.timer</code></summary>
 
+```
+
+[Unit]
+Description=timet log Kostyuk_Ruslan
+
+[Timer]
+OnCalendar=*:*:0,30
+
+#OnBootSec=30sec
+#OnUnitActiveSec=1d
+
+
+[Install]
+WantedBy=timers.target
+
+
+```
+</details>
+
+<code>systemctl daemon-reload</code>  ==> "systemctl start log_otus.timer" - ошибок не выдал
+
+Далее посмотрел "systemctl status log_otus.service" - увидел что он был запущен, значит таймер успешно запустил на юнит service
+
+```
+Время раз в 30 скунд отслеживал двумя способами:
+
+<code>1) systemctl list-timers</code>
+
+```
+
+[root@systemd system]# systemctl list-timers
+NEXT                         LEFT     LAST                         PASSED       UNIT                         ACTIVATES
+Thu 2020-05-28 10:58:30 UTC  11s left Thu 2020-05-28 10:58:10 UTC  8s ago       log_otus.timer               log_otus.service
+Fri 2020-05-29 08:59:56 UTC  22h left Thu 2020-05-28 08:59:56 UTC  1h 58min ago systemd-tmpfiles-clean.timer systemd-tmpfiles-clean.service
+
+2 timers listed.
+
+```
+тут видно что таймер добавился
+
+<code>2) watch -n1 systemctl status log_otus.service</code>
+
+
+```
+
+[root@systemd system]# systemctl status log_otus.service
+● log_otus.service - unit egrep Kostyuk_Ruslan
+   Loaded: loaded (/etc/systemd/system/log_otus.service; disabled; vendor preset: disabled)
+   Active: inactive (dead) since Thu 2020-05-28 11:00:40 UTC; 14s ago
+  Process: 26482 ExecStart=/bin/egrep $LINE $DIR (code=exited, status=0/SUCCESS)
+ Main PID: 26482 (code=exited, status=0/SUCCESS)
+
+May 28 11:00:40 systemd systemd[1]: Started unit egrep Kostyuk_Ruslan.
+May 28 11:00:40 systemd egrep[26482]: May 28 08:48:26 systemd vagrant: OTUS
+[root@systemd system]# 
+
+```
+Тут важно увидеть строки " 14s ago" эта строка счетчик сбрасывается каждые 30 секунд
 
 
