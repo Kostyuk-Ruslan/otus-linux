@@ -62,14 +62,60 @@ May 28 08:48:26 systemd vagrant: OTUS
 
 ```
 
+Как видим наше слово "OTUS" присуствует в файле.
+
+Сам файл по условии задачи копируем в /etc/sysconfig
+
+
+Далее  cоздадим файл в /etc/sysconfig и назовем его "log_otus, в нем определим переменные ключевого слова "OTUS".
 
 
 
-  
-Создадим файл  /etc/sysconfig, в нем определим переменные ключевого слова и назовем его   .service, туда же кладем наш лог файл message
+```
 
+[root@systemd sysconfig]# cat log_otus 
+# New unit Kostyuk_Ruslan
 
-с помощью утилиты logger заносим в него наши контрольные слова которые определены в /etc/sysconfig/ ***.service
+DIR=/etc/sysconfig/messages
+LINE=OTUS
+
+```
  
-Создаем свой юнит в /etc/systemd/system там же создаем и .timer который мониторит лог раз в 30 секунд
+Далее Создаем свой юнит в /etc/systemd/system там же создаем и .timer который по условии задачи должен  мониторить наш лог раз в 30 секунд
+
+и того получилось два файла:
+
+<details>
+<summary><code>log_otus.service</code></summary>
+
+```
+
+[Unit]
+Description=unit egrep Kostyuk_Ruslan
+After=network.target sshd-keygen.service
+Wants=sshd-k
+
+[Service]
+Type=notify
+EnvironmentFile=/etc/sysconfig/log_otus
+ExecStart=/bin/egrep $LINE $DIR
+ExecReload=/bin/kill -HUP $MAINPID
+KillMode=process
+Restart=on-failure
+RestartSec=10s
+
+[Install]
+WantedBy=multi-user.target
+
+```
+
+</details>
+
+
+- log_otus.timer
+
+
+
+
+
 
