@@ -137,12 +137,13 @@ WantedBy=timers.target
 
 <code>systemctl daemon-reload</code>  ==> "systemctl start log_otus.timer" - ошибок не выдал
 
-Далее посмотрел "systemctl status log_otus.service" - увидел что он был запущен, значит таймер успешно запустил на юнит service
+Далее посмотрел "systemctl status log_otus.service" - увидел что он был запущен, значит таймер успешно запустил наш юнит service
 
-```
-Время раз в 30 скунд отслеживал двумя способами:
+
+Время раз в 30 секунд отслеживал двумя способами:
 
 <code>1) systemctl list-timers</code>
+
 
 ```
 
