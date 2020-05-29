@@ -181,7 +181,6 @@ May 28 11:00:40 systemd egrep[26482]: May 28 08:48:26 systemd vagrant: OTUS
 <details>
 <summary><code>Дополнить unit-файл httpd (он же apache) возможностью запустить несколько инстансов сервера с разными конфигурационными файлами</code></summary>
 
-```
 
 Первым делом ставлю пакет "httpd" <code>yum install httpd -y</code>
 
