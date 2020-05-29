@@ -559,7 +559,7 @@ May 29 10:04:14 systemd systemd[1]: Started unit spawn-fcgi Kostyuk Ruslan.
 May 29 10:04:14 systemd spawn-fcgi[1123]: spawn-fcgi: child spawned successfully: PID: 1124
 [root@systemd ~]# 
 
-
+```
 
 
 </details>
@@ -570,9 +570,9 @@ May 29 10:04:14 systemd spawn-fcgi[1123]: spawn-fcgi: child spawned successfully
 
 Доп. задание  *
 
-
 <details>
 <summary><code>Скачать демо-версию Atlassian Jira и переписать основной скрипт запуска на unit-файл.</code></summary>
+
 
 Скачал демо-версию jira c ресурса <code>https://www.atlassian.com/ru/software/jira/download</code>
 
