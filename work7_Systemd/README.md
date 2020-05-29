@@ -41,7 +41,7 @@ end
 </details>
 
 <details>
-<summary><code>Написать service, который будет раз в 30 секунд мониторить лог на предмет наличия ключевого слова (файл лога и ключевое слово должны задаваться в /etc/sysconfig);</code></summary>
+<summary><code>Написать service, который будет раз в 30 секунд мониторить лог на предмет наличия ключевого слова (файл лога и ключевое слово должны задаваться в /etc/sysconfig)</code></summary>
 
 Я решил взять лог файл  "/var/log/messages" первым делом определим контрольное слово в этом файле, я решил, что это будет слово <code>"OTUS"</code>
 
@@ -176,4 +176,43 @@ May 28 11:00:40 systemd egrep[26482]: May 28 08:48:26 systemd vagrant: OTUS
 ```
 Тут важно увидеть строки " 14s ago" эта строка счетчик сбрасывается каждые 30 секунд
 
+</details>
+
+<details>
+<summary><code>Дополнить unit-файл httpd (он же apache) возможностью запустить несколько инстансов сервера с разными конфигурационными файлами</code></summary>
+
+```
+
+Первым делом ставлю пакет "httpd" <code>yum install httpd -y</code>
+
+Далее создаю наш unit-шаблон  "httpd@.service" на основе файла оригинального файлы "httpd.service" который лежит тут(/usr/lib/systemd/system) 
+
+
+```
+[Unit]
+Description=The Apache HTTP Server
+After=network.target remote-fs.target nss-lookup.target
+Documentation=man:httpd(8)
+Documentation=man:apachectl(8)
+
+[Service]
+Type=notify
+EnvironmentFile=/etc/sysconfig/httpd
+ExecStart=/usr/sbin/httpd $OPTIONS -DFOREGROUND
+ExecReload=/usr/sbin/httpd $OPTIONS -k graceful
+ExecStop=/bin/kill -WINCH ${MAINPID}
+# We want systemd to give httpd some time to finish gracefully, but still want
+# it to kill httpd after TimeoutStopSec if something went wrong during the
+# graceful stop. Normally, Systemd sends SIGTERM signal right after the
+# ExecStop, which would kill httpd. We are sending useless SIGCONT here to give
+# httpd time to finish.
+KillSignal=SIGCONT
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target
+
+```
+
+Далее создаю конфигурационные файлы на каждый instance 
 
