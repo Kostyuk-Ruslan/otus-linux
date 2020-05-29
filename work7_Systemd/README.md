@@ -282,3 +282,152 @@ tcp6       0      0 :::8090                 :::*                    LISTEN      
 
 
 
+<details>
+<summary><code>Из репозитория epel установить spawn-fcgi и переписать init-скрипт на unit-файл (имя service должно называться так же: spawn-fcgi) </code></summary>
+
+Честно говоря сперва не понял задание от слова совсем, что за init-скрипт который нужно переписать ? Откуда брать ? Непомню, что бы что-то похожее было на вебинаре, Методички так таковой нет, ну пойдем от того что имеем, epel репозиторий уже был установлен с помощью ansible, соталось только установить в ручную пакет "spawn-fcgi"
+
+<code>yum install spawn-fcgi</code> - ну тут вроде просто, установился без проблем, что дальше непонятно...
+Попробовал просто запустить его как демона <code>systemctl start spawn-fcgi</code>
+Выдал ошибку, чуть копнув
+
+```
+[root@systemd systemd]# systemctl status spawn-fcgi
+● spawn-fcgi.service - LSB: Start and stop FastCGI processes
+   Loaded: loaded (/etc/rc.d/init.d/spawn-fcgi; bad; vendor preset: disabled)
+   Active: failed (Result: exit-code) since Fri 2020-05-29 08:52:23 UTC; 6min ago
+     Docs: man:systemd-sysv-generator(8)
+  Process: 3806 ExecStart=/etc/rc.d/init.d/spawn-fcgi start (code=exited, status=1/FAILURE)
+
+May 29 08:52:23 systemd systemd[1]: Starting LSB: Start and stop FastCGI processes...
+May 29 08:52:23 systemd spawn-fcgi[3806]: Starting spawn-fcgi: [FAILED]
+May 29 08:52:23 systemd systemd[1]: spawn-fcgi.service: control process exited, code=exited status=1
+May 29 08:52:23 systemd systemd[1]: Failed to start LSB: Start and stop FastCGI processes.
+May 29 08:52:23 systemd systemd[1]: Unit spawn-fcgi.service entered failed state.
+May 29 08:52:23 systemd systemd[1]: spawn-fcgi.service failed.
+
+
+```
+
+Тут я увидел строку <code>ExecStart=/etc/rc.d/init.d/spawn-fcgi</code> - тут вижу каталог "init.d" как в условии задачи init файл, наверное это он
+
+посмотрел его поближе и он выдал мне целую "простыню"
+
+<details>
+<summary><code>cat /etc/rc.d/init.d/spawn-fcgi</code></summary>
+
+```
+[root@systemd systemd]# cat /etc/rc.d/init.d/spawn-fcgi 
+#!/bin/sh
+#
+# spawn-fcgi   Start and stop FastCGI processes
+#
+# chkconfig:   - 80 20
+# description: Spawn FastCGI scripts to be used by web servers
+
+### BEGIN INIT INFO
+# Provides: 
+# Required-Start: $local_fs $network $syslog $remote_fs $named
+# Required-Stop: 
+# Should-Start: 
+# Should-Stop: 
+# Default-Start: 
+# Default-Stop: 0 1 2 3 4 5 6
+# Short-Description: Start and stop FastCGI processes
+# Description:       Spawn FastCGI scripts to be used by web servers
+### END INIT INFO
+
+# Source function library.
+. /etc/rc.d/init.d/functions
+
+exec="/usr/bin/spawn-fcgi"
+prog="spawn-fcgi"
+config="/etc/sysconfig/spawn-fcgi"
+
+[ -e /etc/sysconfig/$prog ] && . /etc/sysconfig/$prog
+
+lockfile=/var/lock/subsys/$prog
+
+start() {
+    [ -x $exec ] || exit 5
+    [ -f $config ] || exit 6
+    echo -n $"Starting $prog: "
+    # Just in case this is left over with wrong ownership
+    [ -n "${SOCKET}" -a -S "${SOCKET}" ] && rm -f ${SOCKET}
+    daemon "$exec $OPTIONS >/dev/null"
+    retval=$?
+    echo
+    [ $retval -eq 0 ] && touch $lockfile
+    return $retval
+}
+
+stop() {
+    echo -n $"Stopping $prog: "
+    killproc $prog
+    # Remove the socket in order to never leave it with wrong ownership
+    [ -n "${SOCKET}" -a -S "${SOCKET}" ] && rm -f ${SOCKET}
+    retval=$?
+    echo
+    [ $retval -eq 0 ] && rm -f $lockfile
+    return $retval
+}
+
+restart() {
+    stop
+    start
+}
+
+reload() {
+    restart
+}
+
+force_reload() {
+    restart
+}
+
+rh_status() {
+    # run checks to determine if the service is running or use generic status
+    status $prog
+}
+
+rh_status_q() {
+    rh_status &>/dev/null
+}
+
+
+case "$1" in
+    start)
+        rh_status_q && exit 0
+        $1
+        ;;
+    stop)
+        rh_status_q || exit 0
+        $1
+        ;;
+    restart)
+        $1
+        ;;
+    reload)
+        rh_status_q || exit 7
+        $1
+        ;;
+    force-reload)
+        force_reload
+        ;;
+    status)
+        rh_status
+        ;;
+    condrestart|try-restart)
+        rh_status_q || exit 0
+        restart
+        ;;
+    *)
+        echo $"Usage: $0 {start|stop|status|restart|condrestart|try-restart|reload|force-reload}"
+        exit 2
+esac
+exit $?
+
+
+```
+</details>
+
