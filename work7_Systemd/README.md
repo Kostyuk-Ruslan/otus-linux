@@ -559,7 +559,103 @@ May 29 10:04:14 systemd systemd[1]: Started unit spawn-fcgi Kostyuk Ruslan.
 May 29 10:04:14 systemd spawn-fcgi[1123]: spawn-fcgi: child spawned successfully: PID: 1124
 [root@systemd ~]# 
 
-```
+
 
 
 </details>
+
+
+
+
+
+Доп. задание  *
+
+
+<details>
+<summary><code>Скачать демо-версию Atlassian Jira и переписать основной скрипт запуска на unit-файл.</code></summary>
+
+Скачал демо-версию jira c ресурса <code>https://www.atlassian.com/ru/software/jira/download</code>
+
+Сам файл: <code>atlassian-jira-software-8.9.0-x64.bin</code>
+
+```
+
+[root@systemd ~]# chmod 775 atlassian-jira-software-8.9.0-x64.bin 
+[root@systemd ~]# ./atlassian-jira-software-8.9.0-x64.bin
+
+```
+После вопросов и ответов от установщика Jira  в конце выдал следующее :
+
+
+```
+Installation of Jira Software 8.9.0 is complete
+Your installation of Jira Software 8.9.0 is now ready and can be accessed
+via your browser.
+Jira Software 8.9.0 can be accessed at http://localhost:8080
+Finishing installation ...
+
+```
+
+Первым делом зашел и покапался тут <code>/opt/attlassian/jira/ - прошелся по папкам, нашел интересный каталог /bin
+
+тут раздного рода скрипт-файлы, в моем случае интересные были скрипты отсановки,запуска</code>
+
+ - *start-jira.sh
+
+ - *stop-jira.sh
+
+
+Попробуем с помощью них создать unit-файл, назовем его "jirad.service" и поместим в "/etc/systemd/system"
+
+
+```
+[root@systemd bin]# systemctl cat jirad.service
+# /etc/systemd/system/jirad.service
+
+[Unit]
+Description=jirad unit
+After=network.target
+
+[Service]
+Type=fork
+ExecStart=/opt/atlassian/jira/bin/start-jira.sh
+ExecStop=/opt/atlassian/jira/bin/stop-jira.sh
+ExecReload=/opt/atlassian/jira/bin/stop-jira.sh && /opt/atlassian/jira/bin/start-jira.sh
+
+[Install]
+WantedBy=multi-user.target
+
+
+
+```
+
+<code>systemctl start jirad.service</code>
+
+```
+[root@systemd bin]# systemctl status jirad.service
+● jirad.service - jirad unit
+   Loaded: loaded (/etc/systemd/system/jirad.service; disabled; vendor preset: disabled)
+   Active: active (running) since Fri 2020-05-29 13:19:40 UTC; 8s ago
+  Process: 1472 ExecStop=/opt/atlassian/jira/bin/stop-jira.sh (code=exited, status=0/SUCCESS)
+  Process: 1626 ExecStart=/opt/atlassian/jira/bin/start-jira.sh (code=exited, status=0/SUCCESS)
+ Main PID: 1659 (java)
+   CGroup: /system.slice/jirad.service
+           └─1659 /opt/atlassian/jira/jre//bin/java -Djava.util.logging.config.file=/opt/atlassian/jira/conf/logging.properties -Djava.util.logging.manager=org....
+
+May 29 13:19:40 systemd start-jira.sh[1626]: MMMMMM    `UOJ
+May 29 13:19:40 systemd start-jira.sh[1626]: MMMMMM
+May 29 13:19:40 systemd start-jira.sh[1626]: +MMMMM
+May 29 13:19:40 systemd start-jira.sh[1626]: MMMMM
+May 29 13:19:40 systemd start-jira.sh[1626]: `UOJ
+May 29 13:19:40 systemd start-jira.sh[1626]: Atlassian Jira
+May 29 13:19:40 systemd start-jira.sh[1626]: Version : 8.9.0
+May 29 13:19:40 systemd start-jira.sh[1626]: If you encounter issues starting or stopping Jira, please see the Troubleshooting guide at https://docs.at...tallation
+May 29 13:19:40 systemd start-jira.sh[1626]: Server startup logs are located in /opt/atlassian/jira/logs/catalina.out
+May 29 13:19:40 systemd systemd[1]: Started jirad unit.
+Hint: Some lines were ellipsized, use -l to show in full.
+
+
+```
+
+</details>
+

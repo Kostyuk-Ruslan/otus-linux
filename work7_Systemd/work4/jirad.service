@@ -1,0 +1,14 @@
+
+[Unit]
+Description=jirad unit
+After=network.target
+
+[Service]
+Type=fork
+PIDFile=/opt/atlassian/jira/work/catalina.pid
+ExecStart=/opt/atlassian/jira/bin/start-jira.sh
+ExecStop=/opt/atlassian/jira/bin/stop-jira.sh
+ExecReload=/opt/atlassian/jira/bin/stop-jira.sh && /opt/atlassian/jira/bin/start-jira.sh
+
+[Install]
+WantedBy=multi-user.target
