@@ -278,7 +278,44 @@ tcp6       0      0 :::8090                 :::*                    LISTEN      
 
 ```
 
+Интересно попробовать сделать unit.target что бы наши экземпляры запускались одновременно,  почему нет ?)) 
+
+В /etc/systemd/system/ создал httpd.target
+
+```
+[Unit]
+Wants=httpd@one.service httpd@two.service
+
+```
+
+
+
+
+<code>[root@systemd system]# systemctl start httpd.target</code>
+
+```
+
+
+[root@systemd system]# systemctl status httpd.target
+● httpd.target
+   Loaded: loaded (/etc/systemd/system/httpd.target; static; vendor preset: disabled)
+   Active: active since Fri 2020-05-29 10:40:28 UTC; 3s ago
+
+May 29 10:40:28 systemd systemd[1]: Reached target httpd.target.
+[root@systemd system]# netstat -ntlpa | egrep httpd
+tcp6       0      0 :::8080                 :::*                    LISTEN      1277/httpd          
+tcp6       0      0 :::8090                 :::*                    LISTEN      1278/httpd     
+
+
+```
+
+
+
+
+
 </details>
+
+
 
 
 
