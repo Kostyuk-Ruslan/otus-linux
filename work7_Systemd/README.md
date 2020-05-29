@@ -187,6 +187,10 @@ May 28 11:00:40 systemd egrep[26482]: May 28 08:48:26 systemd vagrant: OTUS
 
 Далее создаю наш unit-шаблон  "httpd@.service" на основе файла оригинального файлы "httpd.service" который лежит тут(/usr/lib/systemd/system) 
 
+<code>cp /usr/lib/systemd/system/httpd.service /usr/lib/systemd/system/httpd@.service</code>
+
+Добавляю параметр "%I" в директиву EnvironmentFile
+
 
 ```
 [Unit]
@@ -197,7 +201,7 @@ Documentation=man:apachectl(8)
 
 [Service]
 Type=notify
-EnvironmentFile=/etc/sysconfig/httpd
+EnvironmentFile=/etc/sysconfig/httpd-I%
 ExecStart=/usr/sbin/httpd $OPTIONS -DFOREGROUND
 ExecReload=/usr/sbin/httpd $OPTIONS -k graceful
 ExecStop=/bin/kill -WINCH ${MAINPID}
@@ -214,5 +218,68 @@ WantedBy=multi-user.target
 
 ```
 
-Далее создаю конфигурационные файлы на каждый instance 
+Далее создаю конфигурационные файлы на каждый instance с параметром OPTIONS
+
+
+```
+[root@systemd sysconfig]# cat httpd-one 
+OPTIONS=-f /etc/httpd/conf.d/one.conf
+[root@systemd sysconfig]# cat httpd-two 
+OPTIONS=-f /etc/httpd/conf.d/two.conf
+
+```
+
+
+Копирую пример оригинального конфига /etc/httpd/conf/ <code>"httpd.conf"</code>  в директорию /etc/httpd/conf.d  <code>"one.conf" и "two.conf"</code>
+
+
+```
+[root@systemd sysconfig]# cp /etc/httpd/conf/httpd.conf /etc/httpd/conf.d/one.conf
+
+[root@systemd sysconfig]# cp /etc/httpd/conf/httpd.conf /etc/httpd/conf.d/two.conf
+
+```
+
+Далее указываю моменты которые должны отличаться между собой в конф. файлах "one.conf" и "two.conf" поменял им Listen (порт) и добавил (PidFile)
+
+
+
+```
+[root@systemd sysconfig]# cat /etc/httpd/conf.d/{one.conf,two.conf} | egrep  'Listen|PidFile'
+# least PidFile.
+PidFile /var/run/httpd-one.pid
+# Listen: Allows you to bind Apache to specific IP addresses and/or
+# Change this to Listen on specific IP addresses as shown below to 
+#Listen 12.34.56.78:80
+Listen 8080
+# least PidFile.
+PidFile /var/run/httpd-two.pid
+# Listen: Allows you to bind Apache to specific IP addresses and/or
+# Change this to Listen on specific IP addresses as shown below to 
+#Listen 12.34.56.78:80
+Listen 8090
+
+```
+Запускаем наши экземпляры
+
+
+```
+
+[root@systemd sysconfig]# systemctl start httpd@one && systemctl start httpd@two   - ошибок не выдал
+
+```
+
+
+Проверяем работу наших экземпляров командой "netstat"
+
+```
+[root@systemd sysconfig]# netstat -ntlpa | egrep httpd
+tcp6       0      0 :::8080                 :::*                    LISTEN      3176/httpd          
+tcp6       0      0 :::8090                 :::*                    LISTEN      3160/httpd  
+
+```
+
+</details>
+
+
 
