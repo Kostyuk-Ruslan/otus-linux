@@ -184,7 +184,7 @@ May 28 11:00:40 systemd egrep[26482]: May 28 08:48:26 systemd vagrant: OTUS
 
 Первым делом ставлю пакет "httpd" <code>yum install httpd -y</code>
 
-Далее создаю наш unit-шаблон  "httpd@.service" на основе файла оригинального файлы "httpd.service" который лежит тут(/usr/lib/systemd/system) 
+Далее создаю наш unit-шаблон  "httpd@.service" на основе файла оригинального файла "httpd.service" который лежит тут (/usr/lib/systemd/system) 
 
 <code>cp /usr/lib/systemd/system/httpd.service /usr/lib/systemd/system/httpd@.service</code>
 
