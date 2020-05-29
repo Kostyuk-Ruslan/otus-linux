@@ -1,0 +1,21 @@
+[Unit]
+Description=unit egrep Kostyuk_Ruslan
+
+[Service]
+#Type=notify
+EnvironmentFile=/etc/sysconfig/log_otus
+ExecStart=/bin/egrep $LINE $DIR
+ExecReload=/bin/kill -HUP $MAINPID
+KillMode=process
+Restart=on-failure
+RestartSec=10s
+
+[Install]
+WantedBy=multi-user.target
+
+
+
+
+
+
+

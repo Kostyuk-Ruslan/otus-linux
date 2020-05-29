@@ -1,0 +1,12 @@
+[Unit]
+Description=unit spawn-fcgi Kostyuk Ruslan
+After=network.target
+
+[Service]
+PIDFile=/var/run/spawn-fcgi.pid
+Type=simple
+EnvironmentFile=/etc/sysconfig/spawn-fcgi
+ExecStart=/bin/spawn-fcgi  $OPTIONS
+KillMode=process
+[Install]
+WantedBy=multi-user.target

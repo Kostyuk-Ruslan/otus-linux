@@ -447,7 +447,7 @@ exit $?
 ```
 Раскоментировал параметры "SOCKET" и "OPTIONS"
 
-Пробуем создать "unit-файл" в /etc/systemd/system с названием "spawn-fcgi"
+Пробуем создать "unit-файл" в /etc/systemd/system с названием "spawn-fcgi.service"
 
 ```
 [root@systemd system]# systemctl cat spawn-fcgi

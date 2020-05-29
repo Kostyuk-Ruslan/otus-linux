@@ -1,0 +1,12 @@
+[Unit]
+Description=timet log Kostyuk_Ruslan
+
+[Timer]
+OnCalendar=*:*:0,30
+
+#OnBootSec=30sec
+#OnUnitActiveSec=1d
+
+
+[Install]
+WantedBy=timers.target
