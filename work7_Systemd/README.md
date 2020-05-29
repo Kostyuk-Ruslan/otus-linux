@@ -285,7 +285,7 @@ tcp6       0      0 :::8090                 :::*                    LISTEN      
 <details>
 <summary><code>Из репозитория epel установить spawn-fcgi и переписать init-скрипт на unit-файл (имя service должно называться так же: spawn-fcgi) </code></summary>
 
-Честно говоря сперва не понял задание от слова совсем, что за init-скрипт который нужно переписать ? Откуда брать ? Непомню, что бы что-то похожее было на вебинаре, Методички так таковой нет, ну пойдем от того что имеем, epel репозиторий уже был установлен с помощью ansible, соталось только установить в ручную пакет "spawn-fcgi"
+Честно говоря сперва не понял задание от слова совсем, что за init-скрипт который нужно переписать ? Откуда брать ? Непомню, что бы что-то похожее было на вебинаре, Методички так таковой нет, ну пойдем от того что имеем, epel репозиторий уже был установлен с помощью ansible, осталось  только установить в ручную пакет "spawn-fcgi"
 
 <code>yum install spawn-fcgi</code> - ну тут вроде просто, установился без проблем, что дальше непонятно...
 Попробовал просто запустить его как демона <code>systemctl start spawn-fcgi</code>
@@ -311,7 +311,7 @@ May 29 08:52:23 systemd systemd[1]: spawn-fcgi.service failed.
 
 Тут я увидел строку <code>ExecStart=/etc/rc.d/init.d/spawn-fcgi</code> - тут вижу каталог "init.d" как в условии задачи init файл, наверное это он
 
-посмотрел его поближе и он выдал мне целую "простыню"
+посмотрел его поближе и он выдал мне целую "простыню" вообще похоже на скрипт запуска которого нужно переписать
 
 <details>
 <summary><code>cat /etc/rc.d/init.d/spawn-fcgi</code></summary>
@@ -431,3 +431,98 @@ exit $?
 ```
 </details>
 
+Недолго думая, решил попробовать, первым делом стало интересно присуствует ли файл с переменными в /etc/sysconfig/ и да он там был
+
+```
+[root@systemd sysconfig]# cat spawn-fcgi 
+# You must set some working options before the "spawn-fcgi" service will work.
+# If SOCKET points to a file, then this file is cleaned up by the init script.
+#
+# See spawn-fcgi(1) for all possible options.
+#
+# Example :
+#SOCKET=/var/run/php-fcgi.sock
+#OPTIONS="-u apache -g apache -s $SOCKET -S -M 0600 -C 32 -F 1 -P /var/run/spawn-fcgi.pid -- /usr/bin/php-cgi"
+
+```
+Раскоментировал параметры "SOCKET" и "OPTIONS"
+
+Пробуем создать "unit-файл" в /etc/systemd/system с названием "spawn-fcgi"
+
+```
+[root@systemd system]# systemctl cat spawn-fcgi
+# /etc/systemd/system/spawn-fcgi.service
+[Unit]
+Description=unit spawn-fcgi Kostyuk Ruslan
+After=network.target
+
+[Service]
+Type=simple
+EnvironmentFile=/etc/sysconfig/spawn-fcgi
+ExecStart=/bin/spawn-fcgi -n $OPTIONS
+KillMode=process
+[Install]
+WantedBy=multi-user.target
+
+```
+
+<code>systemctl daemon-reload</code>
+
+
+После запуска данного юнита у меня постоянно вываливалась ошибка, только потом погуглив я понял, что нужно доустановить недостающие пакеты 
+
+<code>yum install php php-cli -y</code>
+
+После этого юнит запустился успешно <code>systemctl start spawn-fcgi</code>
+
+
+```
+
+[root@systemd ~]# systemctl status spawn-fcgi
+● spawn-fcgi.service - unit spawn-fcgi Kostyuk Ruslan
+   Loaded: loaded (/etc/systemd/system/spawn-fcgi.service; disabled; vendor preset: disabled)
+   Active: active (running) since Fri 2020-05-29 10:04:14 UTC; 3s ago
+ Main PID: 1124 (php-cgi)
+   CGroup: /system.slice/spawn-fcgi.service
+           ├─1124 /usr/bin/php-cgi
+           ├─1125 /usr/bin/php-cgi
+           ├─1126 /usr/bin/php-cgi
+           ├─1127 /usr/bin/php-cgi
+           ├─1128 /usr/bin/php-cgi
+           ├─1129 /usr/bin/php-cgi
+           ├─1130 /usr/bin/php-cgi
+           ├─1131 /usr/bin/php-cgi
+           ├─1132 /usr/bin/php-cgi
+           ├─1133 /usr/bin/php-cgi
+           ├─1134 /usr/bin/php-cgi
+           ├─1135 /usr/bin/php-cgi
+           ├─1136 /usr/bin/php-cgi
+           ├─1137 /usr/bin/php-cgi
+           ├─1138 /usr/bin/php-cgi
+           ├─1139 /usr/bin/php-cgi
+           ├─1140 /usr/bin/php-cgi
+           ├─1141 /usr/bin/php-cgi
+           ├─1142 /usr/bin/php-cgi
+           ├─1143 /usr/bin/php-cgi
+           ├─1144 /usr/bin/php-cgi
+           ├─1145 /usr/bin/php-cgi
+           ├─1146 /usr/bin/php-cgi
+           ├─1147 /usr/bin/php-cgi
+           ├─1148 /usr/bin/php-cgi
+           ├─1149 /usr/bin/php-cgi
+           ├─1150 /usr/bin/php-cgi
+           ├─1151 /usr/bin/php-cgi
+           ├─1152 /usr/bin/php-cgi
+           ├─1153 /usr/bin/php-cgi
+           ├─1154 /usr/bin/php-cgi
+           ├─1155 /usr/bin/php-cgi
+           └─1156 /usr/bin/php-cgi
+
+May 29 10:04:14 systemd systemd[1]: Started unit spawn-fcgi Kostyuk Ruslan.
+May 29 10:04:14 systemd spawn-fcgi[1123]: spawn-fcgi: child spawned successfully: PID: 1124
+[root@systemd ~]# 
+
+```
+
+
+</details>
