@@ -5,6 +5,10 @@
 # А так же выдает актуальное время и все это в совокупности отправляет на почту
 
 LOG='access-4560-644067.log'
+#mail='info_http.log'
+#mail='info_ip.log'
+#mail='info_code.log'
+#mail='info_404.log'
 
 
 
@@ -48,4 +52,6 @@ else
         exit -7;
 fi
 
-echo 'Отчет о  парсинге скрипта' | mail -s 'Report script info' -a /backup/info_code.log   impkos@yandex.ru
+tar --totals --create --verbose --file archive.tar info_code.log info_http.log info_404.log info_ip.log
+
+echo 'Отчет о парсинге скрипта' | mail -s 'Report script info' -a $PWD/archive.tar   impkos@yandex.ru
