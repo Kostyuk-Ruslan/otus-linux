@@ -27,7 +27,7 @@
   - name: install packages
     yum:
      name:
-       - nc
+       - mailx
        - autofs
        - nfs-utils
        - xfsdump
