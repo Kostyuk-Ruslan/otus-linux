@@ -1,0 +1,14 @@
+
+[Unit]
+Description=timer log Kostyuk_Ruslan
+
+[Timer]
+OnCalendar=hourly
+
+#OnBootSec=30sec
+#OnUnitActiveSec=1d
+
+
+[Install]
+WantedBy=timers.target
+
