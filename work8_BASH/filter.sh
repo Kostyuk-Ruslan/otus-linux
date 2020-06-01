@@ -54,4 +54,4 @@ fi
 
 tar --totals --create --verbose --file archive.tar info_code.log info_http.log info_404.log info_ip.log
 
-echo 'Отчет о парсинге скрипта' | mail -s 'Report script info' -a $PWD/archive.tar   impkos@gmail.com
+echo 'Отчет о парсинге скрипта' | mail -s 'Report script info' -a $PWD/archive.tar   impkos@yandex.ru
