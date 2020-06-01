@@ -6,7 +6,7 @@ ENV["LC_ALL"] = "en_US.UTF-8"
 Vagrant.configure(2) do |config|
  config.vm.define "vm-1" do |subconfig|
  subconfig.vm.box = "centos/7"
- subconfig.vm.hostname="systemd"
+ subconfig.vm.hostname="bash"
  subconfig.vm.network :private_network, ip: "192.168.50.11"
  subconfig.vm.provider "virtualbox" do |vb|
  vb.memory = "2024"
