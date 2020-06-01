@@ -8,9 +8,10 @@ User=root
 WorkingDirectory=/backup
 ExecStart=/backup/filter.sh
 ExecReload=/bin/kill -HUP $MAINPID
-#KillMode=process
-#Restart=on-failure
-#RestartSec=10s
+KillMode=process
+Restart=on-failure
+RestartSec=10s
+TimeoutSec=300
 
 [Install]
 WantedBy=multi-user.target
