@@ -157,6 +157,9 @@ N2 ==> <code>Y запрашиваемых адресов (с наибольши�
 
 
 
+<details>
+<summary><code>filter.service</code></summary>
+
 ```
 [Unit]
 Description=unit filter Kostyuk_Ruslan
@@ -179,6 +182,12 @@ TimeoutSec=300
 WantedBy=multi-user.target
 
 ```
+</details>
+
+
+
+<details>
+<summary><code>filter.timer</code></summary>
 
 
 ```
@@ -197,10 +206,16 @@ OnCalendar=hourly
 WantedBy=timers.target
 
 ```
+
+</details>
+
+
 Тут важный момент "OnCalendar=hourly"  -  это означает "ежечасно" 
 
 
 Вот подтвержлдение с почты, что это работает, оставил на ночь:
+
+
 
 <p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/work8_BASH/media/mail.JPG"></p>
 
