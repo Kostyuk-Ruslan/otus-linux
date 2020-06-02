@@ -202,6 +202,7 @@ WantedBy=timers.target
 
 Вот подтвержлдение с почты, что это работает, оставил на ночь:
 
+<p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/work8_BASH/media/mail.JPG"></p>
 
 
 
