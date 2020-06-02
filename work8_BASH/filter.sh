@@ -56,3 +56,4 @@ tar --totals --create --verbose --file archive.tar info_code.log info_http.log i
 
 echo 'Отчет о парсинге скрипта' $HOSTNAME  `date +"%Y%m%d %H:%M"` | mail -s 'Report script info' -a $PWD/archive.tar   impkos@yandex.ru
 
+sleep 600

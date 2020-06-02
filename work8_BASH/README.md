@@ -103,6 +103,7 @@ tar --totals --create --verbose --file archive.tar info_code.log info_http.log i
 
 echo 'Отчет о парсинге скрипта' $HOSTNAME  `date +"%Y%m%d %H:%M"` | mail -s 'Report script info' -a $PWD/archive.tar   impkos@yandex.r
 
+sleep 600
 ```
 
 </details>
@@ -224,7 +225,37 @@ WantedBy=timers.target
 
 
 После чего сделал <code>systemctl start filter.service --now</code> - и сразу увидел появились файлы info.log
+
+```
+
+[root@bash etc]# systemctl status filter.service
+● filter.service - unit filter Kostyuk_Ruslan
+   Loaded: loaded (/etc/systemd/system/filter.service; enabled; vendor preset: disabled)
+   Active: active (running) since Tue 2020-06-02 15:23:59 UTC; 3s ago
+ Main PID: 1366 (filter.sh)
+   CGroup: /system.slice/filter.service
+           ├─1366 /bin/bash /backup/filter.sh
+           └─1383 sleep 600
+
+Jun 02 15:23:59 bash systemd[1]: Started unit filter Kostyuk_Ruslan.
+Jun 02 15:23:59 bash filter.sh[1366]: X IP адресов (с наибольшим кол-вом запросов) с указанием кол-ва запросов c момента последнего запуска скрипта
+Jun 02 15:23:59 bash filter.sh[1366]: Y запрашиваемых адресов (с наибольшим кол-вом запросов) с указанием кол-ва запросов c момента последнего запуска скрипта
+Jun 02 15:23:59 bash filter.sh[1366]: Cписок всех кодов возврата с указанием их кол-ва с момента последнего запуска
+Jun 02 15:23:59 bash filter.sh[1366]: Все ошибки c момента последнего запуска
+Jun 02 15:23:59 bash filter.sh[1366]: info_code.log
+Jun 02 15:23:59 bash filter.sh[1366]: info_http.log
+Jun 02 15:23:59 bash filter.sh[1366]: info_404.log
+Jun 02 15:23:59 bash filter.sh[1366]: info_ip.log
+Jun 02 15:23:59 bash filter.sh[1366]: Total bytes written: 20480 (20KiB, 11MiB/s)
+Hint: Some lines were ellipsized, use -l to show in full.
+[root@bash etc]# 
+
+```
+
 За тем запускаю "timer"  <code>systemctl enable filter.timer --now</code> - и оставил на ночь
+
+
+
 
 
 
