@@ -3,6 +3,7 @@ Description=unit filter Kostyuk_Ruslan
 
 [Service]
 Type=simple
+PIDFile=/var/run/filter.pid
 EnvironmentFile=/etc/sysconfig/filter
 User=root
 WorkingDirectory=/backup
