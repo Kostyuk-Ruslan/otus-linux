@@ -155,7 +155,7 @@ N2 ==> <code>Y запрашиваемых адресов (с наибольши�
 
 - -a $PWD/archive.tar  - тут забираем наш архив с пути где он создан и  крепим вложение archive.tar в нем все наши "info" файлы
 
-все файлы пакуем tar'ом <code>tar --totals --create --verbose --file archive.tar info_code.log info_http.log info_404.log info_ip.log</code>
+все файлы пакуем tar'ом tar --totals --create --verbose --file archive.tar info_code.log info_http.log info_404.log info_ip.log
 
 ```
 
