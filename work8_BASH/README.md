@@ -226,6 +226,9 @@ WantedBy=timers.target
 Тут важный момент "OnCalendar=hourly"  -  это означает "ежечасно" 
 
 
+Эти два файла filter.service и filter.target  все помешаем в "/etc/systemd/system" ==> и делаем <code>systemctl daemon-reload</code>
+
+
 После чего сделал <code>systemctl start filter.service --now</code> - и сразу увидел появились файлы info.log
 
 ```
