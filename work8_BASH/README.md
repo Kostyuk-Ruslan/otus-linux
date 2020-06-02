@@ -151,6 +151,61 @@ N2 ==> <code>Y запрашиваемых адресов (с наибольши�
 все файлы пакуем tar'ом <code>tar --totals --create --verbose --file archive.tar info_code.log info_http.log info_404.log info_ip.log</code>
 
 
+№5 ==><code>Написать скрипт для крона который раз в час присылает на заданную почту наши данные</code>
+
+Преподавать Эалексей Цыгунков" сказал на вебинаре, что cron уже устаревает и лучше использовать "systemd" (timer), ну попробуем использоват его, чего нет ? ))
+
+
+
+```
+[Unit]
+Description=unit filter Kostyuk_Ruslan
+
+[Service]
+Type=simple
+PIDFile=/var/run/filter.pid
+EnvironmentFile=/etc/sysconfig/filter
+User=root
+WorkingDirectory=/backup
+ExecStart=/backup/filter.sh
+ExecReload=/bin/kill -HUP $MAINPID
+KillMode=process
+Restart=on-failure
+RestartSec=10s
+TimeoutSec=300
+
+
+[Install]
+WantedBy=multi-user.target
+
+```
+
+
+```
+
+[Unit]
+Description=timer log Kostyuk_Ruslan
+
+[Timer]
+OnCalendar=hourly
+
+#OnBootSec=30sec
+#OnUnitActiveSec=1d
+
+
+[Install]
+WantedBy=timers.target
+
+```
+Тут важный момент "OnCalendar=hourly"  -  это означает "ежечасно" 
+
+
+Вот подтвержлдение с почты, что это работает, оставил на ночь:
+
+
+
+
+
 
 
 
