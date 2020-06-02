@@ -218,6 +218,11 @@ WantedBy=timers.target
 Тут важный момент "OnCalendar=hourly"  -  это означает "ежечасно" 
 
 
+После чего сделал <code>systemctl start filter.service --now</code> - и сразу увидел появились файлы info.log
+За тем запускаю "timer"  <code>systemctl enable filter.timer --now</code> - и оставил на ночь
+
+
+
 Вот подтвержлдение с почты, что это работает, оставил на ночь:
 
 
