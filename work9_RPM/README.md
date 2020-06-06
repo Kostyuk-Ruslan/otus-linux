@@ -77,7 +77,7 @@ CMD ["/sbin/entrypoint.sh"]
 </details>
 
 
-Сам репозиторий докера и сам докер, я установил через playbook.yml ansible заранее
+Сам репозиторий докера и сам докер, я установил через playbook.yml ansible заранее, когда поднимал vagrant вм
 
 
 Разбираем инструкции в  Dockerfile :
@@ -152,6 +152,7 @@ REPOSITORY          TAG                 IMAGE ID            CREATED             
 [root@rpm ~]# docker run -d -p 3128:3128  9d8bd328b8ef
 5e78002a48cedfdd15b9fb46e5f07dd0a04c1f8f4815367e7af3aca1639a6862
 
+```
 
 Посмотрим на наш контейнер <code>docker ps</code>
 
