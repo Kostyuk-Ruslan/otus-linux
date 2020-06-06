@@ -41,3 +41,70 @@ end
 </details>
 
 
+
+Доп. задание * 
+* реализовать дополнительно пакет через docker
+
+
+Для выполнение этого задания я написал данный Dockerfile за основу взял сборку squid
+
+<details>
+<summary><code>Dockerfile</code></summary>
+
+```
+
+
+FROM centos:7
+MAINTAINER  impkos@mail.ru
+ENV v_squid=4.11
+RUN yum -y install wget make gcc gcc-c++ g++ tar perl autoconf automake sudo  \
+    && cd /tmp \
+    && wget  http://www.squid-cache.org/Versions/v4/squid-${v_squid}.tar.gz \
+    &&  tar xvf squid-${v_squid}.tar.gz \
+    &&  cd /tmp/squid-${v_squid} \
+    &&  ./configure --prefix=/usr/local/squid \
+    &&  make all \
+    &&  make
+COPY docker-entrypoint.sh /
+EXPOSE 3128
+
+CMD ["/sbin/squid"]
+
+```
+
+</details>
+
+Разбираем инструкции в  Dockerfile :
+
+```
+
+FROM centos:7  # Здесь мы указываем главный образ который будет centos7
+
+MAINTAINER  impkos@mail.ru  # Тут указал свою личную почту как владельца
+
+ENV v_squid=4.11  # Определяем переменные среды в нащем случая это версия squid
+
+RUN yum -y install wget make gcc gcc-c++ g++ tar perl autoconf automake sudo  \ # Устанавливаем необходимые зависимости P.S. я они узнал, средством постоянного запуска образа
+и наблюдал, чего ему не хватает при полной сборке образа, когда он выпадал в ошибки.
+
+&& cd /tmp  # тут мы переходим в каталог /tmp для дальнейших манипуляций
+
+&& wget  http://www.squid-cache.org/Versions/v4/squid-${v_squid}.tar.gz \ #  Скачиваем с помощью "wget" архив с полсденей версией squid'a
+
+&&  tar xvf squid-${v_squid}.tar.gz \ #  Разархивируем наш архив "squid-4.11.tar.gz"
+
+&&  cd /tmp/squid-${v_squid} \ # Переходим в наш уже каталог /squid-4.1
+
+&&  ./configure --prefix=/usr/local/squid \ # Тут мы запускаем наш скрипт который будет заниматься проверкой системы,  с ключом который --prefix=/usr/local/squid, что говорит о том, что каталог для установки будет "/usr/local/squid"
+ысе файлы будут распространены в этот каталог
+
+&& make all # ыпогняем сборку пакета all ( в Makefile параметр "all" присуствовал" )
+
+COPY docker-entrypoint.sh /
+
+EXPOSE 3128 # Тут говорим, что будем слушать на порту "3128" 
+
+CMD ["/sbin/squid"] # Команда которая будет запущена при создании контейнера из образа
+
+
+Далее собираем наш образ <code>docker build . </code>
