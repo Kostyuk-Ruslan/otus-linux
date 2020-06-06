@@ -88,7 +88,7 @@ MAINTAINER  impkos@mail.ru  # Тут указал свою личную почт
 
 ENV v_squid=4.11  # Определяем переменные среды в нащем случая это версия squid
 
-RUN yum -y install wget make gcc gcc-c++ g++ tar perl autoconf automake sudo  \ # Устанавливаем необходимые зависимости P.S. я они узнал, средством постоянного запуска образа
+RUN yum -y install wget make gcc gcc-c++ g++ tar perl autoconf automake sudo  \ # Устанавливаем необходимые зависимости P.S. я оних узнал средством постоянного запуска образа
 и наблюдал, чего ему не хватает при полной сборке образа, когда он выпадал в ошибки. Это я вам скажу было не просто, поверьте мне... но черт возьми, админы мы или кто ? Боже храни кэши в докере )) аминь !
 
 && cd /tmp  # тут мы переходим в каталог /tmp для дальнейших манипуляций
@@ -104,11 +104,14 @@ RUN yum -y install wget make gcc gcc-c++ g++ tar perl autoconf automake sudo  \ 
 
 && make all # ыпогняем сборку пакета all ( в Makefile параметр "all" присуствовал" )
 
-COPY docker-entrypoint.sh /
+entrypoint.sh /sbin/entrypoint.sh # Копируем скрипт для запуска после сборки "entrypoint.sh" в "/sbin/entrypoint.sh"
+
+RUN chmod 775 /sbin/entrypoint.sh # Выставляем права на запуск
+
 
 EXPOSE 3128 # Тут говорим, что будем слушать на порту "3128" 
 
-CMD ["/sbin/squid"] # Команда которая будет запущена при создании контейнера из образа
+CMD ["/sbin/entrypoint.sh"] # Команда которая будет запущена при создании контейнера из образа
 
 ```
 
@@ -140,11 +143,19 @@ REPOSITORY          TAG                 IMAGE ID            CREATED             
 
 ```
 
+Вроде все собралось, попытаемся запустить контейнер в минимальных значениях без файлов конф. и вольюмов
 
 
+```
+[root@rpm ~]# docker run -d -p 3128:3128  9d8bd328b8ef
+5e78002a48cedfdd15b9fb46e5f07dd0a04c1f8f4815367e7af3aca1639a6862
 
 
+Посмотрим на наш контейнер <code>docker ps</code>
 
+```
+[root@rpm ~]# docker ps
+CONTAINER ID        IMAGE               COMMAND                 CREATED              STATUS                         PORTS                                 NAMES
+faba9c1570df        9d8bd328b8ef        "/sbin/entrypoint.sh"   About a minute ago   UP 10 seconds                  0.0.0.0:3128->3128/tcp                squid
 
-
-
+```
