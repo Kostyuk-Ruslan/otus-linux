@@ -52,8 +52,6 @@ end
 <summary><code>Dockerfile</code></summary>
 
 ```
-
-
 FROM centos:7
 MAINTAINER  impkos@mail.ru
 ENV v_squid=4.11
@@ -65,10 +63,14 @@ RUN yum -y install wget make gcc gcc-c++ g++ tar perl autoconf automake sudo  \
     &&  ./configure --prefix=/usr/local/squid \
     &&  make all \
     &&  make
-COPY docker-entrypoint.sh /
+COPY entrypoint.sh /sbin/entrypoint.sh
+RUN chmod 775 /sbin/entrypoint.sh
 EXPOSE 3128
 
-CMD ["/sbin/squid"]
+CMD ["/sbin/entrypoint.sh"]
+
+
+
 
 ```
 
