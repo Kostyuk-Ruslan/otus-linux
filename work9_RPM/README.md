@@ -152,11 +152,8 @@ EXPOSE 3128
 CMD ["/sbin/entrypoint.sh"]
 
 
-
-
 ```
 
-</details>
 
 
 Сам репозиторий докера и сам докер, я установил через playbook.yml ansible заранее, когда поднимал vagrant вм
@@ -244,3 +241,4 @@ CONTAINER ID        IMAGE               COMMAND                 CREATED         
 faba9c1570df        9d8bd328b8ef        "/sbin/entrypoint.sh"   About a minute ago   UP 10 seconds                  0.0.0.0:3128->3128/tcp                squid
 
 ```
+</details>
