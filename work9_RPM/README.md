@@ -196,7 +196,7 @@ drwxr-xr-x. 2 root root   59 Jun  7 21:17 static
 total 36
 -rw-r--r--. 1 root mock 33603 Oct  3  2019 nginx.spec
 ```
-После того как я открыл потраха файла "ngixn.spec" мне сразу захотелось его закрыть, да чего греха таить, мне никогда так не хотесь что-то закрыть, как этот файл... Вообщем к такому повороту событий я не был готов )
+После того как я открыл потраха файла "nginx.spec" мне сразу захотелось его закрыть, да чего греха таить, мне никогда так не хотесь что-то закрыть, как этот файл... Вообщем к такому повороту событий я не был готов )
 
 Под музыку "Миссия невыполнима" я снова открыл этот файл и начал смотреть, а точнее искать %build
 
@@ -271,12 +271,6 @@ Commercial subscriptions for nginx are available on:
 * http://nginx.com/products/
 
 ----------------------------------------------------------------------
-[root@rpm x86_64]# 
-
-
-<code>rpm -i nginx-1.16.1-1.el7.x86_64.rpm</code>
-
-
 
 [root@rpm x86_64]# systemctl start nginx
 [root@rpm x86_64]# systemctl status nginx
@@ -306,6 +300,14 @@ Jun 07 22:24:31 rpm systemd[1]: Started The nginx HTTP and reverse proxy server.
 </details>
 
 
+
+
+<details>
+<summary><code>Cоздать свой репо и разместить там свой RPM</code></summary>
+
+
+
+</details>
 
 
 
