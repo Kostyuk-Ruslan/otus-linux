@@ -34,6 +34,7 @@
   - name: install packages
     yum:
      name:
+       - mock
        - redhat-lsb-core
        - rpmdevtools
        - rpm-build

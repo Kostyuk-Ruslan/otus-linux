@@ -47,7 +47,33 @@ end
 <summary><code>создать свой RPM </code></summary>
 
 
-Я решил создать свой rpm "nginx" c определенными опциями для начала скачаем исходник nginx'а
+Я решил создать свой rpm "nginx" c определенными опциями,  а именно попытаемся установить модуль "brotli" ( компрессия данных ) для начала скачаем исходник nginx'а
+
+
+Но сначала <code>yum-builddep nginx</code>
+
+Добавим репозиторий
+
+<code>mcedit /etc/yum.repos.d/nginx.repo</code>
+
+```
+[nginx]
+name=nginx repo
+baseurl=http://nginx.org/packages/mainline/centos/7/$basearch/
+gpgcheck=0
+enabled=1
+
+[nginx-source]
+name=nginx source repo
+baseurl=http://nginx.org/packages/mainline/centos/7/SRPMS/
+gpgcheck=1
+enabled=0
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
+
+```
+
+
+Скачиваем исходник
 
 ```
 
@@ -87,7 +113,7 @@ nginx-1.16.1-1.el7.src.rpm                                                      
 
 ```
 
-Как видим вресия у нас <code>nginx-1.16.1-1.el7.src.rpm</code> устаревшая, но нам сойдет
+Как видим вресия у нас <code>nginx-1.19.0-1.el7.src.rpm</code> вроде последняя
 
 Далее для сборки собственного rpm пакета, нам необходимо установить ряд необходимых пакет, а именно: redhat-lsb-core, rpmdevtools, rpm-build, createrepo, yum-utils в этом нам любезно согласился помочь ansible 
 при поднятии вм в самом начале.
@@ -108,9 +134,171 @@ drwxr-xr-x. 2 root root 6 Jun  7 20:19 RPMS
 drwxr-xr-x. 2 root root 6 Jun  7 20:19 SOURCES
 drwxr-xr-x. 2 root root 6 Jun  7 20:19 SPECS
 drwxr-xr-x. 2 root root 6 Jun  7 20:19 SRPMS
-[root@rpm rpmbuild]# rpmdev-setuptree
+[root@rpm rpmbuild]# 
+
+```
+Он пустой, что бы его заполнить установим пакет  <code>nginx-1.19.0-1.el7.src.rpm</code>
+
+<code>rpm -i nginx-1.19.0-1.el7.src.rpm</code>
+
+Вышло сообщение 
+
+```
+[root@rpm ~]# rpm -i nginx-1.19.0-1.el7.src.rpm 
+warning: user mockbuild does not exist - using root
+warning: user mockbuild does not exist - using root
+warning: user mockbuild does not exist - using root
+warning: user mockbuild does not exist - using root
+warning: user mockbuild does not exist - using root
+warning: user mockbuild does not exist - using root
+warning: user mockbuild does not exist - using root
+warning: user mockbuild does not exist - using root
+warning: user mockbuild does not exist - using root
+warning: user mockbuild does not exist - using root
+warning: user mockbuild does not exist - using root
+warning: user mockbuild does not exist - using root
+warning: user mockbuild does not exist - using root
 
 
+```
+
+Ну тут понятно, потому как мы запускали наш исходник из под рута, об этом он нам и весчает )
+
+Далее скачиваем наш модуль "brotli" ==>  <code>git clone https://github.com/google/ngx_brotli.git</code>
+
+
+Смотрим потраха
+
+```
+
+[root@rpm ~]# cd ngx_brotli
+[root@rpm ngx_brotli]# ll
+total 20
+-rw-r--r--. 1 root root 1593 Jun  7 21:17 config
+-rw-r--r--. 1 root root 1466 Jun  7 21:17 CONTRIBUTING.md
+drwxr-xr-x. 3 root root   20 Jun  7 21:17 deps
+drwxr-xr-x. 2 root root   59 Jun  7 21:17 filter
+-rw-r--r--. 1 root root 1435 Jun  7 21:17 LICENSE
+-rw-r--r--. 1 root root 6444 Jun  7 21:17 README.md
+drwxr-xr-x. 2 root root  122 Jun  7 21:17 script
+drwxr-xr-x. 2 root root   59 Jun  7 21:17 static
+[root@rpm ngx_brotli]# 
+
+```
+
+скопирую каталог с файлами "ngx_brotli" в /usr/src
+
+
+Так далее посмотрим на наш .spec файл
+
+```
+[root@rpm SPECS]# ll
+total 36
+-rw-r--r--. 1 root mock 33603 Oct  3  2019 nginx.spec
+```
+После того как я открыл потраха файла "ngixn.spec" мне сразу захотелось его закрыть, да чего греха таить, мне никогда так не хотесь что-то закрыть, как этот файл... Вообщем к такому повороту событий я не был готов )
+
+Под музыку "Миссия невыполнима" я снова открыл этот файл и начал смотреть, а точнее искать %build
+
+Добавляю наш модуль после надписи %build
+
+<code>--add-module=/usr/src/ngx_brotli</code>
+
+
+
+Начинаем собирать наш rpm пакет  пошел долгий сбор, по итогу выдал :
+
+<code>rpmbuild -bb nginx.spec</code>
+
+
+
+```
+Executing(%clean): /bin/sh -e /var/tmp/rpm-tmp.6YpkNq
++ umask 022
++ cd /root/rpmbuild/BUILD
++ cd nginx-1.16.1
++ /usr/bin/rm -rf /root/rpmbuild/BUILDROOT/nginx-1.19.0-1.el7.x86_64
++ exit 0
+[root@rpm SPECS]# 
+
+
+[root@rpm nginx-1.16.1]# pwd
+/root/rpmbuild/BUILD/nginx-1.19.0
+[root@rpm nginx-1.19.0]# ll
+total 796
+drwxr-xr-x. 6 1001 1001   4096 Jun  7 23:04 auto
+-rw-r--r--. 1 1001 1001 303180 May 26 15:00 CHANGES
+-rw-r--r--. 1 1001 1001 462738 May 26 15:00 CHANGES.ru
+drwxr-xr-x. 2 1001 1001    168 Jun  7 23:04 conf
+-rwxr-xr-x. 1 1001 1001   2502 May 26 15:00 configure
+drwxr-xr-x. 4 1001 1001     72 Jun  7 23:04 contrib
+-rw-r--r--. 1 root root    708 Jun  7 23:12 debugfiles.list
+-rw-r--r--. 1 root root    519 Jun  7 23:12 debuglinks.list
+-rw-r--r--. 1 root root      0 Jun  7 23:12 debugsources.list
+-rw-r--r--. 1 root root     42 Jun  7 23:12 elfbins.list
+drwxr-xr-x. 2 1001 1001     40 Jun  7 23:04 html
+-rw-r--r--. 1 1001 1001   1397 May 26 15:00 LICENSE
+-rw-r--r--. 1 root root    325 Jun  7 23:09 Makefile
+drwxr-xr-x. 2 1001 1001     21 Jun  7 23:04 man
+-rw-r--r--. 1 root root   3646 Jun  7 23:04 nginx-debug.init
+-rw-r--r--. 1 root root   3615 Jun  7 23:04 nginx.init
+-rwxr-xr-x. 1 root root   3655 Jun  7 23:04 nginx.init.in
+drwxr-xr-x. 4 root root    206 Jun  7 23:12 objs
+-rw-r--r--. 1 1001 1001     49 May 26 15:00 README
+drwxr-xr-x. 9 1001 1001     91 Jun  7 23:04 src
+
+
+[root@rpm x86_64]# pwd
+/root/rpmbuild/RPMS/x86_64
+[root@rpm x86_64]# ll
+total 3444
+-rw-r--r--. 1 root root 1092152 Jun  7 23:12 nginx-1.19.0-1.el7.ngx.x86_64.rpm
+-rw-r--r--. 1 root root 2431704 Jun  7 23:12 nginx-debuginfo-1.19.0-1.el7.ngx.x86_64.rpm
+
+[root@rpm x86_64]# rpm -i nginx-1.19.0-1.el7.ngx.x86_64.rpm 
+----------------------------------------------------------------------
+
+Thanks for using nginx!
+
+Please find the official documentation for nginx here:
+* http://nginx.org/en/docs/
+
+Please subscribe to nginx-announce mailing list to get
+the most important news about nginx:
+* http://nginx.org/en/support.html
+
+Commercial subscriptions for nginx are available on:
+* http://nginx.com/products/
+
+----------------------------------------------------------------------
+[root@rpm x86_64]# 
+
+
+<code>rpm -i nginx-1.16.1-1.el7.x86_64.rpm</code>
+
+
+
+[root@rpm x86_64]# systemctl start nginx
+[root@rpm x86_64]# systemctl status nginx
+● nginx.service - The nginx HTTP and reverse proxy server
+   Loaded: loaded (/usr/lib/systemd/system/nginx.service; disabled; vendor preset: disabled)
+   Active: active (running) since Sun 2020-06-07 22:24:31 UTC; 4s ago
+  Process: 2392 ExecStart=/usr/sbin/nginx (code=exited, status=0/SUCCESS)
+  Process: 2391 ExecStartPre=/usr/sbin/nginx -t (code=exited, status=0/SUCCESS)
+  Process: 2388 ExecStartPre=/usr/bin/rm -f /run/nginx.pid (code=exited, status=0/SUCCESS)
+ Main PID: 2394 (nginx)
+    Tasks: 2
+   Memory: 2.7M
+   CGroup: /system.slice/nginx.service
+           ├─2394 nginx: master process /usr/sbin/nginx
+           └─2395 nginx: worker process
+
+Jun 07 22:24:30 rpm systemd[1]: Starting The nginx HTTP and reverse proxy server...
+Jun 07 22:24:31 rpm nginx[2391]: nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
+Jun 07 22:24:31 rpm nginx[2391]: nginx: configuration file /etc/nginx/nginx.conf test is successful
+Jun 07 22:24:31 rpm systemd[1]: Failed to parse PID from file /run/nginx.pid: Invalid argument
+Jun 07 22:24:31 rpm systemd[1]: Started The nginx HTTP and reverse proxy server.
+[root@rpm x86_64]# 
 
 
 ```
