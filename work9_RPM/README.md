@@ -42,6 +42,88 @@ end
 
 
 
+
+<details>
+<summary><code>создать свой RPM </code></summary>
+
+
+Я решил создать свой rpm "nginx" c определенными опциями для начала скачаем исходник nginx'а
+
+```
+
+[root@rpm ~]# yumdownloader --source nginx
+Loaded plugins: fastestmirror
+Repository epel is listed more than once in the configuration
+Enabling updates-source repository
+Enabling base-source repository
+Enabling extras-source repository
+Enabling docker-ce-stable-source repository
+Enabling epel-source repository
+Loading mirror speeds from cached hostfile
+epel/x86_64/metalink                                                                                                                        |  33 kB  00:00:00     
+epel-source/x86_64/metalink                                                                                                                 |  31 kB  00:00:01     
+ * base: mirror.docker.ru
+ * epel: mirror.yandex.ru
+ * epel-source: mirror.yandex.ru
+ * extras: mirror.docker.ru
+ * updates: mirror.docker.ru
+base                                                                                                                                        | 3.6 kB  00:00:00     
+base-source                                                                                                                                 | 2.9 kB  00:00:00     
+docker-ce-stable                                                                                                                            | 3.5 kB  00:00:00     
+docker-ce-stable-source                                                                                                                     | 3.5 kB  00:00:00     
+epel-source                                                                                                                                 | 3.5 kB  00:00:00     
+extras                                                                                                                                      | 2.9 kB  00:00:00     
+extras-source                                                                                                                               | 2.9 kB  00:00:00     
+updates                                                                                                                                     | 2.9 kB  00:00:00     
+updates-source                                                                                                                              | 2.9 kB  00:00:00     
+(1/7): epel-source/x86_64/primary_db                                                                                                        | 2.4 MB  00:00:01     
+(2/7): docker-ce-stable-source/updateinfo                                                                                                   |   55 B  00:00:01     
+(3/7): docker-ce-stable-source/primary_db                                                                                                   |  16 kB  00:00:01     
+(4/7): epel-source/x86_64/updateinfo                                                                                                        | 1.0 MB  00:00:01     
+(5/7): extras-source/7/primary_db                                                                                                           |  21 kB  00:00:00     
+(6/7): updates-source/7/primary_db                                                                                                          |  41 kB  00:00:01     
+(7/7): base-source/7/primary_db                                                                                                             | 974 kB  00:00:03     
+nginx-1.16.1-1.el7.src.rpm                                                                                                                  | 1.0 MB  00:00:00   
+
+```
+
+Как видим вресия у нас <code>nginx-1.16.1-1.el7.src.rpm</code> устаревшая, но нам сойдет
+
+Далее для сборки собственного rpm пакета, нам необходимо установить ряд необходимых пакет, а именно: redhat-lsb-core, rpmdevtools, rpm-build, createrepo, yum-utils в этом нам любезно согласился помочь ansible 
+при поднятии вм в самом начале.
+
+Когда самое страшное позади, мы двигаемся дальше )
+
+Далее создаем дерево каталогов для сборки <code>rpmdev-setuptree</code>
+
+В итоге получилась такая структура:
+
+
+```
+[root@rpm ~]# cd rpmbuild/
+[root@rpm rpmbuild]# ll
+total 0
+drwxr-xr-x. 2 root root 6 Jun  7 20:19 BUILD
+drwxr-xr-x. 2 root root 6 Jun  7 20:19 RPMS
+drwxr-xr-x. 2 root root 6 Jun  7 20:19 SOURCES
+drwxr-xr-x. 2 root root 6 Jun  7 20:19 SPECS
+drwxr-xr-x. 2 root root 6 Jun  7 20:19 SRPMS
+[root@rpm rpmbuild]# rpmdev-setuptree
+
+
+
+
+```
+
+</details>
+
+
+
+
+
+
+
+
 Доп. задание * 
 * реализовать дополнительно пакет через docker
 
