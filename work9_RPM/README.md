@@ -313,21 +313,34 @@ Jun 07 22:24:31 rpm systemd[1]: Started The nginx HTTP and reverse proxy server.
 
 
 
-
-
+Начнем пожалуй с создания каталога локального репозитория
 
 <code>mkdir /usr/share/nginx/html/repo/</code>
 
 
+Далее копируем наш собранный .rpm из  пакет в директорию нашего локального репозитория "/usr/share/nginx/html/repo/"
+
+
+```
+
+[root@rpm x86_64]# pwd
+/root/rpmbuild/RPMS/x86_64  ----> отсюда скопировали
+[root@rpm x86_64]# ll
+total 3444
+-rw-r--r--. 1 root root 1092152 Jun  7 23:12 nginx-1.19.0-1.el7.ngx.x86_64.rpm  ---> скопировали этот .rpm пакет
+-rw-r--r--. 1 root root 2431704 Jun  7 23:12 nginx-debuginfo-1.19.0-1.el7.ngx.x86_64.rpm
+[root@rpm x86_64]# 
+
+```
 
 
 ```
 
 
-[root@rpm repo]#create /repo
+[root@rpm repo]#create /usr/share/nginx/html/repo/
 -bash: create: command not found
 [root@rpm repo]# createrepo /repo
-Spawning worker 0 with 1 pkgs
+Spawning worker 0 with 1 pkgs --> тут видно наш один пакет
 Workers Finished
 Saving Primary metadata
 Saving file lists metadata
@@ -338,19 +351,18 @@ Sqlite DBs complete
 
 ```
 
-Копируем наш собранный .rpm пакет в директорию нашего локального репозитория nginx-1.19.0-1.el7.ngx.x86_64.rpm
+Далее сделал
 
-
-
-
-
-
-yum update ==> он постоянно выдавал ошибки из серии неправильного пути вообщем, решил это так я просто создал еще один каталог "x86_64" которая просила система и скопировал туда "repodata"  в итоге получилось так. Система не могла найти "repomd.xml"
+yum update ==> он постоянно выдавал ошибки из серии неправильного пути, вообщем решил это так, я просто создал еще один каталог "x86_64" которая просила система и скопировал туда "repodata"  в итоге получилось так. Система не могла найти "repomd.xml"
 в ее идеальной картине мира, не хватало папки x86_64, я лишь покорно подчинился и создал ее )
 
 <code>/usr/share/nginx/html/repo/x86_64/repodata</code>
 
 После этого все прошло без ошибок. мать ее )
+
+
+Далее создаем "otus.repo"
+
 
 ```
 
