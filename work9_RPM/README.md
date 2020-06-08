@@ -307,6 +307,118 @@ Jun 07 22:24:31 rpm systemd[1]: Started The nginx HTTP and reverse proxy server.
 
 
 
+
+
+
+
+
+
+
+
+
+<code>mkdir /usr/share/nginx/html/repo/</code>
+
+
+
+
+```
+
+
+[root@rpm repo]#create /repo
+-bash: create: command not found
+[root@rpm repo]# createrepo /repo
+Spawning worker 0 with 1 pkgs
+Workers Finished
+Saving Primary metadata
+Saving file lists metadata
+Saving other metadata
+Generating sqlite DBs
+Sqlite DBs complete
+[root@rpm repo]# 
+
+```
+
+Копируем наш собранный .rpm пакет в директорию нашего локального репозитория nginx-1.19.0-1.el7.ngx.x86_64.rpm
+
+
+
+
+
+
+yum update ==> он постоянно выдавал ошибки из серии неправильного пути вообщем, решил это так я просто создал еще один каталог "x86_64" которая просила система и скопировал туда "repodata"  в итоге получилось так. Система не могла найти "repomd.xml"
+в ее идеальной картине мира, не хватало папки x86_64, я лишь покорно подчинился и создал ее )
+
+<code>/usr/share/nginx/html/repo/x86_64/repodata</code>
+
+После этого все прошло без ошибок. мать ее )
+
+```
+
+[root@rpm ~]# cat >> /etc/yum.repos.d/otus.repo << EOF
+> [otus]
+> name=otus-linux
+> baseurl=file:///usr/share/nginx/html/repo/$basearch/
+> gpgcheck=0
+> enabled=1
+> EOF
+[root@rpm ~]# cd /etc/yum.repos.d/
+[root@rpm yum.repos.d]# ll
+total 60
+-rw-r--r--. 1 root root 1664 Apr  7 22:01 CentOS-Base.repo
+-rw-r--r--. 1 root root 1309 Apr  7 22:01 CentOS-CR.repo
+-rw-r--r--. 1 root root  649 Apr  7 22:01 CentOS-Debuginfo.repo
+-rw-r--r--. 1 root root  314 Apr  7 22:01 CentOS-fasttrack.repo
+-rw-r--r--. 1 root root  630 Apr  7 22:01 CentOS-Media.repo
+-rw-r--r--. 1 root root 1331 Apr  7 22:01 CentOS-Sources.repo
+-rw-r--r--. 1 root root 7577 Apr  7 22:01 CentOS-Vault.repo
+-rw-r--r--. 1 root root  616 Apr  7 22:01 CentOS-x86_64-kernel.repo
+-rw-r--r--. 1 root root 2424 Oct 18  2019 docker-ce.repo
+-rw-r--r--. 1 root root 1050 Sep 17  2019 epel.repo
+-rw-r--r--. 1 root root 1149 Sep 17  2019 epel-testing.repo
+-rw-r--r--. 1 root root  119 Jun  6 21:17 external_repos.repo
+-rw-r--r--. 1 root root   68 Jun  8 12:26 otus.repo
+[root@rpm yum.repos.d]# 
+
+```
+
+
+Отключил все вышестоящие репозитории такие как "epel" иначе при установке "nginx" система тянет не из локальной репы, а из epel, но я быстро показал кто тут главный
+
+
+```
+[root@rpm repo]# yum install nginx
+Loaded plugins: fastestmirror
+Repository epel is listed more than once in the configuration
+Loading mirror speeds from cached hostfile
+ * base: mirror.docker.ru
+  * extras: mirror.corbina.net
+   * updates: mirror.docker.ru
+   Resolving Dependencies
+   --> Running transaction check
+   ---> Package nginx.x86_64 1:1.19.0-1.el7.ngx will be installed
+   --> Finished Dependency Resolution
+   
+   Dependencies Resolved
+   
+   ===================================================================================================================================================================
+    Package                            Arch                                Version                                            Repository                         Size
+    ===================================================================================================================================================================
+    Installing:
+     nginx                              x86_64                              1:1.19.0-1.el7.ngx                                 otus                              1.0 M
+     
+     Transaction Summary
+     ===================================================================================================================================================================
+     Install  1 Package
+     
+     Total download size: 1.0 M
+     Installed size: 3.4 M
+     Is this ok [y/d/N]: 
+     
+```
+
+
+Ну вот наверное и все, искренне надеюсь, что мне это не пригодиться
+
 </details>
 
 
