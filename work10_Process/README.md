@@ -141,6 +141,18 @@ N2 ==> <code>Y запрашиваемых адресов (с наибольши�
 Преподавать Эалексей Цыгунков" сказал на вебинаре, что cron уже устаревает и лучше использовать "systemd" (timer), ну попробуем использоват его, чего нет ? ))
 
 
+<p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/work10_Process/photo/top.JPG"></p>
+
+
+
+<p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/work10_Process/photo/iotop.JPG"></p>
+
+
+
+
+
+
+
 
 
 <details>
@@ -178,6 +190,20 @@ date > nice_up.log &&  nice -n -20 stress-ng --hdd 5 --hdd-ops 100000 -t 10  > /
 ```
 
 </details>
+
+<p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/work10_Process/photo/cpu.JPG"></p>
+
+
+
+<p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/work10_Process/photo/cpu2.JPG"></p>
+
+
+
+
+
+
+
+
 
 
 
