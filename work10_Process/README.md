@@ -46,64 +46,38 @@ end
 
 
 <details>
-<summary><code>filter.sh</code></summary>
+<summary><code>nice.sh</code></summary>
 
 ```
+#!/bin/bash
 
-# Парсит адреса с их количеством
-# Находит все ошибки в логе, а так же находит колы возврата
-# А так же выдает актуальное время и все это в совокупности отправляет на почту
+echo 'Installing packages..'
+yum install stress -y > /dev/null  2>&1 
 
-LOG='access-4560-644067.log'
-#mail='info_http.log'
-#mail='info_ip.log'
-#mail='info_code.log'
-#mail='info_404.log'
-
-
-
-awk '{print $1}' $LOG | uniq -c | sort -n | tail -n20  > info_ip.log
-if [ "$LOG" = access-4560-644067.log ]
+if [ "$?" != 0 ]
 then
-    echo 'X IP адресов (с наибольшим кол-вом запросов) с указанием кол-ва запросов c момента последнего запуска скрипта'
-else
-    echo "Проверьте правильность наименование файла лога"
-        exit -4;
+    echo 'YUM failed!'
+    exit -5;
 fi
 
 
-egrep -o 'https?://([a-z1-9]+.)?[a-z1-9\-]+(\.[a-z]+){1,}/?' $LOG | uniq -c | sort -n| tail -n15 >  info_http.log
-if [ "$LOG" = access-4560-644067.log ]
+
+echo 'run nice 20'
+date > nice_low.log && nohup nice -n 20 stress --cpu 1 -t 10  > /dev/null  2>&1 
+if [ "$?" = 0 ]
 then
-    echo 'Y запрашиваемых адресов (с наибольшим кол-вом запросов) с указанием кол-ва запросов c момента последнего запуска скрипта'
-else
-    echo "Проверьте правильность наименование файла лога"
-        exit -5;
+ date  >> nice_low.log
 fi
 
-awk '{print $9}' $LOG | uniq -c | sort -n  > info_code.log
-if [ "$LOG" = access-4560-644067.log ]
+
+echo 'run nice -20'
+date > nice_up.log && nohup nice -n -20 stress  --cpu 1 -t 10  > /dev/null  2>&1 
+if [ "$?" = 0 ]
 then
-    echo 'Cписок всех кодов возврата с указанием их кол-ва с момента последнего запуска'
-else
-    echo "Проверьте правильность наименование файла лога"
-        exit -6;
+ date  >> nice_up.log
 fi
 
-egrep -o -E '404.*' $LOG > info_404.log
-if [ "$LOG" = access-4560-644067.log ]
-then
-    echo 'Все ошибки c момента последнего запуска'
-else
-    echo "Проверьте правильность наименование файла лога"
-        exit -7;
-fi
 
-tar --totals --create --verbose --file archive.tar info_code.log info_http.log info_404.log info_ip.log
-
-echo 'Отчет о парсинге скрипта' $HOSTNAME  `date +"%Y%m%d %H:%M"` | mail -s 'Report script info' -a $PWD/archive.tar   impkos@yandex.r
-
-sleep 600
 ```
 
 </details>
@@ -170,108 +144,40 @@ N2 ==> <code>Y запрашиваемых адресов (с наибольши�
 
 
 <details>
-<summary><code>filter.service</code></summary>
+<summary><code>nice_io.sh</code></summary>
 
 ```
+#!/bin/bash
 
-[Unit]
-Description=unit filter Kostyuk_Ruslan
+echo 'Installing packages..'
+yum install stress-ng -y > /dev/null  2>&1 
 
-[Service]
-Type=simple
-PIDFile=/var/run/filter.pid
-EnvironmentFile=/etc/sysconfig/filter
-User=root
-WorkingDirectory=/backup
-ExecStart=/backup/filter.sh
-ExecReload=/bin/kill -HUP $MAINPID
-KillMode=process
-Restart=on-failure
-RestartSec=10s
-TimeoutSec=300
-
-
-[Install]
-WantedBy=multi-user.target
-
-
-```
-
-</details>
+if [ "$?" != 0 ]
+then
+    echo 'YUM failed!'
+    exit -5;
+fi
 
 
 
-
-<details>
-<summary><code>filter.timer</code></summary>
-
-
-```
-
-[Unit]
-Description=timer log Kostyuk_Ruslan
-
-[Timer]
-OnCalendar=hourly
-
-#OnBootSec=30sec
-#OnUnitActiveSec=1d
+echo 'run ionice 20'
+date > nice_low.log && nice -n 20 stress-ng --hdd 5 --hdd-ops 100000 -t 10  > /dev/null  2>&1 
+if [ "$?" = 0 ]
+then
+date  >> nice_low.log
 
 
-[Install]
-WantedBy=timers.target
+fi
+
+
+echo 'run ionice -20'
+date > nice_up.log &&  nice -n -20 stress-ng --hdd 5 --hdd-ops 100000 -t 10  > /dev/null  2>&1 
+ date  >> nice_up.log
+
 
 ```
 
 </details>
-
-
-Тут важный момент "OnCalendar=hourly"  -  это означает "ежечасно" 
-
-
-Эти два файла filter.service и filter.target  все помешаем в "/etc/systemd/system" ==> и делаем <code>systemctl daemon-reload</code>
-
-
-После чего сделал <code>systemctl start filter.service --now</code> - и сразу увидел появились файлы info.log
-
-```
-
-[root@bash etc]# systemctl status filter.service
-● filter.service - unit filter Kostyuk_Ruslan
-   Loaded: loaded (/etc/systemd/system/filter.service; enabled; vendor preset: disabled)
-   Active: active (running) since Tue 2020-06-02 15:23:59 UTC; 3s ago
- Main PID: 1366 (filter.sh)
-   CGroup: /system.slice/filter.service
-           ├─1366 /bin/bash /backup/filter.sh
-           └─1383 sleep 600
-
-Jun 02 15:23:59 bash systemd[1]: Started unit filter Kostyuk_Ruslan.
-Jun 02 15:23:59 bash filter.sh[1366]: X IP адресов (с наибольшим кол-вом запросов) с указанием кол-ва запросов c момента последнего запуска скрипта
-Jun 02 15:23:59 bash filter.sh[1366]: Y запрашиваемых адресов (с наибольшим кол-вом запросов) с указанием кол-ва запросов c момента последнего запуска скрипта
-Jun 02 15:23:59 bash filter.sh[1366]: Cписок всех кодов возврата с указанием их кол-ва с момента последнего запуска
-Jun 02 15:23:59 bash filter.sh[1366]: Все ошибки c момента последнего запуска
-Jun 02 15:23:59 bash filter.sh[1366]: info_code.log
-Jun 02 15:23:59 bash filter.sh[1366]: info_http.log
-Jun 02 15:23:59 bash filter.sh[1366]: info_404.log
-Jun 02 15:23:59 bash filter.sh[1366]: info_ip.log
-Jun 02 15:23:59 bash filter.sh[1366]: Total bytes written: 20480 (20KiB, 11MiB/s)
-Hint: Some lines were ellipsized, use -l to show in full.
-[root@bash etc]# 
-
-```
-
-За тем запускаю "timer"  <code>systemctl enable filter.timer --now</code> - и оставил на ночь
-
-
-
-
-
-
-Вот подтвержлдение с почты, что это работает, оставил на ночь:
-
-
-
-<p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/work8_BASH/media/mail.JPG"></p>
 
 
 
