@@ -101,7 +101,7 @@ fi
 с ключом --cpu 1 (1 - стрессер на поток )и время выполнения 10 секунд -t 10 и весь вывод в /dev/null 
 
 
-№2 ==> Вторая строка почти аналогична  выводим сообщение о запуске и выполняем команду "date" которую отправляем в лог ( это будет Start) после выполнения запусаем stress тест  с повышенным приоритетом "nice -n -20"
+№3 ==> Вторая строка почти аналогична  выводим сообщение о запуске и выполняем команду "date" которую отправляем в лог ( это будет Start) после выполнения запусаем stress тест  с повышенным приоритетом "nice -n -20"
 с ключом --cpu 1 (1 - стрессер на поток )и время выполнения 10 секунд -t 10 и весь вывод в /dev/null 
 
 
@@ -116,15 +116,16 @@ fi
 
 Тут собстно в паралельном экране я запустил top и наблюдал, сразу видно, что "cpu" в потолок пошел )) , а во главне наш процесс с повышенным приоритетом
 
-<p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/work10_Process/photo/top.JPG"></p>
-
+<p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/work10_Process/photo/cpu.JPG"></p>
 
 
 
 
 Тут где то внизу теплиться наш процесс с пониженным приоритетом.
 
-<p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/work10_Process/photo/iotop.JPG"></p>
+<p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/work10_Process/photo/cpu2.JPG"></p>
+
+
 
 
 
@@ -197,19 +198,17 @@ date > nice_up.log &&  ionice -c2 -n0 stress-ng --hdd 5 --hdd-ops 100000 -t 10  
 ```
 
 
-
-
-
-
 </details>
 
-<p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/work10_Process/photo/cpu.JPG"></p>
+
+Тут видим на небольшую нагрузку на подсистему io (wa) начал подниматься, во главне наш стрессер
+
+<p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/work10_Process/photo/top.JPG"></p>
 
 
+Тут так же видим операции чтение и записи, во главе так же наш стрессер
 
-<p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/work10_Process/photo/cpu2.JPG"></p>
-
-
+<p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/work10_Process/photo/iotop.JPG"></p>
 
 
 
