@@ -1,9 +1,9 @@
 
 Linux Administrator 2020
 
-   ###########################
-   #Домашнее задание 8  BASH #
-   ###########################
+   #############################
+   #Домашнее задание 10 Process#
+   #############################
 
 
 
@@ -22,7 +22,7 @@ ENV["LC_ALL"] = "en_US.UTF-8"
 Vagrant.configure(2) do |config|
  config.vm.define "vm-1" do |subconfig|
  subconfig.vm.box = "centos/7"
- subconfig.vm.hostname="bash"
+ subconfig.vm.hostname="process
  subconfig.vm.network :private_network, ip: "192.168.50.11"
  subconfig.vm.provider "virtualbox" do |vb|
  vb.memory = "2024"
