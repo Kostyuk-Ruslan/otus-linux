@@ -169,6 +169,8 @@ date > nice_up.log &&  ionice -c2 -n0 stress-ng --hdd 5 --hdd-ops 100000 -t 10  
 
 ```
 
+</details>
+
 
 
 Перейдем в краце к разбору: 
