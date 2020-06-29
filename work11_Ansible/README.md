@@ -152,9 +152,10 @@ PING - PONG Отработал, связь есть
 
 /etc/ansible/nginx/tasks/main.yml
 
+<details>
+<summary><code>main.yml</code></summary>
 
 ```
-
 
  tasks file for nginx
 
@@ -196,12 +197,22 @@ PING - PONG Отработал, связь есть
 
 ```
 
+</details>
+
+
+
+
 
 
 
 /etc/ansible/nginx/templates/nginx.conf.j2
 
 Отрывок шаблона "nginx" (полная версия находится на nginx.conf.j2), все оставил по дефолту за исключением порта поменял на "8080" с помощью переменных
+
+
+<details>
+<summary><code>nginx.conf.j2</code></summary>
+
 
 ```
 
@@ -215,9 +226,16 @@ PING - PONG Отработал, связь есть
 
 ```
 
+</details>
+
+
 Сами переменные прописал тут 
 
 /etc/ansible/nginx/defaults/main.yml
+
+
+<details>
+<summary><code>main.yml</code></summary>
 
 ```
 ---
@@ -228,10 +246,16 @@ nginx_port: 8080
 
 ```
 
+</details>
+
 
 Ну и взаключении наш hendlers
 
 /etc/ansible/nginx/handlers/main.yml
+
+
+<details>
+<summary><code>main.yml</code></summary>
 
 ```
 ---
@@ -252,10 +276,13 @@ nginx_port: 8080
 
 ```
 
+</details>
+
+
 
 Далее запускаем нашу роль <code>ansible-playbook nginx.yml</code>
 
-Вроде ошибок не выдал, перехожу на клиента, там:
+Вроде ошибок не выдал, перехожу на клиента, а там вижу что:
 
 1) Установлен наш nginx
 ```
@@ -293,6 +320,10 @@ total 68
 
 ```
 
+
+
+
+Применился наш шаблон
 
 ```
 
