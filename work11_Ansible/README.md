@@ -22,7 +22,7 @@ ENV["LC_ALL"] = "en_US.UTF-8"
 Vagrant.configure(2) do |config|
  config.vm.define "vm-1" do |subconfig|
  subconfig.vm.box = "centos/7"
- subconfig.vm.hostname="process
+ subconfig.vm.hostname="ansible-server"
  subconfig.vm.network :private_network, ip: "192.168.50.11"
  subconfig.vm.provider "virtualbox" do |vb|
  vb.memory = "2024"
@@ -32,20 +32,42 @@ Vagrant.configure(2) do |config|
  config.vm.provision "ansible" do |ansible|
  ansible.compatibility_mode = "2.0"
  ansible.playbook = "playbook.yml"
+end.
+.
+.
+.
+ config.vm.define "vm-2" do |subconfig|
+ subconfig.vm.box = "centos/7"
+ subconfig.vm.hostname="client"
+ subconfig.vm.network :private_network, ip: "192.168.50.12"
+ subconfig.vm.provider "virtualbox" do |vb|
+ vb.memory = "2024"
+ vb.cpus = "1"
+ end
+     end
+.....
+......
 end
 
-     end
+
 
 ```
 
 </details>
 
 
+
+Создадим роль под ansible
+
+```
+
 [root@ansible-server ansible]# ansible-galaxy init nginx
 - Role nginx was created successfully
 
+```
 
 
+```
 [root@ansible-server ansible]# tree nginx/
 nginx/
 ├── defaults
@@ -65,7 +87,7 @@ nginx/
 └── vars
     └── main.yml
     
-    
+```    
     
     
     
