@@ -1,0 +1,8 @@
+
+- hosts: ansible-client
+  name: ansible run
+  tasks:
+  gather_facts: True
+  roles:
+  - nginx
+

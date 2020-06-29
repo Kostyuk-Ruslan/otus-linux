@@ -1,0 +1,5 @@
+---
+ansible_connection: ssh
+ansible_ssh_pass: B77z3z4q2
+ansible_ssh_user: root
+
