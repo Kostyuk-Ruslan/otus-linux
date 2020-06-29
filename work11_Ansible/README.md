@@ -56,8 +56,11 @@ end
 </details>
 
 
+<code> Вагрант создаст две виртуалки vm-1(ansible-server) и vm-2(client) <--  на нем будем устанавливать наш "nginx"
 
-Создадим роль под ansible
+
+
+Создадим роль под ansible на vm-1
 
 ```
 
@@ -66,6 +69,8 @@ end
 
 ```
 
+
+Пояивлся каталог "nginx" 
 
 ```
 [root@ansible-server ansible]# tree nginx/
@@ -88,9 +93,32 @@ nginx/
     └── main.yml
     
 ```    
+
+Первым делом, настроим hosts, пропишем туда ip адреса клиента
+
+```
+
+[ansible-client]
+192.168.50.12
+
+
+```    
+
+
+Далее создадим каталог group_vars --> all.yml ( в нем пропишем данные для подключения к клиенту )
+
+```
+---
+ansible_connection: ssh
+ansible_ssh_pass: B77z3z4q21
+ansible_ssh_user: root
+
+```
+
+Проверим связь модулем "ping"
     
-    
-    
+
+```
 
 [root@ansible-server ansible]# ansible -i hosts all -m ping  
 [WARNING]: Invalid characters were found in group names but not replaced, use -vvvv to see details
@@ -102,7 +130,7 @@ nginx/
                         "ping": "pong"
                         }
                         
-                        
+```                        
                         
                         
 
