@@ -15,20 +15,10 @@ Vagrant.configure(2) do |config|
  end
  config.vm.provision "ansible" do |ansible|
  ansible.compatibility_mode = "2.0"
- ansible.playbook = "playbook.yml"
+ ansible.playbook = "nginx.yml"
 end 
  
  
- 
- config.vm.define "vm-2" do |subconfig|
- subconfig.vm.box = "centos/7"
- subconfig.vm.hostname="client"
- subconfig.vm.network :private_network, ip: "192.168.50.12"
- subconfig.vm.provider "virtualbox" do |vb|
- vb.memory = "2024"
- vb.cpus = "1"
- end
-     end
      
       
 end

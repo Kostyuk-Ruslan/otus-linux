@@ -1,0 +1,48 @@
+---
+# tasks file for nginx
+
+  - name: Add multiple repositories into the same file (1/2)
+    yum_repository:
+      name: epel
+      description: EPEL YUM repo
+      file: external_repos
+      baseurl: https://download.fedoraproject.org/pub/epel/$releasever/$basearch/
+      gpgcheck: no
+
+
+  - name: install epel-release
+    yum:
+     name:
+      - epel-release
+     state: latest
+    tags: install-packages
+
+
+
+  - name: yum update                                            
+    yum:                                                      
+      name: '*'                                           
+      state: latest
+
+
+      
+  - name: install nginx
+    yum:
+       name:
+         - mc
+         - net-tools
+         - nginx
+       state: latest
+    notify:
+         - start nginx
+    ignore_errors: yes
+    
+
+
+  - name: Configure service
+    template:
+      src: nginx.conf.j2
+      dest: /etc/nginx/nginx.conf
+      mode: '0644'
+    notify: start nginx
+                                

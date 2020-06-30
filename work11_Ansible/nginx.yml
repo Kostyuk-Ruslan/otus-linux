@@ -1,0 +1,9 @@
+
+- hosts: vm-1
+  name: ansible run
+  tasks:
+  gather_facts: True
+  become: yes
+  roles:
+  - nginx
+
