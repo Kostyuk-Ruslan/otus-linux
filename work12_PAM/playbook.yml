@@ -24,31 +24,11 @@
       state: latest
 
 
-  - name: set up docker stable repo
-    command: yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
-    tags: docker
-
-
-
-
   - name: install packages
     yum:
      name:
-       - mock
-       - redhat-lsb-core
-       - rpmdevtools
-       - rpm-build
-       - createrepo
+       - pam
        - yum-utils
-       - docker-ce
-       - docker-compose
-       - mailx
-       - autofs
-       - nfs-utils
-       - xfsdump
-       - lvm2
-       - mdadm
-       - gdisk
        - wget
        - mc
        - screen
