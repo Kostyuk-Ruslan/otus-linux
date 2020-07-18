@@ -108,3 +108,64 @@ user2:x:1002:1003::/home/user2:/bin/bash
 ```
 
 
+Ну далее добавиляем пользователей в группу
+
+```
+[root@pam ~]# usermod -aG admin user1
+[root@pam ~]# usermod -aG admin user2
+
+
+```
+Проверяем отрывок
+
+<code>[root@pam ~]# cat /etc/group</code>
+
+```
+vagrant:x:1000:vagrant
+vboxsf:x:994:
+tcpdump:x:72:
+screen:x:84:
+admin:x:1001:user1,user2
+user1:x:1002:
+user2:x:1003:
+
+```
+
+Видим что в группу "admin" добавились наши юзера
+
+Переходим к запрету через "PAM"
+
+Первым делом включаем модуль, добавил в строку <code>account    required     pam_time.so</code> в /etc/pam/sshd
+
+Получилось так :
+
+```
+#%PAM-1.0
+auth<-->   required<--->pam_sepermit.so
+auth       substack     password-auth
+auth       include      postlogin
+# Used with polkit to reauthorize users in remote sessions
+-auth      optional     pam_reauthorize.so prepare
+account    required     pam_time.so
+account    required     pam_nologin.so
+account    include      password-auth                       
+password   include      password-auth                       
+# pam_selinux.so close should be the first session rule     
+session    required     pam_selinux.so close                
+session    required     pam_loginuid.so                     
+# pam_selinux.so open should only be followed by sessions to be executed in the user context
+session    required     pam_selinux.so open env_params      
+session    required     pam_namespace.so
+session    optional     pam_keyinit.so force revoke
+session    include      password-auth
+session    include      postlogin
+# Used with polkit to reauthorize users in remote sessions
+-session   optional     pam_reauthorize.so prepare
+
+
+```
+
+
+
+
+
