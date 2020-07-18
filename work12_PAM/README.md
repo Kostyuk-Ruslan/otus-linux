@@ -146,8 +146,8 @@ auth       substack     password-auth
 auth       include      postlogin
 # Used with polkit to reauthorize users in remote sessions
 -auth      optional     pam_reauthorize.so prepare
-account    required     pam_time.so
 account    required     pam_nologin.so
+account    required     pam_time.so
 account    include      password-auth                       
 password   include      password-auth                       
 # pam_selinux.so close should be the first session rule     
@@ -164,6 +164,24 @@ session    include      postlogin
 
 
 ```
+
+
+Далее устанавливаем время запрета в <code>/etc/security/time.conf</code>
+
+
+```
+sshd;*;!admin;Sa|Su
+sshd;*;!admin;Sa|Su
+
+```
+
+Небольшой манул
+
+sshd - сервси к каторому применено правило
+* имя терминала
+группа - для которого действует правило
+Sa|Su - сб. и вс. выходные дни
+
 
 
 
