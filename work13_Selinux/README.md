@@ -43,6 +43,8 @@ end
 
 
 
+Преждет чем приступить, сделал снапшот <code>vagrant snapshot save 0.0.2</code>
+
 <details>
 <summary><code>Запустить nginx на нестандартном порту 3-мя разными способами:</code></summary>
 
@@ -66,7 +68,7 @@ Max kernel policy version:      31
 
 Все работает, идем дальше
 
-1) способ ==>
+1) способ ==> Добавление нестандартного порта в имеющийся тип
 
 Наш nginx был устанволен через ansible, поэтому не буду описывать его установку.
 Пока он работает на стандартном 80 порту
@@ -117,10 +119,14 @@ Job for nginx.service failed because the control process exited with error code.
 
 Далее добавляем правило 
 [root@selinux ~]# semanage port -a -t http_port_t -p tcp 5080
+
  и стартуем наш "nginx" и проверяем
+
  
 ```
+
 [root@selinux ~]# systemctl start nginx
+
 [root@selinux ~]# netstat -ntlpa
 Active Internet connections (servers and established)
 Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name    
@@ -137,6 +143,22 @@ tcp6       0      0 ::1:25                  :::*                    LISTEN      
 
 ```
 
+Ну и заодно посмотри добавился ли наш порт в тип
+
+```
+[root@selinux nginx]# semanage port -l | grep http_port_t
+http_port_t                    tcp      5080, 80, 81, 443, 488, 8008, 8009, 8443, 9000
+pegasus_http_port_t            tcp      5988
+
+```
+
+
+
+2 - Способ, я откатился по снапшоту командой <code>vagrant snapshot restore 0.0.2</code>, что бы установить новый порт сделаем его 5081
+
+Все так же при старте systemd юнита "nginx" выдает ошибку и ссылается на "Отказано в доступе"
+
+<code> Jul 19 19:07:14 selinux nginx[1644]: nginx: [emerg] bind() to 0.0.0.0:5081 failed (13: Permission denied) </code>
 
 
 
