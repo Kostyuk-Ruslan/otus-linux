@@ -154,14 +154,66 @@ pegasus_http_port_t            tcp      5988
 
 
 
-2 - Способ, я откатился по снапшоту командой <code>vagrant snapshot restore 0.0.2</code>, что бы установить новый порт сделаем его 5081
+2 Способ ==> переключатели setsebool
+
+Я откатился по снапшоту командой <code>vagrant snapshot restore 0.0.2</code>, что бы установить новый порт сделаем его 5081
 
 Все так же при старте systemd юнита "nginx" выдает ошибку и ссылается на "Отказано в доступе"
 
 <code> Jul 19 19:07:14 selinux nginx[1644]: nginx: [emerg] bind() to 0.0.0.0:5081 failed (13: Permission denied) </code>
 
 
+Для дальнейшего анализа нам понадобится спец пакет для работы с selinux <code> yum install setroubleshoot-server</code>
 
+После чего я очистил логи "audit.log" что бы ничего не мешало " > /var/log/audit/audit.log"
+
+далее попытался запустить nginx, что бы посмотреть что он мне напишет в логе
+
+<code>audit2why < /var/log/audit/audit.log</code>  
+
+Вывод лога:
+
+```
+
+[root@selinux audit]# audit2why /var/log/audit/audit.log 
+^C[root@selinux audit]# audit2why < /var/log/audit/audit.log 
+type=AVC msg=audit(1595186154.006:163): avc:  denied  { name_bind } for  pid=1663 comm="nginx" src=5081 scontext=system_u:system_r:httpd_t:s0 tcontext=system_u:object_r:unreserved_port_t:s0 tclass=tcp_socket permissive=0
+
+    Was caused by:
+	The boolean nis_enabled was set incorrectly. 
+	    Description:
+		Allow nis to enabled
+		
+		    Allow access by executing:
+			# setsebool -P nis_enabled 1
+			
+
+
+```
+
+Сделаем так как говорит <code>setsebool -P nis_enabled 1</code>
+
+После чего проверяем
+
+```
+
+[root@selinux audit]# setsebool -P nis_enabled 1
+[root@selinux audit]# systemctl start nginx
+[root@selinux audit]# netstat -ntlpa
+Active Internet connections (servers and established)
+Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name    
+tcp        0      0 0.0.0.0:111             0.0.0.0:*               LISTEN      373/rpcbind         
+tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN      706/sshd            
+tcp        0      0 0.0.0.0:5081            0.0.0.0:*               LISTEN      1836/nginx: master  
+tcp        0      0 127.0.0.1:25            0.0.0.0:*               LISTEN      939/master          
+tcp        0      0 10.0.2.15:22            10.0.2.2:47274          ESTABLISHED 1527/sshd: vagrant  
+tcp6       0      0 :::111                  :::*                    LISTEN      373/rpcbind         
+tcp6       0      0 :::80                   :::*                    LISTEN      1836/nginx: master  
+tcp6       0      0 :::22                   :::*                    LISTEN      706/sshd            
+tcp6       0      0 ::1:25                  :::*                    LISTEN      939/master          
+[root@selinux audit]# 
+
+```
 
 
 
