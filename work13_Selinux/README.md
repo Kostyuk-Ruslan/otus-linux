@@ -222,11 +222,11 @@ tcp6       0      0 ::1:25                  :::*                    LISTEN      
 
 Так же установил пакет для работы с "selinux"
 
-Эмм честно говоря хочется сделать скринты того, что сделал и что  получилось,с вашего позволения устал писать )))
+Эмм честно говоря хочется сделать скринты того, что сделал и что  получилось, с вашего позволения, а то устал писать )))
 
+<p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/work13_Selinux/photo/1.JPG"></p>
 
-
-
+<p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/work13_Selinux/photo/2.JPG"></p>
 
 
 
