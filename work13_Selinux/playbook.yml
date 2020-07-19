@@ -27,6 +27,7 @@
   - name: install packages
     yum:
      name:
+       - nginx
        - pam
        - yum-utils
        - wget
