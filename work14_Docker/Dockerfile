@@ -18,3 +18,4 @@ RUN apk --update add libc-dev make libxslt-dev gd-dev perl-dev libedit-dev alpin
     && make install
 EXPOSE 80
 
+CMD ["nginx", "-g", "daemon off;"]
