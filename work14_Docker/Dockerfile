@@ -16,6 +16,7 @@ RUN apk --update add libc-dev make libxslt-dev gd-dev perl-dev libedit-dev alpin
 #    --lock-path=/var/run/nginx.lock \
     && make  \
     && make install
+COPY index.html /etc/nginx/html/
 EXPOSE 80
 
 CMD ["nginx", "-g", "daemon off;"]
