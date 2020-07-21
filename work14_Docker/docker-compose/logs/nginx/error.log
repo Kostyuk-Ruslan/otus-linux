@@ -1,0 +1,7 @@
+2020/07/21 08:55:34 [error] 28#28: *3 open() "/usr/share/nginx/html/index.php" failed (2: No such file or directory), client: 192.168.1.2, server: localhost, request: "GET /index.php HTTP/1.1", host: "192.168.1.2"
+2020/07/21 08:55:41 [error] 28#28: *4 open() "/usr/share/nginx/html/index.php" failed (2: No such file or directory), client: 192.168.1.2, server: localhost, request: "GET /index.php HTTP/1.1", host: "192.168.1.2"
+2020/07/21 08:56:28 [error] 28#28: *1 open() "/usr/share/nginx/html/index.php" failed (2: No such file or directory), client: 192.168.1.2, server: localhost, request: "GET /index.php HTTP/1.1", host: "192.168.1.2"
+2020/07/21 08:56:29 [error] 28#28: *2 open() "/usr/share/nginx/html/index.php" failed (2: No such file or directory), client: 192.168.1.2, server: localhost, request: "GET /index.php HTTP/1.1", host: "192.168.1.2"
+2020/07/21 08:57:38 [error] 28#28: *1 open() "/usr/share/nginx/html/index.php" failed (2: No such file or directory), client: 192.168.1.2, server: localhost, request: "GET /index.php HTTP/1.1", host: "192.168.1.2"
+2020/07/21 09:00:26 [error] 29#29: *2 open() "/usr/share/nginx/html/index.php" failed (2: No such file or directory), client: 192.168.1.2, server: localhost, request: "GET /index.php HTTP/1.1", host: "192.168.1.2"
+2020/07/21 09:01:25 [error] 28#28: *1 open() "/usr/share/nginx/html/index.php" failed (2: No such file or directory), client: 192.168.1.2, server: localhost, request: "GET /index.php HTTP/1.1", host: "192.168.1.2"

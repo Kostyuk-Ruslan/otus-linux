@@ -1,0 +1,25 @@
+version: '3.3'
+networks:
+ php:
+
+services:
+ nginx:
+  image: nginx:latest
+  container_name: "nginx_kos"
+  depends_on:
+   - php
+  ports:
+   - "80:80"
+  networks:
+   - php
+  volumes:
+   - ./www:/var/www/
+   - ./logs/nginx:/var/log/nginx
+
+ php:
+  image: php:7.4.6-fpm
+  container_name: "php_kos"
+  ports:
+   - 9000:9000
+  volumes:
+   - ./www:/var/www/
