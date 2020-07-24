@@ -1,0 +1,46 @@
+2020/07/21 21:39:56 [error] 6#0: *1 open() "/etc/nginx/html/favicon.ico" failed (2: No such file or directory), client: 192.168.2.230, server: localhost, request: "GET /favicon.ico HTTP/1.1", host: "192.168.1.2", referrer: "http://192.168.1.2/"
+2020/07/21 21:41:26 [error] 6#0: *3 open() "/etc/nginx/html/index.php" failed (2: No such file or directory), client: 192.168.2.230, server: localhost, request: "GET /index.php HTTP/1.1", host: "192.168.1.2"
+2020/07/21 21:41:29 [error] 6#0: *3 open() "/etc/nginx/html/index.php" failed (2: No such file or directory), client: 192.168.2.230, server: localhost, request: "GET /index.php HTTP/1.1", host: "192.168.1.2"
+2020/07/21 21:41:32 [error] 6#0: *3 open() "/etc/nginx/html/index." failed (2: No such file or directory), client: 192.168.2.230, server: localhost, request: "GET /index. HTTP/1.1", host: "192.168.1.2"
+2020/07/21 21:42:32 [error] 6#0: *3 open() "/etc/nginx/html/index.php" failed (2: No such file or directory), client: 192.168.2.230, server: localhost, request: "GET /index.php HTTP/1.1", host: "192.168.1.2"
+2020/07/21 21:42:35 [error] 6#0: *3 open() "/etc/nginx/html/index.php" failed (2: No such file or directory), client: 192.168.2.230, server: localhost, request: "GET /index.php HTTP/1.1", host: "192.168.1.2"
+2020/07/21 21:43:06 [error] 6#0: *3 open() "/etc/nginx/html/index.php" failed (2: No such file or directory), client: 192.168.2.230, server: localhost, request: "GET /index.php HTTP/1.1", host: "192.168.1.2"
+2020/07/21 21:56:05 [emerg] 1#0: "server" directive is not allowed here in /etc/nginx/nginx.conf:2
+2020/07/21 21:57:39 [emerg] 1#0: "server" directive is not allowed here in /etc/nginx/nginx.conf:1
+2020/07/21 22:01:36 [alert] 7#0: 1024 worker_connections are not enough
+2020/07/21 22:01:36 [error] 7#0: *1022 recv() failed (104: Connection reset by peer) while reading response header from upstream, client: 127.0.0.1, server: localhost, request: "GET /index.php HTTP/1.0", upstream: "http://127.0.0.1:80/index.php", host: "127.0.0.1"
+2020/07/21 22:02:12 [alert] 7#0: 1024 worker_connections are not enough
+2020/07/21 22:02:12 [error] 7#0: *2044 recv() failed (104: Connection reset by peer) while reading response header from upstream, client: 127.0.0.1, server: localhost, request: "GET /index.php HTTP/1.0", upstream: "http://127.0.0.1:80/index.php", host: "127.0.0.1"
+2020/07/21 22:07:59 [alert] 6#0: 1024 worker_connections are not enough
+2020/07/21 22:07:59 [error] 6#0: *1022 recv() failed (104: Connection reset by peer) while reading response header from upstream, client: 127.0.0.1, server: localhost, request: "GET /index.php HTTP/1.0", upstream: "http://127.0.0.1:80/index.php", host: "127.0.0.1"
+2020/07/21 22:08:03 [alert] 6#0: 1024 worker_connections are not enough
+2020/07/21 22:08:03 [error] 6#0: *2044 recv() failed (104: Connection reset by peer) while reading response header from upstream, client: 127.0.0.1, server: localhost, request: "GET /index.php HTTP/1.0", upstream: "http://127.0.0.1:80/index.php", host: "127.0.0.1"
+2020/07/21 22:09:52 [alert] 6#0: 1024 worker_connections are not enough
+2020/07/21 22:09:52 [error] 6#0: *1022 recv() failed (104: Connection reset by peer) while reading response header from upstream, client: 127.0.0.1, server: localhost, request: "GET /index.php HTTP/1.0", upstream: "http://127.0.0.1:80/index.php", host: "127.0.0.1"
+2020/07/21 22:11:06 [alert] 6#0: 1024 worker_connections are not enough
+2020/07/21 22:11:06 [error] 6#0: *2045 recv() failed (104: Connection reset by peer) while reading response header from upstream, client: 127.0.0.1, server: localhost, request: "GET /index.php HTTP/1.0", upstream: "http://127.0.0.1:80/index.php", host: "127.0.0.1"
+2020/07/21 22:11:09 [alert] 6#0: 1024 worker_connections are not enough
+2020/07/21 22:11:09 [error] 6#0: *3067 recv() failed (104: Connection reset by peer) while reading response header from upstream, client: 127.0.0.1, server: localhost, request: "GET /index.php HTTP/1.0", upstream: "http://127.0.0.1:80/index.php", host: "127.0.0.1"
+2020/07/21 22:11:37 [alert] 6#0: 1024 worker_connections are not enough
+2020/07/21 22:11:37 [error] 6#0: *4089 recv() failed (104: Connection reset by peer) while reading response header from upstream, client: 127.0.0.1, server: localhost, request: "GET /index.php HTTP/1.0", upstream: "http://127.0.0.1:80/index.php", host: "127.0.0.1"
+2020/07/21 22:16:45 [emerg] 1#0: host not found in upstream "php" in /etc/nginx/nginx.conf:62
+2020/07/21 22:37:00 [emerg] 1#0: host not found in upstream "php" in /etc/nginx/nginx.conf:62
+2020/07/21 22:38:29 [emerg] 1#0: host not found in upstream "php" in /etc/nginx/nginx.conf:62
+2020/07/21 22:41:07 [alert] 8#0: 1024 worker_connections are not enough
+2020/07/21 22:41:07 [error] 8#0: *1022 recv() failed (104: Connection reset by peer) while reading response header from upstream, client: 127.0.0.1, server: localhost, request: "GET /index.php HTTP/1.0", upstream: "http://127.0.0.1:80/index.php", host: "127.0.0.1"
+2020/07/21 22:41:08 [error] 8#0: *1 "/etc/nginx/html/index.php/index.html" is not found (2: No such file or directory), client: 192.168.2.230, server: localhost, request: "GET /index.php/ HTTP/1.1", host: "192.168.1.2"
+2020/07/21 22:42:58 [alert] 7#0: 1024 worker_connections are not enough
+2020/07/21 22:42:58 [error] 7#0: *1022 recv() failed (104: Connection reset by peer) while reading response header from upstream, client: 127.0.0.1, server: localhost, request: "GET /index.php HTTP/1.0", upstream: "http://127.0.0.1:80/index.php", host: "127.0.0.1"
+2020/07/21 22:45:44 [alert] 7#0: 1024 worker_connections are not enough
+2020/07/21 22:45:44 [error] 7#0: *2045 recv() failed (104: Connection reset by peer) while reading response header from upstream, client: 127.0.0.1, server: localhost, request: "GET /index.php HTTP/1.0", upstream: "http://127.0.0.1:80/index.php", host: "127.0.0.1"
+2020/07/21 22:47:22 [error] 28#28: *1 open() "/usr/share/nginx/html/index.php" failed (2: No such file or directory), client: 192.168.2.230, server: localhost, request: "GET /index.php HTTP/1.1", host: "192.168.1.2"
+2020/07/21 22:47:24 [error] 28#28: *1 open() "/usr/share/nginx/html/index.php" failed (2: No such file or directory), client: 192.168.2.230, server: localhost, request: "GET /index.php HTTP/1.1", host: "192.168.1.2"
+2020/07/21 22:48:37 [emerg] 1#1: "server" directive is not allowed here in /etc/nginx/nginx.conf:3
+2020/07/21 22:49:21 [emerg] 1#1: "server" directive is not allowed here in /etc/nginx/nginx.conf:3
+2020/07/21 22:50:48 [emerg] 1#1: "server" directive is not allowed here in /etc/nginx/nginx.conf:1
+2020/07/21 22:52:50 [emerg] 1#1: open() "/etc/nginx/mime.types" failed (2: No such file or directory) in /etc/nginx/nginx.conf:18
+2020/07/21 22:54:08 [emerg] 1#1: open() "/etc/nginx/fastcgi_params" failed (2: No such file or directory) in /etc/nginx/nginx.conf:64
+2020/07/21 22:55:04 [emerg] 1#1: host not found in upstream "php" in /etc/nginx/nginx.conf:61
+2020/07/21 22:56:22 [emerg] 1#1: host not found in upstream "php" in /etc/nginx/nginx.conf:61
+2020/07/21 22:57:40 [emerg] 1#1: host not found in upstream "php" in /etc/nginx/nginx.conf:61
+2020/07/21 22:59:29 [emerg] 1#1: "server" directive is not allowed here in /etc/nginx/nginx.conf:3

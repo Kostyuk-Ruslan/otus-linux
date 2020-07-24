@@ -22,7 +22,7 @@ RUN apt-get update && apt-get install -y  \
 #       ./buildconf \ 
 &&       make  \
 &&       make install
-COPY index.html /etc/nginx/html/
+WORKDIR /var/www
 EXPOSE 9000
 
 CMD ["php-fpm"]

@@ -1,8 +1,0 @@
- php:
-  build: .
-  container_name: "php_kos"
-  ports:
-    - "9000:9000"
-  volumes:
-    - ./www:/var/www/
-

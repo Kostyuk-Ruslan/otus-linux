@@ -1,25 +1,29 @@
 version: '3'
-#networks:
-# php:
+networks:
+ php:
+ nginx:
 
 services:
  web:
-  build: .
+  image: nginx:latest
   container_name: "nginx_kos"
-#  depends_on:
-#   - php
+  depends_on:
+    - php
   ports:
     - "80:80"
-#  networks:
-#    - php
+  networks:
+    - php
   volumes:
+    - ./hosts:/etc/nginx/
     - ./www:/var/www/
     - ./logs/nginx:/var/log/nginx
 
  php:
-  build: Dockerfile1
+  build: ./php
   container_name: "php_kos"
-  ports:
-    - "9000:9000"
+  networks:
+    - nginx
+#  ports:
+#    - "9000:9000"
   volumes:
     - ./www:/var/www/
