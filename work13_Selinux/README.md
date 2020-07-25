@@ -444,5 +444,5 @@ Hint: Some lines were ellipsized, use -l to show in full.
 
 Ну или же еще как вариант можно попробовать с памраметром setsebool поиграться
 
-
+</details>
 
