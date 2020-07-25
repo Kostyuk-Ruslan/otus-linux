@@ -327,7 +327,7 @@ type=AVC msg=audit(1595698673.461:2344): avc:  denied  { create } for  pid=24253
 
 ```
 
-Посмотри статус systemd named
+Посмотрим статус systemd named
 
 ```
 
@@ -377,7 +377,7 @@ restorecon reset /etc/named/dynamic/named.ddns.lab.view1 context system_u:object
 
 ```
 
-Проверим наш контекст безопасности и убедимся что он в безопасности
+Проверим наш контекст безопасности и убедимся, что он изменился.
 
 ```
 
