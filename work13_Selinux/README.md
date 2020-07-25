@@ -238,6 +238,102 @@ tcp6       0      0 ::1:25                  :::*                    LISTEN      
 
 
 
+<details>
+<summary><code>Обеспечить работоспособность приложения при включенном selinux.</code>
+
+Задание №2) Честно говоря совсем не представляю как решать это задание,начну с логов, а там посмотрим ...
+
+
+Почистим log audit, что бы ничего лишнего не мешало
+
+```
+> /var/log/audit/audiut.log
+
+```
+
+Выполняем команду проверки
+
+```
+nsupdate -k /etc/named.zonetransfer.key
+server 192.168.50.10
+zone ddns.lab 
+update add www.ddns.lab. 60 A 192.168.50.15
+send
+update failed: SERVFAIL
+
+```
+
+На ns01 смотрим лог
+
+
+```
+[root@ns01 ~]# audit2why < /var/log/audit/audit.log 
+type=AVC msg=audit(1595698352.983:2341): avc:  denied  { create } for  pid=24253 comm="isc-worker0000" name="named.ddns.lab.view1.jnl" scontext=system_u:system_r:named_t:s0 tcontext=system_u:object_r:etc_t:s0 tclass=file permissive=0
+
+	Was caused by:
+		Missing type enforcement (TE) allow rule.
+
+		You can use audit2allow to generate a loadable module to allow this access.
+
+type=AVC msg=audit(1595698435.434:2342): avc:  denied  { create } for  pid=24253 comm="isc-worker0000" name="named.ddns.lab.view1.jnl" scontext=system_u:system_r:named_t:s0 tcontext=system_u:object_r:etc_t:s0 tclass=file permissive=0
+
+	Was caused by:
+		Missing type enforcement (TE) allow rule.
+
+		You can use audit2allow to generate a loadable module to allow this access.
+
+type=AVC msg=audit(1595698612.232:2343): avc:  denied  { create } for  pid=24253 comm="isc-worker0000" name="named.ddns.lab.view1.jnl" scontext=system_u:system_r:named_t:s0 tcontext=system_u:object_r:etc_t:s0 tclass=file permissive=0
+
+	Was caused by:
+		Missing type enforcement (TE) allow rule.
+
+		You can use audit2allow to generate a loadable module to allow this access.
+
+type=AVC msg=audit(1595698673.461:2344): avc:  denied  { create } for  pid=24253 comm="isc-worker0000" name="named.ddns.lab.view1.jnl" scontext=system_u:system_r:named_t:s0 tcontext=system_u:object_r:etc_t:s0 tclass=file permissive=0
+
+	Was caused by:
+		Missing type enforcement (TE) allow rule.
+
+		You can use audit2allow to generate a loadable module to allow this access.
+
+[root@ns01 ~]# audit2why < /var/log/audit/audit.log 
+type=AVC msg=audit(1595698352.983:2341): avc:  denied  { create } for  pid=24253 comm="isc-worker0000" name="named.ddns.lab.view1.jnl" scontext=system_u:system_r:named_t:s0 tcontext=system_u:object_r:etc_t:s0 tclass=file permissive=0
+
+	Was caused by:
+		Missing type enforcement (TE) allow rule.
+
+		You can use audit2allow to generate a loadable module to allow this access.
+
+type=AVC msg=audit(1595698435.434:2342): avc:  denied  { create } for  pid=24253 comm="isc-worker0000" name="named.ddns.lab.view1.jnl" scontext=system_u:system_r:named_t:s0 tcontext=system_u:object_r:etc_t:s0 tclass=file permissive=0
+
+	Was caused by:
+		Missing type enforcement (TE) allow rule.
+
+		You can use audit2allow to generate a loadable module to allow this access.
+
+type=AVC msg=audit(1595698612.232:2343): avc:  denied  { create } for  pid=24253 comm="isc-worker0000" name="named.ddns.lab.view1.jnl" scontext=system_u:system_r:named_t:s0 tcontext=system_u:object_r:etc_t:s0 tclass=file permissive=0
+
+	Was caused by:
+		Missing type enforcement (TE) allow rule.
+
+		You can use audit2allow to generate a loadable module to allow this access.
+
+type=AVC msg=audit(1595698673.461:2344): avc:  denied  { create } for  pid=24253 comm="isc-worker0000" name="named.ddns.lab.view1.jnl" scontext=system_u:system_r:named_t:s0 tcontext=system_u:object_r:etc_t:s0 tclass=file permissive=0
+
+	Was caused by:
+		Missing type enforcement (TE) allow rule.
+
+		You can use audit2allow to generate a loadable module to allow this access.
+
+
+
+
+```
+
+
+
+
+
 
 
 
