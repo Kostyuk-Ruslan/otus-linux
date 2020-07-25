@@ -325,15 +325,45 @@ type=AVC msg=audit(1595698673.461:2344): avc:  denied  { create } for  pid=24253
 
 		You can use audit2allow to generate a loadable module to allow this access.
 
+```
 
-
+Посмотри статус systemd named
 
 ```
 
+[root@ns01 named]# systemctl status named
+● named.service - Berkeley Internet Name Domain (DNS)
+   Loaded: loaded (/usr/lib/systemd/system/named.service; enabled; vendor preset: disabled)
+   Active: active (running) since Sat 2020-07-25 17:14:37 UTC; 49min ago
+  Process: 24250 ExecStart=/usr/sbin/named -u named -c ${NAMEDCONF} $OPTIONS (code=exited, status=0/SUCCESS)
+  Process: 24248 ExecStartPre=/bin/bash -c if [ ! "$DISABLE_ZONE_CHECKING" == "yes" ]; then /usr/sbin/named-checkconf -z "$NAMEDCONF"; else echo "Checking of zone files is disabled"; fi (code=exited, status=0/SUCCESS)
+ Main PID: 24253 (named)
+   CGroup: /system.slice/named.service
+           └─24253 /usr/sbin/named -u named -c /etc/named.conf
+
+Jul 25 17:36:52 ns01 named[24253]: /etc/named/dynamic/named.ddns.lab.view1.jnl: create: permission denied
+Jul 25 17:36:52 ns01 named[24253]: client @0x7f2d1c5f5990 192.168.50.15#50260/key zonetransfer.key: view view1: updating zone 'ddns.lab/IN': error: jo...cted error
+Jul 25 17:37:53 ns01 named[24253]: client @0x7f2d1c5f5990 192.168.50.15#8883/key zonetransfer.key: view view1: signer "zonetransfer.key" approved
+Jul 25 17:37:53 ns01 named[24253]: client @0x7f2d1c5f5990 192.168.50.15#8883/key zonetransfer.key: view view1: updating zone 'ddns.lab/IN': adding an ....168.50.15
+Jul 25 17:37:53 ns01 named[24253]: /etc/named/dynamic/named.ddns.lab.view1.jnl: create: permission denied
+Jul 25 17:37:53 ns01 named[24253]: client @0x7f2d1c5f5990 192.168.50.15#8883/key zonetransfer.key: view view1: updating zone 'ddns.lab/IN': error: jou...cted error
+Jul 25 17:52:54 ns01 named[24253]: client @0x7f2d1c5f5990 192.168.50.15#5388/key zonetransfer.key: view view1: signer "zonetransfer.key" approved
+Jul 25 17:52:54 ns01 named[24253]: client @0x7f2d1c5f5990 192.168.50.15#5388/key zonetransfer.key: view view1: updating zone 'ddns.lab/IN': adding an ....168.50.15
+Jul 25 17:52:54 ns01 named[24253]: /etc/named/dynamic/named.ddns.lab.view1.jnl: create: permission denied
+Jul 25 17:52:54 ns01 named[24253]: client @0x7f2d1c5f5990 192.168.50.15#5388/key zonetransfer.key: view view1: updating zone 'ddns.lab/IN': error: jou...cted error
+Hint: Some lines were ellipsized, use -l to show in full.
+[root@ns01 named]# 
 
 
+```
+Угу, что то он не может создать <code>named.ddns.lab.view.jnl</code>, "отказано в доступе" ну ок посомтрим на контекcт безопасности этого файла может, что интересное выдаст
+
+```
+[root@ns01 named]# ll -Z /etc/named/dynamic/named.ddns.lab.view1
+-rw-rw----. named named system_u:object_r:etc_t:s0       /etc/named/dynamic/named.ddns.lab.view1
 
 
+```
 
 
 
