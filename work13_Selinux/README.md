@@ -364,9 +364,85 @@ Hint: Some lines were ellipsized, use -l to show in full.
 
 
 ```
+И тут меня смутил параметр "etc_t"  вообщем немного погуглив где то прочитал, что нужно ставить тип вместо etc_t в dynamic на "named_cache_t"
+
+Попробуем, че нам стоит то 
+<code>semanage fcontext -a -t named_cache_t '/etc/named/dynamic/*'</code>
+а потом
+```
+[root@ns01 dynamic]# restorecon -R -v /etc/named/dynamic/
+restorecon reset /etc/named/dynamic context unconfined_u:object_r:etc_t:s0->unconfined_u:object_r:named_cache_t:s0
+restorecon reset /etc/named/dynamic/named.ddns.lab context system_u:object_r:etc_t:s0->system_u:object_r:named_cache_t:s0
+restorecon reset /etc/named/dynamic/named.ddns.lab.view1 context system_u:object_r:etc_t:s0->system_u:object_r:named_cache_t:s0
+
+```
+
+Проверим наш контекст безопасности и убедимся что он в безопасности
+
+```
+
+[root@ns01 dynamic]# ll -Z *
+-rw-rw----. named named system_u:object_r:named_cache_t:s0 named.ddns.lab
+-rw-rw----. named named system_u:object_r:named_cache_t:s0 named.ddns.lab.view1
+
+```
+На стороне клиента, снова сделаем проверку
+
+```
+[root@client ~]# nsupdate -k /etc/named.zonetransfer.key
+> server 192.168.50.10
+> zone ddns.lab
+> update add www.ddns.lab. 60 A 192.168.50.15
+> send
+
+```
+Ну покрайней мере ошибку не выдал, перейдем снова на сервер ns01
+
+Я вижу что наш файл "named.ddns.lab.view1.jnl" создался 
+```
+[root@ns01 dynamic]# ll
+total 12
+-rw-rw----. 1 named named 509 Jul 25 20:24 named.ddns.lab
+-rw-rw----. 1 named named 509 Jul 25 20:24 named.ddns.lab.view1
+-rw-r--r--. 1 named named 700 Jul 25 20:52 named.ddns.lab.view1.jnl
 
 
+```
 
+systemd вроде тоже показывает, что все ровно
+
+
+```
+
+[root@ns01 dynamic]# systemctl status named
+● named.service - Berkeley Internet Name Domain (DNS)
+   Loaded: loaded (/usr/lib/systemd/system/named.service; enabled; vendor preset: disabled)
+   Active: active (running) since Sat 2020-07-25 20:57:15 UTC; 50s ago
+  Process: 8335 ExecStop=/bin/sh -c /usr/sbin/rndc stop > /dev/null 2>&1 || /bin/kill -TERM $MAINPID (code=exited, status=0/SUCCESS)
+  Process: 8350 ExecStart=/usr/sbin/named -u named -c ${NAMEDCONF} $OPTIONS (code=exited, status=0/SUCCESS)
+  Process: 8348 ExecStartPre=/bin/bash -c if [ ! "$DISABLE_ZONE_CHECKING" == "yes" ]; then /usr/sbin/named-checkconf -z "$NAMEDCONF"; else echo "Checking of zone files is disabled"; fi (code=exited, status=0/SUCCESS)
+ Main PID: 8352 (named)
+   CGroup: /system.slice/named.service
+           └─8352 /usr/sbin/named -u named -c /etc/named.conf
+
+Jul 25 20:57:15 ns01 named[8352]: automatic empty zone: view default: 126.100.IN-ADDR.ARPA
+Jul 25 20:57:15 ns01 named[8352]: automatic empty zone: view default: 127.100.IN-ADDR.ARPA
+Jul 25 20:57:15 ns01 named[8352]: automatic empty zone: view default: 127.IN-ADDR.ARPA
+Jul 25 20:57:15 ns01 named[8352]: automatic empty zone: view default: 254.169.IN-ADDR.ARPA
+Jul 25 20:57:15 ns01 named[8352]: automatic empty zone: view default: 2.0.192.IN-ADDR.ARPA
+Jul 25 20:57:15 ns01 named[8352]: automatic empty zone: view default: 100.51.198.IN-ADDR.ARPA
+Jul 25 20:57:15 ns01 named[8352]: automatic empty zone: view default: 113.0.203.IN-ADDR.ARPA
+Jul 25 20:57:15 ns01 systemd[1]: Started Berkeley Internet Name Domain (DNS).
+Jul 25 20:58:02 ns01 named[8352]: client @0x7f66a803c3e0 192.168.50.15#16756/key zonetransfer.key: view view1: signer "zonetransfer.key" approved
+Jul 25 20:58:02 ns01 named[8352]: client @0x7f66a803c3e0 192.168.50.15#16756/key zonetransfer.key: view view1: updating zone 'ddns.lab/IN': adding an ....168.50.15
+Hint: Some lines were ellipsized, use -l to show in full.
+[root@ns01 dynamic]# 
+
+```
+Вообщем често не знаю, правильно ли я сделал или нет, еще как варианты это отключить его со стороны клиента и сервера в конфиге поставить на <code>disabled</code>
+или <code>setenforce 0</code>
+
+Ну или же еще как вариант можно попробовать с памраметром setsebool поиграться
 
 
 
