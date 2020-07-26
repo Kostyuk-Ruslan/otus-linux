@@ -119,3 +119,10 @@ cf2c65d8d7ab        nginx_custom        "nginx -g 'daemon ..."   6 seconds ago  
 [root@node01 nginx]# 
 
 ```
+
+Заходим в браузер и смотрим
+
+<p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/work13_Selinux/photo/nginx.JPG"></p>
+
+
+
