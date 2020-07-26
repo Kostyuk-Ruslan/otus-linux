@@ -80,17 +80,42 @@ Commercial support is available at
 
 </details>
 
+Собираем наш образ на базе "alpine" командой <code>[root@node01 nginx]# docker build -t nginx_custom . </code>
 
+Пошел долгий процесс, после того как он закончился проверяем наш образ
+В итоге выдал что образ собрался
 
+```
+Step 6/7 : EXPOSE 80
+---> Running in 308248cdbf36
+---> 18101309b001
+Removing intermediate container 308248cdbf36
+Step 7/7 : CMD nginx -g daemon off;
+---> Running in 416675f3c34d
+---> fb5dc701d212
+Removing intermediate container 416675f3c34d
+Successfully built fb5dc701d212
+[root@node01 nginx]# 
+    
 
+```
 
+```
+[root@node01 nginx]# docker images
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+nginx_custom        latest              291443442b6b        26 seconds ago      326 MB
+[root@node01 nginx]# 
 
+```
 
+Далее запускаем наш контейнер
 
+```
+[root@node01 nginx]# docker run -d --name kostyuk-nginx -p 80:80 nginx_custom
+cf2c65d8d7ab3929c5e35adcc6008009d9742b40d9af4755b48386e814b4156e
+[root@node01 nginx]# docker ps
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                NAMES
+cf2c65d8d7ab        nginx_custom        "nginx -g 'daemon ..."   6 seconds ago       Up 4 seconds        0.0.0.0:80->80/tcp   kostyuk-nginx
+[root@node01 nginx]# 
 
-
-
-docker run -it -d --name kostyuk-nginx -p 80:80 127c372d4638
-
-
-docker run -d --name kostyuk-nginx777 -p 80:80 777
+```
