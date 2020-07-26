@@ -229,5 +229,21 @@ services:
 
 ```
 
+Далее поднимаем наши контейнеры командой <code>docker-compose up -d</code>
+Пошел скачиваться, ошибок вроде не выдал
 
+
+Проверяем как все поднялось
+
+```
+[root@node01 work14_Docker]# docker-compose ps
+WARNING: Some networks were defined but are not used by any service: nginx
+  Name                 Command              State           Ports         
+  --------------------------------------------------------------------------
+  nginx_kos   nginx -g daemon off;            Up      0.0.0.0:80->80/tcp    
+  php_kos     docker-php-entrypoint php-fpm   Up      0.0.0.0:9000->9000/tcp
+  [root@node01 work14_Docker]# 
+  
+
+```
 
