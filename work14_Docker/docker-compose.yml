@@ -14,7 +14,7 @@ services:
   networks:
     - php
   volumes:
-#    - ./hosts:/etc/nginx/
+    - ./hosts/nginx.conf:/etc/nginx/nginx.conf
     - ./www:/var/www/
     - ./logs/nginx:/var/log/nginx
 
