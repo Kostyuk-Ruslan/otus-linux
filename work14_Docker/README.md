@@ -11,6 +11,7 @@ Linux Administrator 2020
 <details>
 <summary><code>Dockerfile</code></summary>
 
+```
 FROM alpine:latest
 MAINTAINER  Kostyuk_Ruslan
 ENV v_nginx=1.16.1
@@ -34,6 +35,8 @@ EXPOSE 80
 
 CMD ["nginx", "-g", "daemon off;"]
 
+```
+
 </details>
 
 
@@ -45,6 +48,8 @@ CMD ["nginx", "-g", "daemon off;"]
 
 <details>
 <summary><code>index.html</code></summary>
+
+```
 
 <!DOCTYPE html>
 <html>
@@ -70,6 +75,8 @@ Commercial support is available at
 <p><em>Thank you for using nginx.</em></p>
 </body>
 </html>
+
+```
 
 </details>
 
