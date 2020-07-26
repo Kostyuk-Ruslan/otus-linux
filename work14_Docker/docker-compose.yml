@@ -14,15 +14,15 @@ services:
   networks:
     - php
   volumes:
-    - ./hosts:/etc/nginx/
+#    - ./hosts:/etc/nginx/
     - ./www:/var/www/
     - ./logs/nginx:/var/log/nginx
 
  php:
-  build: ./php
+  image:php-fpm
   container_name: "php_kos"
   networks:
-    - nginx
+    - php
 #  ports:
 #    - "9000:9000"
   volumes:
