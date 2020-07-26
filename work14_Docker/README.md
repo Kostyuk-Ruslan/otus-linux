@@ -122,7 +122,7 @@ cf2c65d8d7ab        nginx_custom        "nginx -g 'daemon ..."   6 seconds ago  
 
 Заходим в браузер и смотрим
 
-<p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/work13_Selinux/photo/nginx.JPG"></p>
+<p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/work14_Docker/photo/nginx.JPG"></p>
 
 
 
