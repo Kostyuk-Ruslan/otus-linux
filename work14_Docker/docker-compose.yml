@@ -5,7 +5,7 @@ networks:
 
 services:
  web:
-  image: nginx:latest
+  image: impkos/nginx:latest
   container_name: "nginx_kos"
   depends_on:
     - php
@@ -19,11 +19,11 @@ services:
     - ./logs/nginx:/var/log/nginx
 
  php:
-  image:php-fpm
+  image: impkos/php:latest
   container_name: "php_kos"
   networks:
     - php
-#  ports:
-#    - "9000:9000"
+  ports:
+    - "9000:9000"
   volumes:
     - ./www:/var/www/

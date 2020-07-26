@@ -130,7 +130,63 @@ cf2c65d8d7ab        nginx_custom        "nginx -g 'daemon ..."   6 seconds ago  
 <p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/work14_Docker/photo/dockerhub.JPG"></p>
 
 
+#Задание 2) Для второго задания я использова два Dockerfile
 
+
+<details>
+<summary><code>Dockerfile - nginx</code></summary>
+
+```
+
+FROM alpine:latest
+MAINTAINER  Kostyuk_Ruslan
+ENV v_nginx=1.16.1
+RUN apk --update add libc-dev make libxslt-dev gd-dev perl-dev libedit-dev alpine-sdk bash build-base zlib-dev pcre pcre-dev openssl openssl-dev linux-headers \
+    && cd /tmp \
+    && wget  http://nginx.org/download/nginx-${v_nginx}.tar.gz \
+    && tar -xvf nginx-${v_nginx}.tar.gz \
+    && cd /tmp/nginx-${v_nginx} \
+    && ./configure \
+    --prefix=/etc/nginx \
+    --sbin-path=/usr/sbin/nginx \
+    --conf-path=/etc/nginx/nginx.conf \
+    --error-log-path=/var/log/nginx/error.log \
+    --http-log-path=/var/log/nginx/access.log \
+    --pid-path=/var/run/nginx.pid \
+#    --lock-path=/var/run/nginx.lock \
+    && make  \
+    && make install
+COPY index.html /etc/nginx/html/
+EXPOSE 80
+
+CMD ["nginx", "-g", "daemon off;"]
+
+
+```
+</details>
+
+и Dockerfile - php
+
+
+
+<details>
+<summary><code>Dockerfile - php</code></summary>
+
+```
+FROM php:7.4-fpm
+RUN apt-get update && apt-get install -y \
+        libfreetype6-dev \
+        libjpeg62-turbo-dev \
+        libpng-dev \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install -j$(nproc) gd
+WORKDIR /var/www
+
+#CMD ["php" "-F"]
+
+
+```
+</details>
 
 
 

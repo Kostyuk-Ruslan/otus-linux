@@ -5641,3 +5641,8 @@
 192.168.2.230 - - [25/Jul/2020:22:24:49 +0000] "GET / HTTP/1.1" 200 612 "-" "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.89 Safari/537.36" "-"
 192.168.2.230 - - [25/Jul/2020:22:24:50 +0000] "GET /favicon.ico HTTP/1.1" 404 555 "http://192.168.1.2/" "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.89 Safari/537.36" "-"
 192.168.2.230 - - [25/Jul/2020:22:24:57 +0000] "GET /info.php HTTP/1.1" 404 555 "-" "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.89 Safari/537.36" "-"
+192.168.2.230 - - [26/Jul/2020:15:12:53 +0000] "GET / HTTP/1.1" 200 542 "-" "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.89 Safari/537.36"
+192.168.2.230 - - [26/Jul/2020:15:12:54 +0000] "GET / HTTP/1.1" 304 0 "-" "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.89 Safari/537.36"
+192.168.2.230 - - [26/Jul/2020:15:13:11 +0000] "GET /index.php HTTP/1.1" 404 555 "-" "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.89 Safari/537.36"
+192.168.2.230 - - [26/Jul/2020:15:13:13 +0000] "GET /index.php HTTP/1.1" 404 555 "-" "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.89 Safari/537.36"
+192.168.2.230 - - [26/Jul/2020:15:13:14 +0000] "GET /index.php HTTP/1.1" 404 555 "-" "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.89 Safari/537.36"
