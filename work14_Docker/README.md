@@ -187,6 +187,11 @@ WORKDIR /var/www
 
 ```
 </details>
+Далее я запушил их в docker hub, для автоматичкой сборки
+
+<p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/work14_Docker/photo/compose.JPG"></p>
+
+
 
 
 
