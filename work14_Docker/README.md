@@ -125,4 +125,12 @@ cf2c65d8d7ab        nginx_custom        "nginx -g 'daemon ..."   6 seconds ago  
 <p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/work14_Docker/photo/nginx.JPG"></p>
 
 
+Далее в докерхабе, я прилинковал свой проект с гитхаба, указал докерфайл и сделал автоматический "Build"
+
+<p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/work14_Docker/photo/dockerhub.JPG"></p>
+
+
+
+
+
 
