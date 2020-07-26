@@ -130,7 +130,7 @@ cf2c65d8d7ab        nginx_custom        "nginx -g 'daemon ..."   6 seconds ago  
 <p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/work14_Docker/photo/dockerhub.JPG"></p>
 
 
-#Задание 2) Для второго задания я использова два Dockerfile
+#Задание 2) Для второго задания я использова два Dockerfile'a
 
 
 <details>
@@ -192,6 +192,42 @@ WORKDIR /var/www
 <p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/work14_Docker/photo/compose.JPG"></p>
 
 
+Далее написал <code>docker-compose.yml</code> где указал, что бы образы он брал смоего репозитория на докерхабе
+
+```
+
+version: '3'
+networks:
+ php:
+ nginx:
+
+services:
+ web:
+  image: impkos/nginx:latest
+  container_name: "nginx_kos"
+  depends_on:
+    - php
+  ports:
+    - "80:80"
+  networks:
+    - php
+  volumes:
+#    - ./hosts:/etc/nginx/
+    - ./www:/var/www/
+    - ./logs/nginx:/var/log/nginx
+
+ php:
+  image: impkos/php:latest
+  container_name: "php_kos"
+  networks:
+    - php
+  ports:
+    - "9000:9000"
+  volumes:
+    - ./www:/var/www/
+
+
+```
 
 
 
