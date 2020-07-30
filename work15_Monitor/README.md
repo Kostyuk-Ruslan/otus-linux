@@ -72,11 +72,9 @@ Created symlink from /etc/systemd/system/multi-user.target.wants/zabbix-agent.se
 Получилось примерно так, постарался выделить основные показатели, те что были в условии задачи ( память, процессор, диск, сеть )
 
 
-<p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/work15_Monitor/photo_zabbix/17.PNG"></p>
-
-
 <p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/work15_Monitor/photo_zabbix/15.PNG"></p>
 
+Полный вывод:
 
 <p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/work15_Monitor/photo_zabbix/14.PNG"></p>
 
