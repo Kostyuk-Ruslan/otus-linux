@@ -37,9 +37,24 @@ Created symlink from /etc/systemd/system/multi-user.target.wants/zabbix-agent.se
 [root@ms001-cent77 zabbix]# 
 
 ```
+проверяем на юнит
 
-И переходим на на наш свежоиспеченный, девственный сервер 
+<p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/work15_Monitor/photo_zabbix/2.JPG"></p>
+
+
+
+И переходим на на наш свежоиспеченный, девственный сервер http://10.0.18.78
 
 <p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/work15_Monitor/photo_zabbix/1.JPG"></p>
+
+
+Далее добавляем нашего клиента Настройка --> Узлы сети --> Создать узел сети
+
+
+<p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/work15_Monitor/photo_zabbix/3.JPG"></p>
+
+
+
+
 
 
