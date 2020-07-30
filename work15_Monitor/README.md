@@ -12,7 +12,6 @@ Linux Administrator 2020
 <details>
 <summary><code>Zabbix</code></summary>
 
-```
 
 Поднял вм, поставил CentOS7, и установил забикс по инструкции <code>https://www.zabbix.com/ru/download?zabbix=5.0&os_distribution=red_hat_enterprise_linux&os_version=7&db=mysql&ws=nginx</code>
 
@@ -84,7 +83,6 @@ Created symlink from /etc/systemd/system/multi-user.target.wants/zabbix-agent.se
 <p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/work15_Monitor/photo_zabbix/14.PNG"></p>
 
 
-```
 
 </details>
 
