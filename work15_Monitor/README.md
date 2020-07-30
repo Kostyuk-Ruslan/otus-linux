@@ -58,6 +58,15 @@ Created symlink from /etc/systemd/system/multi-user.target.wants/zabbix-agent.se
 <p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/work15_Monitor/photo_zabbix/4.JPG"></p>
 
 
+И того у нас 1 локальный сервер и 1 удаленный zabbix-agent
+
+<p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/work15_Monitor/photo_zabbix/5.JPG"></p>
+
+
+Ну а дальше все просто, пошли делать комплексный экран: Мониторинг -> Комплексные экраны --> Создать комплексный экран
+
+
+
 
 
 
