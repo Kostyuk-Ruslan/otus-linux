@@ -37,7 +37,7 @@ Created symlink from /etc/systemd/system/multi-user.target.wants/zabbix-agent.se
 [root@ms001-cent77 zabbix]# 
 
 ```
-проверяем на юнит
+проверяем наш юнит
 
 <p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/work15_Monitor/photo_zabbix/2.JPG"></p>
 
@@ -52,6 +52,20 @@ Created symlink from /etc/systemd/system/multi-user.target.wants/zabbix-agent.se
 
 
 <p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/work15_Monitor/photo_zabbix/3.JPG"></p>
+
+Ну там по мелочи еще добавил шаблонов, в итоге данные пошли, сервер его увидел
+
+<p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/work15_Monitor/photo_zabbix/4.JPG"></p>
+
+
+
+
+
+
+
+
+
+
 
 
 
