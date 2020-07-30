@@ -40,6 +40,6 @@ Created symlink from /etc/systemd/system/multi-user.target.wants/zabbix-agent.se
 
 И переходим на на наш свежоиспеченный, девственный сервер 
 
-<p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/work15_Monitor/photo_zabbix.1.JPG"></p>
+<p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/work15_Monitor/photo_zabbix/1.JPG"></p>
 
 
