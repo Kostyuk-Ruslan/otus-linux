@@ -493,10 +493,47 @@ define service{
         check_command           check_snmp_netint_bw_linux!tun0!7!9
         }
 
+```
+
+
+На стороне клиента
+cd /etc/nagios/nrpe.cfg
+
+```
+log_facility=daemon
+pid_file=/var/run/nrpe.pid
+server_port=5666
+#server_address=127.0.0.1
+nrpe_user=nagios
+nrpe_group=nagios
+allowed_hosts=127.0.0.1,10.0.16.13,10.1.10.1
+dont_blame_nrpe=1
+# command_prefix=/usr/bin/sudo
+debug=0
+command_timeout=60
+connection_timeout=300
+
+command[check_cpu]=/usr/lib64/nagios/plugins/check_cpu -w 80 -c 90
+command[check_ram]=/usr/lib64/nagios/plugins/check_ram -w 80 -c 90
+command[check_hda0]=/usr/lib64/nagios/plugins/check_disk -w 20% -c 10% -p /boot
+command[check_hda1]=/usr/lib64/nagios/plugins/check_disk -w 20% -c 10% -p /
+command[check_swap]=/usr/lib64/nagios/plugins/check_swap -w 200 -c 100
+command[check_users]=/usr/lib64/nagios/plugins/check_users -w 2 -c 3
+command[check_zombie_procs]=/usr/lib64/nagios/plugins/check_procs -w 5 -c 10 -s Z
+command[check_total_procs]=/usr/lib64/nagios/plugins/check_procs -w 600 -c 700
+
+command[check_iptables]=sudo /usr/lib64/nagios/plugins/check_iptables -T filter -r 50
+command[check_proc_ssh]=/usr/lib64/nagios/plugins/check_procs -C sshd -c 1:6
+command[check_proc_ntp]=/usr/lib64/nagios/plugins/check_procs -C ntpd -c 1:1
+command[check_proc_winbind]=/usr/lib64/nagios/plugins/check_procs -C winbindd -c 1:
+command[check_proc_unbound]=/usr/lib64/nagios/plugins/check_procs -C unbound -c 1:5
+command[check_isp1]=/usr/lib64/nagios/plugins/check_bw vlan10
+command[check_isp2]=/usr/lib64/nagios/plugins/check_bw vlan20
+
+
 
 
 ```
-
 
 
 </details>
