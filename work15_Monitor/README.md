@@ -103,7 +103,7 @@ networks:
 services:
     
   grafana:
-    image: grafana/grafana:6.5.2
+    image: grafana/grafana:7.1.1
     container_name: 'grafana'
     restart: always
     networks:
@@ -117,8 +117,8 @@ services:
     ports:
       - 3000:3000
     volumes:
-      - ./grafana/data:/var/lib/grafana  # áä
-      - ./grafana/data/plugins:/var/lib/grafana/plugins  # ïëàãèí? êî?î??é ìîæíî â ???í?? ïîä??í??? .zip
+      - ./grafana/data:/var/lib/grafana 
+      - ./grafana/data/plugins:/var/lib/grafana/plugins 
       - ./grafana/data:/var/lib/grafana
 #      - ./grafana/conf/ldap.toml:/etc/grafana/ldap.toml
       - ./grafana/conf/grafana.ini:/etc/grafana/grafana.ini
@@ -133,7 +133,7 @@ services:
 
 
   prometheus:
-    image: prom/prometheus:v2.15.2
+    image: prom/prometheus:v2.20.0
     container_name: prometheus
     restart: always
     networks:
@@ -175,7 +175,7 @@ services:
       - /var/lib/docker/:/var/lib/docker:ro
 
   node-exporter:
-    image: prom/node-exporter:v0.18.1
+    image: prom/node-exporter:latest
     container_name: node-exporter
     restart: always
     networks:
@@ -222,7 +222,14 @@ services:
 
 ```
 
-Поднимаем "docker-compose up -d"
+Поднимаем "docker-compose up -d" и проверяем
+
+<p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/work15_Monitor/photo_prometheus/1.JPG"></p>
+
+
+И заходим на наш чистый сервер 10.0.18.83:9090
+
+<p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/work15_Monitor/photo_prometheus/2.JPG"></p> 
 
 
 Добавим нашу ноду в конфиг прометеуса
@@ -234,10 +241,20 @@ services:
             - targets: ['10.0.18.88:9100']
 ```
 
+и проверим наш таргет
+
+<p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/work15_Monitor/photo_prometheus/3.JPG"></p>
+
+Он вылетел с ошибкой, что естественно, будем ставить  на нашу ноду "ms001-elk-test01" exporter
+
+На тачке 10.0.18.88 (он же будет у нас клиентом)  установил node-exporter, по факту это 
+
+
+
+
 
 
 После того как упсешно все поднялось, установим node-exporter на linux машину
-
 
 
 
