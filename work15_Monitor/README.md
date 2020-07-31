@@ -333,15 +333,31 @@ NETWORK: хотел траффиек показать, но его что то �
 
 Ну что же в добавок попробуем подцепить нашу ноду клиента к графане
 
+Так как графана на том же сервере, то просто переходим на 3000 порт,поднят из docker-compose, который я указал в начале пароль по умолчанию admin/admin
+
+<p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/work15_Monitor/photo_grafana/11.JPG"></p>
+
+Попадаем в пустую графану
+
+<p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/work15_Monitor/photo_grafana/12.JPG"></p>
+
+ДЛя начала необходимо добавишь нашу ноду, переходим  в Configuration --> DataSource
+
+<p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/work15_Monitor/photo_grafana/13.JPG"></p>
+
+и заполняем адрес нашей ноды
+
+<p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/work15_Monitor/photo_grafana/14.JPG"></p>
+
+После этого делаем save test, все прошло успешно, теперь необходимо добавить dadshboard, я пошел сюда "https://grafana.com/grafana/dashboards/11074"
+и импортировал .json файл в графану "Node Exporter for Prometheus Dashboard EN v20200628" (Manage --> Import ) после успешного импорта, я назвал дашбоард своим ФИО Kostyuk_Ruslan, на фото  видно
+
+<p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/work15_Monitor/photo_grafana/15.JPG"></p>
+<p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/work15_Monitor/photo_grafana/16.JPG"></p>
+<p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/work15_Monitor/photo_grafana/17.JPG"></p>
 
 
-
-
-
-
-
-
-
+Все не влезло, поэтому разбил.
 
 
 
