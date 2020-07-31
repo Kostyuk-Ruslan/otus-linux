@@ -222,8 +222,21 @@ services:
 
 ```
 
+Поднимаем "docker-compose up -d"
 
 
+Добавим нашу ноду в конфиг прометеуса
+
+
+```
+          - job_name: 'ms001-elk-test01'  
+          static_configs:
+            - targets: ['10.0.18.88:9100']
+```
+
+
+
+После того как упсешно все поднялось, установим node-exporter на linux машину
 
 
 
