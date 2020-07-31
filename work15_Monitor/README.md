@@ -369,6 +369,30 @@ NETWORK: хотел траффиек показать, но его что то �
 <summary><code>Доп. задание *  Nagios Core</code></summary>
 
 
+Приведу пример нагиоса, тот что мы используем на работе, все никак не обновимся )
+
+<p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/work15_Monitor/photo_nagios/1.JPG"></p>
+
+Наши красные и зеленые узлы
+
+<p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/work15_Monitor/photo_nagios/2.JPG"></p>
+
+Выбрал хост со стандартными метриками, мониторятся (CPU,RAM,NET,DISK,SWAP и некоторые демоны )
+
+<p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/work15_Monitor/photo_nagios/3.JPG"></p>
+
+Графики некоторых метрик
+
+<p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/work15_Monitor/photo_nagios/4.JPG"></p>
+
+<p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/work15_Monitor/photo_nagios/5.JPG"></p>
+
+<p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/work15_Monitor/photo_nagios/6.JPG"></p>
+
+
+
+
+
 
 
 
