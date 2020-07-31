@@ -247,7 +247,7 @@ services:
 
 Он вылетел с ошибкой, что естественно, будем ставить  на нашу ноду "ms001-elk-test01" exporter
 
-На тачке 10.0.18.88 (он же будет у нас клиентом)  установил node-exporter, по факту это тот же docker-compose.override.yml
+На тачке 10.0.18.88 (он же будет у нас клиентом)  установил node-exporter, по факту это тот же docker-compose.override.ym, плюс прометеус там, что бы можно было подцепить к графане, но это будет дальше
 
 
 ```
@@ -302,10 +302,59 @@ services:
 
 ```
 
+После того как поднялся docker-compose, проверяем доступность метрик на клиенте на порту нашего экспортера "9100"
+
+<p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/work15_Monitor/photo_prometheus/4.JPG"></p>
+
+теперь снова отправляемся на сервер и смотрим наш тагерт, он теперь в "UP"
+
+<p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/work15_Monitor/photo_prometheus/5.JPG"></p>
+
+Ну что же это не может не радовать, теперь отбираем метрики в прометеусе по (CPU,DISK,RAM,NETWORK)
+
+Метрика по диску sda
+
+<p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/work15_Monitor/photo_prometheus/6.JPG"></p>
+
+<p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/work15_Monitor/photo_prometheus/7.JPG"></p>
+
+RAM: Мне показалось это основная из понятных мне
+
+<p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/work15_Monitor/photo_prometheus/8.JPG"></p>
+
+SWAP:
+
+<p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/work15_Monitor/photo_prometheus/9.JPG"></p>
+
+
+NETWORK: хотел траффиек показать, но его что то не нашел
+
+<p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/work15_Monitor/photo_prometheus/10.JPG"></p>
+
+Ну что же в добавок попробуем подцепить нашу ноду клиента к графане
 
 
 
-После того как упсешно все поднялось, установим node-exporter на linux машину
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
