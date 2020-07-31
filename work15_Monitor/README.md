@@ -389,10 +389,113 @@ NETWORK: хотел траффиек показать, но его что то �
 
 <p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/work15_Monitor/photo_nagios/6.JPG"></p>
 
+Настройки со стороны сервера:
+
+```
+define service{
+        use                     smart-home-service,srv-pnp
+        host_name               sh001-gw1.nes.lan
+        service_description     Usage CPU
+        check_command           check_nrpe!check_cpu
+        }
+
+define service{
+        use                     smart-home-service,srv-pnp
+        host_name               sh001-gw1.nes.lan
+        service_description     Usage RAM
+        check_command           check_nrpe!check_ram
+        }
+
+define service{
+        use                     smart-home-service,srv-pnp
+        host_name               sh001-gw1.nes.lan
+        service_description     Partition /
+        check_command           check_nrpe!check_hda1
+        }
+        
+define service{
+        use                     smart-home-service,srv-pnp
+        host_name               sh001-gw1.nes.lan
+        service_description     Partition /boot
+        check_command           check_nrpe!check_hda0
+        }
+        
+define service{
+        use                     smart-home-service,srv-pnp
+        host_name               sh001-gw1.nes.lan
+        service_description     Partition swap
+        check_command           check_nrpe!check_swap
+        }
+
+define service{
+        use                     smart-home-service,srv-pnp
+        host_name               sh001-gw1.nes.lan
+        service_description     Users loged in
+        check_command           check_nrpe!check_users
+        }
+        
+define service{
+        use                     smart-home-service,srv-pnp
+        host_name               sh001-gw1.nes.lan
+        service_description     Processes Total
+        check_command           check_nrpe!check_total_procs
+        }
+        
+define service{
+        use                     smart-home-service,srv-pnp
+        host_name               sh001-gw1.nes.lan
+        service_description     Processes Zombie
+        check_command           check_nrpe!check_zombie_procs
+        }
+        
+define service{
+        use                     smart-home-service,srv-pnp
+        host_name               sh001-gw1.nes.lan
+        service_description     Process Fail2ban
+        check_command           check_nrpe!check_proc_fail2ban
+        }
+        
+define service{
+        use                     smart-home-service,srv-pnp
+        host_name               sh001-gw1.nes.lan
+        service_description     Process SSH
+        check_command           check_nrpe!check_proc_ssh
+        }
+        
+define service{
+        use                     smart-home-service,srv-pnp
+        host_name               sh001-gw1.nes.lan
+        service_description     Process NTP
+        check_command           check_nrpe!check_proc_ntp
+        }
+        
+define service{
+        use                     smart-home-service,srv-pnp
+        host_name               sh001-gw1.nes.lan
+        service_description     Bandwidth vlan10
+        check_command           check_snmp_netint_bw_linux!vlan10!7!9
+#        check_command           check_nrpe!check_vlan10
+
+        }
+        
+define service{
+        use                     smart-home-service,srv-pnp
+        host_name               sh001-gw1.nes.lan
+        service_description     Bandwidth vlan20
+        check_command           check_snmp_netint_bw_linux!vlan20!7!9
+#        check_command           check_nrpe!check_vlan20
+        }
+        
+define service{
+        use                     smart-home-service,srv-pnp
+        host_name               sh001-gw1.nes.lan
+        service_description     Bandwidth tun0
+        check_command           check_snmp_netint_bw_linux!tun0!7!9
+        }
 
 
 
-
+```
 
 
 
