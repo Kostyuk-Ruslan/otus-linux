@@ -247,9 +247,60 @@ services:
 
 Он вылетел с ошибкой, что естественно, будем ставить  на нашу ноду "ms001-elk-test01" exporter
 
-На тачке 10.0.18.88 (он же будет у нас клиентом)  установил node-exporter, по факту это 
+На тачке 10.0.18.88 (он же будет у нас клиентом)  установил node-exporter, по факту это тот же docker-compose.override.yml
 
 
+```
+
+version: '3.3'
+
+volumes:
+ ssl_data:
+
+
+services:
+ prometheus:
+  image: prom/prometheus
+  container_name: prometheus
+  restart: always
+  ports:
+   - '9090:9090'
+  volumes:
+   - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+   - ./prometheus/data:/prometheus:rw
+  command:
+   - '--config.file=/etc/prometheus/prometheus.yml'
+   - '--storage.tsdb.path=/prometheus'
+   - '--storage.tsdb.retention=365d'
+
+ node-exporter:
+  image: prom/node-exporter:latest
+  user: root
+  ports:
+   - '9100:9100'
+  volumes:
+   - /proc:/host/proc:ro
+   - /sys:/host/sys:ro
+   - /:/rootfs:ro
+  command:
+   - '--path.procfs=/host/proc'
+   - '--path.sysfs=/host/sys'
+   - '--collector.filesystem.ignored-mount-points'
+   - '^/(sys|proc|dev|host|etc|rootfs/var/lib/docker/containers|rootfs/var/lib/docker/overlay2|rootfs/run/docker/netns|rootfs/var/lib/docker/aufs)($$|/)'
+
+ cadvisor:
+  image: google/cadvisor:latest
+  privileged: true
+  volumes:
+   - '/:/rootfs:ro'
+   - '/var/run:/var/run:rw'
+   - '/cgroup:/sys/fs/cgroup:ro'
+   - '/var/lib/docker/:/var/lib/docker:ro'
+#   - '/sys/fs/cgroup/cpu,cpuacct:/sys/fs/cgroup/cpuacct,cpu:rw'
+  ports:
+   - '8181:8080'
+
+```
 
 
 
