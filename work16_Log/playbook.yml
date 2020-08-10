@@ -11,6 +11,20 @@
       gpgcheck: no
 
 
+
+
+  - name: nginx repo
+    yum_repository:
+      name: nginx
+      description: nginx repo
+      file: nginx
+      baseurl: https://nginx.org/packages/centos/$releasever/$basearch/
+      gpgcheck: 0
+      enabled: 1
+
+
+
+
   - name: install epel-release
     yum:
      name:
@@ -26,35 +40,27 @@
   - name: start and enable firewalld
     systemd:
         name: firewalld
-        state: started
-        enabled: yes
+        state: stopped
+        enabled: no
     ignore_errors: yes
     tags: services
+
+
+  - name: disable selinux
+    lineinfile:
+      path: /etc/selinux/config
+      regexp: '^SELINUX='
+      line: SELINUX=disabled
+    tags: selinux
+
 
 
 
   - name: install packages
     yum:
      name:
-       - nc
-       - autofs
-       - nfs-utils
-       - xfsdump
-       - lvm2
-       - mdadm
-       - gdisk
-       - wget
-       - mc
-       - screen
-       - tmux
-       - telnet
-       - tcpdump
-       - nano
-       - git
-       - sshpass
-       - rsync
-       - bc
        - ethtool
+       - mc
        - yum-utils
        - ncdu
        - htop
@@ -66,16 +72,18 @@
        - bzip2
        - zip
        - unzip
-       - bind-utils
-       - sshfs
-       - dmidecode
-       - hdparm
-       - smartmontools
-       - traceroute
        - net-tools
-       - bmon
        - vim
-       - cloud-utils-growpart
-
+       - nginx
+       
      state: latest
+
+
+  - name: start and enable nginx
+    systemd:
+        name: nginx
+        state: started
+        enabled: yes
+    ignore_errors: yes
+    tags: services
  
