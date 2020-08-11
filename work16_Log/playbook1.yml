@@ -11,6 +11,37 @@
       gpgcheck: no
 
 
+
+  - name: set up docker stable repo
+    command: yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+    tags: docker
+
+
+  - name: disable selinux
+    lineinfile:
+      path: /etc/selinux/config
+      regexp: '^SELINUX='
+      line: SELINUX=disabled
+    tags: selinux
+
+  - name: stop and disable firewalld
+    systemd:
+      name: firewalld
+      state: stopped
+      enabled: no
+    ignore_errors: yes
+    tags: services
+
+  - name: install docker
+    yum:
+     name:
+      - docker-ce
+      - docker-compose
+    tags: docker
+
+
+
+
   - name: install epel-release
     yum:
      name:
@@ -23,59 +54,37 @@
       name: '*'
       state: latest
 
-  - name: start and enable firewalld
-    systemd:
-        name: firewalld
-        state: started
-        enabled: yes
-    ignore_errors: yes
-    tags: services
-
-
 
   - name: install packages
     yum:
      name:
-       - autofs
-       - nfs-utils
-       - xfsdump
-       - lvm2
-       - mdadm
-       - gdisk
        - wget
        - mc
        - screen
        - tmux
        - telnet
        - tcpdump
-       - nano
-       - git
-       - sshpass
-       - rsync
-       - bc
        - ethtool
        - yum-utils
        - ncdu
        - htop
        - lsof
-       - lshw
-       - iotop
-       - iftop
-       - atop
        - bzip2
        - zip
        - unzip
        - bind-utils
-       - sshfs
-       - dmidecode
-       - hdparm
        - smartmontools
        - traceroute
        - net-tools
-       - bmon
        - vim
-       - cloud-utils-growpart
 
      state: latest
 
+ 
+  - name: start docker
+    service:
+      name: docker
+      state: started
+      enabled: yes
+    tags: docker
  
