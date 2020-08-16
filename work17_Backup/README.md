@@ -167,10 +167,36 @@ Security dir: /root/.config/borg/security/bc62147450f6f56d138572059eaa474db0de01
 - Резервная копия снимается каждые 5 минут. Такой частый запуск в целях демонстрации.
 - Написан скрипт для снятия резервных копий.</code></summary>
 
-``
-123
+```
+Тут я так понял нужно написать скрипт для запуска. ну чтож переходим на client (192.168.50.12)
 
-``
+Скрипт
+
+```
+
+#!/bin/bash
+
+
+BACKUP_USER=root
+BACKUP_HOST=192.168.50.11
+BACKUP_DIR=/var/backup
+
+REPOSITORY=$BACKUP_HOST:$BACKUP_DIR/$(hostname)
+
+
+
+borg create -v -stats \
+$REPOSITORY::'{now:%Y-%m-%d-%H-%M}' \
+/etc
+
+borg prune -v --show-rc --list $REPOSITORY \
+--keep-daily=7 --keep-weekly=4 --keep-monthly=6
+
+
+
+
+
+```
 
 </details>
 
