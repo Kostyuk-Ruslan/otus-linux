@@ -88,7 +88,7 @@ borg 1.1.13
 <details>
 <summary><code>- Репозиторий дле резервных копий должен быть зашифрован ключом или паролем - на ваше усмотрение</code></summary>
 
-Инициализируем репозиторий с сшифрованием 
+Инициализируем репозиторий с шифрованием 
 
 ```
 [root@backup-server backup]# borg init --encryption=repokey-blake2 /var/backup
@@ -135,7 +135,39 @@ drwx------ 3 root root    15 Aug 16 12:15 data
 
 ```
 
+[root@backup-server var]# borg info /var/backup/
+Using a pure-python msgpack! This will result in lower performance.
+Enter passphrase for key /var/backup: 
+Repository ID: bc62147450f6f56d138572059eaa474db0de01e343733dcf3e02b4e52ddc6e61
+Location: /var/backup
+Encrypted: Yes (repokey BLAKE2b)
+Cache: /root/.cache/borg/bc62147450f6f56d138572059eaa474db0de01e343733dcf3e02b4e52ddc6e61
+Security dir: /root/.config/borg/security/bc62147450f6f56d138572059eaa474db0de01e343733dcf3e02b4e52ddc6e61
+------------------------------------------------------------------------------
+                       Original size      Compressed size    Deduplicated size
+                       All archives:                    0 B                  0 B                  0 B
+                       
+                       Unique chunks         Total chunks
+                       Chunk index:                       0                    0
+[root@backup-server var]# 
+                                              
+
+
+```
+
 </details>
 
+
+
+
+<details>
+<summary><code>- Имя бекапа должно содержать информацию о времени снятия бекапа</code></summary>
+
+``
+
+
+``
+
+</details>
 
 
