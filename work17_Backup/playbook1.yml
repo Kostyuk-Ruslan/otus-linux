@@ -38,6 +38,30 @@
 #      state: latest
 
 
+  
+  - name: Install borg
+    get_url:
+      url: https://github.com/borgbackup/borg/releases/download/1.1.13/borg-linux64
+      dest: /usr/bin/borg
+      owner: root
+      group: root
+      mode: '0777'
+
+  - name: Add user for borg
+    user:
+      name: borg
+      home: /home/borg
+      comment: BorgBackup
+
+  - name: Permission borg
+    file:
+      path: /bin/borg
+      owner: root
+      group: root
+      mode: '0777'
+ 
+
+
   - name: install packages
     yum:
      name:
