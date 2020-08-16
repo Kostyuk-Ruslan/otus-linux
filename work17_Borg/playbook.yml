@@ -81,3 +81,24 @@
        - net-tools
        - vim
      state: latest
+
+  - name: Create a directory /var/backup
+    file:
+      path: /var/backup
+      state: directory
+      mode: '0755'
+
+
+  - name: Create filesystem xfs /dev/sdb
+    filesystem:
+      fstype: xfs
+      dev: /dev/sdb
+
+
+  - name: Mount /var/backup
+    mount:
+      path: /var/backup
+      src: /dev/sdb
+      opts: rw
+      state: mounted
+      fstype: xfs
