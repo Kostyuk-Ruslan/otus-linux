@@ -230,6 +230,7 @@ Chunk index:                    1305                 1723
 Using a pure-python msgpack! This will result in lower performance.
                                               
 ```
+Тестовый запуск прошел успешно .
 
 
 Сейчас посмотрим все архивы которые есть в нашем репозитории
@@ -258,3 +259,16 @@ Enter passphrase for key ssh://192.168.50.11/var/backup:
 </details>
 
 
+<details>
+<summary><code>Скрипт запускается из соответствующей Cron джобы, либо systemd timer-а - на ваше усмотрение.</code></summary>
+
+
+
+```
+
+
+
+
+```
+
+</details>
