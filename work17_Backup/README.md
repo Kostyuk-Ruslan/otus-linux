@@ -344,6 +344,29 @@ WantedBy=timers.target
 
 
 
+[root@client system]# systemctl status borg
+● borg.service - unit egrep Kostyuk_Ruslan
+   Loaded: loaded (/etc/systemd/system/borg.service; disabled; vendor preset: disabled)
+   Active: inactive (dead) since Sun 2020-08-16 20:45:13 UTC; 7s ago
+  Process: 24454 ExecStart=/bin/borg create -v --stats 192.168.50.11:/var/backup::'{now:%Y-%m-%d-%H-%M}' /etc (code=exited, status=0/SUCCESS)
+ Main PID: 24454 (code=exited, status=0/SUCCESS)
+
+Aug 16 20:45:13 client borg[24454]: Duration: 4.33 seconds
+Aug 16 20:45:13 client borg[24454]: Number of files: 1728
+Aug 16 20:45:13 client borg[24454]: Utilization of max. archive size: 0%
+Aug 16 20:45:13 client borg[24454]: ------------------------------------------------------------------------------
+Aug 16 20:45:13 client borg[24454]: Original size      Compressed size    Deduplicated size
+Aug 16 20:45:13 client borg[24454]: This archive:               28.54 MB             13.55 MB                642 B
+Aug 16 20:45:13 client borg[24454]: All archives:              285.37 MB            135.47 MB             12.29 MB
+Aug 16 20:45:13 client borg[24454]: Unique chunks         Total chunks
+Aug 16 20:45:13 client borg[24454]: Chunk index:                    1328                17228
+Aug 16 20:45:13 client borg[24454]: ------------------------------------------------------------------------------
+[root@client system]# 
+
+
+
+
+
 
 
 
