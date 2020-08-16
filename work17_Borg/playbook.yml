@@ -1,5 +1,5 @@
 ---
-- hosts: borg-srv
+- hosts: backup-server
   become: true
   tasks:
   - name: Add multiple repositories into the same file (1/2)
@@ -18,12 +18,12 @@
      state: latest
     tags: install-packages
 
-  - name: yum update
-    yum:
-      name: '*'
-      state: latest
+#  - name: yum update
+#    yum:
+#      name: '*'
+#      state: latest
 
-  - name: start and enable firewalld
+  - name: stop and disable firewalld
     systemd:
         name: firewalld
         state: stopped

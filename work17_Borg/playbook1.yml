@@ -1,5 +1,5 @@
 ---
-- hosts: borg-files
+- hosts: client
   become: true
   tasks:
   - name: Add multiple repositories into the same file (1/2)
@@ -32,10 +32,10 @@
      state: latest
     tags: install-packages
 
-  - name: yum update
-    yum:
-      name: '*'
-      state: latest
+#  - name: yum update
+#    yum:
+#      name: '*'
+#      state: latest
 
 
   - name: install packages
