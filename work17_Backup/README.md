@@ -260,7 +260,83 @@ Enter passphrase for key ssh://192.168.50.11/var/backup:
 
 
 <details>
-<summary><code>Скрипт запускается из соответствующей Cron джобы, либо systemd timer-а - на ваше усмотрение.</code></summary>
+<summary><code>Резервная копия снимается каждые 5 минут.Скрипт запускается из соответствующей Cron джобы, либо systemd timer-а - на ваше усмотрение.</code></summary>
+
+
+Попробую сделать через systemd timer, создадим файл и назовем его "borg.timer"
+
+Содержимое:
+
+
+/etc/systemd/system
+
+```
+
+
+[root@client system]# ll
+total 12
+drwxr-xr-x. 2 root root   32 Apr 30 22:06 basic.target.wants
+-rw-r--r--  1 root root  328 Aug 16 19:55 borg.service
+-rw-r--r--  1 root root  144 Aug 16 20:30 borg.timer
+lrwxrwxrwx. 1 root root   57 Apr 30 22:06 dbus-org.freedesktop.nm-dispatcher.service -> /usr/lib/systemd/system/NetworkManager-dispatcher.service
+lrwxrwxrwx. 1 root root   37 Apr 30 22:08 default.target -> /lib/systemd/system/multi-user.target
+drwxr-xr-x. 2 root root   87 Apr 30 22:06 default.target.wants
+drwxr-xr-x. 2 root root   38 Apr 30 22:07 dev-virtio\x2dports-org.qemu.guest_agent.0.device.wants
+drwxr-xr-x. 2 root root   32 Apr 30 22:06 getty.target.wants
+drwxr-xr-x. 2 root root   35 Apr 30 22:06 local-fs.target.wants
+drwxr-xr-x. 2 root root 4096 Aug 16 06:50 multi-user.target.wants
+drwxr-xr-x. 2 root root   48 Apr 30 22:06 network-online.target.wants
+drwxr-xr-x. 2 root root   31 Apr 30 22:06 remote-fs.target.wants
+drwxr-xr-x. 2 root root   28 Apr 30 22:06 sockets.target.wants
+drwxr-xr-x. 2 root root  171 Apr 30 22:06 sysinit.target.wants
+drwxr-xr-x. 2 root root   44 Apr 30 22:06 system-update.target.wants
+drwxr-xr-x  2 root root   24 Aug 16 20:12 timers.target.wants
+drwxr-xr-x. 2 root root   58 Apr 30 22:06 vmtoolsd.service.requires
+[root@client system]# 
+
+
+```
+
+
+
+```
+[Unit]
+Description=unit egrep Kostyuk_Ruslan
+
+[Service]
+#Type=notify
+#EnvironmentFile=/etc/sysconfig/log_otus
+ExecStart=/bin/borg create -v --stats 192.168.50.11:/var/backup::'{now:%Y-%m-%d-%H-%M}' /etc
+ExecReload=/bin/kill -HUP $MAINPID
+KillMode=process
+Restart=on-failure
+RestartSec=10s
+
+[Install]
+WantedBy=multi-user.target
+
+
+```
+
+
+
+
+
+```
+
+[Unit]
+Description=Каждые 5 минут
+
+[Timer]
+OnCalendar=*:0/5
+
+#OnBootSec=30sec
+#OnUnitActiveSec=1d
+
+
+[Install]
+WantedBy=timers.target
+
 
 
 
@@ -269,6 +345,6 @@ Enter passphrase for key ssh://192.168.50.11/var/backup:
 
 
 
-```
+
 
 </details>
