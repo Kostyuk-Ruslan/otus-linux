@@ -202,7 +202,7 @@ borg prune -v --show-rc --list $REPOSITORY \
 
 ```
 
-Запускаем наш тестовый скрипт ./run-borg.sh в процессе спросил пароль для репозитория
+Запускаем наш тестовый скрипт <code>./run-borg.sh</code> в процессе спросил пароль для репозитория
 
 ```
 [root@client ~]# ./run-borg.sh 
@@ -245,6 +245,7 @@ Enter passphrase for key ssh://192.168.50.11/var/backup:
 
 ```
 
+тут видим актуальную дату, как в условии задачи
 
 </details>
 
