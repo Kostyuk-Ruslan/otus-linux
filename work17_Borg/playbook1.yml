@@ -1,0 +1,63 @@
+---
+- hosts: borg-files
+  become: true
+  tasks:
+  - name: Add multiple repositories into the same file (1/2)
+    yum_repository:
+      name: epel
+      description: EPEL YUM repo
+      file: external_repos
+      baseurl: https://download.fedoraproject.org/pub/epel/$releasever/$basearch/
+      gpgcheck: no
+
+  - name: disable selinux
+    lineinfile:
+      path: /etc/selinux/config
+      regexp: '^SELINUX='
+      line: SELINUX=disabled
+    tags: selinux
+
+  - name: stop and disable firewalld
+    systemd:
+      name: firewalld
+      state: stopped
+      enabled: no
+    ignore_errors: yes
+    tags: services
+
+  - name: install epel-release
+    yum:
+     name:
+      - epel-release
+     state: latest
+    tags: install-packages
+
+  - name: yum update
+    yum:
+      name: '*'
+      state: latest
+
+
+  - name: install packages
+    yum:
+     name:
+       - wget
+       - mc
+       - screen
+       - tmux
+       - telnet
+       - tcpdump
+       - ethtool
+       - yum-utils
+       - ncdu
+       - htop
+       - lsof
+       - bzip2
+       - zip
+       - unzip
+       - bind-utils
+       - traceroute
+       - net-tools
+       - vim
+
+     state: latest
