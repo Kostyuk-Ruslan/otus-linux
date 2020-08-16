@@ -167,7 +167,7 @@ Security dir: /root/.config/borg/security/bc62147450f6f56d138572059eaa474db0de01
 - Написан скрипт для снятия резервных копий.</code></summary>
 
 ``
-
+123
 
 ``
 
