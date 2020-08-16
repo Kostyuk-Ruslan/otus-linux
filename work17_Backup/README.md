@@ -132,6 +132,8 @@ drwx------ 3 root root    15 Aug 16 12:15 data
 -rw------- 1 root root    73 Aug 16 12:14 README
 [root@backup-server backup]# 
 
+```
+
 
 ```
 
@@ -151,7 +153,6 @@ Security dir: /root/.config/borg/security/bc62147450f6f56d138572059eaa474db0de01
                        Chunk index:                       0                    0
 [root@backup-server var]# 
                                               
-
 
 ```
 
