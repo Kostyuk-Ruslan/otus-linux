@@ -116,6 +116,34 @@ Write down the passphrase. Store both at safe place(s).
 
 ```
 
+[root@client ~]# borg init --encryption=repokey-blake2 192.168.50.11:/var/backup/
+Using a pure-python msgpack! This will result in lower performance.
+root@192.168.50.11's password: 
+Remote: Using a pure-python msgpack! This will result in lower performance.
+Enter new passphrase: 
+Enter same passphrase again: 
+Do you want your passphrase to be displayed for verification? [yN]: y
+Your passphrase (between double-quotes): "B77z3z4q2"
+Make sure the passphrase displayed above is exactly what you wanted.
+
+By default repositories initialized with this version will produce security
+errors if written to with an older version (up to and including Borg 1.0.8).
+
+If you want to use these older versions, you can disable the check by running:
+borg upgrade --disable-tam ssh://192.168.50.11/var/backup
+
+See https://borgbackup.readthedocs.io/en/stable/changes.html#pre-1-0-9-manifest-spoofing-vulnerability for details about the security implications.
+
+IMPORTANT: you will need both KEY AND PASSPHRASE to access this repo!
+Use "borg key export" to export the key, optionally in printable format.
+Write down the passphrase. Store both at safe place(s).
+
+[root@client ~]# 
+
+
+
+```
+
 Провереям что репа создалась
 
 ```
@@ -182,7 +210,7 @@ BACKUP_USER=root
 BACKUP_HOST=192.168.50.11
 BACKUP_DIR=/var/backup
 
-REPOSITORY=$BACKUP_HOST:$BACKUP_DIR/$(hostname)
+REPOSITORY=$BACKUP_HOST:$BACKUP_DIR
 
 
 
@@ -194,6 +222,35 @@ borg prune -v --show-rc --list $REPOSITORY \
 --keep-daily=7 --keep-weekly=4 --keep-monthly=6
 
 
+```
+
+Запускаем наш тестовый скрипт ./run-borg.sh в процессе спросил пароль для репозитория
+
+```
+[root@client ~]# ./run-borg.sh 
+Using a pure-python msgpack! This will result in lower performance.
+root@192.168.50.11's password: 
+Remote: Using a pure-python msgpack! This will result in lower performance.
+Enter passphrase for key ssh://192.168.50.11/var/backup: 
+Creating archive at "192.168.50.11:/var/backup::{now:%Y-%m-%d-%H-%M}"
+------------------------------------------------------------------------------
+Archive name: 2020-08-16-14-48
+Archive fingerprint: 4282470a4a440bff83f7bce3db5cc42828d41ed241ddfa157c24d6a564e2f05b
+Time (start): Sun, 2020-08-16 14:48:22
+Time (end):   Sun, 2020-08-16 14:48:31
+Duration: 9.19 seconds
+Number of files: 1726
+Utilization of max. archive size: 0%
+------------------------------------------------------------------------------
+Original size      Compressed size    Deduplicated size
+This archive:               28.54 MB             13.55 MB             11.89 MB
+All archives:               28.54 MB             13.55 MB             11.89 MB
+                       
+Unique chunks         Total chunks
+Chunk index:                    1305                 1723
+------------------------------------------------------------------------------
+Using a pure-python msgpack! This will result in lower performance.
+                                              
 ```
 
 </details>
