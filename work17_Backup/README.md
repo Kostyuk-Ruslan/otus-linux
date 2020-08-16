@@ -88,7 +88,49 @@ borg 1.1.13
 <details>
 <summary><code>- Репозиторий дле резервных копий должен быть зашифрован ключом или паролем - на ваше усмотрение</code></summary>
 
+Инициализируем репозиторий с сшифрованием 
+
 ```
+[root@backup-server backup]# borg init --encryption=repokey-blake2 /var/backup
+Using a pure-python msgpack! This will result in lower performance.
+Enter new passphrase: 
+Enter same passphrase again: 
+Do you want your passphrase to be displayed for verification? [yN]: y
+Your passphrase (between double-quotes): "B77z3z4q2"
+Make sure the passphrase displayed above is exactly what you wanted.
+
+By default repositories initialized with this version will produce security
+errors if written to with an older version (up to and including Borg 1.0.8).
+
+If you want to use these older versions, you can disable the check by running:
+borg upgrade --disable-tam /var/backup
+
+See https://borgbackup.readthedocs.io/en/stable/changes.html#pre-1-0-9-manifest-spoofing-vulnerability for details about the security implications.
+
+IMPORTANT: you will need both KEY AND PASSPHRASE to access this repo!
+Use "borg key export" to export the key, optionally in printable format.
+Write down the passphrase. Store both at safe place(s).
+
+[root@backup-server backup]# 
+
+
+```
+
+Провереям что репа создалась
+
+```
+[root@backup-server backup]# pwd
+/var/backup
+[root@backup-server backup]# ll
+total 64
+-rw------- 1 root root   964 Aug 16 12:15 config
+drwx------ 3 root root    15 Aug 16 12:15 data
+-rw------- 1 root root    52 Aug 16 12:15 hints.1
+-rw------- 1 root root 41258 Aug 16 12:15 index.1
+-rw------- 1 root root   190 Aug 16 12:15 integrity.1
+-rw------- 1 root root    16 Aug 16 12:15 nonce
+-rw------- 1 root root    73 Aug 16 12:14 README
+[root@backup-server backup]# 
 
 
 ```
