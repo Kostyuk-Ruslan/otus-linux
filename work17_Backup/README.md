@@ -88,30 +88,8 @@ borg 1.1.13
 <details>
 <summary><code>- Репозиторий дле резервных копий должен быть зашифрован ключом или паролем - на ваше усмотрение</code></summary>
 
-Инициализируем репозиторий с шифрованием 
+Инициализируем репозиторий с шифрованием c клиента на сервер 
 
-```
-[root@backup-server backup]# borg init --encryption=repokey-blake2 /var/backup
-Using a pure-python msgpack! This will result in lower performance.
-Enter new passphrase: 
-Enter same passphrase again: 
-Do you want your passphrase to be displayed for verification? [yN]: y
-Your passphrase (between double-quotes): "B77z3z4q2"
-Make sure the passphrase displayed above is exactly what you wanted.
-
-By default repositories initialized with this version will produce security
-errors if written to with an older version (up to and including Borg 1.0.8).
-
-If you want to use these older versions, you can disable the check by running:
-borg upgrade --disable-tam /var/backup
-
-See https://borgbackup.readthedocs.io/en/stable/changes.html#pre-1-0-9-manifest-spoofing-vulnerability for details about the security implications.
-
-IMPORTANT: you will need both KEY AND PASSPHRASE to access this repo!
-Use "borg key export" to export the key, optionally in printable format.
-Write down the passphrase. Store both at safe place(s).
-
-[root@backup-server backup]# 
 
 
 ```
@@ -252,6 +230,21 @@ Chunk index:                    1305                 1723
 Using a pure-python msgpack! This will result in lower performance.
                                               
 ```
+
+
+Сейчас посмотрим все архивы которые есть в нашем репозитории
+
+```
+root@client ~]# borg list 192.168.50.11:/var/backup
+Using a pure-python msgpack! This will result in lower performance.
+root@192.168.50.11's password: 
+Remote: Using a pure-python msgpack! This will result in lower performance.
+Enter passphrase for key ssh://192.168.50.11/var/backup: 
+2020-08-16-14-48                     Sun, 2020-08-16 14:48:22 [4282470a4a440bff83f7bce3db5cc42828d41ed241ddfa157c24d6a564e2f05b]
+[root@client ~]# 
+
+```
+
 
 </details>
 
