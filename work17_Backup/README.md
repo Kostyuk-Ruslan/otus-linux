@@ -598,13 +598,6 @@ Creating archive at "192.168.50.11:/var/backup::{now:%Y-%m-%d-%H-%M}"
 Далее настраиваем ротацию логов
 
 
-
-</details>
-
-
-<details>
-<summary><code>Описание процесса восстановления.</code></summary>
-
 Заходим в /etc/logrotate.d/ и создаем фай <code>borg.conf</code>
 
 ```
@@ -645,3 +638,5 @@ total 28
 
 
 
+<details>
+<summary><code>Описание процесса восстановления.</code></summary>
