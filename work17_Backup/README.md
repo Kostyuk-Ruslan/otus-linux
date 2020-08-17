@@ -115,6 +115,28 @@ borg 1.1.13
 /dev/sdb с обьемом, я сделал 5GB (Можно запустить вагран файл все должно быть ровно )
  
 ```
+
+```
+
+[root@backup-server ~]# lsblk
+NAME   MAJ:MIN RM SIZE RO TYPE MOUNTPOINT
+sda      8:0    0  40G  0 disk 
+└─sda1   8:1    0  40G  0 part /
+sdb      8:16   0   5G  0 disk /var/backup
+[root@backup-server ~]# df -hT
+Filesystem     Type      Size  Used Avail Use% Mounted on
+devtmpfs       devtmpfs  900M     0  900M   0% /dev
+tmpfs          tmpfs     907M     0  907M   0% /dev/shm
+tmpfs          tmpfs     907M  8.6M  899M   1% /run
+tmpfs          tmpfs     907M     0  907M   0% /sys/fs/cgroup
+/dev/sda1      xfs        40G  3.4G   37G   9% /
+/dev/sdb       xfs       5.0G   45M  5.0G   1% /var/backup
+tmpfs          tmpfs     182M     0  182M   0% /run/user/0
+tmpfs          tmpfs     182M     0  182M   0% /run/user/1000
+[root@backup-server ~]# 
+
+
+```
 </details>
 
 <details>
@@ -171,6 +193,7 @@ drwx------ 3 root root    15 Aug 16 12:15 data
 
 ```
 
+О том, что шифрование работает, я так понял нам об этом говорит строка <code>Encrypted: Yes (repokey BLAKE2b)</code>
 
 ```
 
@@ -436,9 +459,36 @@ Pass --all to see loaded but inactive timers, too.
 
 
 ```
+Запустил примерно на 30 минут наш таймер и  посмотрим на наш репозиторий с бэкапами и его время выполнения
+
+
+```
+
+
+
+```
+
+
+
+</details>
+
+
+
+
+
+<details>
+<summary><code>- Настроено логирование процесса бекапа. Для упрощения можно весь вывод перенаправлять в logger с соответствующим тегом. Если настроите не в syslog, то обязательна ротация логов</code></summary>
 
 
 
 
 
 </details>
+
+
+
+
+
+
+
+
