@@ -830,7 +830,7 @@ drwxr-xr-x.  2 root root       22 Jun  9  2014 cron.hourly
 Все файлы появились !
 
 
-
+</details>
 
 Образ "client" залил в Vagrant https://app.vagrantup.com/impkos/boxes/Kostyuk-Rus/versions/11
 
