@@ -1,0 +1,10 @@
+/var/log/borg/* {
+ size 100M
+    missingok
+    notifempty
+    sharedscripts
+    rotate 4
+    compress
+    delaycompress
+}                
+
