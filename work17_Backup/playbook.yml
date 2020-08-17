@@ -102,3 +102,12 @@
       opts: rw
       state: mounted
       fstype: xfs
+
+
+  - name: Установить authorized key из файла id_rsa.pub
+    authorized_key:
+      user: root
+      state: present
+      key: "{{ lookup('file', '/root/.ssh/id_rsa.pub') }}"    
+      
+        
