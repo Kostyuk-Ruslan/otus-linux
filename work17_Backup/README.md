@@ -832,7 +832,9 @@ drwxr-xr-x.  2 root root       22 Jun  9  2014 cron.hourly
 
 
 
+Образ "client" залил в Vagrant https://app.vagrantup.com/impkos/boxes/Kostyuk-Rus/versions/11
 
+Образ "backup-server" в Vagrant https://app.vagrantup.com/impkos/boxes/Kostyuk-Rus/versions/12
 
 
 
