@@ -251,8 +251,9 @@ borg create -v -s -p \
 $REPOSITORY::'{now:%Y-%m-%d-%H-%M}' \
 /etc --show-rc 2>> $LOG
 
-borg prune -v --show-rc --list $REPOSITORY \
---keep-monthly=9 --keep-daily=90 
+Временно выключим
+#borg prune -v --show-rc --list $REPOSITORY \
+#--keep-monthly=9 --keep-daily=90
 
 
 ```
@@ -317,7 +318,7 @@ Remote: Using a pure-python msgpack! This will result in lower performance.
 <summary><code>Резервная копия снимается каждые 5 минут.Скрипт запускается из соответствующей Cron джобы, либо systemd timer-а - на ваше усмотрение.</code></summary>
 
 
-Попробую сделать через systemd timer, но для начала создадим юнит, создадим файл и назовем его "borg.service" и помещаем его  в /etc/systemd/system
+Попробую сделать через systemd timer, но для начала создадим файл и назовем его "borg.service" и помеcтим его  в "/etc/systemd/system"
 
 ```
 
@@ -354,7 +355,7 @@ Description=unit borg Kostyuk_Ruslan
 
 [Service]
 #Type=notify
-#EnvironmentFile=/etc/sysconfig/log_otus
+#EnvironmentFile=/etc/sysconfig/
 ExecStart=/bin/bash /root/run.sh
 ExecReload=/bin/kill -HUP $MAINPID
 KillMode=process
@@ -395,7 +396,7 @@ WantedBy=timers.target
 
 
 
-Проверяем  и видим что наш юнит работает, сделал бэкап после запуска
+Проверяем  и видим что наш юнит работает, после его запуска он сделал бэкап
 
 ```
 
@@ -715,7 +716,7 @@ Remote: Using a pure-python msgpack! This will result in lower performance.
 
 1) Посмотрим что внутри <code>borg list 192.168.50.11:/var/backup::2020-08-17-14-14</code>там куча файлов /etc
 
-2) Я сперва лучше восстановлю в директории "/home" из бэкапа файлы, а потом удалю "/etc" ))
+2) Я сперва лучше восстановлю в директорию "/home" наш актуальный бэкап, а потом удалю "/etc" ))
 
 ```
 [root@client home]# borg extract 192.168.50.11:/var/backup::2020-08-17-14-14

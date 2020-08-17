@@ -1,0 +1,14 @@
+[Unit]
+Description=unit borg Kostyuk_Ruslan
+
+[Service]
+#Type=notify
+#EnvironmentFile=/etc/sysconfig/log_otus
+ExecStart=/bin/bash /root/run.sh
+ExecReload=/bin/kill -HUP $MAINPID
+KillMode=process
+Restart=on-failure
+RestartSec=10s
+
+[Install]
+WantedBy=multi-user.target
