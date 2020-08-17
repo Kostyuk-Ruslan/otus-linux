@@ -84,7 +84,8 @@ borg 1.1.13
 
 ```
 1) Проблема: Когда только инициализируешь репозиторий, из условия задачи можно сделать "зашифровать ключом или  паролем", так вот, когда делаешь с паролем, как следствие из условия задачи ( Резервная копия снимается каждые 5 минут.)
-Становится проблематичным, так как когда запускаешь скрипт на клиенте, что бы он связался с репозиторием сервера он постоянно требует, что бы ты вводил пароль для репозитория, поэтому я сделал просто с шифрованием, но без пароля ! Возможно это как то делается или обходится тем же скриптом, но я пока не нашел
+Становится проблематичным, так как когда запускаешь скрипт на клиенте, что бы он связался с репозиторием сервера он постоянно требует, что бы ты вводил пароль для репозитория, поэтому я сделал просто с шифрованием, но без пароля ! Возможно это как то делается или обходится тем же скриптом, погуглив можно было бы
+сделать в скрипт так BORG_PASSPHRASE="super secret passphrase" но уэже было лениво.
 
 
 2) Такой же момент, но с авторизацией ssh, то есть когда запускаешь скрипт на клиенте, и связываешься с сервером, то должен пройти авторизацию на сервер бэкап, что так же становится проблематичным если условия задачи (Резервная копия снимается каждые 5 минут)
@@ -230,7 +231,7 @@ Security dir: /root/.config/borg/security/bc62147450f6f56d138572059eaa474db0de01
 
 Тут я так понял нужно написать скрипт для запуска. ну чтож переходим на client (192.168.50.12)
 
-Скрипт
+Скрипт <code>run.sh</code> c правами на запуск +x
 
 
 ```
@@ -246,7 +247,7 @@ REPOSITORY=$BACKUP_HOST:$BACKUP_DIR
 
 
 
-borg create -v -stats \
+borg create -v --stats \
 $REPOSITORY::'{now:%Y-%m-%d-%H-%M}' \
 /etc
 
@@ -352,7 +353,7 @@ Description=unit borg Kostyuk_Ruslan
 [Service]
 #Type=notify
 #EnvironmentFile=/etc/sysconfig/log_otus
-ExecStart=/bin/borg create -v --stats 192.168.50.11:/var/backup::'{now:%Y-%m-%d-%H-%M}' /etc
+ExecStart=/bin/bash /root/run.sh
 ExecReload=/bin/kill -HUP $MAINPID
 KillMode=process
 Restart=on-failure
@@ -363,7 +364,6 @@ WantedBy=multi-user.target
 
 
 ```
-В принципе можно было бы его усовершенствовать в плане добавив а не писать прямым текстом наш репозиторий, применив к нему EnvironmentFile, но было лень :)
 Сделаем <code>systemctl daemon-reload</code> и <code>systemctl start borg</code> и  добавляем в автозагрузку <code>systemctl enable borg.service</code>
 
 
@@ -397,25 +397,24 @@ WantedBy=timers.target
 
 ```
 
-[root@client system]# systemctl status borg
+[root@client system]# systemctl status borg.service
 ● borg.service - unit egrep Kostyuk_Ruslan
    Loaded: loaded (/etc/systemd/system/borg.service; disabled; vendor preset: disabled)
-   Active: inactive (dead) since Sun 2020-08-16 20:45:13 UTC; 7s ago
-  Process: 24454 ExecStart=/bin/borg create -v --stats 192.168.50.11:/var/backup::'{now:%Y-%m-%d-%H-%M}' /etc (code=exited, status=0/SUCCESS)
- Main PID: 24454 (code=exited, status=0/SUCCESS)
-
-Aug 16 20:45:13 client borg[24454]: Duration: 4.33 seconds
-Aug 16 20:45:13 client borg[24454]: Number of files: 1728
-Aug 16 20:45:13 client borg[24454]: Utilization of max. archive size: 0%
-Aug 16 20:45:13 client borg[24454]: ------------------------------------------------------------------------------
-Aug 16 20:45:13 client borg[24454]: Original size      Compressed size    Deduplicated size
-Aug 16 20:45:13 client borg[24454]: This archive:               28.54 MB             13.55 MB                642 B
-Aug 16 20:45:13 client borg[24454]: All archives:              285.37 MB            135.47 MB             12.29 MB
-Aug 16 20:45:13 client borg[24454]: Unique chunks         Total chunks
-Aug 16 20:45:13 client borg[24454]: Chunk index:                    1328                17228
-Aug 16 20:45:13 client borg[24454]: ------------------------------------------------------------------------------
-[root@client system]# 
-
+      Active: inactive (dead) since Mon 2020-08-17 10:16:22 UTC; 2s ago
+        Process: 4291 ExecStart=/bin/bash /root/run.sh (code=exited, status=0/SUCCESS)
+         Main PID: 4291 (code=exited, status=0/SUCCESS)
+         
+         Aug 17 10:16:21 client bash[4291]: Duration: 4.13 seconds
+         Aug 17 10:16:21 client bash[4291]: Number of files: 1728
+         Aug 17 10:16:21 client bash[4291]: Utilization of max. archive size: 0%
+         Aug 17 10:16:21 client bash[4291]: ------------------------------------------------------------------------------
+         Aug 17 10:16:21 client bash[4291]: Original size      Compressed size    Deduplicated size
+         Aug 17 10:16:21 client bash[4291]: This archive:               28.54 MB             13.55 MB             60.15 kB
+         Aug 17 10:16:21 client bash[4291]: All archives:              827.58 MB            392.89 MB             13.03 MB
+         Aug 17 10:16:21 client bash[4291]: Unique chunks         Total chunks
+         Aug 17 10:16:21 client bash[4291]: Chunk index:                    1366                49965
+         Aug 17 10:16:21 client bash[4291]: ------------------------------------------------------------------------------
+         
 
 ```
 
@@ -463,6 +462,27 @@ Pass --all to see loaded but inactive timers, too.
 
 
 ```
+[root@client ~]# borg list 192.168.50.11:/var/backup
+Using a pure-python msgpack! This will result in lower performance.
+Remote: Using a pure-python msgpack! This will result in lower performance.
+2020-08-16-19-22                     Sun, 2020-08-16 19:22:40 [47bb367e79b39d86a12a3d2ce6433973dba98e5c8d4f27086aeae819560a3681]
+2020-08-16-19-52                     Sun, 2020-08-16 19:52:05 [b6730c0c137f37e07dc0585d143c237bffb41dd7a538e6f3f79417cf8daed4bf]
+'2020-68cfef15217de147ac3e87d05acca5b3-16-client-56' Sun, 2020-08-16 19:56:23 [2aab9411b6354642748d37ca84924906d00b79d5b304d9a8e3231d1eaaab6107]
+'2020-68cfef15217de147ac3e87d05acca5b3-16-client-21' Sun, 2020-08-16 20:21:38 [00237f8a3eb3b88555457223dbeecc113d7caa0cdfa2fc60e35c587bc295e750]
+'2020-68cfef15217de147ac3e87d05acca5b3-16-client-22' Sun, 2020-08-16 20:22:07 [7075a288dff65a0c10f18d337803891584b0bbc4874581f51e9d5307304e0ccd]
+'2020-68cfef15217de147ac3e87d05acca5b3-16-client-23' Sun, 2020-08-16 20:23:06 [b45072a3f40a6b5102a29986806fab776312181569496bd70db8382c9cdf9de1]
+'2020-68cfef15217de147ac3e87d05acca5b3-16-client-24' Sun, 2020-08-16 20:24:07 [5f25808dea559a8838313a61fd9ff03a10d4017676c229c065a6895b1545738a]
+'2020-68cfef15217de147ac3e87d05acca5b3-16-client-35' Sun, 2020-08-16 20:35:06 [9fcc37c1902cc503710203d01bf6bcd4366b9f5cded0219fcb19b3be074e83d4]
+'2020-68cfef15217de147ac3e87d05acca5b3-16-client-40' Sun, 2020-08-16 20:40:06 [66d9a0a8c85c6eabec6ee04906e7decbcc7856b1367873fe3198c451da486caf]
+'2020-68cfef15217de147ac3e87d05acca5b3-16-client-45' Sun, 2020-08-16 20:45:07 [89923758cccfc15adab96213af87f76807762b2a80c3f267ce75c96eab5cb5b5]
+'2020-68cfef15217de147ac3e87d05acca5b3-17-client-00' Mon, 2020-08-17 09:00:13 [dcf108038649c2870ec002a0d65593b9aba630c529bd8439c678503364bec5f0]
+'2020-68cfef15217de147ac3e87d05acca5b3-17-client-05' Mon, 2020-08-17 09:05:22 [40975e2dd79bfe51f31995cc3c5a19cfc77296c80ab86d4d881a35a55a7fda63]
+'2020-68cfef15217de147ac3e87d05acca5b3-17-client-10' Mon, 2020-08-17 09:10:17 [c807acbb4b7e5f6335792a82e453ff6996aee34bc154be7f89ae62c983ec3459]
+'2020-68cfef15217de147ac3e87d05acca5b3-17-client-15' Mon, 2020-08-17 09:15:22 [fcb1bcf45bc9a1b1c08e23d18219a0df1c29d39f26ffe79ac18ab6685da1b3d8]
+'2020-68cfef15217de147ac3e87d05acca5b3-17-client-20' Mon, 2020-08-17 09:20:22 [c18331656d3339e6359ae41ff4fdcd3f8b867f50084972c691944a25a80d2c6c]
+'2020-68cfef15217de147ac3e87d05acca5b3-17-client-25' Mon, 2020-08-17 09:25:22 [26743122648c3ce999d881e2a3cf2fb0b28e89c3b314768c8f6afbca7bc67953]
+'2020-68cfef15217de147ac3e87d05acca5b3-17-client-30' Mon, 2020-08-17 09:30:22 [32df247a20d80fd29e03a777978ef639633c33b2993675440550fe30878da857]
+[root@client ~]# 
 
 
 
