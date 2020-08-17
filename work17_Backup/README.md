@@ -370,7 +370,7 @@ WantedBy=timers.target
 
 
 
-Проверяем  и видим что наш юнит работает
+Проверяем  и видим что наш юнит работает, сделал бэкап после запуска
 
 ```
 
@@ -396,17 +396,46 @@ Aug 16 20:45:13 client borg[24454]: --------------------------------------------
 
 ```
 
+Проверяем, что наш таймер работает 
+
+
+```
+
+
+[root@client ~]# systemctl status borg.timer
+● borg.timer - Каждые 5 минут
+   Loaded: loaded (/etc/systemd/system/borg.timer; enabled; vendor preset: disabled)
+      Active: active (waiting) since Mon 2020-08-17 08:59:42 UTC; 3min 3s ago
+      
+      Aug 17 08:59:42 client systemd[1]: Started Каждые 5 минут.
+      [root@client ~]# 
+      
+
+```
+
+
+
+
+
+
 Далее проверим как отработает наш таймер, я проверяю это командой <code>systemctl list-timers</code> и отсчитываю время в графе "LEFT" ровно через 5 минут он обнуляется и снова идет отчет, таймер работает + я еще проверял так
 сделал два экрана на одном экране запустил <code>watch -n1 systemctl status borg.service</code> , а на втором экране запустил <code>watch -n1 systemctl status borg.timer</code> и наблюдал как юнит в режиме реального времени перезапускается каждые 5 минут, время можно плюч посмотреть в
 
 <code>Active: inactive (dead) since Sun 2020-08-16 20:45:13 UTC; 7s ago</code>  "ago"  здесь, онон обнуляется по истечению пяти минут.
 
+```
+[root@client ~]# systemctl list-timers
+NEXT                         LEFT      LAST                         PASSED       UNIT                         ACTIVATES
+Mon 2020-08-17 09:05:00 UTC  4s left   Mon 2020-08-17 09:00:00 UTC  4min 55s ago borg.timer                   borg.service
+Mon 2020-08-17 09:14:35 UTC  9min left n/a                          n/a          systemd-tmpfiles-clean.timer systemd-tmpfiles-clean.service
+
+2 timers listed.
+Pass --all to see loaded but inactive timers, too.
+[root@client ~]# 
 
 
 
-
-
-
+```
 
 
 
