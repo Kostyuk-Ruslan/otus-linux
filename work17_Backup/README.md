@@ -595,15 +595,53 @@ Creating archive at "192.168.50.11:/var/backup::{now:%Y-%m-%d-%H-%M}"
 
 
 
+Далее настраиваем ротацию логов
 
 
 
 </details>
 
 
+<details>
+<summary><code>Описание процесса восстановления.</code></summary>
+
+Заходим в /etc/logrotate.d/ и создаем фай <code>borg.conf</code>
+
+```
+/var/log/borg/* {
+ size 100M
+    missingok
+    notifempty
+    sharedscripts
+    rotate 4
+    compress
+    delaycompress
+}                
+
+
+```
+Главное что бы не превышал 100 MB, делал коспрессию и оставлял 4 файла
+
+
+После чего запускаем ротацию <code>logrotate -f /etc/logrotate.conf</code>
+
+```
+
+[root@client borg]# pwd
+/var/log/borg
+[root@client borg]# ll
+total 28
+-rw-r--r-- 1 root root     0 Aug 17 13:52 borg.log
+-rw-r--r-- 1 root root 26896 Aug 17 13:30 borg.log-20200817
+[root@client borg]# 
+
+
+```
+Вроде завелось
 
 
 
+</details>
 
 
 
