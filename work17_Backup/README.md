@@ -231,7 +231,7 @@ Security dir: /root/.config/borg/security/bc62147450f6f56d138572059eaa474db0de01
 
 Тут я так понял нужно написать скрипт для запуска. ну чтож переходим на client (192.168.50.12)
 
-Скрипт <code>run.sh</code> c правами на запуск +x
+Скрипт <code>run.sh</code> c правами на запуск +x и помещаем его в каталог /root   т.е. /root/run.sh
 
 
 ```
@@ -257,32 +257,34 @@ borg prune -v --show-rc --list $REPOSITORY \
 
 ```
 
-Запускаем наш тестовый скрипт <code>./run-borg.sh</code> Предварительно сгенерировав пару ключей для безпарольной авторизации с удаленным сервером, где находится наш репозиторий. 
+Запускаем наш тестовый скрипт <code>./run.sh</code> Предварительно сгенерировав пару ключей для безпарольной авторизации с удаленным сервером, где находится наш репозиторий. 
 
 
 ```
-[root@client ~]# ./run-borg.sh 
+[root@client ~]# pwd
+/root
+[root@client ~]# ./run.sh 
 Using a pure-python msgpack! This will result in lower performance.
 Remote: Using a pure-python msgpack! This will result in lower performance.
 Creating archive at "192.168.50.11:/var/backup::{now:%Y-%m-%d-%H-%M}"
 ------------------------------------------------------------------------------
-Archive name: 2020-08-16-14-48
-Archive fingerprint: 4282470a4a440bff83f7bce3db5cc42828d41ed241ddfa157c24d6a564e2f05b
-Time (start): Sun, 2020-08-16 14:48:22
-Time (end):   Sun, 2020-08-16 14:48:31
-Duration: 9.19 seconds
-Number of files: 1726
+Archive name: 2020-08-17-10-21
+Archive fingerprint: 7bf1f163cbd8123aeb647326d10aa1b61e6e5538db2f5848b0696a239473364b
+Time (start): Mon, 2020-08-17 10:21:54
+Time (end):   Mon, 2020-08-17 10:21:59
+Duration: 4.34 seconds
+Number of files: 1728
 Utilization of max. archive size: 0%
 ------------------------------------------------------------------------------
 Original size      Compressed size    Deduplicated size
-This archive:               28.54 MB             13.55 MB             11.89 MB
-All archives:               28.54 MB             13.55 MB             11.89 MB
+This archive:               28.54 MB             13.55 MB                590 B
+All archives:              884.66 MB            419.98 MB             13.03 MB
                        
 Unique chunks         Total chunks
-Chunk index:                    1305                 1723
+Chunk index:                    1368                53411
 ------------------------------------------------------------------------------
-Using a pure-python msgpack! This will result in lower performance.
-                                              
+[root@client ~]# 
+                                                                                            
 ```
 Тестовый запуск прошел успешно .
 
@@ -293,7 +295,7 @@ Using a pure-python msgpack! This will result in lower performance.
 root@client ~]# borg list 192.168.50.11:/var/backup
 Using a pure-python msgpack! This will result in lower performance.
 Remote: Using a pure-python msgpack! This will result in lower performance.
-2020-08-16-14-48                     Sun, 2020-08-16 14:48:22 [4282470a4a440bff83f7bce3db5cc42828d41ed241ddfa157c24d6a564e2f05b]
+2020-08-17-14-48                     Sun, 2020-08-17 14:48:22 [4282470a4a440bff83f7bce3db5cc42828d41ed241ddfa157c24d6a564e2f05b]
 [root@client ~]# 
 
 ```
