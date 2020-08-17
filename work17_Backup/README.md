@@ -80,11 +80,11 @@ borg 1.1.13
 
 
 <details>
-<summary><code>Проблемы с которыми столкнулся, прочитать в первую очередь</code></summary>
+<summary><code>Проблемы с которыми столкнулся, желательно прочитать в первую очередь !</code></summary>
 
 ```
-1) Проблема: Когда только инициализируешь репозиторий, из условия задачи можно сделать "зашифровать ключом или  паролем", так вот, когда делаешь с паролем, как слдествие из условия задачи ( Резервная копия снимается каждые 5 минут.)
-Становится проблематичным, так как когда запускаешь скрипт на клиенте, что бы он связался с репозиторием сервера он постоянно требует, что бы ты вводил пароль для репозитория, поэтому я сделал просто с шифрованием, но без пароля ! Возможно это как то делается или обходится, ног я пока не нашел
+1) Проблема: Когда только инициализируешь репозиторий, из условия задачи можно сделать "зашифровать ключом или  паролем", так вот, когда делаешь с паролем, как следствие из условия задачи ( Резервная копия снимается каждые 5 минут.)
+Становится проблематичным, так как когда запускаешь скрипт на клиенте, что бы он связался с репозиторием сервера он постоянно требует, что бы ты вводил пароль для репозитория, поэтому я сделал просто с шифрованием, но без пароля ! Возможно это как то делается или обходится тем же скриптом, но я пока не нашел
 
 
 2) Такой же момент, но с авторизацией ssh, то есть когда запускаешь скрипт на клиенте, и связываешься с сервером, то должен пройти авторизацию на сервер бэкап, что так же становится проблематичным если условия задачи (Резервная копия снимается каждые 5 минут)
@@ -92,6 +92,9 @@ borg 1.1.13
 
 
 ```
+
+Возможно, я что то не так понял, если что  поправьте плиз
+
 
 </details>
 
@@ -117,7 +120,7 @@ borg 1.1.13
 <details>
 <summary><code>- Репозиторий дле резервных копий должен быть зашифрован ключом или паролем - на ваше усмотрение</code></summary>
 
-Инициализируем репозиторий с шифрованием c клиента на сервер 
+Инициализируем репозиторий с шифрованием c клиента на сервер  (сделал с шифрованием, но без пароля )
 
 
 
@@ -129,8 +132,7 @@ root@192.168.50.11's password:
 Remote: Using a pure-python msgpack! This will result in lower performance.
 Enter new passphrase: 
 Enter same passphrase again: 
-Do you want your passphrase to be displayed for verification? [yN]: y
-Your passphrase (between double-quotes): "B77z3z4q2"
+Do you want your passphrase to be displayed for verification? [yN]: n
 Make sure the passphrase displayed above is exactly what you wanted.
 
 By default repositories initialized with this version will produce security
@@ -231,14 +233,13 @@ borg prune -v --show-rc --list $REPOSITORY \
 
 ```
 
-Запускаем наш тестовый скрипт <code>./run-borg.sh</code> в процессе спросил пароль для репозитория
+Запускаем наш тестовый скрипт <code>./run-borg.sh</code> Предварительно сгенерировав пару ключей для безпарольной авторизации с удаленным сервером, где находится наш репозиторий. 
+
 
 ```
 [root@client ~]# ./run-borg.sh 
 Using a pure-python msgpack! This will result in lower performance.
-root@192.168.50.11's password: 
 Remote: Using a pure-python msgpack! This will result in lower performance.
-Enter passphrase for key ssh://192.168.50.11/var/backup: 
 Creating archive at "192.168.50.11:/var/backup::{now:%Y-%m-%d-%H-%M}"
 ------------------------------------------------------------------------------
 Archive name: 2020-08-16-14-48
@@ -267,9 +268,7 @@ Using a pure-python msgpack! This will result in lower performance.
 ```
 root@client ~]# borg list 192.168.50.11:/var/backup
 Using a pure-python msgpack! This will result in lower performance.
-root@192.168.50.11's password: 
 Remote: Using a pure-python msgpack! This will result in lower performance.
-Enter passphrase for key ssh://192.168.50.11/var/backup: 
 2020-08-16-14-48                     Sun, 2020-08-16 14:48:22 [4282470a4a440bff83f7bce3db5cc42828d41ed241ddfa157c24d6a564e2f05b]
 [root@client ~]# 
 
@@ -292,12 +291,7 @@ Enter passphrase for key ssh://192.168.50.11/var/backup:
 <summary><code>Резервная копия снимается каждые 5 минут.Скрипт запускается из соответствующей Cron джобы, либо systemd timer-а - на ваше усмотрение.</code></summary>
 
 
-Попробую сделать через systemd timer, создадим файл и назовем его "borg.timer"
-
-Содержимое:
-
-
-/etc/systemd/system
+Попробую сделать через systemd timer, но для начала создадим юнит, создадим файл и назовем его "borg.service" и помещаем его  в /etc/systemd/system
 
 ```
 
@@ -330,7 +324,7 @@ drwxr-xr-x. 2 root root   58 Apr 30 22:06 vmtoolsd.service.requires
 
 ```
 [Unit]
-Description=unit egrep Kostyuk_Ruslan
+Description=unit borg Kostyuk_Ruslan
 
 [Service]
 #Type=notify
@@ -346,9 +340,14 @@ WantedBy=multi-user.target
 
 
 ```
+В принципе можно было бы его усовершенствовать в плане добавив а не писать прямым текстом наш репозиторий, применив к нему EnvironmentFile, но было лень :)
+Сделаем <code>systemctl daemon-reload</code> и <code>systemctl start borg</code> и  добавляем в автозагрузку <code>systemctl enable borg.service</code>
 
 
 
+
+
+Далее пишем наш borg.timer с запуском на каждые 5 минут и так же <code>systemctl daemon-reload</code> и <code>systemctl start borg.timer</code> <code>systemctl enable borg.timer</code>
 
 
 ```
@@ -366,12 +365,14 @@ OnCalendar=*:0/5
 [Install]
 WantedBy=timers.target
 
-
-
-
 ```
 
 
+
+
+Проверяем  и видим что наш юнит работает
+
+```
 
 [root@client system]# systemctl status borg
 ● borg.service - unit egrep Kostyuk_Ruslan
@@ -391,6 +392,18 @@ Aug 16 20:45:13 client borg[24454]: Unique chunks         Total chunks
 Aug 16 20:45:13 client borg[24454]: Chunk index:                    1328                17228
 Aug 16 20:45:13 client borg[24454]: ------------------------------------------------------------------------------
 [root@client system]# 
+
+
+```
+
+Далее проверим как отработает наш таймер, я проверяю это командой <code>systemctl list-timers</code> и отсчитываю время в графе "LEFT" ровно через 5 минут он обнуляется и снова идет отчет, таймер работает + я еще проверял так
+сделал два экрана на одном экране запустил <code>watch -n1 systemctl status borg.service</code> , а на втором экране запустил <code>watch -n1 systemctl status borg.timer</code> и наблюдал как юнит в режиме реального времени перезапускается каждые 5 минут, время можно плюч посмотреть в
+
+<code>Active: inactive (dead) since Sun 2020-08-16 20:45:13 UTC; 7s ago</code>  "ago"  здесь, онон обнуляется по истечению пяти минут.
+
+
+
+
 
 
 
