@@ -244,12 +244,12 @@ BACKUP_HOST=192.168.50.11
 BACKUP_DIR=/var/backup
 
 REPOSITORY=$BACKUP_HOST:$BACKUP_DIR
+LOG=/var/log/borg/borg.log
 
 
-
-borg create -v --stats \
+borg create -v -s -p \
 $REPOSITORY::'{now:%Y-%m-%d-%H-%M}' \
-/etc
+/etc --show-rc 2>> $LOG
 
 borg prune -v --show-rc --list $REPOSITORY \
 --keep-monthly=9 --keep-daily=90 
@@ -445,7 +445,7 @@ WantedBy=timers.target
 Далее проверим как отработает наш таймер, я проверяю это командой <code>systemctl list-timers</code> и отсчитываю время в графе "LEFT" ровно через 5 минут он обнуляется и снова идет отчет, таймер работает + я еще проверял так
 сделал два экрана на одном экране запустил <code>watch -n1 systemctl status borg.service</code> , а на втором экране запустил <code>watch -n1 systemctl status borg.timer</code> и наблюдал как юнит в режиме реального времени перезапускается каждые 5 минут, время можно плюч посмотреть в
 
-<code>Active: inactive (dead) since Sun 2020-08-16 20:45:13 UTC; 7s ago</code>  "ago"  здесь, онон обнуляется по истечению пяти минут.
+<code>Active: inactive (dead) since Sun 2020-08-16 20:45:13 UTC; 7s ago</code>  "ago"  здесь, оно обнуляется по истечению пяти минут.
 
 ```
 [root@client ~]# systemctl list-timers
@@ -461,29 +461,22 @@ Pass --all to see loaded but inactive timers, too.
 
 ```
 Запустил примерно на 30 минут наш таймер и  посмотрим на наш репозиторий с бэкапами и его время выполнения
+Промежуток 5 минут между бэкапами, работает.
 
 
 ```
 [root@client ~]# borg list 192.168.50.11:/var/backup
 Using a pure-python msgpack! This will result in lower performance.
 Remote: Using a pure-python msgpack! This will result in lower performance.
-2020-08-16-19-22                     Sun, 2020-08-16 19:22:40 [47bb367e79b39d86a12a3d2ce6433973dba98e5c8d4f27086aeae819560a3681]
-2020-08-16-19-52                     Sun, 2020-08-16 19:52:05 [b6730c0c137f37e07dc0585d143c237bffb41dd7a538e6f3f79417cf8daed4bf]
-'2020-68cfef15217de147ac3e87d05acca5b3-16-client-56' Sun, 2020-08-16 19:56:23 [2aab9411b6354642748d37ca84924906d00b79d5b304d9a8e3231d1eaaab6107]
-'2020-68cfef15217de147ac3e87d05acca5b3-16-client-21' Sun, 2020-08-16 20:21:38 [00237f8a3eb3b88555457223dbeecc113d7caa0cdfa2fc60e35c587bc295e750]
-'2020-68cfef15217de147ac3e87d05acca5b3-16-client-22' Sun, 2020-08-16 20:22:07 [7075a288dff65a0c10f18d337803891584b0bbc4874581f51e9d5307304e0ccd]
-'2020-68cfef15217de147ac3e87d05acca5b3-16-client-23' Sun, 2020-08-16 20:23:06 [b45072a3f40a6b5102a29986806fab776312181569496bd70db8382c9cdf9de1]
-'2020-68cfef15217de147ac3e87d05acca5b3-16-client-24' Sun, 2020-08-16 20:24:07 [5f25808dea559a8838313a61fd9ff03a10d4017676c229c065a6895b1545738a]
-'2020-68cfef15217de147ac3e87d05acca5b3-16-client-35' Sun, 2020-08-16 20:35:06 [9fcc37c1902cc503710203d01bf6bcd4366b9f5cded0219fcb19b3be074e83d4]
-'2020-68cfef15217de147ac3e87d05acca5b3-16-client-40' Sun, 2020-08-16 20:40:06 [66d9a0a8c85c6eabec6ee04906e7decbcc7856b1367873fe3198c451da486caf]
-'2020-68cfef15217de147ac3e87d05acca5b3-16-client-45' Sun, 2020-08-16 20:45:07 [89923758cccfc15adab96213af87f76807762b2a80c3f267ce75c96eab5cb5b5]
-'2020-68cfef15217de147ac3e87d05acca5b3-17-client-00' Mon, 2020-08-17 09:00:13 [dcf108038649c2870ec002a0d65593b9aba630c529bd8439c678503364bec5f0]
-'2020-68cfef15217de147ac3e87d05acca5b3-17-client-05' Mon, 2020-08-17 09:05:22 [40975e2dd79bfe51f31995cc3c5a19cfc77296c80ab86d4d881a35a55a7fda63]
-'2020-68cfef15217de147ac3e87d05acca5b3-17-client-10' Mon, 2020-08-17 09:10:17 [c807acbb4b7e5f6335792a82e453ff6996aee34bc154be7f89ae62c983ec3459]
-'2020-68cfef15217de147ac3e87d05acca5b3-17-client-15' Mon, 2020-08-17 09:15:22 [fcb1bcf45bc9a1b1c08e23d18219a0df1c29d39f26ffe79ac18ab6685da1b3d8]
-'2020-68cfef15217de147ac3e87d05acca5b3-17-client-20' Mon, 2020-08-17 09:20:22 [c18331656d3339e6359ae41ff4fdcd3f8b867f50084972c691944a25a80d2c6c]
-'2020-68cfef15217de147ac3e87d05acca5b3-17-client-25' Mon, 2020-08-17 09:25:22 [26743122648c3ce999d881e2a3cf2fb0b28e89c3b314768c8f6afbca7bc67953]
-'2020-68cfef15217de147ac3e87d05acca5b3-17-client-30' Mon, 2020-08-17 09:30:22 [32df247a20d80fd29e03a777978ef639633c33b2993675440550fe30878da857]
+2020-08-17-10-55                     Mon, 2020-08-17 10:55:54 [281ffd32449d67df740e7847ce3b4c75103d0fba56d5de60eca355f7ba34cd35]
+2020-08-17-11-00                     Mon, 2020-08-17 11:00:22 [f1823b800b03cd248e1b353b91a92b3e8da55f82a995f90ca0ba276bfb60e8cd]
+2020-08-17-11-05                     Mon, 2020-08-17 11:05:26 [4e4a3bd99210905d6ba0ad8f7db3d5be4ac343b3348eb3b7f820d7553d801d86]
+2020-08-17-11-10                     Mon, 2020-08-17 11:10:22 [71a8f30ff6de17354fe3dcf305ffba7a33a0aab1b87d783f573aaf588e295b67]
+2020-08-17-11-15                     Mon, 2020-08-17 11:15:22 [9ddef7da77ca740483b5097b5e3a54bdd9db21d19d3e0680365ca08ec9f56028]
+2020-08-17-11-20                     Mon, 2020-08-17 11:20:26 [75b706da0320d6d8fab266212702d3582616f0299da1cd96273d270290eb43ae]
+2020-08-17-11-25                     Mon, 2020-08-17 11:25:22 [4e77fae731ab6bd97de6f542face5490c1a494ccfd4148ca08b603078ef58dc2]
+2020-08-17-11-30                     Mon, 2020-08-17 11:30:24 [37367c266065e75d77107fee9b768055e48618d9ce6eb50f2c90e11989d63aab]
+2020-08-17-11-35                     Mon, 2020-08-17 11:35:22 [5872094bbfa4340ae18f0203eaae7b4cb48ad443f656c4541c1fcc98025275e6]
 [root@client ~]# 
 
 
@@ -501,6 +494,43 @@ Remote: Using a pure-python msgpack! This will result in lower performance.
 <details>
 <summary><code>- Настроено логирование процесса бекапа. Для упрощения можно весь вывод перенаправлять в logger с соответствующим тегом. Если настроите не в syslog, то обязательна ротация логов</code></summary>
 
+
+По началу, я никак не мог найти логи, потом  почитав документацию понял, что По умолчанию Borg записывает весь вывод журнала в stderr.  Понятно, т.е. снова все прийдется делать самому
+первое что я сделал это добавил в ansible --> playbook.yml модули для создания лога, что бы при последующем запуске вм лог уже существовал.
+
+```
+
+  - name: Create a directory Log borg
+    file:
+      path: /var/log/borg/
+      state: directory
+      mode: '0775'
+
+
+  - name: Create file log borg
+    file:
+      path: /var/log/borg/borg.log
+      owner: root
+      group: root
+      mode: '0775'
+      state: touch
+
+
+```
+
+Потом исходя из документации добавил в скрипт <code>run.sh</code> слудющие строки
+
+```
+LOG=/var/log/borg/borg.log   #  тут обьявили переменную
+
+
+borg create -v -s -p \
+$REPOSITORY::'{now:%Y-%m-%d-%H-%M}' \
+/etc --show-rc 2>> $LOG   # тут --show-rc  - регистрирует коды возврата 0,1,2  terminating with success status, rc 0, что в принципе полезно смотреть ... и 2>> перенаправляем все в нашу переменную $LOG (/var/log/borg/borg.log)
+
+
+```
+Как оказалось есть еще уровни BORG_LOGGING_CONF  (warn, crirical и т.д.) но их я не стал вносить
 
 
 

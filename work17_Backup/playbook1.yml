@@ -52,13 +52,21 @@
       name: borg
       home: /home/borg
       comment: BorgBackup
-
-  - name: Permission borg
+      
+  - name: Create a directory Log borg
     file:
-      path: /bin/borg
+      path: /var/log/borg/
+      state: directory
+      mode: '0775'
+
+  
+  - name: Create file log borg
+    file:
+      path: /var/log/borg/borg.log
       owner: root
       group: root
-      mode: '0777'
+      mode: '0775'
+      state: touch
  
 
 
