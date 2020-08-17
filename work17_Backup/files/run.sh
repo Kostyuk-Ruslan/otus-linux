@@ -15,6 +15,6 @@ $REPOSITORY::'{now:%Y-%m-%d-%H-%M}' \
 /etc --show-rc 2>> $LOG
 
 
-Временно выключим
+#Временно выключим
 #borg prune -v --show-rc --list $REPOSITORY \
 #--keep-monthly=9 --keep-daily=90 
