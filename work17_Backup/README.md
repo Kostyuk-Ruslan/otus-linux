@@ -89,7 +89,7 @@ borg 1.1.13
 
 
 2) Такой же момент, но с авторизацией ssh, то есть когда запускаешь скрипт на клиенте, и связываешься с сервером, то должен пройти авторизацию на сервер бэкап, что так же становится проблематичным если условия задачи (Резервная копия снимается каждые 5 минут)
-Решение было сделать следующие я просто сделал авторизацию по ключам. Сгененрировал закрытый ключ его я сотавил на клиенте, а закрытый поместил на удаленную машину вм вагрант. После этого все работает.
+Решение было сделать следующие я просто сделал авторизацию по ключам. Сгенерировал закрытый ключ его я оcтавил на клиенте, а закрытый поместил на удаленную машину вм вагрант(backup-server). После этого все работает.
 
 
 ```
@@ -107,13 +107,13 @@ borg 1.1.13
 
 
 <details>
-<summary><code>Директория для резервных копий /var/backup. Это должна быть отдельная точка монтирования. В данном случае для демонстрации размер не принципиален, достаточно будет и 2GB.</code></summary>
+<summary><code>Директория для резервных копий "/var/backup". Это должна быть отдельная точка монтирования. В данном случае для демонстрации размер не принципиален, достаточно будет и 2GB.</code></summary>
 
 ```
 
-Тут все просто, все это за меня сделает "ansible" можно посмотреть playbook.yml он установит Borg, создаст каталог /var/backup, сформирует файловую систему "xfs" и примонтирует ее на отдельный диск.
+Тут все просто, все это за меня сделает "ansible" можно посмотреть "playbook.yml" он установит "Borg", создаст каталог "/var/backup", сформирует файловую систему "xfs" и примонтирует ее на отдельный диск.
 
-/dev/sdb с обьемом, я сделал 5GB (Можно запустить вагран файл все должно быть ровно )
+"/dev/sdb" с обьемом, я сделал "5GB" (Можно запустить вагран файл все должно быть ровно )
  
 ```
 
@@ -496,7 +496,7 @@ Remote: Using a pure-python msgpack! This will result in lower performance.
 
 
 По началу, я никак не мог найти логи, потом  почитав документацию понял, что По умолчанию Borg записывает весь вывод журнала в stderr.  Понятно, т.е. снова все прийдется делать самому
-первое что я сделал это добавил в ansible --> playbook.yml модули для создания лога, что бы при последующем запуске вм лог уже существовал.
+первое что я сделал это добавил в ansible --> playbook1.yml модули для создания лога, что бы при последующем запуске вм лог уже существовал.
 
 ```
 
@@ -531,6 +531,69 @@ $REPOSITORY::'{now:%Y-%m-%d-%H-%M}' \
 
 ```
 Как оказалось есть еще уровни BORG_LOGGING_CONF  (warn, crirical и т.д.) но их я не стал вносить
+
+теперь смотрим отрывок самого лога
+
+```
+Using a pure-python msgpack! This will result in lower performance.
+Remote: Using a pure-python msgpack! This will result in lower performance.
+Creating archive at "192.168.50.11:/var/backup::{now:%Y-%m-%d-%H-%M}"
+0 B O 0 B C 0 B D 0 N etc
+Initializing cache transaction: Reading config
+Initializing cache transaction: Reading chunks
+Initializing cache transaction: Reading files
+
+778.48 kB O 283.33 kB C 0 B D 82 N etc/systemd/system/remote-fs.target.wants
+9.28 MB O 2.97 MB C 0 B D 168 N etc/pam.d/runuser
+13.91 MB O 4.90 MB C 0 B D 268 N etc/selinux/targeted/active/modules/100/dmesg
+14.35 MB O 5.32 MB C 0 B D 366 N etc/selinux/targeted/active/modules/100/nsd/hll
+14.86 MB O 5.81 MB C 0 B D 465 N etc/selinux/targeted/active/modules/100/tangd/hll
+15.40 MB O 6.32 MB C 0 B D 564 N etc/selinux/targeted/active/modules/100/cvs/hll
+15.84 MB O 6.74 MB C 0 B D 664 N etc/selinux/targeted/active/modules/100/netlabel
+16.28 MB O 7.16 MB C 0 B D 764 N etc/selinux/targeted/active/modules/100/svnserve/cil
+16.84 MB O 7.70 MB C 0 B D 864 N etc/selinux/targeted/active/modules/100/courier/hll
+17.28 MB O 8.12 MB C 0 B D 962 N etc/selinux/targeted/active/modules/100/mozilla/cil
+17.79 MB O 8.61 MB C 0 B D 1061 N etc/selinux/targeted/active/modules/100/soundserver/hll
+18.34 MB O 9.14 MB C 0 B D 1161 N etc/selinux/targeted/active/modules/100/cmirrord/lang_ext
+18.84 MB O 9.62 MB C 0 B D 1260 N etc/selinux/targeted/active/modules/100/modemmanager
+19.34 MB O 10.10 MB C 0 B D 1360 N etc/selinux/targeted/active/modules/100/smokeping/cil
+25.51 MB O 12.38 MB C 0 B D 1458 N etc/polkit-1/rules.d
+26.40 MB O 12.58 MB C 0 B D 1559 N etc/sysconfig/network-scripts/ifup-tunnel
+27.38 MB O 13.27 MB C 0 B D 1645 N etc/pki/CA/private
+Remote: Compacting segments   0%
+Remote: Compacting segments  50%
+Saving files cache
+Saving chunks cache
+Saving cache config
+
+
+------------------------------------------------------------------------------
+Archive name: 2020-08-17-13-01
+Archive fingerprint: 3df76253d48245bcdbc15b8cfdc0039bf17919ca35323717be3f134b1b210134
+Time (start): Mon, 2020-08-17 13:01:50
+Time (end):   Mon, 2020-08-17 13:01:54
+Duration: 4.12 seconds
+Number of files: 1728
+Utilization of max. archive size: 0%
+------------------------------------------------------------------------------
+Original size      Compressed size    Deduplicated size
+This archive:               28.54 MB             13.55 MB                748 B
+All archives:                1.20 GB            569.04 MB             12.06 MB
+                       
+Unique chunks         Total chunks
+Chunk index:                    1357                72599
+------------------------------------------------------------------------------
+terminating with success status, rc 0
+Using a pure-python msgpack! This will result in lower performance.
+Remote: Using a pure-python msgpack! This will result in lower performance.
+Creating archive at "192.168.50.11:/var/backup::{now:%Y-%m-%d-%H-%M}"
+0 B O 0 B C 0 B D 0 N etc
+                                              
+
+```
+Ну вообщем там реально большой выхлоп, я лучше весь лог прикреплю в github
+
+
 
 
 
