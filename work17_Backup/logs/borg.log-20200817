@@ -1,0 +1,40 @@
+Using a pure-python msgpack! This will result in lower performance.
+Remote: Using a pure-python msgpack! This will result in lower performance.
+Creating archive at "192.168.50.11:/var/backup::{now:%Y-%m-%d-%H-%M}"
+0 B O 0 B C 0 B D 0 N etc                                                       Initializing cache transaction: Reading configInitializing cache transaction: Reading chunksInitializing cache transaction: Reading files713.07 kB O 243.29 kB C 0 B D 39 N etc/nsswitch.conf.bak                        774.85 kB O 280.65 kB C 0 B D 79 N etc/systemd/journald.conf                    9.20 MB O 2.92 MB C 0 B D 109 N etc/nfsmount.conf                               9.28 MB O 2.97 MB C 0 B D 163 N etc/pam.d/other                                 13.66 MB O 4.66 MB C 0 B D 215 N etc/selinux/targeted...dules/100/authconfig/cil13.90 MB O 4.88 MB C 0 B D 265 N etc/selinux/targeted...modules/100/dcc/lang_ext14.10 MB O 5.08 MB C 0 B D 312 N etc/selinux/targeted...ve/modules/100/jetty/hll14.34 MB O 5.30 MB C 0 B D 363 N etc/selinux/targeted...e/modules/100/ninfod/hll14.58 MB O 5.53 MB C 0 B D 418 N etc/selinux/targeted...odules/100/rhev/lang_ext14.88 MB O 5.82 MB C 0 B D 469 N etc/selinux/targeted/active/modules/100/thin   15.19 MB O 6.12 MB C 0 B D 519 N etc/selinux/targeted...modules/100/arpwatch/hll15.52 MB O 6.44 MB C 0 B D 593 N etc/selinux/targeted...ve/modules/100/getty/cil15.90 MB O 6.80 MB C 0 B D 680 N etc/selinux/targeted...100/openshift-origin/cil16.36 MB O 7.24 MB C 0 B D 780 N etc/selinux/targeted...tive/modules/100/tor/hll16.93 MB O 7.78 MB C 0 B D 880 N etc/selinux/targeted...ules/100/dirsrv/lang_ext17.39 MB O 8.23 MB C 0 B D 979 N etc/selinux/targeted...odules/100/ntop/lang_ext17.88 MB O 8.69 MB C 0 B D 1079 N etc/selinux/targeted...ve/modules/100/tftp/hll18.43 MB O 9.22 MB C 0 B D 1178 N etc/selinux/targeted...ve/modules/100/dbus/hll18.94 MB O 9.71 MB C 0 B D 1279 N etc/selinux/targeted...ve/modules/100/nscd/cil19.52 MB O 10.28 MB C 0 B D 1379 N etc/selinux/targete...modules/100/systemd/hll26.11 MB O 12.43 MB C 0 B D 1474 N etc/ssh/sshd_config                          26.48 MB O 12.62 MB C 0 B D 1583 N etc/sysconfig/irqbalance                     27.52 MB O 13.29 MB C 0 B D 1661 N etc/security/pwquality.conf                  Remote: Compacting segments   0%Remote: Compacting segments  50%Saving files cacheSaving chunks cacheSaving cache config                                                                                ------------------------------------------------------------------------------
+Archive name: 2020-08-17-16-00
+Archive fingerprint: 7d9e6483caad1a5ed2e3e10608cbaf46c6149c3e8abb7d244282e2126d70e731
+Time (start): Mon, 2020-08-17 16:00:19
+Time (end):   Mon, 2020-08-17 16:00:25
+Duration: 5.94 seconds
+Number of files: 1729
+Utilization of max. archive size: 0%
+------------------------------------------------------------------------------
+                       Original size      Compressed size    Deduplicated size
+This archive:               28.54 MB             13.55 MB             36.69 kB
+All archives:              684.90 MB            325.15 MB             12.67 MB
+
+                       Unique chunks         Total chunks
+Chunk index:                    1347                41367
+------------------------------------------------------------------------------
+terminating with success status, rc 0
+Using a pure-python msgpack! This will result in lower performance.
+Remote: Using a pure-python msgpack! This will result in lower performance.
+Creating archive at "192.168.50.11:/var/backup::{now:%Y-%m-%d-%H-%M}"
+0 B O 0 B C 0 B D 0 N etc                                                       Initializing cache transaction: Reading configInitializing cache transaction: Reading chunksInitializing cache transaction: Reading files747.12 kB O 260.19 kB C 0 B D 45 N etc/rc.d/rc5.d                               778.48 kB O 283.33 kB C 0 B D 82 N etc/systemd/system/...t.wants/postfix.service9.25 MB O 2.96 MB C 0 B D 125 N etc/trusted-key.key                             9.29 MB O 2.98 MB C 0 B D 186 N etc/pam.d/smartcard-auth-ac                     13.74 MB O 4.73 MB C 0 B D 233 N etc/selinux/targeted...tive/modules/100/ccs/cil13.98 MB O 4.96 MB C 0 B D 283 N etc/selinux/targeted...les/100/fprintd/lang_ext14.20 MB O 5.17 MB C 0 B D 334 N etc/selinux/targeted/active/modules/100/lvm    14.61 MB O 5.57 MB C 0 B D 423 N etc/selinux/targeted.../modules/100/roundup/hll15.12 MB O 6.06 MB C 0 B D 512 N etc/selinux/targeted...e/modules/100/amanda/cil15.59 MB O 6.51 MB C 0 B D 610 N etc/selinux/targeted...active/modules/100/ipsec16.04 MB O 6.93 MB C 0 B D 709 N etc/selinux/targeted.../100/publicfile/lang_ext16.49 MB O 7.37 MB C 0 B D 807 N etc/selinux/targeted...e/modules/100/xguest/hll17.04 MB O 7.89 MB C 0 B D 906 N etc/selinux/targeted...modules/100/gssproxy/hll17.50 MB O 8.33 MB C 0 B D 1005 N etc/selinux/targeted...es/100/postfix/lang_ext18.04 MB O 8.85 MB C 0 B D 1104 N etc/selinux/targeted...ve/modules/100/watchdog18.55 MB O 9.34 MB C 0 B D 1203 N etc/selinux/targeted...les/100/gdomap/lang_ext19.04 MB O 9.81 MB C 0 B D 1302 N etc/selinux/targeted...les/100/pesign/lang_ext19.61 MB O 10.36 MB C 0 B D 1401 N etc/selinux/targete...100/userhelper/lang_ext26.29 MB O 12.52 MB C 0 B D 1496 N etc/grub.d/40_custom                         26.48 MB O 12.62 MB C 0 B D 1595 N etc/logrotate.d/syslog                       27.63 MB O 13.30 MB C 0 B D 1679 N etc/depmod.d/dist.conf                       Remote: Compacting segments   0%Remote: Compacting segments  50%Saving files cacheSaving chunks cacheSaving cache config                                                                                ------------------------------------------------------------------------------
+Archive name: 2020-08-17-16-05
+Archive fingerprint: e00159eded8acff8b1c48cfda79110d5ed48cdd7610322d6191e1e11da59beba
+Time (start): Mon, 2020-08-17 16:05:29
+Time (end):   Mon, 2020-08-17 16:05:34
+Duration: 5.46 seconds
+Number of files: 1729
+Utilization of max. archive size: 0%
+------------------------------------------------------------------------------
+                       Original size      Compressed size    Deduplicated size
+This archive:               28.54 MB             13.55 MB                604 B
+All archives:              713.44 MB            338.70 MB             12.67 MB
+
+                       Unique chunks         Total chunks
+Chunk index:                    1348                43091
+------------------------------------------------------------------------------
+terminating with success status, rc 0

@@ -1,0 +1,100 @@
+Using a pure-python msgpack! This will result in lower performance.
+Remote: Using a pure-python msgpack! This will result in lower performance.
+Creating archive at "192.168.50.11:/var/backup::{now:%Y-%m-%d-%H-%M}"
+0 B O 0 B C 0 B D 0 N etc                                                       Initializing cache transaction: Reading configInitializing cache transaction: Reading chunksInitializing cache transaction: Reading files747.12 kB O 260.19 kB C 0 B D 45 N etc/rc.d/rc0.d/K50netconsole                 778.48 kB O 283.33 kB C 0 B D 82 N etc/systemd/system/...s/vmtoolsd-init.service9.22 MB O 2.94 MB C 0 B D 117 N etc/sudoers                                     9.28 MB O 2.97 MB C 0 B D 171 N etc/pam.d/su-l                                  13.82 MB O 4.80 MB C 0 B D 250 N etc/selinux/targeted...ules/100/comsat/lang_ext14.22 MB O 5.19 MB C 0 B D 337 N etc/selinux/targeted...active/modules/100/mandb14.64 MB O 5.59 MB C 0 B D 429 N etc/selinux/targeted...ve/modules/100/rtkit/hll15.24 MB O 6.17 MB C 0 B D 528 N etc/selinux/targeted.../modules/100/bitlbee/hll15.68 MB O 6.59 MB C 0 B D 628 N etc/selinux/targeted...dules/100/ktalk/lang_ext16.12 MB O 7.01 MB C 0 B D 728 N etc/selinux/targeted...tive/modules/100/rpc/cil16.58 MB O 7.45 MB C 0 B D 829 N etc/selinux/targeted...s/100/automount/lang_ext17.15 MB O 7.99 MB C 0 B D 930 N etc/selinux/targeted...e/modules/100/kmscon/hll17.61 MB O 8.44 MB C 0 B D 1030 N etc/selinux/targeted.../modules/100/rlogin/cil18.21 MB O 9.02 MB C 0 B D 1131 N etc/selinux/targeted...s/100/auditadm/lang_ext18.72 MB O 9.50 MB C 0 B D 1231 N etc/selinux/targeted...dules/100/keyboardd/cil19.18 MB O 9.95 MB C 0 B D 1328 N etc/selinux/targeted...dules/100/readahead/hll19.73 MB O 10.48 MB C 0 B D 1424 N etc/selinux/targete.../contexts/dbus_contexts26.30 MB O 12.53 MB C 0 B D 1522 N etc/profile.d/vim.sh                         26.53 MB O 12.64 MB C 0 B D 1620 N etc/pki                                      27.67 MB O 13.32 MB C 0 B D 1697 N etc/vmware-tools/vgauth                      Remote: Compacting segments   0%Remote: Compacting segments  50%Saving files cacheSaving chunks cacheSaving cache config                                                                                ------------------------------------------------------------------------------
+Archive name: 2020-08-17-16-10
+Archive fingerprint: f82713da0a6b70cd23aba57de694454a61f96403d777e8d7be8e6046c646e73e
+Time (start): Mon, 2020-08-17 16:10:29
+Time (end):   Mon, 2020-08-17 16:10:34
+Duration: 5.10 seconds
+Number of files: 1729
+Utilization of max. archive size: 0%
+------------------------------------------------------------------------------
+                       Original size      Compressed size    Deduplicated size
+This archive:               28.54 MB             13.55 MB                604 B
+All archives:              741.98 MB            352.25 MB             12.67 MB
+
+                       Unique chunks         Total chunks
+Chunk index:                    1349                44815
+------------------------------------------------------------------------------
+terminating with success status, rc 0
+Using a pure-python msgpack! This will result in lower performance.
+Remote: Using a pure-python msgpack! This will result in lower performance.
+Creating archive at "192.168.50.11:/var/backup::{now:%Y-%m-%d-%H-%M}"
+0 B O 0 B C 0 B D 0 N etc                                                       Initializing cache transaction: Reading configInitializing cache transaction: Reading chunksInitializing cache transaction: Reading files778.48 kB O 283.33 kB C 0 B D 82 N etc/systemd/system/...s/vmtoolsd-init.service9.28 MB O 2.97 MB C 0 B D 149 N etc/ld.so.conf.d/mariadb-x86_64.conf            9.70 MB O 3.09 MB C 0 B D 200 N etc/selinux/targeted/active/homedir_template    13.82 MB O 4.81 MB C 0 B D 251 N etc/selinux/targeted...odules/100/container/cil14.06 MB O 5.04 MB C 0 B D 300 N etc/selinux/targeted...odules/100/hypervkvp/hll14.23 MB O 5.20 MB C 0 B D 340 N etc/selinux/targeted...ctive/modules/100/milter14.44 MB O 5.40 MB C 0 B D 385 N etc/selinux/targeted...dules/100/pcscd/lang_ext14.68 MB O 5.63 MB C 0 B D 435 N etc/selinux/targeted...ve/modules/100/sblim/hll14.97 MB O 5.91 MB C 0 B D 484 N etc/selinux/targeted...e/modules/100/usermanage15.27 MB O 6.20 MB C 0 B D 534 N etc/selinux/targeted...e/modules/100/brltty/hll15.52 MB O 6.43 MB C 0 B D 591 N etc/selinux/targeted...ve/modules/100/games/hll15.75 MB O 6.65 MB C 0 B D 642 N etc/selinux/targeted.../modules/100/mailman/hll15.96 MB O 6.86 MB C 0 B D 691 N etc/selinux/targeted...tive/modules/100/piranha16.17 MB O 7.06 MB C 0 B D 738 N etc/selinux/targeted.../modules/100/sanlock/hll16.38 MB O 7.26 MB C 0 B D 786 N etc/selinux/targeted...les/100/unlabelednet/hll16.71 MB O 7.58 MB C 0 B D 835 N etc/selinux/targeted...les/100/blkmapd/lang_ext16.96 MB O 7.81 MB C 0 B D 886 N etc/selinux/targeted...dules/100/dspam/lang_ext17.16 MB O 8.00 MB C 0 B D 935 N etc/selinux/targeted...modules/100/linuxptp/cil17.41 MB O 8.25 MB C 0 B D 986 N etc/selinux/targeted...e/modules/100/opensm/cil17.63 MB O 8.45 MB C 0 B D 1033 N etc/selinux/targeted...modules/100/rpcbind/cil17.89 MB O 8.70 MB C 0 B D 1083 N etc/selinux/targeted...odules/100/tlp/lang_ext18.21 MB O 9.02 MB C 0 B D 1130 N etc/selinux/targeted...odules/100/auditadm/hll18.44 MB O 9.23 MB C 0 B D 1180 N etc/selinux/targeted...dules/100/devicekit/cil18.77 MB O 9.55 MB C 0 B D 1241 N etc/selinux/targeted...e/modules/100/lircd/hll19.18 MB O 9.95 MB C 0 B D 1329 N etc/selinux/targeted...active/modules/100/rhcs19.73 MB O 10.48 MB C 0 B D 1423 N etc/selinux/targete...exts/customizable_types26.30 MB O 12.53 MB C 0 B D 1522 N etc/profile.d/vim.sh                         26.53 MB O 12.64 MB C 0 B D 1619 N etc/tuned/active_profile                     27.67 MB O 13.32 MB C 0 B D 1695 N etc/vmware-tools/GuestProxyData              Remote: Compacting segments   0%Remote: Compacting segments  50%Saving files cacheSaving chunks cacheSaving cache config                                                                                ------------------------------------------------------------------------------
+Archive name: 2020-08-17-16-15
+Archive fingerprint: ce8dd2105571ca740382b5e20fa6a942189a4a8a171da54570e141e9ddd18957
+Time (start): Mon, 2020-08-17 16:15:23
+Time (end):   Mon, 2020-08-17 16:15:29
+Duration: 6.49 seconds
+Number of files: 1729
+Utilization of max. archive size: 0%
+------------------------------------------------------------------------------
+                       Original size      Compressed size    Deduplicated size
+This archive:               28.54 MB             13.55 MB                604 B
+All archives:              770.52 MB            365.80 MB             12.67 MB
+
+                       Unique chunks         Total chunks
+Chunk index:                    1350                46539
+------------------------------------------------------------------------------
+terminating with success status, rc 0
+Using a pure-python msgpack! This will result in lower performance.
+Remote: Using a pure-python msgpack! This will result in lower performance.
+Creating archive at "192.168.50.11:/var/backup::{now:%Y-%m-%d-%H-%M}"
+0 B O 0 B C 0 B D 0 N etc                                                       Initializing cache transaction: Reading configInitializing cache transaction: Reading chunksInitializing cache transaction: Reading files778.48 kB O 283.33 kB C 0 B D 82 N etc/systemd/system/...toolsd.service.requires9.28 MB O 2.97 MB C 0 B D 161 N etc/pam.d                                       13.77 MB O 4.76 MB C 0 B D 239 N etc/selinux/targeted...e/modules/100/chrome/cil14.02 MB O 5.00 MB C 0 B D 290 N etc/selinux/targeted...e/modules/100/glance/cil14.23 MB O 5.20 MB C 0 B D 340 N etc/selinux/targeted...dules/100/mandb/lang_ext14.47 MB O 5.43 MB C 0 B D 393 N etc/selinux/targeted.../modules/100/portmap/hll14.73 MB O 5.68 MB C 0 B D 445 N etc/selinux/targeted...les/100/slocate/lang_ext15.03 MB O 5.97 MB C 0 B D 495 N etc/selinux/targeted...tive/modules/100/vpn/hll15.31 MB O 6.23 MB C 0 B D 545 N etc/selinux/targeted.../modules/100/chronyd/cil15.56 MB O 6.48 MB C 0 B D 602 N etc/selinux/targeted...modules/100/hostname/cil15.77 MB O 6.67 MB C 0 B D 650 N etc/selinux/targeted...odules/100/miscfiles/cil16.00 MB O 6.90 MB C 0 B D 700 N etc/selinux/targeted...100/portreserve/lang_ext16.21 MB O 7.09 MB C 0 B D 748 N etc/selinux/targeted...s/100/seunshare/lang_ext16.44 MB O 7.31 MB C 0 B D 799 N etc/selinux/targeted/active/modules/100/w3c    16.78 MB O 7.64 MB C 0 B D 852 N etc/selinux/targeted...e/modules/100/cinder/hll17.00 MB O 7.85 MB C 0 B D 897 N etc/selinux/targeted.../modules/100/ganesha/hll17.22 MB O 8.06 MB C 0 B D 946 N etc/selinux/targeted...modules/100/lsm/lang_ext17.45 MB O 8.28 MB C 0 B D 995 N etc/selinux/targeted...00/permissivedomains/cil17.73 MB O 8.55 MB C 0 B D 1050 N etc/selinux/targeted...es/100/sensord/lang_ext18.02 MB O 8.83 MB C 0 B D 1101 N etc/selinux/targeted...tive/modules/100/vmware18.30 MB O 9.10 MB C 0 B D 1150 N etc/selinux/targeted...ules/100/certmonger/hll18.54 MB O 9.33 MB C 0 B D 1199 N etc/selinux/targeted...modules/100/fstools/hll18.81 MB O 9.59 MB C 0 B D 1251 N etc/selinux/targeted...00/lttng-tools/lang_ext19.06 MB O 9.83 MB C 0 B D 1304 N etc/selinux/targeted...ive/modules/100/pki/hll19.57 MB O 10.32 MB C 0 B D 1392 N etc/selinux/targete.../modules/100/unconfined26.11 MB O 12.43 MB C 0 B D 1473 N etc/ssh/moduli                               26.38 MB O 12.57 MB C 0 B D 1553 N etc/sysconfig/network-scripts/ifup-plip      26.55 MB O 12.65 MB C 0 B D 1634 N etc/pki/nss-legacy/nss-rhel7.config          27.83 MB O 13.37 MB C 0 B D 1710 N etc/vmware-tools/poweron-vm-default          Remote: Compacting segments   0%Remote: Compacting segments  50%Saving files cacheSaving chunks cacheSaving cache config                                                                                ------------------------------------------------------------------------------
+Archive name: 2020-08-17-16-20
+Archive fingerprint: 807dc470c945015360f62d9d6a908b5caeda1299fd1e3eca4e1a4a91489f97e2
+Time (start): Mon, 2020-08-17 16:20:34
+Time (end):   Mon, 2020-08-17 16:20:41
+Duration: 6.57 seconds
+Number of files: 1729
+Utilization of max. archive size: 0%
+------------------------------------------------------------------------------
+                       Original size      Compressed size    Deduplicated size
+This archive:               28.54 MB             13.55 MB                604 B
+All archives:              799.05 MB            379.34 MB             12.67 MB
+
+                       Unique chunks         Total chunks
+Chunk index:                    1351                48263
+------------------------------------------------------------------------------
+terminating with success status, rc 0
+Using a pure-python msgpack! This will result in lower performance.
+Remote: Using a pure-python msgpack! This will result in lower performance.
+Creating archive at "192.168.50.11:/var/backup::{now:%Y-%m-%d-%H-%M}"
+0 B O 0 B C 0 B D 0 N etc                                                       Initializing cache transaction: Reading configInitializing cache transaction: Reading chunksInitializing cache transaction: Reading files778.48 kB O 283.33 kB C 0 B D 82 N etc/systemd/system/...wants/nfs-client.target9.28 MB O 2.97 MB C 0 B D 167 N etc/pam.d/remote                                13.84 MB O 4.83 MB C 0 B D 252 N etc/selinux/targeted...odules/100/container/hll14.04 MB O 5.02 MB C 0 B D 296 N etc/selinux/targeted.../modules/100/hddtemp/cil14.22 MB O 5.19 MB C 0 B D 337 N etc/selinux/targeted...active/modules/100/mandb14.43 MB O 5.39 MB C 0 B D 383 N etc/selinux/targeted...ve/modules/100/pcscd/cil14.67 MB O 5.62 MB C 0 B D 434 N etc/selinux/targeted...ve/modules/100/sblim/cil14.97 MB O 5.91 MB C 0 B D 484 N etc/selinux/targeted...e/modules/100/usermanage15.26 MB O 6.19 MB C 0 B D 533 N etc/selinux/targeted...e/modules/100/brltty/cil15.49 MB O 6.41 MB C 0 B D 586 N etc/selinux/targeted...ive/modules/100/freeipmi15.73 MB O 6.64 MB C 0 B D 639 N etc/selinux/targeted...tive/modules/100/lpd/hll15.98 MB O 6.87 MB C 0 B D 693 N etc/selinux/targeted.../modules/100/piranha/hll16.19 MB O 7.07 MB C 0 B D 743 N etc/selinux/targeted...modules/100/sendmail/cil16.40 MB O 7.27 MB C 0 B D 791 N etc/selinux/targeted...dules/100/usernetctl/cil16.72 MB O 7.59 MB C 0 B D 839 N etc/selinux/targeted...modules/100/bugzilla/cil16.97 MB O 7.82 MB C 0 B D 888 N etc/selinux/targeted...ive/modules/100/fcoe/hll17.17 MB O 8.01 MB C 0 B D 937 N etc/selinux/targeted...ive/modules/100/loadkeys17.42 MB O 8.26 MB C 0 B D 989 N etc/selinux/targeted...odules/100/oracleasm/cil17.69 MB O 8.51 MB C 0 B D 1041 N etc/selinux/targeted...active/modules/100/sasl17.94 MB O 8.75 MB C 0 B D 1090 N etc/selinux/targeted...ules/100/unprivuser/cil18.24 MB O 9.04 MB C 0 B D 1137 N etc/selinux/targeted...ules/100/bcfg2/lang_ext18.47 MB O 9.27 MB C 0 B D 1186 N etc/selinux/targeted.../modules/100/dnssec/cil18.74 MB O 9.52 MB C 0 B D 1236 N etc/selinux/targeted...les/100/kpatch/lang_ext18.96 MB O 9.74 MB C 0 B D 1283 N etc/selinux/targeted...ive/modules/100/ntp/hll19.36 MB O 10.12 MB C 0 B D 1364 N etc/selinux/targete...ve/modules/100/snmp/hll21.60 MB O 10.87 MB C 0 B D 1451 N etc/selinux/targeted/contexts/users/user_u   26.32 MB O 12.54 MB C 0 B D 1542 N etc/sysconfig/network-scripts/ifdown-isdn    26.55 MB O 12.65 MB C 0 B D 1633 N etc/pki/nss-legacy                           27.84 MB O 13.38 MB C 0 B D 1713 N etc/vmware-tools/suspend-vm-default          Remote: Compacting segments   0%Remote: Compacting segments  50%Saving files cacheSaving chunks cacheSaving cache config                                                                                ------------------------------------------------------------------------------
+Archive name: 2020-08-17-16-25
+Archive fingerprint: c1559b7ee07352814989de522649fd15f1b0a805d140418e7355746907ad0ac0
+Time (start): Mon, 2020-08-17 16:25:33
+Time (end):   Mon, 2020-08-17 16:25:40
+Duration: 6.58 seconds
+Number of files: 1729
+Utilization of max. archive size: 0%
+------------------------------------------------------------------------------
+                       Original size      Compressed size    Deduplicated size
+This archive:               28.54 MB             13.55 MB                604 B
+All archives:              827.59 MB            392.89 MB             12.67 MB
+
+                       Unique chunks         Total chunks
+Chunk index:                    1352                49987
+------------------------------------------------------------------------------
+terminating with success status, rc 0
+Using a pure-python msgpack! This will result in lower performance.
+Remote: Using a pure-python msgpack! This will result in lower performance.
+Creating archive at "192.168.50.11:/var/backup::{now:%Y-%m-%d-%H-%M}"
+0 B O 0 B C 0 B D 0 N etc                                                       Initializing cache transaction: Reading configInitializing cache transaction: Reading chunksInitializing cache transaction: Reading files774.85 kB O 280.65 kB C 0 B D 79 N etc/systemd/journald.conf                    9.28 MB O 2.97 MB C 0 B D 161 N etc/pam.d                                       13.88 MB O 4.86 MB C 0 B D 260 N etc/selinux/targeted...ules/100/daemontools/cil14.32 MB O 5.28 MB C 0 B D 357 N etc/selinux/targeted...ve/modules/100/mysql/hll14.83 MB O 5.77 MB C 0 B D 456 N etc/selinux/targeted...ve/modules/100/staff/hll15.36 MB O 6.29 MB C 0 B D 556 N etc/selinux/targeted...ules/100/condor/lang_ext15.80 MB O 6.70 MB C 0 B D 656 N etc/selinux/targeted...ve/modules/100/mount/cil16.25 MB O 7.13 MB C 0 B D 756 N etc/selinux/targeted...odules/100/sosreport/hll16.80 MB O 7.66 MB C 0 B D 856 N etc/selinux/targeted...s/100/cloudform/lang_ext17.24 MB O 8.08 MB C 0 B D 951 N etc/selinux/targeted...odules/100/mediawiki/hll17.60 MB O 8.42 MB C 0 B D 1025 N etc/selinux/targeted...les/100/remotelogin/hll17.86 MB O 8.67 MB C 0 B D 1075 N etc/selinux/targeted...ve/modules/100/tcpd/cil18.16 MB O 8.97 MB C 0 B D 1122 N etc/selinux/targeted...ve/modules/100/anaconda18.68 MB O 9.46 MB C 0 B D 1222 N etc/selinux/targeted...ive/modules/100/irc/cil19.15 MB O 9.91 MB C 0 B D 1321 N etc/selinux/targeted...modules/100/quantum/cil19.73 MB O 10.48 MB C 0 B D 1422 N etc/selinux/targete.../100/zosremote/lang_ext26.30 MB O 12.52 MB C 0 B D 1515 N etc/profile.d/colorls.sh                     26.52 MB O 12.63 MB C 0 B D 1614 N etc/cron.weekly                              27.50 MB O 13.28 MB C 0 B D 1654 N etc/bash_completion.d/redefine_filedir       27.65 MB O 13.31 MB C 0 B D 1691 N etc/firewalld/zones/public.xml               Remote: Compacting segments   0%Remote: Compacting segments  50%Saving files cacheSaving chunks cacheSaving cache config                                                                                ------------------------------------------------------------------------------
+Archive name: 2020-08-17-16-30
+Archive fingerprint: 84eea7f5d1f5b95590207ed6c0ac44800876589f6af941bce34c7844dcf40a55
+Time (start): Mon, 2020-08-17 16:30:09
+Time (end):   Mon, 2020-08-17 16:30:13
+Duration: 4.72 seconds
+Number of files: 1729
+Utilization of max. archive size: 0%
+------------------------------------------------------------------------------
+                       Original size      Compressed size    Deduplicated size
+This archive:               28.54 MB             13.55 MB                604 B
+All archives:              856.13 MB            406.44 MB             12.67 MB
+
+                       Unique chunks         Total chunks
+Chunk index:                    1353                51711
+------------------------------------------------------------------------------
+terminating with success status, rc 0
