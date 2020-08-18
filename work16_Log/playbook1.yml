@@ -101,6 +101,23 @@
     copy:
       src: elk/
       dest: /opt/containers/
-      owner: root
-      group: root
+      owner: 1000
+      group: 1000
       mode: 0775 
+
+
+  - name: heartbeat permission
+    file:
+      path: /opt/containers/heartbeat/heartbeat.yml
+      owner: 1000
+      group: 1000
+      mode: '0644'
+
+
+
+
+  - name: docker-compose up
+    command: docker-compose -f docker-compose.yml up -d
+    args:
+      chdir: /opt/containers
+
