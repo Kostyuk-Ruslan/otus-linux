@@ -49,10 +49,10 @@
      state: latest
     tags: install-packages
 
-  - name: yum update
-    yum:
-      name: '*'
-      state: latest
+#  - name: yum update
+#    yum:
+#      name: '*'
+#      state: latest
 
 
   - name: install packages
@@ -87,4 +87,20 @@
       state: started
       enabled: yes
     tags: docker
- 
+
+
+  - name: Create a directory containers
+    file:
+      path: /opt/containers
+      state: directory
+      mode: '0775'
+
+
+
+  - name: copy docker files
+    copy:
+      src: elk/
+      dest: /opt/containers/
+      owner: root
+      group: root
+      mode: 0775 

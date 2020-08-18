@@ -51,10 +51,10 @@
      state: latest
     tags: install-packages
 
-  - name: yum update
-    yum:
-      name: '*'
-      state: latest
+#  - name: yum update
+#    yum:
+#      name: '*'
+#      state: latest
 
   - name: start and enable firewalld
     systemd:
