@@ -1,5 +1,5 @@
 ---
-- hosts: elk
+- hosts: log
   become: true
   tasks:
   - name: Add multiple repositories into the same file (1/2)
@@ -9,13 +9,6 @@
       file: external_repos
       baseurl: https://download.fedoraproject.org/pub/epel/$releasever/$basearch/
       gpgcheck: no
-
-
-
-  - name: set up docker stable repo
-    command: yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
-    tags: docker
-
 
   - name: disable selinux
     lineinfile:
@@ -31,16 +24,6 @@
       enabled: no
     ignore_errors: yes
     tags: services
-
-  - name: install docker
-    yum:
-     name:
-      - docker-ce
-      - docker-compose
-    tags: docker
-
-
-
 
   - name: install epel-release
     yum:
@@ -81,43 +64,4 @@
      state: latest
 
  
-  - name: start docker
-    service:
-      name: docker
-      state: started
-      enabled: yes
-    tags: docker
-
-
-  - name: Create a directory containers
-    file:
-      path: /opt/containers
-      state: directory
-      mode: '0775'
-
-
-
-  - name: copy docker files
-    copy:
-      src: elk/
-      dest: /opt/containers/
-      owner: 1000
-      group: 1000
-      mode: 0775 
-
-
-  - name: heartbeat permission
-    file:
-      path: /opt/containers/heartbeat/heartbeat.yml
-      owner: 1000
-      group: 1000
-      mode: '0644'
-
-
-
-
-  - name: docker-compose up
-    command: docker-compose -f docker-compose.yml up -d
-    args:
-      chdir: /opt/containers
 

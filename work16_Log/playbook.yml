@@ -25,20 +25,20 @@
 
 
 
-  - name: Add Elasticsearch GPG key.
-    rpm_key:
-      key: https://packages.elastic.co/GPG-KEY-elasticsearch
-      state: present
+#  - name: Add Elasticsearch GPG key.
+#    rpm_key:
+#      key: https://packages.elastic.co/GPG-KEY-elasticsearch
+#      state: present
 
-  - name: Add multiple repositories into the same file (2/2)
-    yum_repository:
-      name: rpmforge
-      description: RPMforge YUM repo
-      file: elastic
-      baseurl: https://artifacts.elastic.co/packages/7.x/yum
-      gpgcheck: 1
-      gpgkey: https://artifacts.elastic.co/GPG-KEY-elasticsearch
-      enabled: yes
+#  - name: Add multiple repositories into the same file (2/2)
+#    yum_repository:
+#      name: rpmforge
+#      description: RPMforge YUM repo
+#      file: elastic
+#      baseurl: https://artifacts.elastic.co/packages/7.x/yum
+#      gpgcheck: 1
+#      gpgkey: https://artifacts.elastic.co/GPG-KEY-elasticsearch
+#      enabled: yes
 
 
 
