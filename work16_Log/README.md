@@ -422,8 +422,15 @@ error_log  /var/log/nginx/error.log crit; - критичные локально
 
 ```
 
-security, log audit.*  @@192.168.50.13:514
+$ModLoad imfile
+$InputFileName /var/log/audit/audit.log
+$InputFileTag tag_audit_log:
+$InputFileStateFile audit_log
+$InputFileSeverity info
+$InputFileFacility local6
+$InputRunFileMonitor
 
+*.*   @@192.168.50.13:514
 
 ```
 Все логи аудита должны уходить на удаленный сервер <code>192.168.50.13</code>
