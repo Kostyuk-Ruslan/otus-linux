@@ -302,6 +302,23 @@ crit - Критичные
 
 
 
+2) Теперь сделаем тоже самое, но что бы собиралось все локально
+
+<code>/etc/rsyslog.d/all_crit_local.conf</code>
+
+
+```
+*.crit /var/log/all_crit_local.log
+
+
+```
+Разбираем:
+
+* - Все логи
+
+crit - Критичные
+ 
+/var/log/all_crit_local.log  - путь к логам на локальной машине
 
 
 
