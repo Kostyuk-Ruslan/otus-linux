@@ -388,10 +388,20 @@ drwxr-xr-x. 2 root   root       23 Aug 21 14:06 tuned
 <details>
 <summary><code>Логи аудита должны также уходить на удаленную систему</code></summary>
 
+Теперь снова создадим правило для аудита <code>/etc/rsyslog.d/audit_remote.conf</code>
+
 
 ```
 
+security, log audit.*  @@192.168.50.13:514
+
+
 ```
+Все логи аудита должны уходить на удаленный сервер <code>192.168.50.13</code>
+
+
+
+
 
 
 </details>
