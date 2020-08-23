@@ -90,6 +90,14 @@ end
 #$ModLoad imtcp
 #$InputTCPServerRun 514
 
+
+Плюс добавляем правило
+
+$template RemoteLogs,"/var/log/rsyslog/%HOSTNAME%/%PROGRAMNAME%.log"
+*.* ?RemoteLogs
+& ~
+
+
 ```
 
 После чего запустил unit и добавил в автозагрузку <code>systemctl enable rsyslog --now </code>
