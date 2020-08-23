@@ -200,13 +200,15 @@ Aug 23 14:56:30 web systemd[1]: Started Security Auditing Service.
 ```
 
 
+
+Теперь следим за конфигами nginx, ради теста создаем файл "777" в каталоге нашего  "nginx" , ну или правим сами конф. файлы не суть, в логах теперь все запишет
+
 ```
 
 
 [root@web /]# cd /etc/nginx/
 [root@web nginx]# ll
 total 36
--rw-r--r--  1 root root    0 Aug 23 18:38 777
 drwxr-xr-x. 2 root root   26 Aug 21 14:20 conf.d
 -rw-r--r--. 1 root root 1007 Apr 21 15:07 fastcgi_params
 -rw-r--r--. 1 root root 2837 Apr 21 15:07 koi-utf
@@ -243,7 +245,7 @@ lrwxrwxrwx. 1 root root   29 Aug 21 14:20 modules -> ../../usr/lib64/nginx/modul
 
 
 
-
+Проверяем лог <code>/var/log/audit.log</code>
 
 ```
 
@@ -260,10 +262,9 @@ p_fi=0000000000000000 cap_fe=0 cap_fver=0
 type=PROCTITLE msg=audit(1598207901.613:863): proctitle=62617368002D726366696C65002E626173687263
 
 
-
-
-
 ```
+
+Видим записи о создании файла
 
 
 </details>
