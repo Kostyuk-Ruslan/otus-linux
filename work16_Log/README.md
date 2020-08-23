@@ -373,8 +373,16 @@ drwxr-xr-x. 2 root   root       23 Aug 21 14:06 tuned
 <details>
 <summary><code>Все логи с nginx должны уходить на удаленный сервер (локально только критичные)</code></summary>
 
+Как мне сказаль гугл, оазывается некоторые линуксовые приложения умеют отправлять лог напрямую в "syslog" тоже касается и "nginx"
+
+адрес на статью <code>https://nginx.org/ru/docs/syslog.html</code>
+
+<code>mcedit /etc/nginx/nginx.conf </code>
 
 ```
+access_log syslog:server=192.168.50.13:514 info;
+error_log syslog:server=192.168.50.13:514 warn;
+error_log  /var/log/nginx/error.log warn;
 
 ```
 
