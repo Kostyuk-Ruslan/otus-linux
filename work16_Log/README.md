@@ -380,9 +380,9 @@ drwxr-xr-x. 2 root   root       23 Aug 21 14:06 tuned
 <code>mcedit /etc/nginx/nginx.conf </code>
 
 ```
-access_log syslog:server=192.168.50.13:514 info;
-error_log syslog:server=192.168.50.13:514 warn;
-error_log  /var/log/nginx/error.log warn;
+access_log syslog:server=192.168.50.13:514,tag=nginx_access;
+error_log syslog:server=192.168.50.13:514,tag=nginx_error;
+error_log  /var/log/nginx/error.log crit;
 
 ```
 
