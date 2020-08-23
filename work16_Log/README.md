@@ -139,6 +139,8 @@ LISTEN      0      25                                                           
 ```
 
 
+
+
 </details>
 
 
@@ -150,6 +152,13 @@ LISTEN      0      25                                                           
 
 <details>
 <summary><code>Настраиваем аудит следящий за изменением конфигов нжинкса</code></summary>
+
+Делать будем  на вм  "web" где развернуть "nginx" 
+
+1) Конфиг "nginx" находится по пути <code>/etc/nginx/nginx.conf</code>
+2) Для  решения этого задания будем использовать  "auditd" все логи будут сыпаться сюда <code>/var/log/audit/audit.log</code>
+3) Настроем правила аудита с помощью <code>auditctl</code>
+4) Правило будем считывать из правил <code>/etc/audit.rulse</code>
 
 ```
 
@@ -167,6 +176,10 @@ LISTEN      0      25                                                           
 
 
 ```
+
+
+
+
 
 
 

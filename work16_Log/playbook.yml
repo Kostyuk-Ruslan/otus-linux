@@ -94,8 +94,8 @@
        - net-tools
        - vim
        - nginx
-       - filebeat
-       - auditbeat
+#       - filebeat
+#       - auditbeat
      state: latest
 
 
@@ -108,15 +108,15 @@
     tags: services
 
 
-  - name: start filebeat
-    systemd:
-      name: filebeat
-      state: started
-      enabled: yes
+#  - name: start filebeat
+#    systemd:
+#      name: filebeat
+#      state: started
+#      enabled: yes
 
-  - name: start auditbeat
-    systemd:
-      name: auditbeat
-      state: started
-      enabled: yes
+#  - name: start auditbeat
+#    systemd:
+#      name: auditbeat
+#      state: started
+#      enabled: yes
  
