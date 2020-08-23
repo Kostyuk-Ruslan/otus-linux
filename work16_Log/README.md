@@ -386,6 +386,19 @@ error_log  /var/log/nginx/error.log crit;
 
 ```
 
+```
+access_log syslog:server=192.168.50.13:514,tag=nginx_access;  - отправка логов на уд. машину
+error_log syslog:server=192.168.50.13:514,tag=nginx_error; - отправка логов на уд. машину
+
+error_log  /var/log/nginx/error.log crit; - критичные локально
+```
+
+
+
+
+<code>nginx -t </code>
+
+
 
 </details>
 
