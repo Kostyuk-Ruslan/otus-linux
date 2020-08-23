@@ -155,15 +155,25 @@ LISTEN      0      25                                                           
 
 Делать будем  на вм  "web" где развернуть "nginx" 
 
-1) Конфиг "nginx" находится по пути <code>/etc/nginx/nginx.conf</code>
+1) Конфиги "nginx" находится по пути <code>/etc/nginx/</code>
 2) Для  решения этого задания будем использовать  "auditd" все логи будут сыпаться сюда <code>/var/log/audit/audit.log</code>
 3) Настроем правила аудита с помощью <code>auditctl</code>
 4) Правило будем считывать из правил <code>/etc/audit.rulse</code>
 
-```
+<code>/etc/audit/audit.d/rules.d/audit.rules</code>
 
 
 ```
+auditctl -w /etc/nginx/ -k root
+
+```
+
+Разбираем : -w - наблюдаем за каталогом.
+            -k - задает условное имя (ключ) для облегчения поиска записей о событии.
+
+
+
+
 
 </details>
 
