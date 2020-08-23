@@ -276,12 +276,12 @@ type=PROCTITLE msg=audit(1598207901.613:863): proctitle=62617368002D726366696C65
 <summary><code>Все критичные логи с web должны собираться и локально и удаленно</code></summary>
 
 
-Для решения этой задачи создадим правило в каталоге /etc/rsyslog.d/
+Для решения этой задачи создадим правило в каталоге <code>/etc/rsyslog.d/</code>
 
 
 1) Все критичные логи "web" собираются удаленно 
 
-/etc/rsyslog.d/all_crit_remote.conf
+<code>/etc/rsyslog.d/all_crit_remote.conf</code>
 
 ```
 
