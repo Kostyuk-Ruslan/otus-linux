@@ -44,7 +44,7 @@ Vagrant.configure(2) do |config|
  config.vm.provision "ansible" do |ansible|
  ansible.compatibility_mode = "2.0"
  ansible.playbook = "playbook.yml"
-end.
+end
 
 
 
@@ -448,6 +448,62 @@ $InputRunFileMonitor
 во вторую систему все остальное</code></summary>
 
 
+```
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+home = ENV['HOME']
+ENV["LC_ALL"] = "en_US.UTF-8"
+
+Vagrant.configure(2) do |config|
+ config.vm.define "elk" do |subconfig|
+ subconfig.vm.box = "centos/7"
+ subconfig.vm.hostname="elk"
+ subconfig.vm.network :"private_network",  ip: "192.168.50.12"
+ subconfig.vm.provider "virtualbox" do |vb|
+ vb.memory = "3024"
+ vb.cpus = "1"
+ end
+ end
+ config.vm.provision "ansible" do |ansible|
+ ansible.compatibility_mode = "2.0"
+ ansible.playbook = "playbook1.yml"
+ end
+ config.vm.define "web" do |subconfig|
+ subconfig.vm.box = "centos/7"
+ subconfig.vm.hostname="web"
+ subconfig.vm.network :private_network, ip: "192.168.50.11"
+ subconfig.vm.provider "virtualbox" do |vb|
+ vb.memory = "1024"
+ vb.cpus = "1"
+ end
+ end
+ config.vm.provision "ansible" do |ansible|
+ ansible.compatibility_mode = "2.0"
+ ansible.playbook = "playbook.yml"
+end
+
+
+
+
+ config.vm.define "log" do |subconfig|
+ subconfig.vm.box = "centos/7"
+ subconfig.vm.hostname="log"
+ subconfig.vm.network :"private_network",  ip: "192.168.50.13"
+ subconfig.vm.provider "virtualbox" do |vb|
+ vb.memory = "1024"
+ vb.cpus = "1"
+ end
+ config.vm.provision "ansible" do |ansible|
+ ansible.compatibility_mode = "2.0"
+ ansible.playbook = "playbook2.yml"
+
+end
+end
+end
+
+
+
+```
 
 
 
