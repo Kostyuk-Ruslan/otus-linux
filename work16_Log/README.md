@@ -322,6 +322,76 @@ crit - Критичные
 /var/log/all_crit_local.log  - путь к логам на локальной машине
 
 
+Перезапускаем сервис <code>systemctl restart rsyslog</code>
+
+
+Проверяем логи локально:
+
+```
+[root@web log]# ll
+total 356
+-rw-------  1 root   root      764 Aug 23 20:25 all_crit_local.log
+drwxr-xr-x. 2 root   root      219 Apr 30 22:09 anaconda
+drwxr-xr-x. 2 root   root        6 Sep  5  2019 atop
+drwx------. 2 root   root       23 Aug 21 14:05 audit
+-rw-------. 1 root   utmp        0 Apr 30 22:06 btmp
+drwxr-xr-x. 2 chrony chrony      6 Aug  8  2019 chrony
+-rw-------  1 root   root     1440 Aug 23 20:01 cron
+-rw-------. 1 root   root     4017 Aug 23 15:21 cron-20200823
+-rw-r--r--  1 root   root    26496 Aug 23 14:56 dmesg
+-rw-r--r--. 1 root   root    26568 Aug 21 14:05 dmesg.old
+-rw-r--r--. 1 root   root      193 Apr 30 22:06 grubby_prune_debug
+-rw-r--r--. 1 root   root   292292 Aug 23 15:00 lastlog
+-rw-------  1 root   root        0 Aug 23 15:21 maillog
+-rw-------. 1 root   root      380 Aug 23 14:56 maillog-20200823
+-rw-------  1 root   root     2555 Aug 23 20:25 messages
+-rw-------. 1 root   root   184646 Aug 23 15:12 messages-20200823
+drwxr-xr-x. 2 root   root       60 Aug 23 18:31 nginx
+drwxr-xr-x. 2 root   root        6 Aug  8  2019 qemu-ga
+drwxr-xr-x. 2 root   root        6 Apr 30 22:09 rhsm
+drwx------. 3 root   root       17 Apr 30 22:06 samba
+-rw-------  1 root   root     2850 Aug 23 20:25 secure
+-rw-------. 1 root   root    26486 Aug 23 15:00 secure-20200823
+-rw-------  1 root   root        0 Aug 23 15:21 spooler
+-rw-------. 1 root   root        0 Apr 30 22:07 spooler-20200823
+-rw-------. 1 root   root    64000 Aug 21 14:20 tallylog
+drwxr-xr-x. 2 root   root       23 Aug 21 14:06 tuned
+-rw-r--r--. 1 root   root      470 Aug 21 14:10 vboxadd-install.log
+-rw-r--r--  1 root   root       61 Aug 23 14:56 vboxadd-setup.log
+-rw-r--r--. 1 root   root       61 Aug 21 14:13 vboxadd-setup.log.1
+-rw-r--r--. 1 root   root      224 Aug 21 14:13 vboxadd-setup.log.2
+-rw-rw-r--. 1 root   utmp    10752 Aug 23 15:00 wtmp
+-rw-------. 1 root   root     3377 Aug 21 14:20 yum.log
+[root@web log]# 
+```
+
+
+
+</details>
+
+
+<details>
+<summary><code>Все логи с nginx должны уходить на удаленный сервер (локально только критичные)</code></summary>
+
+
+```
+
+```
+
+
+</details>
+
+
+
+
+
+<details>
+<summary><code>Логи аудита должны также уходить на удаленную систему</code></summary>
+
+
+```
+
+```
 
 
 </details>
