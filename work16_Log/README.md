@@ -699,7 +699,7 @@ Hint: Some lines were ellipsized, use -l to show in full.
 <p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/work16_Log/photo/7.PNG"></p>
 
 
-За вторую систему "log"  я взял простой "rsyslog"
+За вторую систему сервер логов "log"  я взял простой "rsyslog" ( 10.0.18.90)
 
 Раскоментировал
 
@@ -716,9 +716,11 @@ Hint: Some lines were ellipsized, use -l to show in full.
 ```
 и перестартанул демона <code>systemctl restart rsyslog</code> и проверил доступность порта 514 командой <code>ss -ntlpa</code>
 
-А на стороне "web" по условию задачи со "*"  во вторую систему должно уходить все остальное
+А на стороне клиента "web" по условию задачи со "*"  во вторую систему должно уходить все остальное
 
-так же как и на сервер, я раскоментил порты, проверил доступность 514 порта
+На клиенте (web) так же как и на сервере (log), я раскоментил порты, проверил доступность 514 порта
+
+И добавил в rsyslog правило отправки всех логов
 
 <code>/etc/rsyslog.d/all__remote_log.conf</code>
 
