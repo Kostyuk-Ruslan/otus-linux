@@ -662,6 +662,23 @@ Hint: Some lines were ellipsized, use -l to show in full.
 
 
 
+<p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/work16_Log/photo/1.PNG"></p>
+
+
+<p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/work16_Log/photo/1.PNG"></p>
+
+
+<p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/work16_Log/photo/1.PNG"></p>
+
+
+<p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/work16_Log/photo/1.PNG"></p>
+
+
+<p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/work16_Log/photo/1.PNG"></p>
+
+
+
+
 
 
 </details>
