@@ -623,6 +623,27 @@ processors:
 ```
 
 
+Запускаем нашего демона <code> systemctl enable filebeat --now</code>
+
+```
+
+[root@web modules.d]# systemctl status filebeat
+● filebeat.service - Filebeat sends log files to Logstash or directly to Elasticsearch.
+   Loaded: loaded (/usr/lib/systemd/system/filebeat.service; enabled; vendor preset: disabled)
+   Active: active (running) since Mon 2020-08-24 11:43:21 UTC; 5s ago
+     Docs: https://www.elastic.co/products/beats/filebeat
+ Main PID: 6373 (filebeat)
+   CGroup: /system.slice/filebeat.service
+           └─6373 /usr/share/filebeat/bin/filebeat --environment systemd -c /etc/filebeat/filebeat.yml --path.home /usr/share/filebeat --path.config /etc/filebeat --path.data /var/lib/filebeat --path.logs /var/log/filebeat
+
+Aug 24 11:43:21 web filebeat[6373]: 2020-08-24T11:43:21.325Z        INFO        cfgfile/reload.go:164        Config reloader started
+Aug 24 11:43:21 web filebeat[6373]: 2020-08-24T11:43:21.333Z        INFO        log/input.go:157        Configured paths: [/var/log/nginx/access.log*]
+Aug 24 11:43:21 web filebeat[6373]: 2020-08-24T11:43:21.334Z        INFO        log/input.go:157        Configured paths: [/var/log/nginx/error.log*]
+Aug 24 11:43:21 web filebeat[6373]: 2020-08-24T11:43:21.334Z        INFO        eslegclient/connection.go:99        elasticsearch url: http://localhost:9200
+
+```
+
+
 
 
 
