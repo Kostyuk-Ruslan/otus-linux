@@ -452,7 +452,9 @@ $InputRunFileMonitor
 
 2) Вагрант "elk"  поднимает вм "elk" средствами докера, он будет подниматься очень долго, но в итоге все будет нором, конифг и docker-compose приложил на гитхабе
 
-3) [root@node01 test]# docker-compose ps
+3) Все данные логов  "filebeat" отправляет сразу в elastic, в обход "logstash" 
+
+4) [root@elk]# docker-compose ps
     Name                   Command               State                       Ports                     
     -------------------------------------------------------------------------------------------------------
     elasticsearch   /tini -- /usr/local/bin/do ...   Up      0.0.0.0:9200->9200/tcp, 0.0.0.0:9300->9300/tcp
@@ -460,7 +462,7 @@ $InputRunFileMonitor
     kibana          /usr/local/bin/dumb-init - ...   Up      0.0.0.0:5601->5601/tcp                        
     logstash        /usr/local/bin/docker-entr ...   Up      0.0.0.0:5044->5044/tcp, 0.0.0.0:9600->9600/tcp
     nginx           /docker-entrypoint.sh ngin ...   Up      0.0.0.0:443->443/tcp, 0.0.0.0:80->80/tcp      
-    [root@node01 test]# 
+    [root@elk]# 
     
 
 
@@ -553,11 +555,48 @@ end
 
 С помощью плейбука устанавливаем "filebeat", настройки плейбука прикрепил в гитхаб, они закоменчены. Что бы не пересекались с основным заданием.
 
+Настраиваем filebeat:
+
+```
+[root@web ~]# cd /etc/filebeat/
+[root@web filebeat]# ll
+total 2876
+-rw-r--r-- 1 root root 2802335 Aug 11 20:11 fields.yml
+-rw-r--r-- 1 root root  115869 Aug 11 20:11 filebeat.reference.yml
+-rw------- 1 root root    8912 Aug 11 20:11 filebeat.yml
+drwxr-xr-x 2 root root    4096 Aug 24 08:44 modules.d
+[root@web filebeat]# 
+
+```
 
 
+С помощью регулярки посмотрим что висит в стандартном конфиге "filebeat"
 
+```
 
+[root@web filebeat]# egrep -v "^$|^[[:space:]]*#" filebeat.yml 
+filebeat.inputs:
+- type: log
+  enabled: false
+  paths:
+    - /var/log/*.log
+filebeat.config.modules:
+  path: ${path.config}/modules.d/*.yml
+  reload.enabled: false
+setup.template.settings:
+  index.number_of_shards: 1
+setup.kibana:
+output.elasticsearch:
+  hosts: ["localhost:9200"]
+processors:
+  - add_host_metadata:
+      when.not.contains.tags: forwarded
+  - add_cloud_metadata: ~
+  - add_docker_metadata: ~
+  - add_kubernetes_metadata: ~
 
+```
+Оставим как есть, подправим только модуль, как раз есть модуль для "nginx" В стандратной компектации
 
 
 
