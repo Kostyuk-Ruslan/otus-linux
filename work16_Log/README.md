@@ -614,10 +614,10 @@ processors:
 - module: nginx
   access:
     enabled: true
-    var.paths: ["/path/to/log/nginx/access.log*"]
+    var.paths: ["/var/log/nginx/access.log*"]
   error:
     enabled: true
-    var.paths: ["/path/to/log/nginx/error.log*"]
+    var.paths: ["/var/log/nginx/error.log*"]
 
 
 ```
@@ -627,19 +627,30 @@ processors:
 
 ```
 
-[root@web modules.d]# systemctl status filebeat
+[root@ms001-cent nginx]# systemctl status filebeat
 ● filebeat.service - Filebeat sends log files to Logstash or directly to Elasticsearch.
    Loaded: loaded (/usr/lib/systemd/system/filebeat.service; enabled; vendor preset: disabled)
-   Active: active (running) since Mon 2020-08-24 11:43:21 UTC; 5s ago
+   Active: active (running) since Mon 2020-08-24 15:32:51 MSK; 11min ago
      Docs: https://www.elastic.co/products/beats/filebeat
- Main PID: 6373 (filebeat)
+ Main PID: 5642 (filebeat)
+    Tasks: 9
+   Memory: 62.2M
    CGroup: /system.slice/filebeat.service
-           └─6373 /usr/share/filebeat/bin/filebeat --environment systemd -c /etc/filebeat/filebeat.yml --path.home /usr/share/filebeat --path.config /etc/filebeat --path.data /var/lib/filebeat --path.logs /var/log/filebeat
+           └─5642 /usr/share/filebeat/bin/filebeat -e -c /etc/filebeat/filebeat.yml -path.home /usr/share/filebeat -path.config /etc/filebeat -path.data /var/lib/filebeat -path.logs /var/log/filebeat
 
-Aug 24 11:43:21 web filebeat[6373]: 2020-08-24T11:43:21.325Z        INFO        cfgfile/reload.go:164        Config reloader started
-Aug 24 11:43:21 web filebeat[6373]: 2020-08-24T11:43:21.333Z        INFO        log/input.go:157        Configured paths: [/var/log/nginx/access.log*]
-Aug 24 11:43:21 web filebeat[6373]: 2020-08-24T11:43:21.334Z        INFO        log/input.go:157        Configured paths: [/var/log/nginx/error.log*]
-Aug 24 11:43:21 web filebeat[6373]: 2020-08-24T11:43:21.334Z        INFO        eslegclient/connection.go:99        elasticsearch url: http://localhost:9200
+Aug 24 15:40:54 ms001-cent filebeat[5642]: 2020-08-24T15:40:54.234+0300        INFO        [monitoring]        log/log.go:145        Non-zero metrics in the last 30s        {"monitoring": {"metrics": {"beat":{"cpu":{"system":{"ticks":1070...
+Aug 24 15:41:24 ms001-cent filebeat[5642]: 2020-08-24T15:41:24.235+0300        INFO        [monitoring]        log/log.go:145        Non-zero metrics in the last 30s        {"monitoring": {"metrics": {"beat":{"cpu":{"system":{"ticks":1100...
+Aug 24 15:41:54 ms001-cent filebeat[5642]: 2020-08-24T15:41:54.234+0300        INFO        [monitoring]        log/log.go:145        Non-zero metrics in the last 30s        {"monitoring": {"metrics": {"beat":{"cpu":{"system":{"ticks":1130...
+Aug 24 15:42:24 ms001-cent filebeat[5642]: 2020-08-24T15:42:24.234+0300        INFO        [monitoring]        log/log.go:145        Non-zero metrics in the last 30s        {"monitoring": {"metrics": {"beat":{"cpu":{"system":{"ticks":1140...
+Aug 24 15:42:54 ms001-cent filebeat[5642]: 2020-08-24T15:42:54.237+0300        INFO        [monitoring]        log/log.go:145        Non-zero metrics in the last 30s        {"monitoring": {"metrics": {"beat":{"cpu":{"system":{"ticks":1160...
+Aug 24 15:43:05 ms001-cent filebeat[5642]: 2020-08-24T15:43:05.189+0300        INFO        log/harvester.go:297        Harvester started for file: /var/log/nginx/access.log
+Aug 24 15:43:05 ms001-cent filebeat[5642]: 2020-08-24T15:43:05.190+0300        INFO        log/harvester.go:297        Harvester started for file: /var/log/nginx/error.log
+Aug 24 15:43:24 ms001-cent filebeat[5642]: 2020-08-24T15:43:24.235+0300        INFO        [monitoring]        log/log.go:145        Non-zero metrics in the last 30s        {"monitoring": {"metrics": {"beat":{"cpu":{"system":{"ticks":1180...
+Aug 24 15:43:54 ms001-cent filebeat[5642]: 2020-08-24T15:43:54.235+0300        INFO        [monitoring]        log/log.go:145        Non-zero metrics in the last 30s        {"monitoring": {"metrics": {"beat":{"cpu":{"system":{"ticks":1210...
+Aug 24 15:44:24 ms001-cent filebeat[5642]: 2020-08-24T15:44:24.234+0300        INFO        [monitoring]        log/log.go:145        Non-zero metrics in the last 30s        {"monitoring": {"metrics": {"beat":{"cpu":{"system":{"ticks":1230...
+Hint: Some lines were ellipsized, use -l to show in full.
+[root@ms001-cent nginx]# 
+
 
 ```
 
