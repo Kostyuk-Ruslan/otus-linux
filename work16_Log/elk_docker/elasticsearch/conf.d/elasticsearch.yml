@@ -1,0 +1,18 @@
+cluster.name: "docker_cluster_cross_master"
+node.name: "node_master"
+network.host: 0.0.0.0
+network.bind_host: 0.0.0.0
+network.publish_host: 192.168.50.12
+
+xpack.license.self_generated.type : basic
+xpack.monitoring.collection.enabled : true
+
+
+
+# for security I need License...
+xpack.security.enabled: true
+xpack.security.transport.filter.enabled: true
+discovery.zen.minimum_master_nodes: 1
+
+http.port: 9200
+
