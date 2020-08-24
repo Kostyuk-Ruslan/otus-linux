@@ -699,6 +699,35 @@ Hint: Some lines were ellipsized, use -l to show in full.
 <p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/work16_Log/photo/7.PNG"></p>
 
 
+За вторую систему "log"  я взял простой "rsyslog"
+
+Раскоментировал
+
+
+```
+# Provides UDP syslog reception
+#$ModLoad imudp
+#$UDPServerRun 514
+
+# Provides TCP syslog reception
+#$ModLoad imtcp
+#$InputTCPServerRun 514
+
+```
+и перестартанул демона <code>systemctl restart rsyslog</code> и проверил доступность порта 514 командой <code>ss -ntlpa</code>
+
+А на стороне "web" по условию задачи со "*"  во вторую систему должно уходить все остальное
+
+так же как и на сервер, я раскоментил порты, проверил доступность 514 порта
+
+<code>/etc/rsyslog.d/all__remote_log.conf</code>
+
+```
+
+*.* @@10.0.18.90:514
+
+```
+
 
 </details>
 
