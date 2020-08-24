@@ -631,51 +631,66 @@ processors:
 
 ```
 
-[root@ms001-cent filebeat]# systemctl status filebeat
+[root@web nginx]# systemctl status filebeat
 ● filebeat.service - Filebeat sends log files to Logstash or directly to Elasticsearch.
    Loaded: loaded (/usr/lib/systemd/system/filebeat.service; enabled; vendor preset: disabled)
-   Active: active (running) since Mon 2020-08-24 16:40:17 MSK; 8s ago
+   Active: active (running) since Mon 2020-08-24 17:03:00 MSK; 1h 2min ago
      Docs: https://www.elastic.co/products/beats/filebeat
- Main PID: 13840 (filebeat)
+ Main PID: 13522 (filebeat)
     Tasks: 8
-   Memory: 40.5M
+   Memory: 22.0M
    CGroup: /system.slice/filebeat.service
-           └─13840 /usr/share/filebeat/bin/filebeat -e -c /etc/filebeat/filebeat.yml -path.home /usr/share/filebeat -path.config /etc/filebeat -path.data /var/lib/filebeat -path.logs /var/log/filebeat
+           └─13522 /usr/share/filebeat/bin/filebeat -e -c /etc/filebeat/filebeat.yml -path.home /usr/share/filebeat -path.config /etc/filebeat -path.data /var/lib/filebeat -path.logs /var/log/filebeat
 
-Aug 24 16:40:21 ms001-cent filebeat[13840]: 2020-08-24T16:40:21.871+0300        INFO        [index-management]        idxmgmt/std.go:271        ILM policy successfully loaded.
-Aug 24 16:40:21 ms001-cent filebeat[13840]: 2020-08-24T16:40:21.871+0300        INFO        [index-management]        idxmgmt/std.go:410        Set setup.template.name to '{filebeat-7.6.0 {now/d}-000001}' as ILM is enabled.
-Aug 24 16:40:21 ms001-cent filebeat[13840]: 2020-08-24T16:40:21.872+0300        INFO        [index-management]        idxmgmt/std.go:415        Set setup.template.pattern to 'filebeat-7.6.0-*' as ILM is enabled.
-Aug 24 16:40:21 ms001-cent filebeat[13840]: 2020-08-24T16:40:21.872+0300        INFO        [index-management]        idxmgmt/std.go:449        Set settings.index.lifecycle.rollover_alias in template to {filebeat-7.6.0 {n...s ILM is enabled.
-Aug 24 16:40:21 ms001-cent filebeat[13840]: 2020-08-24T16:40:21.872+0300        INFO        [index-management]        idxmgmt/std.go:453        Set settings.index.lifecycle.name in template to {filebeat {"policy":{"phases...s ILM is enabled.
-Aug 24 16:40:22 ms001-cent filebeat[13840]: 2020-08-24T16:40:22.130+0300        INFO        template/load.go:109        Try loading template filebeat-7.6.0 to Elasticsearch
-Aug 24 16:40:22 ms001-cent filebeat[13840]: 2020-08-24T16:40:22.319+0300        INFO        template/load.go:101        template with name 'filebeat-7.6.0' loaded.
-Aug 24 16:40:22 ms001-cent filebeat[13840]: 2020-08-24T16:40:22.319+0300        INFO        [index-management]        idxmgmt/std.go:295        Loaded index template.
-Aug 24 16:40:22 ms001-cent filebeat[13840]: 2020-08-24T16:40:22.610+0300        INFO        [index-management]        idxmgmt/std.go:306        Write alias successfully generated.
-Aug 24 16:40:22 ms001-cent filebeat[13840]: 2020-08-24T16:40:22.634+0300        INFO        pipeline/output.go:105        Connection to backoff(elasticsearch(http://10.0.18.88:9200)) established
+Aug 24 18:00:30 web filebeat[13522]: 2020-08-24T18:00:30.649+0300        INFO        [monitoring]        log/log.go:145        Non-zero metrics in the last 30s        {"monitoring": {"metrics": {"beat":{"cpu":{"system":{"ticks":620,"time"...
+Aug 24 18:01:00 web filebeat[13522]: 2020-08-24T18:01:00.538+0300        INFO        [monitoring]        log/log.go:145        Non-zero metrics in the last 30s        {"monitoring": {"metrics": {"beat":{"cpu":{"system":{"ticks":620,"time"...
+Aug 24 18:01:30 web filebeat[13522]: 2020-08-24T18:01:30.538+0300        INFO        [monitoring]        log/log.go:145        Non-zero metrics in the last 30s        {"monitoring": {"metrics": {"beat":{"cpu":{"system":{"ticks":630,"time"...
+Aug 24 18:02:00 web filebeat[13522]: 2020-08-24T18:02:00.537+0300        INFO        [monitoring]        log/log.go:145        Non-zero metrics in the last 30s        {"monitoring": {"metrics": {"beat":{"cpu":{"system":{"ticks":630,"time"...
+Aug 24 18:02:30 web filebeat[13522]: 2020-08-24T18:02:30.537+0300        INFO        [monitoring]        log/log.go:145        Non-zero metrics in the last 30s        {"monitoring": {"metrics": {"beat":{"cpu":{"system":{"ticks":640,"time"...
+Aug 24 18:03:00 web filebeat[13522]: 2020-08-24T18:03:00.537+0300        INFO        [monitoring]        log/log.go:145        Non-zero metrics in the last 30s        {"monitoring": {"metrics": {"beat":{"cpu":{"system":{"ticks":640,"time"...
+Aug 24 18:03:30 web filebeat[13522]: 2020-08-24T18:03:30.537+0300        INFO        [monitoring]        log/log.go:145        Non-zero metrics in the last 30s        {"monitoring": {"metrics": {"beat":{"cpu":{"system":{"ticks":640,"time"...
+Aug 24 18:04:00 web filebeat[13522]: 2020-08-24T18:04:00.538+0300        INFO        [monitoring]        log/log.go:145        Non-zero metrics in the last 30s        {"monitoring": {"metrics": {"beat":{"cpu":{"system":{"ticks":640},"tota...
+Aug 24 18:04:30 web filebeat[13522]: 2020-08-24T18:04:30.537+0300        INFO        [monitoring]        log/log.go:145        Non-zero metrics in the last 30s        {"monitoring": {"metrics": {"beat":{"cpu":{"system":{"ticks":640,"time"...
+Aug 24 18:05:00 web filebeat[13522]: 2020-08-24T18:05:00.549+0300        INFO        [monitoring]        log/log.go:145        Non-zero metrics in the last 30s        {"monitoring": {"metrics": {"beat":{"cpu":{"system":{"ticks":650,"time"...
 Hint: Some lines were ellipsized, use -l to show in full.
-[root@ms001-cent filebeat]# 
+[root@web nginx]# ^C
+
 
 
 
 ```
 
 
+Теперь перейдем в нашу Кибану доступна по ip 10.0.18.88, порт вводить не нужно за меня это сделает "nginx proxy" настройки прикрепил в гитхабе в папке "elk_docker"
 
+Перейдем в меню
 
 <p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/work16_Log/photo/1.PNG"></p>
+
+
+Тут перейдем в "Index Patterns" и посмотрим прилетел ли нам какой нибудь индекс с данными.
 
 
 <p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/work16_Log/photo/2.PNG"></p>
 
 
+
+А вот и наш индекс "filebeat-7.6.0.2020.08.24-0000001, создаем паттерн filebeat-*  и ставим в default ( это нужно для того, что бы мы легко могли находить и фильтровать все наши индексы)
+
 <p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/work16_Log/photo/3.PNG"></p>
 
+
+Перейдем в "Index Management", сюда будут приходить наши новые индексы, видим что на данный момент в них есть данные об этом говорит колонка "Storage size".
 
 <p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/work16_Log/photo/4.PNG"></p>
 
 
+Перейдем в Kibana Discover, и где фильтр выберем наш pattern "filebeat-*" , поставим время за последние "15 минут" и видим как посыпались логи "nginx"
+
 <p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/work16_Log/photo/6.PNG"></p>
 
+
+Посмотрим на них поближе, в нашем случае вижу логи "access"
 
 <p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/work16_Log/photo/7.PNG"></p>
 
