@@ -722,13 +722,15 @@ Hint: Some lines were ellipsized, use -l to show in full.
 
 И добавил в rsyslog правило отправки всех логов
 
-<code>/etc/rsyslog.d/all__remote_log.conf</code>
+<code>/etc/rsyslog.d/all_remote_log.conf</code>
 
 ```
 
 *.* @@10.0.18.90:514
 
 ```
+
+И снова перестартанул демона "rsyslog"
 
 
 </details>
