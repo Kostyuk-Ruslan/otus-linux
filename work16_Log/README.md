@@ -441,6 +441,26 @@ $InputRunFileMonitor
 
 
 
+
+
+<details>
+<summary><code>Заметки по доп. заданию</code></summary>
+
+
+```
+1) Что бы elk стал доступен по веб интерфейсу, я в варанте именил сеть с "private" на "public" и прописал с статикой ip из своей физ. сети, что они стали общедоступными
+
+
+```
+
+</details>
+
+
+
+
+
+
+
 <details>
 <summary><code>* развернуть еще машину elk
 и таким образом настроить 2 центральных лог системы elk И какую либо еще
@@ -458,7 +478,7 @@ Vagrant.configure(2) do |config|
  config.vm.define "elk" do |subconfig|
  subconfig.vm.box = "centos/7"
  subconfig.vm.hostname="elk"
- subconfig.vm.network :"private_network",  ip: "192.168.50.12"
+ subconfig.vm.network :"pulic_network",  ip: "192.168.50.12"
  subconfig.vm.provider "virtualbox" do |vb|
  vb.memory = "3024"
  vb.cpus = "1"
@@ -471,7 +491,7 @@ Vagrant.configure(2) do |config|
  config.vm.define "web" do |subconfig|
  subconfig.vm.box = "centos/7"
  subconfig.vm.hostname="web"
- subconfig.vm.network :private_network, ip: "192.168.50.11"
+ subconfig.vm.network :public_network, ip: "192.168.50.11"
  subconfig.vm.provider "virtualbox" do |vb|
  vb.memory = "1024"
  vb.cpus = "1"
@@ -488,7 +508,7 @@ end
  config.vm.define "log" do |subconfig|
  subconfig.vm.box = "centos/7"
  subconfig.vm.hostname="log"
- subconfig.vm.network :"private_network",  ip: "192.168.50.13"
+ subconfig.vm.network :"public_network",  ip: "192.168.50.13"
  subconfig.vm.provider "virtualbox" do |vb|
  vb.memory = "1024"
  vb.cpus = "1"
@@ -504,6 +524,39 @@ end
 
 
 ```
+
+После чего будут созданы 3 вм "web" "log" "elk"
+
+"log" и "elk" -  это две центральные лог системы
+
+"web" - тут "nginx"
+
+
+
+```
+
+
+
+```
+
+
+<code>в elk должны уходить только логи нжинкса</code>
+
+
+Вагрант "elk"  поднимает вм "elk" средствами докера, он будет подниматься очень долго, но в итоге все будет нором, конифг и docker-compose приложил на гитхабе
+
+
+
+
+
+
+тут все просто, устанавливаем "filebeat"  с помощью ansible, настройки плейбука прикрепил в гитхаб, они закоменчены.
+
+
+
+
+
+
 
 
 
