@@ -493,7 +493,7 @@ Vagrant.configure(2) do |config|
  config.vm.define "elk" do |subconfig|
  subconfig.vm.box = "centos/7"
  subconfig.vm.hostname="elk"
- subconfig.vm.network :"pulic_network",  ip: "192.168.50.12"
+ subconfig.vm.network :"pulic_network",  ip: "10.0.18.88"
  subconfig.vm.provider "virtualbox" do |vb|
  vb.memory = "3024"
  vb.cpus = "1"
@@ -506,7 +506,7 @@ Vagrant.configure(2) do |config|
  config.vm.define "web" do |subconfig|
  subconfig.vm.box = "centos/7"
  subconfig.vm.hostname="web"
- subconfig.vm.network :public_network, ip: "192.168.50.11"
+ subconfig.vm.network :public_network, ip: "10.0.18.89"
  subconfig.vm.provider "virtualbox" do |vb|
  vb.memory = "1024"
  vb.cpus = "1"
@@ -523,7 +523,7 @@ end
  config.vm.define "log" do |subconfig|
  subconfig.vm.box = "centos/7"
  subconfig.vm.hostname="log"
- subconfig.vm.network :"public_network",  ip: "192.168.50.13"
+ subconfig.vm.network :"public_network",  ip: "10.0.18.90"
  subconfig.vm.provider "virtualbox" do |vb|
  vb.memory = "1024"
  vb.cpus = "1"
