@@ -587,11 +587,7 @@ setup.template.settings:
   index.number_of_shards: 1
 setup.kibana:
 output.elasticsearch:
-  hosts: ["10.0.18.88:9200"]
-  enabled: true
-  username: "elastic"
-  password: "changeme"
-     
+  hosts: ["elasticsearch:9200"]
 processors:
   - add_host_metadata:
       when.not.contains.tags: forwarded
@@ -600,28 +596,37 @@ processors:
   - add_kubernetes_metadata: ~
 
 ```
-Оставим как есть, подправим только модуль, как раз есть модуль для "nginx" идет в стандратной компектации
-
-Активируем его
 
 
-```
-[root@web modules.d]# pwd
-/etc/filebeat/modules.d
-[root@web modules.d]# mv nginx.yml.disabled nginx.yml
-[root@web modules.d]# 
+Поменяем его на свой
 
 ```
-И впишем пути в логам
+filebeat.inputs:
+- type: log
+  enabled: true
+  paths:
+      - /var/log/nginx/access.log
+  fields:
+    type: nginx_access
+  fields_under_root: true
+  scan_frequency: 5s
 
-```
-- module: nginx
-  access:
-    enabled: true
-    var.paths: ["/var/log/nginx/access.log*"]
-  error:
-    enabled: true
-    var.paths: ["/var/log/nginx/error.log*"]
+- type: log
+  enabled: true
+  paths:
+      - /var/log/nginx/error.log
+  fields:
+    type: nginx_error
+  fields_under_root: true
+  scan_frequency: 5s
+
+setup.kibana:
+output.elasticsearch:
+  hosts: ["10.0.18.88:9200"]
+  enabled: true
+  username: "elastic"
+  password: "changeme"
+
 
 
 ```
@@ -690,8 +695,7 @@ Hint: Some lines were ellipsized, use -l to show in full.
 <p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/work16_Log/photo/6.PNG"></p>
 
 
-Посмотрим на них поближе, в нашем случае вижу логи "access"
-
+Посмотрим на них поближе, в нашем случае вижу логи "access"  от "nginx"
 <p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/work16_Log/photo/7.PNG"></p>
 
 
