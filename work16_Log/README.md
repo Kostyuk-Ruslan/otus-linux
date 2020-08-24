@@ -596,7 +596,33 @@ processors:
   - add_kubernetes_metadata: ~
 
 ```
-Оставим как есть, подправим только модуль, как раз есть модуль для "nginx" В стандратной компектации
+Оставим как есть, подправим только модуль, как раз есть модуль для "nginx" идет в стандратной компектации
+
+Активируем его
+
+
+```
+[root@web modules.d]# pwd
+/etc/filebeat/modules.d
+[root@web modules.d]# mv nginx.yml.disabled nginx.yml
+[root@web modules.d]# 
+
+```
+И впишем пути в логам
+
+```
+- module: nginx
+  access:
+    enabled: true
+    var.paths: ["/path/to/log/nginx/access.log*"]
+  error:
+    enabled: true
+    var.paths: ["/path/to/log/nginx/error.log*"]
+
+
+```
+
+
 
 
 
