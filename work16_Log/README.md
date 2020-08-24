@@ -587,7 +587,11 @@ setup.template.settings:
   index.number_of_shards: 1
 setup.kibana:
 output.elasticsearch:
-  hosts: ["localhost:9200"]
+  hosts: ["10.0.18.88:9200"]
+  enabled: true
+  username: "elastic"
+  password: "changeme"
+     
 processors:
   - add_host_metadata:
       when.not.contains.tags: forwarded
@@ -627,29 +631,30 @@ processors:
 
 ```
 
-[root@ms001-cent nginx]# systemctl status filebeat
+[root@ms001-cent filebeat]# systemctl status filebeat
 ● filebeat.service - Filebeat sends log files to Logstash or directly to Elasticsearch.
    Loaded: loaded (/usr/lib/systemd/system/filebeat.service; enabled; vendor preset: disabled)
-   Active: active (running) since Mon 2020-08-24 15:32:51 MSK; 11min ago
+   Active: active (running) since Mon 2020-08-24 16:40:17 MSK; 8s ago
      Docs: https://www.elastic.co/products/beats/filebeat
- Main PID: 5642 (filebeat)
-    Tasks: 9
-   Memory: 62.2M
+ Main PID: 13840 (filebeat)
+    Tasks: 8
+   Memory: 40.5M
    CGroup: /system.slice/filebeat.service
-           └─5642 /usr/share/filebeat/bin/filebeat -e -c /etc/filebeat/filebeat.yml -path.home /usr/share/filebeat -path.config /etc/filebeat -path.data /var/lib/filebeat -path.logs /var/log/filebeat
+           └─13840 /usr/share/filebeat/bin/filebeat -e -c /etc/filebeat/filebeat.yml -path.home /usr/share/filebeat -path.config /etc/filebeat -path.data /var/lib/filebeat -path.logs /var/log/filebeat
 
-Aug 24 15:40:54 ms001-cent filebeat[5642]: 2020-08-24T15:40:54.234+0300        INFO        [monitoring]        log/log.go:145        Non-zero metrics in the last 30s        {"monitoring": {"metrics": {"beat":{"cpu":{"system":{"ticks":1070...
-Aug 24 15:41:24 ms001-cent filebeat[5642]: 2020-08-24T15:41:24.235+0300        INFO        [monitoring]        log/log.go:145        Non-zero metrics in the last 30s        {"monitoring": {"metrics": {"beat":{"cpu":{"system":{"ticks":1100...
-Aug 24 15:41:54 ms001-cent filebeat[5642]: 2020-08-24T15:41:54.234+0300        INFO        [monitoring]        log/log.go:145        Non-zero metrics in the last 30s        {"monitoring": {"metrics": {"beat":{"cpu":{"system":{"ticks":1130...
-Aug 24 15:42:24 ms001-cent filebeat[5642]: 2020-08-24T15:42:24.234+0300        INFO        [monitoring]        log/log.go:145        Non-zero metrics in the last 30s        {"monitoring": {"metrics": {"beat":{"cpu":{"system":{"ticks":1140...
-Aug 24 15:42:54 ms001-cent filebeat[5642]: 2020-08-24T15:42:54.237+0300        INFO        [monitoring]        log/log.go:145        Non-zero metrics in the last 30s        {"monitoring": {"metrics": {"beat":{"cpu":{"system":{"ticks":1160...
-Aug 24 15:43:05 ms001-cent filebeat[5642]: 2020-08-24T15:43:05.189+0300        INFO        log/harvester.go:297        Harvester started for file: /var/log/nginx/access.log
-Aug 24 15:43:05 ms001-cent filebeat[5642]: 2020-08-24T15:43:05.190+0300        INFO        log/harvester.go:297        Harvester started for file: /var/log/nginx/error.log
-Aug 24 15:43:24 ms001-cent filebeat[5642]: 2020-08-24T15:43:24.235+0300        INFO        [monitoring]        log/log.go:145        Non-zero metrics in the last 30s        {"monitoring": {"metrics": {"beat":{"cpu":{"system":{"ticks":1180...
-Aug 24 15:43:54 ms001-cent filebeat[5642]: 2020-08-24T15:43:54.235+0300        INFO        [monitoring]        log/log.go:145        Non-zero metrics in the last 30s        {"monitoring": {"metrics": {"beat":{"cpu":{"system":{"ticks":1210...
-Aug 24 15:44:24 ms001-cent filebeat[5642]: 2020-08-24T15:44:24.234+0300        INFO        [monitoring]        log/log.go:145        Non-zero metrics in the last 30s        {"monitoring": {"metrics": {"beat":{"cpu":{"system":{"ticks":1230...
+Aug 24 16:40:21 ms001-cent filebeat[13840]: 2020-08-24T16:40:21.871+0300        INFO        [index-management]        idxmgmt/std.go:271        ILM policy successfully loaded.
+Aug 24 16:40:21 ms001-cent filebeat[13840]: 2020-08-24T16:40:21.871+0300        INFO        [index-management]        idxmgmt/std.go:410        Set setup.template.name to '{filebeat-7.6.0 {now/d}-000001}' as ILM is enabled.
+Aug 24 16:40:21 ms001-cent filebeat[13840]: 2020-08-24T16:40:21.872+0300        INFO        [index-management]        idxmgmt/std.go:415        Set setup.template.pattern to 'filebeat-7.6.0-*' as ILM is enabled.
+Aug 24 16:40:21 ms001-cent filebeat[13840]: 2020-08-24T16:40:21.872+0300        INFO        [index-management]        idxmgmt/std.go:449        Set settings.index.lifecycle.rollover_alias in template to {filebeat-7.6.0 {n...s ILM is enabled.
+Aug 24 16:40:21 ms001-cent filebeat[13840]: 2020-08-24T16:40:21.872+0300        INFO        [index-management]        idxmgmt/std.go:453        Set settings.index.lifecycle.name in template to {filebeat {"policy":{"phases...s ILM is enabled.
+Aug 24 16:40:22 ms001-cent filebeat[13840]: 2020-08-24T16:40:22.130+0300        INFO        template/load.go:109        Try loading template filebeat-7.6.0 to Elasticsearch
+Aug 24 16:40:22 ms001-cent filebeat[13840]: 2020-08-24T16:40:22.319+0300        INFO        template/load.go:101        template with name 'filebeat-7.6.0' loaded.
+Aug 24 16:40:22 ms001-cent filebeat[13840]: 2020-08-24T16:40:22.319+0300        INFO        [index-management]        idxmgmt/std.go:295        Loaded index template.
+Aug 24 16:40:22 ms001-cent filebeat[13840]: 2020-08-24T16:40:22.610+0300        INFO        [index-management]        idxmgmt/std.go:306        Write alias successfully generated.
+Aug 24 16:40:22 ms001-cent filebeat[13840]: 2020-08-24T16:40:22.634+0300        INFO        pipeline/output.go:105        Connection to backoff(elasticsearch(http://10.0.18.88:9200)) established
 Hint: Some lines were ellipsized, use -l to show in full.
-[root@ms001-cent nginx]# 
+[root@ms001-cent filebeat]# 
+
 
 
 ```
