@@ -1,0 +1,13 @@
+
+---
+- name: sevrer pxe
+  hosts: server
+  become: true
+  roles:
+    - role: server
+
+- name: client
+  hosts: client
+  become: true
+  roles:
+    - role: client
