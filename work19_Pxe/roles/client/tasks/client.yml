@@ -1,6 +1,5 @@
 ---
 
-
   - name: Add multiple repositories into the same file (1/2)
     yum_repository:
       name: epel
@@ -15,6 +14,7 @@
      name:
       - epel-release
      state: latest
+
 
   
   - name: install packages
@@ -37,7 +37,7 @@
        - vim
      state: latest
 
-  
+
 
   - name: stop and disable firewalld
     systemd:
@@ -53,8 +53,25 @@
       line: SELINUX=disabled
 
 
-  - name: Добавляем публичный ключ клиента для возможности захода на сервер без пароля
-    authorized_key:
-      user: root
-      state: present
-      key: "{{ lookup('file', './files/id_rsa.pub') }}"
+  - name: Создаем каталог ~root/.ssh/
+    file:
+     path: /root/.ssh
+     state: directory
+     owner: root
+     group: root
+     mode: '700'
+
+
+
+  - name: Копируем приватный ключ клиента в домашний каталог ~root/.ssh/
+    copy:
+     src:  files/id_rsa
+     dest: /root/.ssh/
+     group: root
+     owner: root
+     mode: '600'
+
+  - name: И обновляем known_hosts, чтобы избавиться от запроса подтверждения при первичном подключении
+    raw: ssh-keyscan -t rsa server >> /root/.ssh/known_hosts
+
+

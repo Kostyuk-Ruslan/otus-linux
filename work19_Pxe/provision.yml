@@ -1,6 +1,6 @@
 
 ---
-- name: sevrer pxe
+- name: server
   hosts: server
   become: true
   roles:
