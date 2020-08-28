@@ -35,6 +35,10 @@
        - unzip
        - net-tools
        - vim
+       - dhcp
+       - tftp
+       - syslinux-tftpboot.noarch
+       - tftp-server
      state: latest
 
   
