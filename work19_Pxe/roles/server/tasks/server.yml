@@ -81,3 +81,22 @@
       state: started
       enabled: yes
 
+
+
+
+  - name: Создаем каталог pxelinux/
+    file:
+      path: /var/lib/tftpboot/pxelinux/
+      state: directory
+      mode: '0775'
+
+
+   - name: Копируем pxelinux.cfg
+     copy:
+       src:  files/pxelinux.cfg
+       dest: /var/lib/tftpboot/pxelinux/
+       group: root
+       owner: root
+       mode: '775'
+
+  
