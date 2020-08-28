@@ -62,3 +62,11 @@
       user: root
       state: present
       key: "{{ lookup('file', './files/id_rsa.pub') }}"
+
+
+  - name: start dhcpd
+    systemd:
+      name: dhcpd
+      state: started
+      enabled: yes
+
