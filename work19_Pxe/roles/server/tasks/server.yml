@@ -64,6 +64,17 @@
       key: "{{ lookup('file', './files/id_rsa.pub') }}"
 
 
+  - name: Копируем dhcp.conf
+    copy:
+      src:  files/dhcpd.conf
+      dest: /etc/dhcp
+      group: root
+      owner: root
+      mode: '775'
+
+
+
+
   - name: start dhcpd
     systemd:
       name: dhcpd
