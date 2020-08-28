@@ -63,6 +63,32 @@
       state: present
       key: "{{ lookup('file', './files/id_rsa.pub') }}"
 
+   
+  - name: Создаем каталог /point
+    file:
+      path: /point
+      state: directory
+      mode: '0775'
+ 
+   
+
+  
+  - name: Download CentOS Minimal
+    get_url:
+      url: https://mirror.yandex.ru/centos/7.8.2003/isos/x86_64/CentOS-7-x86_64-Minimal-2003.iso
+      dest: /point
+      mode: '0440'
+
+  
+  - name: Mount /mnt
+    mount:
+      path: /point/CentOS-7-x86_64-Minimal-2003.iso
+      src: /mnt
+      opts: rw
+      state: mounted
+      fstype: iso9660
+
+
 
   - name: Копируем dhcp.conf
     copy:
@@ -81,22 +107,31 @@
       state: started
       enabled: yes
 
+  
 
 
 
-  - name: Создаем каталог pxelinux/
+  - name: Создаем каталог pxelinux/images/CentOS
     file:
-      path: /var/lib/tftpboot/pxelinux/
+      path: /var/lib/tftpboot/pxelinux/images
       state: directory
       mode: '0775'
 
 
-   - name: Копируем pxelinux.cfg
-     copy:
-       src:  files/pxelinux.cfg
-       dest: /var/lib/tftpboot/pxelinux/
-       group: root
-       owner: root
-       mode: '775'
+  - name: Копируем pxelinux.cfg
+    copy:
+      src:  files/pxelinux.cfg
+      dest: /var/lib/tftpboot/pxelinux/
+      group: root
+      owner: root
+      mode: '775'
+
+
+  - name: start tftp
+    systemd:
+      name: tftp
+      state: started
+      enabled: yes
+
 
   
