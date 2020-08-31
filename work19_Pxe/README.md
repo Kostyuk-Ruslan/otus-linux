@@ -13,4 +13,180 @@ Linux Administrator 2020
 <details>
 <summary><code>Vagrantfile</code></summary>
 
+```
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+home = ENV['HOME']
+ENV["LC_ALL"] = "en_US.UTF-8"
+
+Vagrant.configure(2) do |config|
+ config.vm.define "server" do |subconfig|
+ subconfig.vm.box = "centos/7"
+ subconfig.vm.hostname="server"
+ subconfig.vm.network :private_network, ip: "192.168.50.11"
+ subconfig.vm.provider "virtualbox" do |vb|
+ vb.memory = "2024"
+ vb.cpus = "1"
+ end
+ end
+
+ config.vm.define "client" do |subconfig|
+ subconfig.vm.box = "centos/7"
+ subconfig.vm.hostname="client"
+ subconfig.vm.network :private_network, ip: "192.168.50.12"
+ subconfig.vm.provider "virtualbox" do |vb|
+ vb.memory = "2024"
+ vb.cpus = "1"
+ end
+ end
+ config.vm.provision "ansible" do |ansible|
+ ansible.compatibility_mode = "2.0"
+ ansible.playbook = "provision.yml"
+
+     end
+end
+
+</details>
+
+```
+
+
+<details>
+<summary><code>Следуя шагам из документа установить и настроить загрузку по сети для дистрибутива CentOS8
+https://docs.centos.org/en-US/8-docs/advanced-install/assembly_preparing-for-a-network-install</code></summary>
+
+
+Для начала установим необходимые сервисы <code>dhcpd,tftp-server,xinetd</code>
+
+
+Далее настроим dhcp сервер так, что бы он монг использовать загрузочные образы, созданные с помощью syslinux.
+
+Сам файл <code>/etc/dhcp/dhcpd.conf</code>
+
+```
+option space pxelinux;
+option pxelinux.magic code 208 = string;
+option pxelinux.configfile code 209 = text;
+option pxelinux.pathprefix code 210 = text;
+option pxelinux.reboottime code 211 = unsigned integer 32;
+option architecture-type code 93 = unsigned integer 16;
+
+subnet 192.168.50.0 netmask 255.255.255.0 {
+        option routers 192.168.50.254;
+        range 192.168.50.2 192.168.50.253;
+
+        class "pxeclients" {
+          match if substring (option vendor-class-identifier, 0, 9) = "PXEClient";
+          next-server 192.168.50.1;
+
+          if option architecture-type = 00:07 {
+            filename "uefi/shim.efi";
+            } else {
+            filename "pxelinux/pxelinux.0";
+          }
+        }
+}
+
+
+
+
+```
+
+Далее нужно получить файл <code>pxelinux.0</code> из пакета <code>syslinux</code>
+
+Выполним следующие:
+
+Создадим каталог "/point"
+
+```
+[root@server ~]# cd /
+[root@server /]# mkdir /point
+[root@server /]# ll
+итого 28
+drwxr-xr-x   15 root root 4096 авг 24 19:09 backup
+lrwxrwxrwx.   1 root root    7 май  9 11:26 bin -> usr/bin
+dr-xr-xr-x.   5 root root 4096 июл 30 22:49 boot
+drwxr-xr-x   22 root root 3300 авг 31 10:23 dev
+drwxr-xr-x. 101 root root 8192 авг 31 10:23 etc
+drwxr-xr-x.   2 root root    6 авг 12 17:17 home
+lrwxrwxrwx.   1 root root    7 май  9 11:26 lib -> usr/lib
+lrwxrwxrwx.   1 root root    9 май  9 11:26 lib64 -> usr/lib64
+drwxr-xr-x.   2 root root    6 апр 11  2018 media
+drwxr-xr-x.   2 root root    6 апр 11  2018 mnt
+drwxr-xr-x.  13 root root  170 июл 27 01:01 opt
+drwxr-xr-x    2 root root    6 авг 31 11:28 point
+dr-xr-xr-x  146 root root    0 авг 31 10:23 proc
+dr-xr-x---.  14 root root 4096 авг 31 11:24 root
+drwxr-xr-x   32 root root  880 авг 31 11:15 run
+lrwxrwxrwx.   1 root root    8 май  9 11:26 sbin -> usr/sbin
+drwxr-xr-x.   2 root root    6 апр 11  2018 srv
+dr-xr-xr-x   13 root root    0 авг 31 10:23 sys
+drwxrwxrwt.  30 root root 4096 авг 31 11:26 tmp
+drwxr-xr-x.  13 root root  155 май  9 11:26 usr
+drwxr-xr-x.  19 root root  267 май  9 11:40 var
+[root@node01 /]# 
+
+```
+
+
+Скачаем образ <code>wget http://centos-mirror.rbc.ru/pub/centos/8.2.2004/isos/x86_64/CentOS-8.2.2004-x86_64-minimal.iso</code>
+
+```
+[root@server /]# cd /point/
+[root@server point]# wget http://centos-mirror.rbc.ru/pub/centos/8.2.2004/isos/x86_64/CentOS-8.2.2004-x86_64-minimal.iso
+--2020-08-31 11:32:49--  http://centos-mirror.rbc.ru/pub/centos/8.2.2004/isos/x86_64/CentOS-8.2.2004-x86_64-minimal.iso
+Распознаётся centos-mirror.rbc.ru (centos-mirror.rbc.ru)... 80.68.250.216
+Подключение к centos-mirror.rbc.ru (centos-mirror.rbc.ru)|80.68.250.216|:80... соединение установлено.
+HTTP-запрос отправлен. Ожидание ответа... 200 OK
+Длина: 1718616064 (1,6G) [application/octet-stream]
+Сохранение в: «CentOS-8.2.2004-x86_64-minimal.iso»
+
+```
+
+Далее монтируем наш .iso  в "read only"
+
+```
+mount -t iso9660 /point/CentOS-8.2.2004-x86_64-minimal.iso /mnt -o loop,ro
+
+```
+
+
+
+
+</details>
+
+
+<details>
+<summary><code>Настроить установку из репозитория HTTP</code></summary>
+
+
+
+
+</details>
+
+
+
+
+<details>
+<summary><code>Настроить автоматическую установку для созданного kickstart файла</code></summary>
+
+
+
+
+</details>
+
+
+
+
+<details>
+<summary><code>Доп. задание * Настройка Cobbler</code></summary>
+
+
+
+
+</details>
+
+
+
+
 

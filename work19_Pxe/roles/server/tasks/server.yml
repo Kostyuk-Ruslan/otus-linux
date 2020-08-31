@@ -39,6 +39,8 @@
        - tftp
        - syslinux-tftpboot.noarch
        - tftp-server
+       - xinetd
+       - cobbler
      state: latest
 
   
@@ -63,6 +65,23 @@
       state: present
       key: "{{ lookup('file', './files/id_rsa.pub') }}"
 
+
+#  - name: Create a new primary partition with a size of 1GiB
+#    parted:
+#      device: /dev/sdb
+#      number: 1
+#      state: present
+#      part_end: 2GiB
+
+
+ 
+#  - name: Create filesystem xfs /dev/sdb
+#    filesystem:
+#      fstype: xfs
+#      dev: /dev/sdb1
+  
+
+
    
   - name: Создаем каталог /point
     file:
@@ -73,21 +92,15 @@
    
 
   
-  - name: Download CentOS Minimal
-    get_url:
-      url: https://mirror.yandex.ru/centos/7.8.2003/isos/x86_64/CentOS-7-x86_64-Minimal-2003.iso
-      dest: /point
-      mode: '0440'
+#  - name: Download CentOS Minimal
+#    get_url:
+#      url: http://centos-mirror.rbc.ru/pub/centos/8.2.2004/isos/x86_64/CentOS-8.2.2004-x86_64-minimal.iso
+#      dest: /point
+#      mode: '0777'
 
   
-  - name: Mount /mnt
-    mount:
-      path: /point/CentOS-7-x86_64-Minimal-2003.iso
-      src: /mnt
-      opts: rw
-      state: mounted
-      fstype: iso9660
-
+#  - name: Mount iso
+#    raw: mount -t iso9660 /point/CentOS-8.2.2004-x86_64-minimal.iso /mnt -o loop,ro
 
 
   - name: Копируем dhcp.conf
@@ -101,37 +114,55 @@
 
 
 
-  - name: start dhcpd
+  - name: start unit all
     systemd:
-      name: dhcpd
       state: started
       enabled: yes
-
-  
-
-
-
-  - name: Создаем каталог pxelinux/images/CentOS
-    file:
-      path: /var/lib/tftpboot/pxelinux/images
-      state: directory
-      mode: '0775'
+      name: "{{ item }}"
+    with_items:
+      - tftp.service
+      - dhcpd.service
+      - xinetd.service
 
 
-  - name: Копируем pxelinux.cfg
+
+  - name: Копируем syslinux-tftpboot
     copy:
-      src:  files/pxelinux.cfg
-      dest: /var/lib/tftpboot/pxelinux/
+      src:  /mnt/BaseOS/Packages/syslinux-tftpboot-6.04-4.el8.noarch.rpm
+      dest: /point/
+      remote_src: yes
       group: root
       owner: root
       mode: '775'
 
 
-  - name: start tftp
-    systemd:
-      name: tftp
-      state: started
-      enabled: yes
+
+  - name: "RPM"
+    shell: rpm2cpio syslinux-tftpboot-6.04-4.el8.noarch.rpm | cpio -dimv
+    args:
+        chdir: /point
+        
+        
+  - name: Создаем каталог pxelinux/pxelinux.cfg
+    file:
+      path: /var/lib/tftpboot/pxelinux/pxelinux.cfg
+      state: directory
+      mode: '0775'
 
 
+  - name: Копируем файлы в каталог pxelinux
+    copy:
+      src:  /point/tftpboot/{{ item }}
+      dest: /var/lib/tftpboot/pxelinux/
+      remote_src: yes
+      group: root
+      owner: root
+      mode: '775'
+    with_items:
+    - "pxelinux.0"
+    - "libcom32.c32"
+    - "ldlinux.c32"
+    - "vesamenu.c32"
   
+        
+        
