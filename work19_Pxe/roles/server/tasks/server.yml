@@ -145,7 +145,7 @@
         
   - name: Создаем каталог pxelinux/pxelinux.cfg
     file:
-      path: /var/lib/tftpboot/pxelinux/pxelinux.cfg
+      path: /var/lib/tftpboot/pxelinux/pxelinux.cfg/
       state: directory
       mode: '0775'
 
@@ -165,4 +165,11 @@
     - "vesamenu.c32"
   
         
+  - name: Копируем default в каталог pxelinux.cfg
+    copy:
+      src:  files/default
+      dest: /var/lib/tftpboot/pxelinux/pxelinux.cfg
+      group: root
+      owner: root
+      mode: '775'
         
