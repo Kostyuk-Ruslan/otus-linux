@@ -30,17 +30,26 @@ Vagrant.configure(2) do |config|
  subconfig.vm.hostname="server"
  subconfig.vm.network :private_network, ip: "192.168.50.11"
  subconfig.vm.provider "virtualbox" do |vb|
- vb.memory = "2024"
+ vb.memory = "1024"
  vb.cpus = "1"
  end
  end
-
+.
  config.vm.define "client" do |subconfig|
  subconfig.vm.box = "centos/7"
  subconfig.vm.hostname="client"
  subconfig.vm.network :private_network, ip: "192.168.50.12"
  subconfig.vm.provider "virtualbox" do |vb|
- vb.memory = "2024"
+ vb.memory = "1024"
+ vb.cpus = "1"
+ end
+ end
+ config.vm.define "srv-kickstart" do |subconfig|
+ subconfig.vm.box = "centos/7"
+ subconfig.vm.hostname="srv-kickstart"
+ subconfig.vm.network :private_network, ip: "192.168.50.13"
+ subconfig.vm.provider "virtualbox" do |vb|
+ vb.memory = "1024"
  vb.cpus = "1"
  end
  end
@@ -50,6 +59,8 @@ Vagrant.configure(2) do |config|
 
      end
 end
+
+
 
 ```
 
@@ -194,8 +205,46 @@ dr-xr-xr-x. 3 root root 2048 Jun  8 22:08 Minimal
 Далее устанавливаем наш веб сервер, это будет "nginx" добавляем параметр <code>autoindex on;</code> что бы он работал корректно, после чего
 копируем содержимое каталога "/mnt" в  каталог "/usr/share/nginx/html/"
 
+```
+[root@server ~]# cp -pr /mnt/BaseOS/Packages/ /usr/share/nginx/html/
+[root@server ~]# 
+```
 
 
+
+Далее находим и  распаковываем пакет <code>syslinux-tftpboot-6.04-4.el8.noarch.rpm</code> получился, вот такой вот выхлоп
+
+```
+[root@server html]# rpm2cpio syslinux-tftpboot-6.04-4.el8.noarch.rpm | cpio -dimv
+./tftpboot
+./tftpboot/cat.c32
+./tftpboot/chain.c32
+./tftpboot/cmd.c32
+./tftpboot/cmenu.c32
+./tftpboot/config.c32
+./tftpboot/cptime.c32
+./tftpboot/cpu.c32
+./tftpboot/cpuid.c32
+./tftpboot/cpuidtest.c32
+./tftpboot/debug.c32
+./tftpboot/dhcp.c32
+./tftpboot/dir.c32
+./tftpboot/disk.c32
+./tftpboot/dmi.c32
+./tftpboot/dmitest.c32
+```
+Далее создаем каталог <code>mkdir /var/lib/tftpboot/pxelinux</code> и закидываем в него файлы
+
+```
+pxelinux.0 
+
+libcom.c32 
+
+ldlinux.c32
+
+vesamenu.c32
+
+```
 
 
 </details>
