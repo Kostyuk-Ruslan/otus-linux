@@ -11,3 +11,9 @@
   become: true
   roles:
     - role: client
+
+- name: srv-kickstart
+  hosts: srv-kickstart
+  become: true
+  roles:
+    - role: srv-kickstart

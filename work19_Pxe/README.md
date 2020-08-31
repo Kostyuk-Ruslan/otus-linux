@@ -7,8 +7,13 @@ Linux Administrator 2020
 
    
 
+<code>Домашка для меня оказалась реально очень сложной, наверное пока самая сложное и непонятное  Д.З. !( Честно говоря даже запись вебинара особо не помогает   </code>
 
 Для выполнение домашнего задания я использовал следующий вагрант файл
+Создает три вм машины
+1) client - тут вроде все понятно
+2) server - тут сервер для разливки образа по HTTP:
+3) srv-kickstart - тут сервер для разливки образа с помощью kickstart файла
 
 <details>
 <summary><code>Vagrantfile</code></summary>
@@ -46,14 +51,28 @@ Vagrant.configure(2) do |config|
      end
 end
 
+```
+
 </details>
 
+
+
+<details>
+<summary><code>Предисловие</code></summary>
+
 ```
+
+Постарался все автоматизировать через ansible, кроме доп. задания
+
+```
+</details>
+
 
 
 <details>
 <summary><code>Следуя шагам из документа установить и настроить загрузку по сети для дистрибутива CentOS8
-https://docs.centos.org/en-US/8-docs/advanced-install/assembly_preparing-for-a-network-install</code></summary>
+htps://docs.centos.org/en-US/8-docs/advanced-install/assembly_preparing-for-a-network-install</code>
+Настроить установку из репозитория HTTP</summary>
 
 
 Для начала установим необходимые сервисы <code>dhcpd,tftp-server,xinetd</code>
@@ -156,20 +175,14 @@ mount -t iso9660 /point/CentOS-8.2.2004-x86_64-minimal.iso /mnt -o loop,ro
 </details>
 
 
-<details>
-<summary><code>Настроить установку из репозитория HTTP</code></summary>
-
-
-
-
-</details>
-
-
 
 
 <details>
 <summary><code>Настроить автоматическую установку для созданного kickstart файла</code></summary>
+Честно говоря, что то не совсем понял как установить и настроить kickstart, что то инструкция какая то туманная, что преподаватель дал в вебинаре.
 
+
+Для автоматизации по сути только создал kickstart и переделал файл "default"
 
 
 
