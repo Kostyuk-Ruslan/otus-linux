@@ -295,6 +295,17 @@ initrd.img - образ
 
 ```
 
+После чего запускаем наши юниты
+
+```
+[root@server tftpboot]# systemctl enable tftp --now
+Created symlink from /etc/systemd/system/sockets.target.wants/tftp.socket to /usr/lib/systemd/system/tftp.socket.
+[root@server tftpboot]# systemctl enable dhcpd --now
+[root@server tftpboot]# systemctl enable xinetd --now
+[root@server tftpboot]# 
+```
+
+
 
 <details>
 <summary><code>Настроить автоматическую установку для созданного kickstart файла</code></summary>
