@@ -234,6 +234,7 @@ dr-xr-xr-x. 3 root root 2048 Jun  8 22:08 Minimal
 ./tftpboot/dmitest.c32
 ```
 Далее создаем каталог <code>mkdir /var/lib/tftpboot/pxelinux</code> и закидываем в него файлы
+Сами файлы мы взяли отсюда "/usr/share/nginx/html/BaseOS/Packages/tftpboot/"
 
 ```
 pxelinux.0 
@@ -245,11 +246,54 @@ ldlinux.c32
 vesamenu.c32
 
 ```
+После чего создаем еще один каталог <code>mkdir /var/lib/tftpboot/pxelinux/pxelinux.cfg</code>
 
+Добавим туда конфигурацию по умолчанию <code>default</code>
+
+```
+default vesamenu.c32
+prompt 1
+timeout 600
+
+display boot.msg
+
+label linux
+  menu label ^Install system
+  menu default
+  kernel images/vmlinuz
+  append initrd=images/initrd.img ip=dhcp inst.repo=http://192.168.50.11/
+label vesa
+  menu label Install system with ^basic video driver
+  kernel images/vmlinuz
+  append initrd=images/initrd.img ip=dhcp inst.xdriver=vesa nomodeset inst.repo=http://192.168.50.11/
+label rescue
+  menu label ^Rescue installed system
+  kernel images/vmlinuz
+  append initrd=images/initrd.img rescue
+label local
+  menu label Boot from ^local drive
+  localboot 0xffff
+
+
+```
 
 </details>
 
 
+
+Далее создаем каталог "images" 
+
+mkdir -p /var/lib/tftpboot/pxelinux/images/ и закидываем туда наши файлы
+
+cp /usr/share/nginx/html/images/pxeboot/{vmlinuz,initrd.img} /var/lib/tftpboot/pxelinux/images/
+
+```
+vmlinuz - ядро
+
+initrd.img - образ
+
+
+```
 
 
 <details>
