@@ -154,7 +154,7 @@
       mode: '0775'
     with_items:
     - "pxelinux.cfg/"
-    - "rawhide-x86_64/"
+    - "images/"
 
 
 
@@ -185,12 +185,15 @@
 
   - name: Копируем изображение заставки в корневой каталог tftp
     copy:
-      src:  /boot/grub/splash.xpm.gz
-      dest: /var/lib/tftpboot/pxelinux/
+      src:  /usr/share/nginx/html/images/pxeboot/{{ item }}
+      dest: /var/lib/tftpboot/pxelinux/images
       remote_src: yes
       group: root
       owner: root
       mode: '775'
+    with_items:
+    - "vmlinuz"
+    - "initrd.img"
         
 
 

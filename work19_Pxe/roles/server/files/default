@@ -8,16 +8,16 @@ display boot.msg
 label linux
   menu label ^Install system
   menu default
-  kernel images/CentOS-8.0.1905/vmlinuz
-  append initrd=images/CentOS-8.0.1905/initrd.img ip=dhcp inst.repo=http://192.168.50.11/
+  kernel images/vmlinuz
+  append initrd=images/initrd.img ip=dhcp inst.repo=http://192.168.50.11/
 label vesa
   menu label Install system with ^basic video driver
-  kernel images/CentOS-8.0.1905/vmlinuz
-  append initrd=images/CentOS-8.0.1905/initrd.img ip=dhcp inst.xdriver=vesa nomodeset inst.repo=http://192.168.50.11/
+  kernel images/vmlinuz
+  append initrd=images/initrd.img ip=dhcp inst.xdriver=vesa nomodeset inst.repo=http://192.168.50.11/
 label rescue
   menu label ^Rescue installed system
   kernel images/vmlinuz
-  append initrd=images/CentOS-8.0.1905/initrd.img rescue
+  append initrd=images/initrd.img rescue
 label local
   menu label Boot from ^local drive
   localboot 0xffff
