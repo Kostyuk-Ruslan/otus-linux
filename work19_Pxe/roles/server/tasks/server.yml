@@ -143,11 +143,16 @@
         chdir: /point
         
         
-  - name: Создаем каталог pxelinux/pxelinux.cfg
+  - name: Создаем каталог pxelinux/pxelinux.cfg и rawhide-x86_64
     file:
-      path: /var/lib/tftpboot/pxelinux/pxelinux.cfg/
+      path: /var/lib/tftpboot/pxelinux/{{ item }}
       state: directory
       mode: '0775'
+    with_items:
+    - "pxelinux.cfg/"
+    - "rawhide-x86_64/"
+
+
 
 
   - name: Копируем файлы в каталог pxelinux
@@ -173,3 +178,15 @@
       owner: root
       mode: '775'
         
+
+  - name: Копируем изображение заставки в корневой каталог tftp
+    copy:
+      src:  /boot/grub/splash.xpm.gz
+      dest: /var/lib/tftpboot/pxelinux/
+      remote_src: yes
+      group: root
+      owner: root
+      mode: '775'
+        
+
+  
