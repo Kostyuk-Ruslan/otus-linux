@@ -106,15 +106,15 @@
    
 
   
-#  - name: Download CentOS Minimal
-#    get_url:
-#      url: http://centos-mirror.rbc.ru/pub/centos/8.2.2004/isos/x86_64/CentOS-8.2.2004-x86_64-minimal.iso
-#      dest: /point
-#      mode: '0777'
+  - name: Download CentOS Minimal
+    get_url:
+      url: http://centos-mirror.rbc.ru/pub/centos/8.2.2004/isos/x86_64/CentOS-8.2.2004-x86_64-minimal.iso
+      dest: /point
+      mode: '0777'
 
   
-#  - name: Mount iso
-#    raw: mount -t iso9660 /point/CentOS-8.2.2004-x86_64-minimal.iso /mnt -o loop,ro
+  - name: Mount iso
+    raw: mount -t iso9660 /point/CentOS-8.2.2004-x86_64-minimal.iso /mnt -o loop,ro
 
 
 
@@ -147,7 +147,7 @@
         chdir: /usr/share/nginx/html/BaseOS/Packages
         
         
-  - name: Создаем каталог pxelinux/pxelinux.cfg и rawhide-x86_64
+  - name: Создаем каталог pxelinux/pxelinux.cfg и images
     file:
       path: /var/lib/tftpboot/pxelinux/{{ item }}
       state: directory
@@ -161,7 +161,7 @@
 
   - name: Копируем файлы в каталог pxelinux
     copy:
-      src:  /point/tftpboot/{{ item }}
+      src:  /usr/share/nginx/html/BaseOS/Packages/tftpboot/{{ item }}
       dest: /var/lib/tftpboot/pxelinux/
       remote_src: yes
       group: root
@@ -172,6 +172,8 @@
     - "libcom32.c32"
     - "ldlinux.c32"
     - "vesamenu.c32"
+    - "libutil.c32"
+    - "menu.c32"
   
         
   - name: Копируем default в каталог pxelinux.cfg
