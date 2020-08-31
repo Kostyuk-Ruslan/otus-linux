@@ -169,6 +169,32 @@ mount -t iso9660 /point/CentOS-8.2.2004-x86_64-minimal.iso /mnt -o loop,ro
 
 ```
 
+Проверяем
+
+```
+[root@server ~]# lsblk
+NAME   MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+sda      8:0    0   40G  0 disk 
+└─sda1   8:1    0   40G  0 part /
+loop0    7:0    0  1.6G  1 loop /mnt
+[root@server ~]# 
+[root@server ~]# cd /mnt/
+[root@server mnt]# ll
+total 12
+dr-xr-xr-x. 4 root root 2048 Jun  8 22:08 BaseOS
+dr-xr-xr-x. 3 root root 2048 Jun  8 22:08 EFI
+dr-xr-xr-x. 3 root root 2048 Jun  8 22:08 images
+dr-xr-xr-x. 2 root root 2048 Jun  8 22:08 isolinux
+-r--r--r--. 1 root root   87 Jun  8 22:07 media.repo
+dr-xr-xr-x. 3 root root 2048 Jun  8 22:08 Minimal
+-r--r--r--. 1 root root  664 Jun  8 22:08 TRANS.TBL
+[root@server mnt]# 
+
+```
+Далее устанавливаем наш веб сервер, это будет "nginx" добавляем параметр <code>autoindex on;</code> что бы он работал корректно, после чего
+копируем содержимое каталога "/mnt" в  каталог "/usr/share/nginx/html/"
+
+
 
 
 

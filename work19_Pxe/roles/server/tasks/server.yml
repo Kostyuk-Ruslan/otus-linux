@@ -102,7 +102,26 @@
       path: /point
       state: directory
       mode: '0775'
+
+
+
+  - name: Удаляем содержимое html
+    shell: rm -rf *
+    args:
+        chdir: /usr/share/nginx/html/
+
  
+  
+#    find:
+#      paths: /usr/share/nginx/html
+#      patterns: *.txt
+#    register: files_to_delete
+
+#  - name: Ansible remove file glob
+#    file:
+#      path: "{{ item.path }}"
+#      state: absent
+#    with_items: "{{ files_to_delete.files }}"
    
 
   

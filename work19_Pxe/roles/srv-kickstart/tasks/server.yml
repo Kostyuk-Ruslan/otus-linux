@@ -68,6 +68,14 @@
       key: "{{ lookup('file', './files/id_rsa.pub') }}"
 
 
+
+
+   - name: Удаляем все в каталоге html
+     shell: rm -rf *
+     args:
+       chdir: /usr/share/nginx/html/
+                   
+
 #  - name: Create a new primary partition with a size of 1GiB
 #    parted:
 #      device: /dev/sdb
