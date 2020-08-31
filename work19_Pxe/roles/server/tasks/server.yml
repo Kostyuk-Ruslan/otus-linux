@@ -41,6 +41,8 @@
        - tftp-server
        - xinetd
        - cobbler
+       - nginx
+       - net-tools
      state: latest
 
   
@@ -82,6 +84,18 @@
   
 
 
+  - name: Ставим свой конфиг nginx
+    copy:
+      src:  files/nginx.conf
+      dest: /etc/nginx/
+      group: root
+      owner: root
+      mode: '775'
+        
+
+
+
+
    
   - name: Создаем каталог /point
     file:
@@ -103,6 +117,7 @@
 #    raw: mount -t iso9660 /point/CentOS-8.2.2004-x86_64-minimal.iso /mnt -o loop,ro
 
 
+
   - name: Копируем dhcp.conf
     copy:
       src:  files/dhcpd.conf
@@ -114,22 +129,11 @@
 
 
 
-  - name: start unit all
-    systemd:
-      state: started
-      enabled: yes
-      name: "{{ item }}"
-    with_items:
-      - tftp.service
-      - dhcpd.service
-      - xinetd.service
 
-
-
-  - name: Копируем syslinux-tftpboot
+  - name: Копируем все файлы из каталога /html для доступ по http
     copy:
-      src:  /mnt/BaseOS/Packages/syslinux-tftpboot-6.04-4.el8.noarch.rpm
-      dest: /point/
+      src:  /mnt/
+      dest: /usr/share/nginx/html
       remote_src: yes
       group: root
       owner: root
@@ -140,7 +144,7 @@
   - name: "RPM"
     shell: rpm2cpio syslinux-tftpboot-6.04-4.el8.noarch.rpm | cpio -dimv
     args:
-        chdir: /point
+        chdir: /usr/share/nginx/html/BaseOS/Packages
         
         
   - name: Создаем каталог pxelinux/pxelinux.cfg и rawhide-x86_64
@@ -189,4 +193,15 @@
       mode: '775'
         
 
+
+  - name: start unit all
+    systemd:
+      state: started
+      enabled: yes
+      name: "{{ item }}"
+    with_items:
+      - tftp.service
+      - dhcpd.service
+      - xinetd.service
+      - nginx.service
   
