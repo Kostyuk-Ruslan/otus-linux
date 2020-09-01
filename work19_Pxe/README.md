@@ -277,9 +277,6 @@ label local
 
 ```
 
-</details>
-
-
 
 Далее создаем каталог "images" 
 
@@ -306,8 +303,9 @@ Created symlink from /etc/systemd/system/sockets.target.wants/tftp.socket to /us
 ```
 
 
-В принципе все это делает "ansible"
 
+В принципе все это делает "ansible"
+</details>
 
 <details>
 <summary><code>Настроить автоматическую установку для созданного kickstart файла</code></summary>
