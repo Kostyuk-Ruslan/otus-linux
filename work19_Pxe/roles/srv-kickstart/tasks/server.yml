@@ -43,6 +43,7 @@
        - system-config-kickstart
        - nginx
        - net-tools
+       - pykickstart
      state: latest
 
   
@@ -61,19 +62,19 @@
       line: SELINUX=disabled
 
 
-  - name: Добавляем публичный ключ клиента для возможности захода на сервер без пароля
-    authorized_key:
-      user: root
-      state: present
-      key: "{{ lookup('file', './files/id_rsa.pub') }}"
+#  - name: Добавляем публичный ключ клиента для возможности захода на сервер без пароля
+#    authorized_key:
+#      user: root
+#      state: present
+#      key: "{{ lookup('file', './files/id_rsa.pub') }}"
 
 
 
 
-   - name: Удаляем все в каталоге html
-     shell: rm -rf *
-     args:
-       chdir: /usr/share/nginx/html/
+  - name: Удаляем все в каталоге html
+    shell: rm -rf *
+    args:
+      chdir: /usr/share/nginx/html/
                    
 
 #  - name: Create a new primary partition with a size of 1GiB

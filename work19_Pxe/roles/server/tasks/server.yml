@@ -61,11 +61,11 @@
       line: SELINUX=disabled
 
 
-  - name: Добавляем публичный ключ клиента для возможности захода на сервер без пароля
-    authorized_key:
-      user: root
-      state: present
-      key: "{{ lookup('file', './files/id_rsa.pub') }}"
+#  - name: Добавляем публичный ключ клиента для возможности захода на сервер без пароля
+#    authorized_key:
+#      user: root
+#      state: present
+#      key: "{{ lookup('file', './files/id_rsa.pub') }}"
 
 
 #  - name: Create a new primary partition with a size of 1GiB

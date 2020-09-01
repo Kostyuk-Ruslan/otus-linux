@@ -1,23 +1,2 @@
 
-default vesamenu.c32
-prompt 1
-timeout 600
-
-display boot.msg
-
-label linux
-  menu label ^Install system
-  menu default
-  kernel images/vmlinuz
-  append initrd=images/initrd.img ip=dhcp inst.repo=http://192.168.50.11/
-label vesa
-  menu label Install system with ^basic video driver
-  kernel images/vmlinuz
-  append initrd=images/initrd.img ip=dhcp inst.xdriver=vesa nomodeset inst.repo=http://192.168.50.11/
-label rescue
-  menu label ^Rescue installed system
-  kernel images/vmlinuz
-  append initrd=images/initrd.img rescue
-label local
-  menu label Boot from ^local drive
-  localboot 0xffff
+APPEND initrd=images/images/pxeboot/initrd.img ramdisk_size=128000 ip=dhcp method=http://192.168.50.13/images/ devfs=nomount ks=http://192.168.50.13/ks.cfg
