@@ -73,7 +73,7 @@ end
 
 ```
 
-Постарался все автоматизировать через ansible, кроме доп. задания
+Постарался все автоматизировать через ansible
 
 ```
 </details>
@@ -337,131 +337,10 @@ APPEND initrd=images/images/pxeboot/initrd.img ramdisk_size=128000 ip=dhcp metho
 
 ```
 
-Вообщем скорее всего неправильно...
+Вообщем скорее всего неправильно... оставил настройку через HTTP , через NFS делать не стал
 
 
 </details>
-
-
-
-
-<details>
-<summary><code>Доп. задание * Настройка Cobbler</code></summary>
-
-Первым делом устанавливаю сам cobbler
-
-<code>yum install cobbler</code> - Ну вот фундамент построен ))
-
-Исходя из документации, необходимо сделать некоторые преднастройки <code>/etc/cobbler/settings</code>
-
-```
-# default, localhost
-server: 192.168.50.11
-
-
-# default, localhost
-next_server: 192.168.50.11
-manage_dhcp: 1 - чтобы cobbler сгенерировал файл dhcpd.conf на основе dhcp.template, включенного в cobbler
-
-```
-[root@server ~]# systemctl restart cobblerd
-
-Посмотрим на структуру 
-
-
-```
-[root@server ~]# cd /etc/cobbler/
-[root@server cobbler]# mc
-
-[root@server cobbler]# ll
-total 108
--rw-r--r-- 1 root root    40 Aug 30  2019 auth.conf
--rw-r--r-- 1 root root    75 Aug 30  2019 cheetah_macros
--rw-r--r-- 1 root root  2409 Aug 30  2019 cobbler_bash
--rw-r--r-- 1 root root 11636 Aug 30  2019 completions
--rw-r--r-- 1 root root  3177 Aug 30  2019 dhcp.template
--rw-r--r-- 1 root root   386 Aug 30  2019 dnsmasq.template
--rw-r--r-- 1 root root   704 May 28  2018 genders.template
--rw-r--r-- 1 root root  2014 Aug 30  2019 import_rsync_whitelist
-drwxr-xr-x 2 root root    31 Aug 31 14:34 iso
-drwxr-xr-x 2 root root    38 Aug 31 14:34 ldap
--rw-r--r-- 1 root root  3076 Aug 30  2019 modules.conf
--rw-r--r-- 1 root root    43 Aug 30  2019 mongodb.conf
--rw-r--r-- 1 root root   680 Feb  2  2015 named.template
-drwxr-xr-x 2 root root   291 Aug 31 14:34 power
-drwxr-xr-x 2 root root  4096 Aug 31 14:34 pxe
-drwxr-xr-x 2 root root    41 Aug 31 14:34 reporting
--rw-r--r-- 1 root root   368 Aug 30  2019 rsync.exclude
--rw-r--r-- 1 root root  1073 Aug 30  2019 rsync.template
--rw-r--r-- 1 root root   764 Jul 21  2017 secondary.template
--rw-r--r-- 1 root root 19918 Sep  1 10:33 settings
--rw-r--r-- 1 root root   740 Aug 30  2019 tftpd.template
--rw-r--r-- 1 root root   848 Aug 30  2019 users.conf
--rw-r--r-- 1 root root    49 Aug 30  2019 users.digest
--rw-r--r-- 1 root root   115 Oct 15  2019 version
--rw-r--r-- 1 root root   522 Feb  2  2015 zone.template
-drwxr-xr-x 2 root root     6 Oct 15  2019 zone_templates
-[root@server cobbler]# 
-
-```
-Изменим dhcp.template на dhcp.conf и приведем его вот к такому виду, исходя из сервера на котором тестирую
-
-```
-subnet 10.0.18.0 netmask 255.255.255.0 {
-     option routers             10.0.18.1;
-     option domain-name-servers 10.1.16.242,10.1.16.242;
-     option subnet-mask         255.255.255.0;
-     filename                   "/pxelinux.0";
-     default-lease-time         2.8.0;
-     max-lease-time             43200;
-     next-server                $next_server;
-}
-
-
-
-```
-
-При рестарте сервиса ругается, что необходимор создать "/usr/share/cobbler/web/" после того как создали данную строктуру папок юнит запустился без проблем
-
-```
-[root@server web]# systemctl status cobblerd.service
-● cobblerd.service - Cobbler Helper Daemon
-   Loaded: loaded (/usr/lib/systemd/system/cobblerd.service; disabled; vendor preset: disabled)
-   Active: active (running) since Tue 2020-09-01 10:41:21 MSK; 2s ago
-  Process: 5391 ExecStartPost=/usr/bin/touch /usr/share/cobbler/web/cobbler.wsgi (code=exited, status=0/SUCCESS)
- Main PID: 5390 (cobblerd)
-    Tasks: 1
-   Memory: 21.5M
-   CGroup: /system.slice/cobblerd.service
-           └─5390 /usr/bin/python2 -s /usr/bin/cobblerd -F
-
-```
-
-
-
-```
-[root@server web]# systemctl status cobblerd.service
-● cobblerd.service - Cobbler Helper Daemon
-   Loaded: loaded (/usr/lib/systemd/system/cobblerd.service; disabled; vendor preset: disabled)
-   Active: active (running) since Tue 2020-09-01 10:41:21 MSK; 4s ago
-  Process: 5391 ExecStartPost=/usr/bin/touch /usr/share/cobbler/web/cobbler.wsgi (code=exited, status=0/SUCCESS)
- Main PID: 5390 (cobblerd)
-    Tasks: 1
-   Memory: 21.5M
-   CGroup: /system.slice/cobblerd.service
-           └─5390 /usr/bin/python2 -s /usr/bin/cobblerd -F
-
-Sep 01 10:41:21 server systemd[1]: Stopping Cobbler Helper Daemon...
-Sep 01 10:41:21 server systemd[1]: Stopped Cobbler Helper Daemon.
-Sep 01 10:41:21 server systemd[1]: Starting Cobbler Helper Daemon...
-Sep 01 10:41:21 server systemd[1]: Started Cobbler Helper Daemon.
-[root@server web]# 
-```
-
-
-
-</details>
-
 
 
 
