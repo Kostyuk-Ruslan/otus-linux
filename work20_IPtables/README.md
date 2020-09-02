@@ -136,5 +136,12 @@ Chain TRAFFIC (1 references)
 [root@inetRouter ~]# 
 ```
 
+```
+[root@inetRouter ~]# service iptables save
+iptables: Saving firewall rules to /etc/sysconfig/iptables:[  OK  ]
+[root@inetRouter ~]# 
+```
+
+
 
 </details>
