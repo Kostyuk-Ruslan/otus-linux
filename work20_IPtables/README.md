@@ -7,6 +7,8 @@ Linux Administrator 2020
 
    
 
+Предварительно поставил ряд утилит через "Vagrantfile"
+
 <details>
 <summary><code>Vagrantfile</code></summary>
 
@@ -26,6 +28,17 @@ Linux Administrator 2020
 - 7776
 
 - 9992
+
+Первым делом, мы сделаем доступ к серверу по логину и паролю, лень было делать ключи
+
+в /etc/sshd_config подредактируем строку
+
+"PasswordAuthentication yes"
+
+
+Добавим пользователя "qwerty" и пароль "qwerty"
+
+<code>useradd -m -p qwerty qwerty</code>
 
 
 Содаем файл <code>iptables.rules</code> и заноcим туда правила "iptables"
@@ -56,23 +69,7 @@ COMMIT
 
 ```
 
-Выдаем права "775"
 
-```
-[root@inetRouter ~]# chmod 775 iptables.rules 
-[root@inetRouter ~]# ll
-итого 44
--rw-------. 1 root root  5155 Апр 30 21:53 anaconda-ks.cfg
--rw-r--r--. 1 root root 16625 Апр 30 21:53 install.log
--rw-r--r--. 1 root root  7151 Апр 30 21:52 install.log.syslog
--rwxrwxr-x. 1 root root  1107 Сен  2 12:46 iptables.rules
-drwxr-xr-x. 4 root root  4096 Сен  2 12:21 rpmbuild
-[root@inetRouter ~]# 
-```
-
-```
-[root@inetRouter ~]# yum install iptables-services
-```
 
 ```
 [root@inetRouter ~]# systemctl enable iptables --now
@@ -141,6 +138,65 @@ Chain TRAFFIC (1 references)
 iptables: Saving firewall rules to /etc/sysconfig/iptables:[  OK  ]
 [root@inetRouter ~]# 
 ```
+После перезагрузки, я потерял доступ к этому серверу :)
+
+
+Переходим к centralRouter, то откуда будем подключаться
+
+
+Создаем файл knock.sh, выдаем ему права, я выдал "775"
+
+С таким содержимым
+
+```
+#!/bin/bash
+HOST=$1
+shift
+for ARG in "$@"
+do
+sudo nmap -Pn --max-retries 0 -p $ARG $HOST
+done
+        
+
+``` 
+И запускаем "knock.sh"
+
+
+```
+[root@centralRouter ~]#./knock.sh 192.168.255.1 8882 7776 9992
+
+Starting Nmap 6.40 ( http://nmap.org ) at 2020-09-02 14:45 UTC
+Warning: 192.168.255.1 giving up on port because retransmission cap hit (0).
+Nmap scan report for 192.168.255.1
+Host is up (0.0010s latency).
+PORT     STATE    SERVICE
+8882/tcp filtered unknown
+MAC Address: 08:00:27:BF:31:CB (Cadmus Computer Systems)
+
+Nmap done: 1 IP address (1 host up) scanned in 0.47 seconds
+
+Starting Nmap 6.40 ( http://nmap.org ) at 2020-09-02 14:45 UTC
+Warning: 192.168.255.1 giving up on port because retransmission cap hit (0).
+Nmap scan report for 192.168.255.1
+Host is up (0.0012s latency).
+PORT     STATE    SERVICE
+7776/tcp filtered unknown
+MAC Address: 08:00:27:BF:31:CB (Cadmus Computer Systems)
+
+Nmap done: 1 IP address (1 host up) scanned in 0.44 seconds
+
+Starting Nmap 6.40 ( http://nmap.org ) at 2020-09-02 14:45 UTC
+Warning: 192.168.255.1 giving up on port because retransmission cap hit (0).
+Nmap scan report for 192.168.255.1
+Host is up (0.0012s latency).
+PORT     STATE    SERVICE
+9992/tcp filtered issc
+MAC Address: 08:00:27:BF:31:CB (Cadmus Computer Systems)
+
+Nmap done: 1 IP address (1 host up) scanned in 0.44 seconds
+
+```
+
 
 
 
