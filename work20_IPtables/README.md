@@ -70,16 +70,17 @@ drwxr-xr-x. 4 root root  4096 Сен  2 12:21 rpmbuild
 [root@inetRouter ~]# 
 ```
 
-
+```
 [root@inetRouter ~]# yum install iptables-services
+```
 
-
-
+```
 [root@inetRouter ~]# systemctl enable iptables --now
 Created symlink from /etc/systemd/system/basic.target.wants/iptables.service to /usr/lib/systemd/system/iptables.service.
 [root@inetRouter ~]#
+```
 
-
+```
 [root@inetRouter ~]# systemctl status iptables      
 ● iptables.service - IPv4 firewall with iptables
    Loaded: loaded (/usr/lib/systemd/system/iptables.service; enabled; vendor preset: disabled)
@@ -91,7 +92,7 @@ Sep 02 13:40:20 inetRouter systemd[1]: Starting IPv4 firewall with iptables...
 Sep 02 13:40:20 inetRouter iptables.init[27288]: iptables: Applying firewall rules: [  OK  ]
 Sep 02 13:40:20 inetRouter systemd[1]: Started IPv4 firewall with iptables.
 [root@inetRouter ~]# 
-
+```
 
 
 ```
