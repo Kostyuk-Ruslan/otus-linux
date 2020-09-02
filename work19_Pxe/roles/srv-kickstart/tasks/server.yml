@@ -207,9 +207,9 @@
     - "initrd.img"
         
 
-  - name: Копируем дефолтный ks файл и переименовываем его в новый каталог
+  - name: Копируем сгенерированный ks файл и переименовываем его в новый каталог
     copy:
-      src:  /root/anaconda-ks.cfg
+      src:  files/kickstart.cfg
       dest: /var/lib/tftpboot/ks.cfg
       group: root
       owner: root
