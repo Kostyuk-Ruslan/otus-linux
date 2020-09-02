@@ -1,114 +1,16 @@
-# otus-linux
-Vagrantfile - для стенда урока 9 - Network
 
-# Дано
-Vagrantfile с начальным  построением сети
-inetRouter
-centralRouter
-centralServer
+Linux Administrator 2020
 
-тестировалось на virtualbox
+   ################################
+   #Домашнее задание 20 IPtables  #
+   ################################
 
-# Планируемая архитектура
-построить следующую архитектуру
-
-Сеть office1
-- 192.168.2.0/26      - dev
-- 192.168.2.64/26    - test servers
-- 192.168.2.128/26  - managers
-- 192.168.2.192/26  - office hardware
-
-Сеть office2
-- 192.168.1.0/25      - dev
-- 192.168.1.128/26  - test servers
-- 192.168.1.192/26  - office hardware
-
-
-Сеть central
-- 192.168.0.0/28    - directors
-- 192.168.0.32/28  - office hardware
-- 192.168.0.64/26  - wifi
-
-```
-Office1 ---\
-      -----> Central --IRouter --> internet
-Office2----/
-```
-Итого должны получится следующие сервера
-- inetRouter
-- centralRouter
-- office1Router
-- office2Router
-- centralServer
-- office1Server
-- office2Server
-
-# Теоретическая часть
-- Найти свободные подсети
-- Посчитать сколько узлов в каждой подсети, включая свободные
-- Указать broadcast адрес для каждой подсети
-- проверить нет ли ошибок при разбиении
-
-# Практическая часть
-- Соединить офисы в сеть согласно схеме и настроить роутинг
-- Все сервера и роутеры должны ходить в инет черз inetRouter
-- Все сервера должны видеть друг друга
-- у всех новых серверов отключить дефолт на нат (eth0), который вагрант поднимает для связи
-- при нехватке сетевых интервейсов добавить по несколько адресов на интерфейс
-
-
-
-
-
-
-<code>Теоретическая часть Д.З.</code>
-
+   
 
 <details>
-<summary><code>Найти свободные подсети</code></summary>
+<summary><code>Vagrantfile</code></summary>
 
 ```
-
-192.168.0.16/28
-
-192.168.0.48/28
-
-
-
-```
-
-</details>
-
-
-<details>
-<summary><code>Посчитать сколько узлов в каждой подсети, включая свободные</code></summary>
-
-```
-
-Сеть office1
-- 192.168.2.0/26   - 62 
-- 192.168.2.64/26  - 62
-- 192.168.2.128/26 - 62
-- 192.168.2.192/26 - 62 
-
-Сеть office2
-- 192.168.1.0/25   - 126
-- 192.168.1.128/26 - 62
-- 192.168.1.192/26 - 62
-
-
-Сеть central
-- 192.168.0.0/28   - 14
-- 192.168.0.32/28  - 14
-- 192.168.0.64/26  - 62 
-
-
-
-Свободные :
-
-192.168.0.16/28 - 14
-
-192.168.0.48/28 - 14
 
 
 ```
@@ -117,50 +19,62 @@ Office2----/
 
 
 
+Есть  сервер inetRouter (192.168.255.1)  последовательность портов будет следующая
 
-<details>
-<summary><code>Указать broadcast адрес для каждой подсети</code></summary>
+- 8882
+
+- 7776
+
+- 9992
+
+
+Содаем файл <code>iptables.rules</code> и заноcим туда правила "iptables"
+
+```
+
+:INPUT DROP [0:0]
+:FORWARD ACCEPT [0:0]
+:OUTPUT ACCEPT [0:0]
+:TRAFFIC - [0:0]
+:SSH-INPUT - [0:0]
+:SSH-INPUTTWO - [0:0]
+
+-A INPUT -j TRAFFIC
+-A TRAFFIC -p icmp --icmp-type any -j ACCEPT
+-A TRAFFIC -m state --state ESTABLISHED,RELATED -j ACCEPT
+-A TRAFFIC -m state --state NEW -m tcp -p tcp --dport 22 -m recent --rcheck --seconds 30 --name SSH2 -j ACCEPT
+-A TRAFFIC -m state --state NEW -m tcp -p tcp -m recent --name SSH2 --remove -j DROP
+-A TRAFFIC -m state --state NEW -m tcp -p tcp --dport 9992 -m recent --rcheck --name SSH1 -j SSH-INPUTTWO
+-A TRAFFIC -m state --state NEW -m tcp -p tcp -m recent --name SSH1 --remove -j DROP
+-A TRAFFIC -m state --state NEW -m tcp -p tcp --dport 7776 -m recent --rcheck --name SSH0 -j SSH-INPUT
+-A TRAFFIC -m state --state NEW -m tcp -p tcp -m recent --name SSH0 --remove -j DROP
+-A TRAFFIC -m state --state NEW -m tcp -p tcp --dport 8882 -m recent --name SSH0 --set -j DROP
+-A SSH-INPUT -m recent --name SSH1 --set -j DROP
+-A SSH-INPUTTWO -m recent --name SSH2 --set -j DROP
+-A TRAFFIC -j DROP
+COMMIT
 
 
 ```
 
-Сеть office1          Broadcust
-- 192.168.2.0/26   -  192.168.2.63
-- 192.168.2.64/26  -  192.168.2.127
-- 192.168.2.128/26 -  192.168.2.191
-- 192.168.2.192/26 -  192.168.2.255
-
-Сеть office2
-- 192.168.1.0/25   -  192.168.1.127
-- 192.168.1.128/26 -  192.168.1.191
-- 192.168.1.192/26 -  192.168.1.255
-
-
-Сеть central
-- 192.168.0.0/28   -  192.168.0.15
-- 192.168.0.32/28  -  192.168.0.47
-- 192.168.0.64/26  -  192.168.0.127
-
-
-
+Выдаем права "775"
 
 ```
-</details>
-
-<details>
-<summary><code>проверить нет ли ошибок при разбиении</code></summary>
-
-
-
-
-```
-Ну раз такое условие в задачи стоит, то точно есть ошибки в разбиении 
-Честно говоря неочень понятно, что тут имеется ввиду,я в сетях слаб. Возможно что то, где то, кому то, отдано слишком много, можно сузить маской,но это не точно ))
-Но опять же здесь  хорошо бы понимать сколько дается кол-во хостов.
-
-192.168.2.128/26  - managers  - тут можно впринципе постаивть 25 маску
-
-
+[root@inetRouter ~]# chmod 775 iptables.rules 
+[root@inetRouter ~]# ll
+итого 44
+-rw-------. 1 root root  5155 Апр 30 21:53 anaconda-ks.cfg
+-rw-r--r--. 1 root root 16625 Апр 30 21:53 install.log
+-rw-r--r--. 1 root root  7151 Апр 30 21:52 install.log.syslog
+-rwxrwxr-x. 1 root root  1107 Сен  2 12:46 iptables.rules
+drwxr-xr-x. 4 root root  4096 Сен  2 12:21 rpmbuild
+[root@inetRouter ~]# 
 ```
 
-</details>
+
+
+
+systemctl enable iptables --now
+
+
+
