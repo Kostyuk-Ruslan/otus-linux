@@ -28,7 +28,9 @@ MACHINES = {
                    {adapter: 3, auto_config: false, virtualbox__intnet: true},
                    {adapter: 4, auto_config: false, virtualbox__intnet: true},
                 ]
+
   },
+  
   
 }
 
