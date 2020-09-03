@@ -30,6 +30,23 @@ MACHINES = {
                 ]
 
   },
+
+  :Office1Router => {
+        :box_name => "centos/7",
+        :net => [
+                   {ip: '192.168.2.0', adapter: 2, netmask: "255.255.255.192", virtualbox__intnet: "dev"},
+                   {ip: '192.168.2.64', adapter: 2, netmask: "255.255.255.192", virtualbox__intnet: "test-servers"},
+                   {ip: '192.168.2.128', adapter: 2, netmask: "255.255.255.192", virtualbox__intnet: "managers"},
+                   {ip: '192.168.2.192', adapter: 2, netmask: "255.255.255.192", virtualbox__intnet: "office-hardware"},
+                   {ip: '192.168.255.4', adapter: 2, netmask: "255.255.255.252", virtualbox__intnet: "router-net"},
+
+                  ]
+
+  },
+
+
+
+
   
   
 }
