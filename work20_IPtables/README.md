@@ -194,10 +194,16 @@ PORT     STATE    SERVICE
 MAC Address: 08:00:27:BF:31:CB (Cadmus Computer Systems)
 
 Nmap done: 1 IP address (1 host up) scanned in 0.44 seconds
+[root@centralRouter ~]# ssh xxx@192.168.255.1
+xxx@192.168.255.1's password: 
+Last login: Wed Sep  2 15:02:02 2020 from 192.168.255.2
+[xxx@inetRouter ~]$ 
+[xxx@inetRouter ~]$ 
+
 
 ```
 
-
+После чего пробуем атворизоваться
 
 
 </details>

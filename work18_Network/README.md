@@ -164,3 +164,54 @@ Office2----/
 ```
 
 </details>
+
+
+
+
+<details>
+<summary><code>Практическая часть</code></summary>
+
+```
+
+
+Office1+------------------------+
+                                |
+                                |
+                                |
+                                |
+                                |
+                                |
+                                +centralServer+-------------------+centralRouter+--------------+inetRouter
+                                |
+                                |
+				|
+				|
+				|
+				|
+Office2+------------------------+
+
+
+
+```
+</details>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
