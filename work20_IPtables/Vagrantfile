@@ -68,7 +68,6 @@ Vagrant.configure("2") do |config|
           when "inetRouter"
             box.vm.provision "shell", run: "always", inline: <<-SHELL
             sysctl net.ipv4.conf.all.forwarding=1
-#            iptables-restore < /vagrant/iptables_inetrouter.rules
             iptables -t nat -A POSTROUTING ! -d 192.168.0.0/16 -o eth0 -j MASQUERADE
             ip route add 192.168.0.0/16 via 192.168.255.2
             sed -i 's/PasswordAuthentication no/PasswordAuthentication yes/g' /etc/ssh/sshd_config
@@ -82,7 +81,6 @@ Vagrant.configure("2") do |config|
               ip route add 192.168.0.0/16 via 192.168.255.2
               echo "GATEWAY=192.168.255.1" >> /etc/sysconfig/network-scripts/ifcfg-eth1
               echo "DEFROUTE=no" >> /etc/sysconfig/network-scripts/ifcfg-eth0
-#              iptables-restore < /vagrant/iptables_inetrouter2.rules
             SHELL
           when "centralRouter"
             box.vm.provision "shell", run: "always", inline: <<-SHELL
@@ -92,10 +90,6 @@ Vagrant.configure("2") do |config|
               echo "DEFROUTE=no" >> /etc/sysconfig/network-scripts/ifcfg-eth0 
               echo "GATEWAY=192.168.255.1" >> /etc/sysconfig/network-scripts/ifcfg-eth1
               systemctl restart network
-              yum install nmap -y
-#              chmod +x /vagrant/knock.sh
-              systemctl stop firewalld
-              setenforce 0
               SHELL
           when "centralServer"
             box.vm.provision "shell", run: "always", inline: <<-SHELL
@@ -104,10 +98,7 @@ Vagrant.configure("2") do |config|
               systemctl restart network
               yum install -y epel-release
               yum install -y nginx
-              systemctl enable nginx
-              systemctl start nginx
-              systemctl stop firewalld
-              setenforce 0
+              systemctl enable nginx --now
               SHELL
         end
 
