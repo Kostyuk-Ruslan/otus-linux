@@ -21,9 +21,7 @@ Linux Administrator 2020
 
 
 <details>
-<summary><code реализовать knocking port
- - centralRouter может попасть на ssh inetrRouter через knock скрипт
-Есть  сервер inetRouter (192.168.255.1)  последовательность портов будет следующая</code></summary>
+<summary><code> реализовать knocking port centralRouter может попасть на ssh inetrRouter через knock скрипт Есть  сервер inetRouter (192.168.255.1)  последовательность портов будет следующая</code></summary>
 
 - 8882
 
