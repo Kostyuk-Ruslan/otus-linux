@@ -7,15 +7,6 @@ Linux Administrator 2020
 
    
 
-Предварительно поставил ряд утилит через "Vagrantfile"
-
-<details>
-<summary><code>Vagrantfile</code></summary>
-
-```
-
-
-```
 
 </details>
 
@@ -217,6 +208,8 @@ Last login: Wed Sep  2 15:02:02 2020 from 192.168.255.2
 
 
 ```
+Честно говоря не совсем понял, что имеется ввиду по поводу локалхоста 
+сделал так box.vm.network 'forwarded_port', guest: 8080, host: 8080, host_ip: '127.0.0.1' честно скажу где -то списал
 
 ```
 
@@ -275,3 +268,22 @@ traceroute to 8.8.8.8 (8.8.8.8), 30 hops max, 60 byte packets
 
 ```
 </details>
+
+
+
+
+<details>
+<summary><code> реализовать проход на 80й порт без маскарадинга</code></summary>
+
+```
+iptables -t nat -A POSTROUTING -o eth2 -p tcp --dst 192.168.0.2 --dport 80 -j SNAT --to-source 192.168.255.3 
+ 
+``` 
+ 
+</details>
+ 
+ 
+ 
+ 
+ 
+
