@@ -212,6 +212,20 @@ Last login: Wed Sep  2 15:02:02 2020 from 192.168.255.2
 
 
 
+<details>
+<summary><code>пробросить 80й порт на inetRouter2 8080</code></summary>
+
+
+
+```
+
+
+[root@inetRouter2 ~]# iptables -t nat -A PREROUTING -i eth2 -p tcp --dport 8080 -j DNAT --to 192.168.0.2:80
+
+```
+</details>
+
+
 
 
 
