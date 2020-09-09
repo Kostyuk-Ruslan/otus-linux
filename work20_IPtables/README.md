@@ -211,6 +211,20 @@ Last login: Wed Sep  2 15:02:02 2020 from 192.168.255.2
 
 
 
+<details>
+<summary><code> добавить inetRouter2, который виден(маршрутизируется (host-only тип сети для виртуалки)) с хоста или форвардится порт через локалхост</code></summary>
+
+
+
+```
+
+```
+
+</details>
+
+
+
+
 
 <details>
 <summary><code>пробросить 80й порт на inetRouter2 8080</code></summary>
