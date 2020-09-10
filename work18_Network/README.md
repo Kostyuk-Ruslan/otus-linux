@@ -231,12 +231,16 @@ Office2----/
 
 
 
+<details>
+<summary><code>Проверка</summary></code>
+
+```
 
 
 
+```
 
-
-
+</details>
 
 
 
