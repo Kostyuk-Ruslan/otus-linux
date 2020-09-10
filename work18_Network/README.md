@@ -255,6 +255,7 @@ VM, run `vagrant status NAME`.
 
 ```
 
+Пингуем гугл
 
 ```
 [root@Office2Server ~]# ping 8.8.8.8
@@ -270,6 +271,7 @@ rtt min/avg/max/mdev = 24.885/29.595/40.188/6.160 ms
 [root@Office2Server ~]# 
 ```
 
+Установил пакет и сделал tracert 8.8.8.8
 
 ```
 [root@Office2Server ~]# traceroute 8.8.8.8
@@ -301,6 +303,9 @@ traceroute to 8.8.8.8 (8.8.8.8), 30 hops max, 60 byte packets
 
 ```
 
+
+Пингуем соседний сервер Office1Server
+
 ```
 root@Office2Server ~]# ping 192.168.2.194
 PING 192.168.2.194 (192.168.2.194) 56(84) bytes of data.
@@ -313,6 +318,79 @@ PING 192.168.2.194 (192.168.2.194) 56(84) bytes of data.
 4 packets transmitted, 4 received, 0% packet loss, time 3006ms
 rtt min/avg/max/mdev = 5.860/6.069/6.331/0.222 ms
 [root@Office2Server ~]# 
+
+
+```
+
+Переходим на сервер Office1Server и делаем тоже самое
+
+
+пинг интернет
+
+```
+[root@Office1Server ~]# ping 8.8.8.8
+PING 8.8.8.8 (8.8.8.8) 56(84) bytes of data.
+64 bytes from 8.8.8.8: icmp_seq=1 ttl=57 time=23.9 ms
+64 bytes from 8.8.8.8: icmp_seq=2 ttl=57 time=22.9 ms
+64 bytes from 8.8.8.8: icmp_seq=3 ttl=57 time=25.1 ms
+64 bytes from 8.8.8.8: icmp_seq=4 ttl=57 time=31.1 ms
+^C
+--- 8.8.8.8 ping statistics ---
+4 packets transmitted, 4 received, 0% packet loss, time 3007ms
+rtt min/avg/max/mdev = 22.938/25.799/31.106/3.170 ms
+[root@Office1Server ~]# 
+
+
+```
+
+
+трасерт 8.8.8.8
+
+```
+[root@Office1Server ~]# traceroute 8.8.8.8                                                                                                                                                                                                       
+traceroute to 8.8.8.8 (8.8.8.8), 30 hops max, 60 byte packets
+ 1  gateway (192.168.2.193)  2.581 ms  1.723 ms  1.437 ms
+ 2  192.168.0.33 (192.168.0.33)  5.072 ms  2.705 ms  2.493 ms
+ 3  192.168.255.1 (192.168.255.1)  3.341 ms  3.032 ms  2.961 ms
+ 4  * * *
+ 5  * * *
+ 6  * * *
+ 7  * * *
+ 8  72.14.209.81 (72.14.209.81)  15.846 ms  15.765 ms  15.679 ms
+ 9  108.170.250.51 (108.170.250.51)  15.542 ms 108.170.250.66 (108.170.250.66)  14.912 ms 108.170.250.51 (108.170.250.51)  14.752 ms
+10  216.239.50.46 (216.239.50.46)  20.673 ms *  20.462 ms
+11  72.14.238.168 (72.14.238.168)  23.206 ms 172.253.65.159 (172.253.65.159)  22.707 ms 72.14.238.168 (72.14.238.168)  21.121 ms
+12  142.250.56.221 (142.250.56.221)  23.505 ms 216.239.47.201 (216.239.47.201)  21.112 ms 142.250.56.127 (142.250.56.127)  26.157 ms
+13  * * *
+14  * * *
+15  * * *
+16  * * *
+17  * * *
+18  * * *
+19  * * *
+20  * * *
+21  * * *
+22  * * dns.google (8.8.8.8)  19.459 ms
+[root@Office1Server ~]# 
+
+```
+
+Пингуем соседний сервер Office2Server
+
+
+```
+[root@Office1Server ~]# ping 192.168.1.194
+PING 192.168.1.194 (192.168.1.194) 56(84) bytes of data.
+64 bytes from 192.168.1.194: icmp_seq=1 ttl=61 time=5.57 ms
+64 bytes from 192.168.1.194: icmp_seq=2 ttl=61 time=7.02 ms
+64 bytes from 192.168.1.194: icmp_seq=3 ttl=61 time=6.42 ms
+64 bytes from 192.168.1.194: icmp_seq=4 ttl=61 time=5.66 ms
+64 bytes from 192.168.1.194: icmp_seq=5 ttl=61 time=4.31 ms
+^C
+--- 192.168.1.194 ping statistics ---
+5 packets transmitted, 5 received, 0% packet loss, time 4008ms
+rtt min/avg/max/mdev = 4.310/5.800/7.025/0.917 ms
+[root@Office1Server ~]# 
 
 
 
