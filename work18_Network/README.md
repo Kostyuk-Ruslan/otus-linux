@@ -234,7 +234,85 @@ Office2----/
 <details>
 <summary><code>Проверка</summary></code>
 
+Проверяем что все поднялось
+
 ```
+[root@node01 work18_Network]# vagrant status
+Current machine states:
+
+inetRouter                running (virtualbox)
+CentralRouter             running (virtualbox)
+CentralServer             running (virtualbox)
+Office1Router             running (virtualbox)
+Office1Server             running (virtualbox)
+Office2Router             running (virtualbox)
+Office2Server             running (virtualbox)
+
+This environment represents multiple VMs. The VMs are all listed
+above with their current state. For more information about a specific
+VM, run `vagrant status NAME`.
+[root@node01 work18_Network]# 
+
+```
+
+
+```
+[root@Office2Server ~]# ping 8.8.8.8
+PING 8.8.8.8 (8.8.8.8) 56(84) bytes of data.
+64 bytes from 8.8.8.8: icmp_seq=1 ttl=57 time=40.1 ms
+64 bytes from 8.8.8.8: icmp_seq=2 ttl=57 time=24.8 ms
+64 bytes from 8.8.8.8: icmp_seq=3 ttl=57 time=26.7 ms
+64 bytes from 8.8.8.8: icmp_seq=4 ttl=57 time=26.5 ms
+^C
+--- 8.8.8.8 ping statistics ---
+4 packets transmitted, 4 received, 0% packet loss, time 3008ms
+rtt min/avg/max/mdev = 24.885/29.595/40.188/6.160 ms
+[root@Office2Server ~]# 
+```
+
+
+```
+[root@Office2Server ~]# traceroute 8.8.8.8
+traceroute to 8.8.8.8 (8.8.8.8), 30 hops max, 60 byte packets
+ 1  gateway (192.168.1.193)  0.735 ms  0.579 ms  0.486 ms
+ 2  192.168.0.33 (192.168.0.33)  1.065 ms  0.924 ms  1.024 ms
+ 3  192.168.255.1 (192.168.255.1)  2.515 ms  1.724 ms  21.370 ms
+ 4  * * *
+ 5  * * *
+ 6  * * *
+ 7  * * *
+ 8  72.14.209.81 (72.14.209.81)  12.259 ms  11.331 ms  23.137 ms
+ 9  * * 108.170.250.146 (108.170.250.146)  12.557 ms
+10  172.253.66.116 (172.253.66.116)  22.930 ms * 209.85.249.158 (209.85.249.158)  20.310 ms
+11  172.253.66.108 (172.253.66.108)  20.136 ms 216.239.57.222 (216.239.57.222)  22.906 ms 72.14.238.168 (72.14.238.168)  29.897 ms
+12  216.239.48.97 (216.239.48.97)  22.234 ms 216.239.63.129 (216.239.63.129)  20.917 ms 172.253.70.49 (172.253.70.49)  22.863 ms
+13  * * *
+14  * * *
+15  * * *
+16  * * *
+17  * * *
+18  * * *
+19  * * *
+20  * * *
+21  * * *
+22  dns.google (8.8.8.8)  64.281 ms  71.300 ms *
+[root@Office2Server ~]# 
+
+
+```
+
+```
+root@Office2Server ~]# ping 192.168.2.194
+PING 192.168.2.194 (192.168.2.194) 56(84) bytes of data.
+64 bytes from 192.168.2.194: icmp_seq=1 ttl=61 time=5.89 ms
+64 bytes from 192.168.2.194: icmp_seq=2 ttl=61 time=6.33 ms
+64 bytes from 192.168.2.194: icmp_seq=3 ttl=61 time=6.19 ms
+64 bytes from 192.168.2.194: icmp_seq=4 ttl=61 time=5.86 ms
+^C
+--- 192.168.2.194 ping statistics ---
+4 packets transmitted, 4 received, 0% packet loss, time 3006ms
+rtt min/avg/max/mdev = 5.860/6.069/6.331/0.222 ms
+[root@Office2Server ~]# 
 
 
 
