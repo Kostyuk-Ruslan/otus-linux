@@ -1,0 +1,67 @@
+  - name: repository openvpn
+    yum_repository:
+      name: openvpn
+      description: repo_openvpn
+      baseurl: https://download.copr.fedorainfracloud.org/results/dsommers/openvpn-beta/epel-7-$basearch/
+      skip_if_unavailable: yes
+      gpgcheck: 1
+      gpgkey: https://download.copr.fedorainfracloud.org/results/dsommers/openvpn-beta/pubkey.gpg
+      enabled: yes
+
+
+
+  - name: Add multiple repositories 
+    yum_repository:
+      name: epel
+      description: EPEL YUM repo
+      file: external_repos
+      baseurl: https://download.fedoraproject.org/pub/epel/$releasever/$basearch/
+      gpgcheck: no
+
+
+  - name: install epel-release
+    yum:
+     name:
+      - epel-release
+     state: latest
+    tags: install-packages
+
+
+  - name: Disable SELinux
+    selinux:
+      state: disabled
+
+
+  - name: stop and disable firewalld
+    systemd:
+      name: firewalld
+      state: stopped
+      enabled: no
+
+
+  - name: install openvpn
+    yum:
+     name:
+      - zip
+      - unzip
+      - openssl
+      - wget
+      - mc
+      - openvpn
+      - openvpn-devel
+      - easy-rsa
+    notify:
+      - start openvpn
+    ignore_errors: yes
+
+
+
+  - name: Set ip forwarding on in /proc and in the sysctl file and reload if necessary
+    sysctl:
+      name: net.ipv4.ip_forward
+      value: '1'
+      sysctl_set: yes
+      state: present
+      reload: yes
+
+
