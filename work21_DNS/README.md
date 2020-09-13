@@ -1,14 +1,31 @@
-# Домашнее задание split-dns
+Linux Administrator 2020
 
-## Список виртуальных машин
+###########################
+#Домашнее задание 21 DNS  #
+###########################
+         
+         
 
-| name | ip | описание |
-|------|------|------|
-| ns01 | 192.168.50.10 | master DNS |
-| ns02 | 192.168.50.11 | slave DNS |
-| client | 192.168.50.15 | server web1 |
-| client2 | 192.168.50.16 | server web2 |
+<details>
+<summary><code>настроить split-dns
+клиент1 - видит обе зоны, но в зоне dns.lab только web1</code></summary>
 
-## Описание стенда
-client видит оба сервера по www.newdns.lab и web1.dns.lab.
-client видит web1.dns.lab  web2.dns.lab.
+</code></summary>
+
+```
+
+
+```
+</details>
+
+
+<details>
+<summary><code>клиент2 видит только dns.lab</code></summary>
+
+```
+
+
+
+```
+
+</details>
