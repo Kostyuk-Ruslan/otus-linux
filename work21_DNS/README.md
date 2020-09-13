@@ -117,6 +117,12 @@ ns02.dns.lab.		3600	IN	A	192.168.50.11
 <summary><code>клиент2 видит только dns.lab</code></summary>
 
 ```
+[root@client2 ~]# dig web1.dns.lab +short @192.168.50.10
+192.168.50.15
+[root@client2 ~]# dig web2.dns.lab +short @192.168.50.10
+192.168.50.16
+[root@client2 ~]# dig www.newdns.lab +short @192.168.50.10
+[root@client2 ~]# dig www.newdns.lab +short @192.168.50.11
 
 
 
