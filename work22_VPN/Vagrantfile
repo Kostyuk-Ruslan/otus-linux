@@ -21,4 +21,10 @@ Vagrant.configure(2) do |config|
   end
 
 
+  config.vm.define "openvpncl" do |openvpncl|
+    openvpncl.vm.network "private_network", ip: "192.168.50.11", virtualbox__intnet: "vpn"
+    openvpncl.vm.hostname = "openvpncl"
+  end
+
+
 end
