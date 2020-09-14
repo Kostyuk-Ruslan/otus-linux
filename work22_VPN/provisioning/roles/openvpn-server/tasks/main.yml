@@ -51,9 +51,6 @@
       - openvpn-devel
       - easy-rsa
       - iperf3
-#    notify:
-#      - start openvpn
-    ignore_errors: yes
 
 
   - name: Create a directory ccd
@@ -75,13 +72,6 @@
       owner: root
       group: root
       state: link
-
-  - name: template server.conf
-    template:
-      src:  templates/server.conf.j2
-      dest: /etc/openvpn/server/server.conf
-      mode: '0755'
-
 
 
 
@@ -122,6 +112,36 @@
 
 
 
+  - name: template server.conf
+    template:
+      src:  templates/server.conf.j2
+      dest: /etc/openvpn/server/server.conf
+      mode: '0755'
+
+
+  - name: Create directory log openvpn
+    file:
+      path: /var/log/openvpn/
+      state: directory
+      mode: '0775'
+ 
+
+
+  - name: Create file openvpn logs
+    file:
+      path: /var/log/openvpn/{{ item }}
+      state: touch
+      mode: '0775'
+    with_items:
+    - "openvpn.log"
+    - "openvpn-status.log"
 
 
 
+
+  - name: start openvpn-server unit
+    systemd:
+      name: openvpn-server@server
+      state: restarted
+      enabled: yes
+               

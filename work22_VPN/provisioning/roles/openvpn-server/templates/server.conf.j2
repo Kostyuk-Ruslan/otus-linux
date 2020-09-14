@@ -7,12 +7,12 @@ server {{ openvpn_server_net }} {{ openvpn_server_mask }}
 push "topology subnet"
 #ifconfig {{ openvpn_ifconfig_ip }} {{ openvpn_ifconfig_mask }}
 #push "route-gateway {{ openvpn_gateway }}
-ifconfig-pool {{ openvpn_ifconfig_pool }}
+#ifconfig-pool {{ openvpn_ifconfig_pool }}
 management localhost 7505
-ca /etc/openvpn/keys/ca.crt
-cert /etc/openvpn/keys/server.crt
-key /etc/openvpn/keys/server.key
-dh /etc/openvpn/keys/dh.pem
+ca /etc/openvpn/server/3.0.7/pki/ca.crt
+cert /etc/openvpn/server/3.0.7/pki/issued/server.crt
+key /etc/openvpn/server/3.0.7/pki/private/server.key
+dh /etc/openvpn/server/3.0.7/pki/dh.pem
 comp-lzo
 cipher AES-128-CBC
 client-to-client
