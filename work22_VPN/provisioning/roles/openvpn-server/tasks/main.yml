@@ -50,6 +50,7 @@
       - openvpn
       - openvpn-devel
       - easy-rsa
+      - iperf3
 #    notify:
 #      - start openvpn
     ignore_errors: yes
@@ -63,6 +64,7 @@
     with_items:
     - "ccd/"
     - "keys/"
+    - "scripts/"
                
                
 
@@ -73,6 +75,13 @@
       owner: root
       group: root
       state: link
+
+  - name: template server.conf
+    template:
+      src: templates/server.conf.j2
+      dest: /etc/openvpn/server/
+      mode: '0755'
+
 
 
 
