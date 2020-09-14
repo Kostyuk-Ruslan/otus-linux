@@ -78,8 +78,8 @@
 
   - name: template server.conf
     template:
-      src: templates/server.conf.j2
-      dest: /etc/openvpn/server/
+      src:  templates/server.conf.j2
+      dest: /etc/openvpn/server/server.conf
       mode: '0755'
 
 
