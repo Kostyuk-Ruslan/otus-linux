@@ -94,3 +94,34 @@
       reload: yes
 
 
+
+
+  - name: easyrsa init-pki
+    shell: ./easyrsa init-pki
+    args:
+        chdir: /etc/openvpn/server/3.0.7
+
+
+  - name: easyrsa gen-dh
+    shell: ./easyrsa gen-dh
+    args:
+        chdir: /etc/openvpn/server/3.0.7
+
+
+
+  - name: easyrsa ca
+    shell:  echo server | ./easyrsa build-ca nopass
+    args:
+        chdir: /etc/openvpn/server/3.0.7
+
+
+  - name: easyrsa server.crt ans server.key
+    shell: ./easyrsa build-server-full server nopass
+    args:
+        chdir: /etc/openvpn/server/3.0.7
+
+
+
+
+
+

@@ -5,8 +5,8 @@ port {{ openvpn_port }}
 dev {{ openvpn_dev }}
 server {{ openvpn_server_net }} {{ openvpn_server_mask }}
 push "topology subnet"
-ifconfig {{ openvpn_ifconfig_ip }} {{ openvpn_ifconfig_mask }}
-push "route-gateway {{ openvpn_gateway }}
+#ifconfig {{ openvpn_ifconfig_ip }} {{ openvpn_ifconfig_mask }}
+#push "route-gateway {{ openvpn_gateway }}
 ifconfig-pool {{ openvpn_ifconfig_pool }}
 management localhost 7505
 ca /etc/openvpn/keys/ca.crt
@@ -14,12 +14,15 @@ cert /etc/openvpn/keys/server.crt
 key /etc/openvpn/keys/server.key
 dh /etc/openvpn/keys/dh.pem
 comp-lzo
-clietn-config-dir /etc/openvpn/ccd
-client-connect /etc/openvpn/scripts/client-up
-client-disconnect /etc/openvpn/scripts/client-down
+cipher AES-128-CBC
+client-to-client
+max-clients 32
+client-config-dir /etc/openvpn/ccd
+#client-connect /etc/openvpn/scripts/client-up
+#client-disconnect /etc/openvpn/scripts/client-down
 log-append /var/log/openvpn/openvpn.log
 status /var/log/openvpn/openvpn-status.log
 verb 3
 
 # -= TEST =-
-push route {{ openvpn_routes }}
+push  "{{ openvpn_routes }}"
