@@ -1,12 +1,13 @@
 
 ---
 
-- hosts: openvpnsrv
+- hosts: client
   become: true
   roles:
-    - openvpn-server
+    - srv_vpn1
 
-- hosts: openvpncl
+
+- hosts: server
   become: true
   roles:
-  - openvpn-client
+    - srv_vpn2
