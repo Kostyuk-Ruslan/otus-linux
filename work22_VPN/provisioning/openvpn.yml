@@ -11,3 +11,9 @@
   become: true
   roles:
     - srv_vpn2
+
+
+- hosts: openvpnsrv
+  become: true
+  roles:
+    - openvpnsrv
