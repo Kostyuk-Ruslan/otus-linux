@@ -7,10 +7,12 @@ Linux Administrator 2020
          
 
 <details>
-<summary><code>настроить split-dns
-клиент1 - видит обе зоны, но в зоне dns.lab только web1</code></summary>
+<summary><code>PN
+1. Между двумя виртуалками поднять vpn в режимах
+- tun
+- tap
+Прочуствовать разницу.</code></summary>
 
-</code></summary>
 
 ```
 
@@ -312,7 +314,7 @@ tcp6       0      0 :::9090                 :::*                    LISTEN      
 ```
 
 
-А теперь пинг с клиента на сервер
+А теперь пинг с клиента на сервер, все работает
 
 ```
 [root@node01 client]# ping -c 4 10.10.10.1
