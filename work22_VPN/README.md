@@ -172,8 +172,125 @@ default via 10.0.2.2 dev eth0 proto dhcp metric 100
 
 
 
+```
+Далее на клиент (node01 - 192.168.1.2) я установил софт openvpn после чего перенес клиентские сертификаты
+
+- ca.cr
+- client.crt
+- client.key
+в каталог </code>/etc/openvpn/client</code>
+
+и там же создал файл "client.conf"
 
 ```
+dev tun
+proto tcp
+remote 192.168.10.30 1194
+client
+resolv-retry infinite
+ca ./ca.crt
+cert ./client.crt
+key ./client.key
+persist-key
+persist-tun
+comp-lzo
+verb 3
+status /var/log/openvpn-status.log
+log /var/log/openvpn.log
+
+
+```
+Запускаем нашего демона <code>systemctl start openvpn-client@client</code>
+
+```
+[root@node01 client]# systemctl start openvpn-client@client
+[root@node01 client]# systemctl status openvpn-client@client
+● openvpn-client@client.service - OpenVPN tunnel for client
+   Loaded: loaded (/usr/lib/systemd/system/openvpn-client@.service; disabled; vendor preset: disabled)
+   Active: active (running) since Чт 2020-09-17 10:59:26 MSK; 2s ago
+     Docs: man:openvpn(8)
+           https://community.openvpn.net/openvpn/wiki/Openvpn24ManPage
+           https://community.openvpn.net/openvpn/wiki/HOWTO
+ Main PID: 5574 (openvpn)
+   Status: "Pre-connection initialization successful"
+   CGroup: /system.slice/system-openvpn\x2dclient.slice/openvpn-client@client.service
+           └─5574 /usr/sbin/openvpn --suppress-timestamps --nobind --config client.conf
+
+сен 17 10:59:26 node01 systemd[1]: Starting OpenVPN tunnel for client...
+сен 17 10:59:26 node01 systemd[1]: Started OpenVPN tunnel for client.
+[root@node01 client]# 
+
+
+```
+Наличие поднятия интерйеса tun
+
+```
+[root@node01 client]# ifconfig
+eno1: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 192.168.1.2  netmask 255.255.255.0  broadcast 192.168.1.255
+        inet6 fe80::2665:9360:4b44:2617  prefixlen 64  scopeid 0x20<link>
+        ether 6c:4b:90:0a:29:3c  txqueuelen 1000  (Ethernet)
+        RX packets 13801  bytes 2163382 (2.0 MiB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 7842  bytes 1925610 (1.8 MiB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+lo: flags=73<UP,LOOPBACK,RUNNING>  mtu 65536
+        inet 127.0.0.1  netmask 255.0.0.0
+        inet6 ::1  prefixlen 128  scopeid 0x10<host>
+        loop  txqueuelen 1000  (Local Loopback)
+        RX packets 2357  bytes 296994 (290.0 KiB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 2357  bytes 296994 (290.0 KiB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+tun0: flags=4305<UP,POINTOPOINT,RUNNING,NOARP,MULTICAST>  mtu 1500
+        inet 10.10.11.8  netmask 255.255.255.255  destination 255.255.255.0
+        inet6 fe80::8c89:db8b:fd0:fa7e  prefixlen 64  scopeid 0x20<link>
+        unspec 00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00  txqueuelen 100  (UNSPEC)
+        RX packets 0  bytes 0 (0.0 B)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 3  bytes 144 (144.0 B)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+vboxnet6: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 192.168.10.1  netmask 255.255.255.0  broadcast 192.168.10.255
+        inet6 fe80::800:27ff:fe00:6  prefixlen 64  scopeid 0x20<link>
+        ether 0a:00:27:00:00:06  txqueuelen 1000  (Ethernet)
+        RX packets 0  bytes 0 (0.0 B)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 28  bytes 2160 (2.1 KiB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+wlp2s0: flags=4099<UP,BROADCAST,MULTICAST>  mtu 1500
+        ether 06:42:4d:f5:90:ba  txqueuelen 1000  (Ethernet)
+        RX packets 0  bytes 0 (0.0 B)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 0  bytes 0 (0.0 B)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+[root@node01 client]# 
+
+
+
+```
+Видим что поучили на "10.10.11.8"
+
+ну и роуты 
+
+```
+root@node01 client]# ip ro
+default via 192.168.1.1 dev eno1 proto dhcp metric 100 
+10.10.10.1 via 255.255.255.0 dev tun0 
+192.168.1.0/24 dev eno1 proto kernel scope link src 192.168.1.2 metric 100 
+192.168.10.0/24 dev vboxnet6 proto kernel scope link src 192.168.10.1 
+255.255.255.0 dev tun0 proto kernel scope link src 10.10.11.8 
+[root@node01 client]# 
+
+
+
+```
+
 
 </details>
 
