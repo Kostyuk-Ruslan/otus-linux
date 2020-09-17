@@ -558,9 +558,249 @@ rtt min/avg/max/mdev = 2.229/2.349/2.606/0.153 ms
 <summary><code>3*. Самостоятельно изучить, поднять ocserv и подключиться с хоста к виртуалке</code></summary>
 
 ```
+Примечание создал еще одну виртуалку в Вагранте и назвал ее ocserv (192.168.10.40)
+Автоматизировал через ансибл
+
+Некоторые ключи я смог сгенерировать через ансибл, те которые не смогу я использовал модуль "copy" так как при создании ключей требуется неоднократно ввести некоторые данные, как это победить через ансибл, я пока не знаю ((
+поэтому я заранее сгенерировал некоторые  ключи и копирую их на сервер.
+
+
+прочитав инструкцию система оказалось интересна тем, что не приходится перетаскивать клиентские ключи на сам клиент это на (Линуксе ) достаточно просто установить пакет на стороне клиента openconnect, так же порадовала
+возможность индивидуальным клиентам пушить роуты как в опенвпне ну и то что есть инсталаятор под винду.
+
+Минус , мне не понравилось, чо приходится генерить много сертификатов (непонятно они все одинаковые или нет)
+
+```
+
+Установил пакет ocserv на сервере и openconnect на клиенте (node01 - 192.168.1.2) делал все по оф. документации <code>https://ocserv.gitlab.io/www/manual.html</code>
+
+Ключи генерируются сразу в /etc/ocserv
+
+<code>server.conf</code> , я его особо не стал менять сильно от дефолтного, настроек у него очень много как мне показалось
+
+тут хочется отсановиться по подробнее на методе аутентификации, "pam" установлен из коробки, то есть можно атворизоваться с клиента использовав локальные логин и пароль рута, я их заранее определил с помощью ансибла
+поэтому выбрал <code>auth = "pam"</code> p.s. как оказалось можно делать индивидуальные пароли и логины для клиента используя <code>ocpasswd</code>
+
+```
+
+auth = "pam"
+tcp-port = 443 
+udp-port = 443
+run-as-user = ocserv
+run-as-group = ocserv
+socket-file = ocserv.sock
+chroot-dir = /var/lib/ocserv
+banner = "Welcome"
+max-clients = 16
+max-same-clients = 2
+keepalive = 32400
+dpd = 90
+mobile-dpd = 1800
+switch-to-tcp-timeout = 25
+try-mtu-discovery = false
+server-cert = /etc/ocserv/server-cert.pem                                                  
+server-key = /etc/ocserv/server-key.pem                                                    
+ca-cert = /etc/ocserv/ca.crt                                                               
+cert-user-oid = 0.9.2342.19200300.100.1.1                                                  
+tls-priorities = "NORMAL:%SERVER_PRECEDENCE:%COMPAT:-VERS-SSL3.0"                          
+auth-timeout = 240                                                                         
+min-reauth-time = 300                                                                      
+max-ban-score = 50
+ban-reset-time = 300
+cookie-timeout = 300
+deny-roaming = false
+rekey-time = 172800
+rekey-method = ssl
+use-occtl = true
+pid-file = /var/run/ocserv.pid
+device = vpns
+predictable-ips = true
+default-domain = example.com
+ipv4-network = 192.168.5.0  //сеть впн
+ipv4-netmask = 255.255.255.0 .. маска
+ping-leases = false
+route = 192.168.5.0/255.255.255.0  // данные маршруты будут отправлены клиенту
+dtls-legacy = true
+user-profile = profile.xml
+
+```
+после чего запускаем нашего демона ocserv
+
+```
+
+[root@ocserv ~]# systemctl start ocserv
+[root@ocserv ~]# systemctl status ocserv
+● ocserv.service - OpenConnect SSL VPN server
+   Loaded: loaded (/usr/lib/systemd/system/ocserv.service; enabled; vendor preset: disabled)
+   Active: active (running) since Thu 2020-09-17 15:28:03 UTC; 24min ago
+     Docs: man:ocserv(8)
+  Process: 696 ExecStartPre=/usr/sbin/ocserv-genkey (code=exited, status=0/SUCCESS)
+ Main PID: 703 (ocserv-main)
+   CGroup: /system.slice/ocserv.service
+           ├─703 ocserv-main
+           └─714 ocserv-sm
+
+Sep 17 15:28:04 ocserv ocserv[703]: main: initialized ocserv 1.1.0
+Sep 17 15:28:04 ocserv ocserv[703]: listening (UDP) on 0.0.0.0:443...
+Sep 17 15:28:04 ocserv ocserv[703]: listening (UDP) on [::]:443...
+Sep 17 15:28:04 ocserv ocserv[714]: sec-mod: reading supplemental config from files
+Sep 17 15:28:04 ocserv ocserv[714]: sec-mod: sec-mod initialized (socket: /var/lib/ocserv/ocserv.sock.12c4413f)
+Sep 17 15:28:45 ocserv ocserv[703]: note: skipping 'pid-file' config option
+Sep 17 15:28:45 ocserv ocserv[703]: note: setting 'pam' as primary authentication method
+Sep 17 15:28:45 ocserv ocserv[703]: note: 'dtls-psk' cannot be combined with unix socket file
+Sep 17 15:28:45 ocserv ocserv[703]: note: setting 'file' as supplemental config option
+Sep 17 15:28:51 ocserv ocserv[703]: main:192.168.10.1:46066 user disconnected (reason: unspecified, rx: 0, tx: 0)
+[root@ocserv ~]# 
+```
+
+Порт слушаем 443 ocserv
+
+```
+
+[root@ocserv ~]# netstat -ntlpa
+Active Internet connections (servers and established)
+Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name    
+tcp        0      0 0.0.0.0:111             0.0.0.0:*               LISTEN      391/rpcbind         
+tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN      694/sshd            
+tcp        0      0 127.0.0.1:25            0.0.0.0:*               LISTEN      934/master          
+tcp        0      0 0.0.0.0:443             0.0.0.0:*               LISTEN      703/ocserv-main     
+tcp        0      0 10.0.2.15:22            10.0.2.2:36154          ESTABLISHED 1074/sshd: vagrant  
+tcp6       0      0 :::111                  :::*                    LISTEN      391/rpcbind         
+tcp6       0      0 :::22                   :::*                    LISTEN      694/sshd            
+tcp6       0      0 ::1:25                  :::*                    LISTEN      934/master          
+tcp6       0      0 :::443                  :::*                    LISTEN      703/ocserv-main     
+
+```
+
+Далее уже на стороне клиента, полпытаемся подконектиться к серверу - логин "root" , пароль "qwerty"
 
 
 ```
+[root@node01 tasks]# openconnect 192.168.10.40
+POST https://192.168.10.40/
+Connected to 192.168.10.40:443
+SSL negotiation with 192.168.10.40
+Server certificate verify failed: signer not found
+
+Certificate from VPN server "192.168.10.40" failed verification.
+Reason: signer not found
+To trust this server in future, perhaps add this to your command line:
+    --servercert pin-sha256:pKpCDZxwzjVVncuwFQ0PsVmlwK14gsVmq+WDuNub+80=
+    Enter 'yes' to accept, 'no' to abort; anything else to view: yes
+    Connected to HTTPS on 192.168.10.40 with ciphersuite (TLS1.2)-(ECDHE-RSA-SECP256R1)-(AES-128-GCM)
+    XML POST enabled
+    Please enter your username.
+    Username:root
+    POST https://192.168.10.40/auth
+    Please enter your password.
+    Password:
+    POST https://192.168.10.40/auth
+    Got CONNECT response: HTTP/1.1 200 CONNECTED
+    CSTP connected. DPD 90, Keepalive 32400
+    Connected as 192.168.5.170, using SSL, with DTLS in progress
+    Established DTLS connection (using GnuTLS). Ciphersuite (DTLS1.2)-(RSA)-(AES-128-GCM).
+    
+```
+
+
+Проверяем ESTABLESHED между клиентом и сервером по "443"
+
+```
+[root@node01 ~]# netstat -ntlpa
+Active Internet connections (servers and established)
+Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name    
+tcp        0      0 127.0.0.1:2222          0.0.0.0:*               LISTEN      9344/VBoxHeadless   
+tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN      1074/sshd           
+tcp        0      0 127.0.0.1:2200          0.0.0.0:*               LISTEN      15260/VBoxHeadless  
+tcp        0      0 127.0.0.1:2201          0.0.0.0:*               LISTEN      20511/VBoxHeadless  
+tcp        0      0 127.0.0.1:25            0.0.0.0:*               LISTEN      1489/master         
+tcp        0      0 127.0.0.1:2202          0.0.0.0:*               LISTEN      16543/VBoxHeadless  
+tcp        0   1280 192.168.1.2:22          193.112.160.203:45280   ESTABLISHED 22409/sshd: [accept 
+tcp        0      0 192.168.1.2:22          185.9.84.50:58931       ESTABLISHED 1612/sshd: root@pts 
+tcp        0    196 192.168.1.2:22          185.9.84.50:61702       ESTABLISHED 22407/sshd: root@pt 
+tcp        0      0 192.168.10.1:46072      192.168.10.40:443       ESTABLISHED 22353/openconnect   
+tcp        0      0 192.168.10.1:46844      192.168.10.30:1194      ESTABLISHED 24324/openvpn       
+tcp        0      0 192.168.1.2:22          185.9.84.50:58977       ESTABLISHED 1683/sshd: root@pts 
+tcp6       0      0 :::22                   :::*                    LISTEN      1074/sshd           
+tcp6       0      0 ::1:25                  :::*                    LISTEN      1489/master         
+tcp6       0      0 :::9090                 :::*                    LISTEN      1/systemd           
+[root@node01 ~]# 
+
+
+```
+
+
+
+Видим что поднялся новый виртуальный интерфейс с названием tun1 "192.168.5.170"
+
+```
+
+[root@node01 ~]# ifconfig
+eno1: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 192.168.1.2  netmask 255.255.255.0  broadcast 192.168.1.255
+        inet6 fe80::2665:9360:4b44:2617  prefixlen 64  scopeid 0x20<link>
+        ether 6c:4b:90:0a:29:3c  txqueuelen 1000  (Ethernet)
+        RX packets 646499  bytes 767057943 (731.5 MiB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 383734  bytes 41225291 (39.3 MiB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+lo: flags=73<UP,LOOPBACK,RUNNING>  mtu 65536
+        inet 127.0.0.1  netmask 255.0.0.0
+        inet6 ::1  prefixlen 128  scopeid 0x10<host>
+        loop  txqueuelen 1000  (Local Loopback)
+        RX packets 94036  bytes 401640787 (383.0 MiB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 94036  bytes 401640787 (383.0 MiB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+
+tun1: flags=4305<UP,POINTOPOINT,RUNNING,NOARP,MULTICAST>  mtu 1434
+        inet 192.168.5.170  netmask 255.255.255.255  destination 192.168.5.170
+        inet6 fe80::48cf:cd56:e6cf:7b28  prefixlen 64  scopeid 0x20<link>
+        unspec 00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00  txqueuelen 500  (UNSPEC)
+        RX packets 4  bytes 248 (248.0 B)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 3  bytes 144 (144.0 B)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+vboxnet6: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 192.168.10.1  netmask 255.255.255.0  broadcast 192.168.10.255
+        inet6 fe80::800:27ff:fe00:6  prefixlen 64  scopeid 0x20<link>
+        ether 0a:00:27:00:00:06  txqueuelen 1000  (Ethernet)
+        RX packets 0  bytes 0 (0.0 B)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 839  bytes 109468 (106.9 KiB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+wlp2s0: flags=4099<UP,BROADCAST,MULTICAST>  mtu 1500
+        ether 1e:74:b7:53:c7:94  txqueuelen 1000  (Ethernet)
+        RX packets 0  bytes 0 (0.0 B)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 0  bytes 0 (0.0 B)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+[root@node01 ~]# 
+
+```
+и напоследок роуты
+
+
+```
+[root@node01 ~]# ip r
+default via 192.168.1.1 dev eno1 proto dhcp metric 100 
+192.168.1.0/24 dev eno1 proto kernel scope link src 192.168.1.2 metric 100 
+192.168.5.0/24 dev tun1 scope link 
+192.168.10.0/24 dev vboxnet6 proto kernel scope link src 192.168.10.1 
+192.168.10.40 dev vboxnet6 scope link src 192.168.10.1 
+[root@node01 ~]# 
+
+```
+
+
+
+
+
 
 </details>
 

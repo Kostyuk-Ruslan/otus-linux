@@ -28,7 +28,7 @@
       enabled: no
 
 
-  - name: install openvpn
+  - name: install ocserv
     yum:
      name:
       - net-tools
@@ -40,6 +40,27 @@
       - ocserv
       - easy-rsa
       - iperf3
+
+
+  - name: Меняем пароль рута на qwerty
+    user:
+      name: root
+      update_password: always
+      password: "{{ 'qwerty' | password_hash('sha512') }}"
+
+  - name: Меняем PasswordAuthentication на yes
+    lineinfile: 
+      path: /etc/ssh/sshd_config 
+      regexp: '^#?PasswordAuthentication' 
+      line: 'PasswordAuthentication yes'
+
+
+  - name: restart sshd
+    systemd:
+      name: sshd
+      state: restarted
+      enabled: yes
+
 
 
 
@@ -115,10 +136,13 @@
     args:
       chdir: /etc/ocserv
    
-  - name: Генерируем user.p12
-    shell: certtool --to-p12 --load-privkey user-key.pem --pkcs-cipher 3des-pkcs12 --load-certificate user-cert.pem --outfile user.p12
-    args:
-      chdir: /etc/ocserv
+  - name: Копируем готовый user.p12
+    copy:
+      src:  files/user.p12
+      dest: /etc/ocserv
+      group: root
+      owner: root
+      mode: '775'
       
       
   - name: template ocserv.conf
@@ -126,6 +150,8 @@
       src:  templates/ocserv.conf.j2
       dest: /etc/ocserv/ocserv.conf
       mode: '0755'
+
+
  
 
   - name: start ocserv unit
