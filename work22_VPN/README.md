@@ -561,14 +561,14 @@ rtt min/avg/max/mdev = 2.229/2.349/2.606/0.153 ms
 Примечание создал еще одну виртуалку в Вагранте и назвал ее ocserv (192.168.10.40)
 Автоматизировал через ансибл
 
-Некоторые ключи я смог сгенерировать через ансибл, те которые не смогу я использовал модуль "copy" так как при создании ключей требуется неоднократно ввести некоторые данные, как это победить через ансибл, я пока не знаю ((
+Некоторые ключи я смог сгенерировать через ансибл, те которые не смог, я использовал модуль "copy" так как при создании некоторых сертификатов требуется неоднократно ввести некоторые данные, как это победить через ансибл, я пока не знаю ((
 поэтому я заранее сгенерировал некоторые  ключи и копирую их на сервер.
 
 
-прочитав инструкцию система оказалось интересна тем, что не приходится перетаскивать клиентские ключи на сам клиент это на (Линуксе ) достаточно просто установить пакет на стороне клиента openconnect, так же порадовала
+прочитав инструкцию система оказалось интересна тем, что не приходится перетаскивать клиентские ключи на сам клиент это я тестил на (Линуксе ) достаточно просто установить пакет на стороне клиента openconnect, так же порадовала
 возможность индивидуальным клиентам пушить роуты как в опенвпне ну и то что есть инсталаятор под винду.
 
-Минус , мне не понравилось, чо приходится генерить много сертификатов (непонятно они все одинаковые или нет)
+Минус , мне не понравилось, чо приходится генерить много сертификатов, честно говоря не знаю, все ли они нужны, надо будет перечитать документацию )
 
 ```
 
@@ -578,7 +578,7 @@ rtt min/avg/max/mdev = 2.229/2.349/2.606/0.153 ms
 
 <code>server.conf</code> , я его особо не стал менять сильно от дефолтного, настроек у него очень много как мне показалось
 
-тут хочется отсановиться по подробнее на методе аутентификации, "pam" установлен из коробки, то есть можно атворизоваться с клиента использовав локальные логин и пароль рута, я их заранее определил с помощью ансибла
+тут хочется отсановиться по подробнее на методе аутентификации, "pam" установлен из коробки, то есть можно атворизоваться с клиента использовав локальные логин и пароль рута те что на сервере, я их заранее определил с помощью ансибла
 поэтому выбрал <code>auth = "pam"</code> p.s. как оказалось можно делать индивидуальные пароли и логины для клиента используя <code>ocpasswd</code>
 
 ```
@@ -617,14 +617,14 @@ device = vpns
 predictable-ips = true
 default-domain = example.com
 ipv4-network = 192.168.5.0  //сеть впн
-ipv4-netmask = 255.255.255.0 .. маска
+ipv4-netmask = 255.255.255.0 // маска
 ping-leases = false
 route = 192.168.5.0/255.255.255.0  // данные маршруты будут отправлены клиенту
 dtls-legacy = true
 user-profile = profile.xml
 
 ```
-после чего запускаем нашего демона ocserv
+после чего запускаем нашего демона "ocserv"
 
 ```
 
@@ -672,7 +672,7 @@ tcp6       0      0 :::443                  :::*                    LISTEN      
 
 ```
 
-Далее уже на стороне клиента, полпытаемся подконектиться к серверу - логин "root" , пароль "qwerty"
+Далее уже на стороне клиента, попытаемся подконектиться к серверу - логин "root" , пароль "qwerty"
 
 
 ```
@@ -783,6 +783,56 @@ wlp2s0: flags=4099<UP,BROADCAST,MULTICAST>  mtu 1500
 [root@node01 ~]# 
 
 ```
+и на сервере видим новый интерфейс vpns0 - 192.168.5.1
+
+
+```
+[root@ocserv ~]# ifconfig
+eth0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 10.0.2.15  netmask 255.255.255.0  broadcast 10.0.2.255
+        inet6 fe80::5054:ff:fe4d:77d3  prefixlen 64  scopeid 0x20<link>
+        ether 52:54:00:4d:77:d3  txqueuelen 1000  (Ethernet)
+        RX packets 594  bytes 53611 (52.3 KiB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 403  bytes 44727 (43.6 KiB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+eth1: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 192.168.10.40  netmask 255.255.255.0  broadcast 192.168.10.255
+        inet6 fe80::a00:27ff:fe2b:caa1  prefixlen 64  scopeid 0x20<link>
+        ether 08:00:27:2b:ca:a1  txqueuelen 1000  (Ethernet)
+        RX packets 79  bytes 12815 (12.5 KiB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 76  bytes 15893 (15.5 KiB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+lo: flags=73<UP,LOOPBACK,RUNNING>  mtu 65536
+        inet 127.0.0.1  netmask 255.0.0.0
+        inet6 ::1  prefixlen 128  scopeid 0x10<host>
+        loop  txqueuelen 1000  (Local Loopback)
+        RX packets 32  bytes 2592 (2.5 KiB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 32  bytes 2592 (2.5 KiB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+vpns0: flags=81<UP,POINTOPOINT,RUNNING>  mtu 1434
+        inet 192.168.5.1  netmask 255.255.255.255  destination 192.168.5.170
+        inet6 fe80::ac0d:51fc:2b19:1e01  prefixlen 64  scopeid 0x20<link>
+        unspec 00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00  txqueuelen 500  (UNSPEC)
+        RX packets 3  bytes 144 (144.0 B)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 7  bytes 448 (448.0 B)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+[root@ocserv ~]# 
+
+```
+
+
+
+
+
+
 и напоследок роуты
 
 
@@ -797,8 +847,22 @@ default via 192.168.1.1 dev eno1 proto dhcp metric 100
 
 ```
 
+c клиента пингую сервер
 
+```
+[root@node01 ~]# ping 192.168.5.1
+PING 192.168.5.1 (192.168.5.1) 56(84) bytes of data.
+64 bytes from 192.168.5.1: icmp_seq=1 ttl=64 time=2.41 ms
+64 bytes from 192.168.5.1: icmp_seq=2 ttl=64 time=2.51 ms
+64 bytes from 192.168.5.1: icmp_seq=3 ttl=64 time=2.63 ms
+64 bytes from 192.168.5.1: icmp_seq=4 ttl=64 time=2.31 ms
+^C
+--- 192.168.5.1 ping statistics ---
+4 packets transmitted, 4 received, 0% packet loss, time 3004ms
+rtt min/avg/max/mdev = 2.312/2.468/2.632/0.133 ms
+[root@node01 ~]# 
 
+```
 
 
 
