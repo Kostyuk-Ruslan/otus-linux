@@ -1,0 +1,25 @@
+
+---
+
+#openvpn_server_key: "server.key"
+#openvpn_server_crt: "server.crt"
+#openvpn_ca_crt: "ca.crt"
+#openvpn_dh_pem: "dh.pem"
+#openvpn_ta_key: "ta.key"
+openvpn_port: '1194'
+openvpn_proto: 'udp'
+openvpn_dev: 'tun0'
+openvpn_server_net: '10.1.10.0'
+openvpn_server_mask: '255.255.255.0'
+openvpn_ifconfig_ip : '10.1.10.1'
+openvpn_ifconfig_mask : '255.255.255.0'
+openvpn_gateway: '10.1.10.1'
+openvpn_ifconfig_pool: '10.1.10.2 10.1.10.199 255.255.255.0'
+openvpn_routes:
+    'route 10.1.10.0 255.255.255.0'
+#- '10.0.1.0 255.255.255.0'
+
+#openvpn_dns_servers:
+#  - '10.0.0.2'
+#  - '10.0.0.3'
+
