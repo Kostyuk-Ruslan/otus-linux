@@ -63,7 +63,7 @@ verb 3
 
 
 ```
-Важный момент, что бы клиент получил персональный, я в  /etc/openvpn/ccd создал файл "client"
+Важный момент, что бы клиент получил персональный ip, я в  /etc/openvpn/ccd создал файл "client"
 
 файл с названием "client" должен быть аналогичен с названием клиентского сертификата, в данном случаем, он называется тоже "client"
 
@@ -175,7 +175,7 @@ default via 10.0.2.2 dev eth0 proto dhcp metric 100
 ```
 Далее на клиент (node01 - 192.168.1.2) я установил софт openvpn после чего перенес клиентские сертификаты
 
-- ca.cr
+- ca.crt
 - client.crt
 - client.key
 в каталог </code>/etc/openvpn/client</code>
@@ -222,7 +222,7 @@ log /var/log/openvpn.log
 
 
 ```
-Наличие поднятия интерйеса tun
+Смотрим  наличие поднятия интерйеса tun
 
 ```
 [root@node01 client]# ifconfig
@@ -288,9 +288,48 @@ default via 192.168.1.1 dev eno1 proto dhcp metric 100
 [root@node01 client]# 
 
 
-
 ```
 
+Проверка порта 1194 на предмет "ESTABLISHED"
+
+```
+[root@node01 client]# netstat -ntlpa
+Active Internet connections (servers and established)
+Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name    
+tcp        0      0 127.0.0.1:2222          0.0.0.0:*               LISTEN      4146/VBoxHeadless   
+tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN      1074/sshd           
+tcp        0      0 127.0.0.1:25            0.0.0.0:*               LISTEN      1489/master         
+tcp        0      0 192.168.1.2:22          185.9.84.50:59116       ESTABLISHED 4903/sshd: root@pts 
+tcp        0      0 192.168.1.2:22          185.9.84.50:58931       ESTABLISHED 1612/sshd: root@pts 
+tcp        0      0 127.0.0.1:2222          127.0.0.1:41038         ESTABLISHED 4146/VBoxHeadless   
+tcp        0      0 192.168.10.1:45658      192.168.10.30:1194      ESTABLISHED 5574/openvpn        
+tcp        0      0 127.0.0.1:41038         127.0.0.1:2222          ESTABLISHED 5135/ssh            
+tcp        0    196 192.168.1.2:22          185.9.84.50:58977       ESTABLISHED 1683/sshd: root@pts 
+tcp6       0      0 :::22                   :::*                    LISTEN      1074/sshd           
+tcp6       0      0 ::1:25                  :::*                    LISTEN      1489/master         
+tcp6       0      0 :::9090                 :::*                    LISTEN      1/systemd           
+[root@node01 client]# 
+```
+
+
+А теперь пинг с клиента на сервер
+
+```
+[root@node01 client]# ping -c 4 10.10.10.1
+PING 10.10.10.1 (10.10.10.1) 56(84) bytes of data.
+64 bytes from 10.10.10.1: icmp_seq=1 ttl=64 time=2.60 ms
+64 bytes from 10.10.10.1: icmp_seq=2 ttl=64 time=2.27 ms
+64 bytes from 10.10.10.1: icmp_seq=3 ttl=64 time=2.22 ms
+64 bytes from 10.10.10.1: icmp_seq=4 ttl=64 time=2.29 ms
+
+--- 10.10.10.1 ping statistics ---
+4 packets transmitted, 4 received, 0% packet loss, time 3004ms
+rtt min/avg/max/mdev = 2.229/2.349/2.606/0.153 ms
+[root@node01 client]# 
+
+
+
+```
 
 </details>
 
