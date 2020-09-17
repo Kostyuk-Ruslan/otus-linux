@@ -17,3 +17,9 @@
   become: true
   roles:
     - openvpnsrv
+
+
+- hosts: ocserv
+  become: true
+  roles:
+    - ocserv

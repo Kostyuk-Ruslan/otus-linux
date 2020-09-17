@@ -1,0 +1,136 @@
+
+  - name: Add multiple repositories 
+    yum_repository:
+      name: epel
+      description: EPEL YUM repo
+      file: external_repos
+      baseurl: https://download.fedoraproject.org/pub/epel/$releasever/$basearch/
+      gpgcheck: no
+
+
+  - name: install epel-release
+    yum:
+     name:
+      - epel-release
+     state: latest
+    tags: install-packages
+
+
+  - name: Disable SELinux
+    selinux:
+      state: disabled
+
+
+  - name: stop and disable firewalld
+    systemd:
+      name: firewalld
+      state: stopped
+      enabled: no
+
+
+  - name: install openvpn
+    yum:
+     name:
+      - net-tools
+      - zip
+      - unzip
+      - openssl
+      - wget
+      - mc
+      - ocserv
+      - easy-rsa
+      - iperf3
+
+
+
+  - name: Set ip forwarding on in /proc and in the sysctl file and reload if necessary
+    sysctl:
+      name: net.ipv4.ip_forward
+      value: '1'
+      sysctl_set: yes
+      state: present
+      reload: yes
+
+
+  - name: Генерируем CA ca-key.pem 
+    shell: certtool --generate-privkey --outfile ca-key.pem
+    args:
+       chdir: /etc/ocserv/
+      
+  - name: Копируем готовый ca.tmpl
+    copy:
+      src:  files/ca.tmpl
+      dest: /etc/ocserv
+      group: root
+      owner: root
+      mode: '775'
+ 
+ 
+  
+  - name: Создаем ca-cert.pem
+    shell: certtool --generate-self-signed --load-privkey ca-key.pem --template ca.tmpl --outfile ca-cert.pem
+    args:
+      chdir: /etc/ocserv
+     
+     
+
+  - name: Создаем сертификат локального сервера server-key.pem
+    shell:  certtool --generate-privkey --outfile server-key.pem
+    args:
+      chdir: /etc/ocserv
+      
+      
+  - name: Копируем готовый server.tmpl
+    copy:
+      src:  files/server.tmpl
+      dest: /etc/ocserv
+      group: root
+      owner: root
+      mode: '775'
+ 
+
+  - name: Создаем server-cert.pem
+    shell: certtool --generate-certificate --load-privkey server-key.pem --load-ca-certificate ca-cert.pem --load-ca-privkey ca-key.pem --template server.tmpl --outfile server-cert.pem
+    args:
+      chdir: /etc/ocserv
+      
+      
+  - name: Генерируем клиентский сертификат user-key.pem
+    shell: certtool --generate-privkey --outfile user-key.pem
+    args:
+      chdir: /etc/ocserv
+      
+
+  - name: Копируем готовый user.tmpl
+    copy:
+      src:  files/user.tmpl
+      dest: /etc/ocserv
+      group: root
+      owner: root
+      mode: '775'
+ 
+ 
+  - name: Генерируем user-cert.pem
+    shell: certtool --generate-certificate --load-privkey user-key.pem --load-ca-certificate ca-cert.pem --load-ca-privkey ca-key.pem --template user.tmpl --outfile user-cert.pem
+    args:
+      chdir: /etc/ocserv
+   
+  - name: Генерируем user.p12
+    shell: certtool --to-p12 --load-privkey user-key.pem --pkcs-cipher 3des-pkcs12 --load-certificate user-cert.pem --outfile user.p12
+    args:
+      chdir: /etc/ocserv
+      
+      
+  - name: template ocserv.conf
+    template:
+      src:  templates/ocserv.conf.j2
+      dest: /etc/ocserv/ocserv.conf
+      mode: '0755'
+ 
+
+  - name: start ocserv unit
+    systemd:
+      name: ocserv
+      state: restarted
+      enabled: yes
+ 
