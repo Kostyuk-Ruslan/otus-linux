@@ -23,7 +23,7 @@ client и server по умолчанию средствами ансибла, п
 
 тестируем TAP
 
-На сервере запустили <code>iperf3 -c 10.10.10.1 -t 40 -i 5</code>
+На сервере запустили прослушку
 
 ```
 [root@node01 work22_VPN]# vagrant ssh server
@@ -547,6 +547,17 @@ PING 10.10.10.1 (10.10.10.1) 56(84) bytes of data.
 rtt min/avg/max/mdev = 2.229/2.349/2.606/0.153 ms
 [root@node01 client]# 
 
+
+
+```
+
+</details>
+
+
+<details>
+<summary><code>3*. Самостоятельно изучить, поднять ocserv и подключиться с хоста к виртуалке</code></summary>
+
+```
 
 
 ```
