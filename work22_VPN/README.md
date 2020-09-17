@@ -13,14 +13,217 @@ Linux Administrator 2020
 - tap
 Прочуствовать разницу.</code></summary>
 
+
+client и server по умолчанию средствами ансибла, поднимаются в режиме "tap", на tun поменяю в ручную в dev
+
 тут делал как по инструкции из pdf, автоматизировал через ansible, единсвтенное примечание:
 
 ключ "static.key" сперва создал руками командой <code>openvpn --genkey --secret /etc/openvpn/static.key</code> , а потом я его перенес в ансибл и  он тянится из роли ансибла,из каталога /files
 
+
+тестируем TAP
+
+На сервере запустили <code>iperf3 -c 10.10.10.1 -t 40 -i 5</code>
+
 ```
+[root@node01 work22_VPN]# vagrant ssh server
+Last login: Thu Sep 17 08:36:30 2020 from 10.0.2.2
+[vagrant@server ~]$ sudo -i
+[root@server ~]# iperf3 -s &
+[1] 28170
+[root@server ~]# -----------------------------------------------------------
+Server listening on 5201
+-----------------------------------------------------------
+
+На клиенте запускаем iperf3 -c 10.10.10.1 -t 40 -i 5 и ждем
+
+```
+[root@client ~]# iperf3 -c 10.10.10.1 -t 40 -i 5
+Connecting to host 10.10.10.1, port 5201
+[  4] local 10.10.10.2 port 43992 connected to 10.10.10.1 port 5201
+[ ID] Interval           Transfer     Bandwidth       Retr  Cwnd
+[  4]   0.00-5.01   sec  24.7 MBytes  41.3 Mbits/sec  229    164 KBytes       
+[  4]   5.01-10.00  sec  27.8 MBytes  46.7 Mbits/sec   28    164 KBytes       
+[  4]  10.00-15.01  sec  28.7 MBytes  48.1 Mbits/sec   61    148 KBytes       
+[  4]  15.01-20.00  sec  26.8 MBytes  44.9 Mbits/sec   38    129 KBytes       
+[  4]  20.00-25.00  sec  28.3 MBytes  47.4 Mbits/sec   25    135 KBytes       
+[  4]  25.00-30.01  sec  27.8 MBytes  46.6 Mbits/sec   28    159 KBytes       
+[  4]  30.01-35.00  sec  28.5 MBytes  47.9 Mbits/sec   23    139 KBytes       
+[  4]  35.00-40.00  sec  27.4 MBytes  46.0 Mbits/sec   18    116 KBytes       
+- - - - - - - - - - - - - - - - - - - - - - - - -
+[ ID] Interval           Transfer     Bandwidth       Retr
+[  4]   0.00-40.00  sec   220 MBytes  46.1 Mbits/sec  450             sender
+[  4]   0.00-40.00  sec   219 MBytes  45.9 Mbits/sec                  receiver
+
+iperf Done.
+[root@client ~]# 
+
+
+Вывод сервера
+
+```
+[root@server ~]# iperf3 -s &
+[1] 28170
+[root@server ~]# -----------------------------------------------------------
+Server listening on 5201
+-----------------------------------------------------------
+Accepted connection from 10.10.10.2, port 43990
+[  5] local 10.10.10.1 port 5201 connected to 10.10.10.2 port 43992
+[ ID] Interval           Transfer     Bandwidth
+[  5]   0.00-1.00   sec  3.94 MBytes  33.0 Mbits/sec                  
+[  5]   1.00-2.00   sec  5.10 MBytes  42.8 Mbits/sec                  
+[  5]   2.00-3.00   sec  3.84 MBytes  32.2 Mbits/sec                  
+[  5]   3.00-4.01   sec  5.32 MBytes  44.3 Mbits/sec                  
+[  5]   4.01-5.01   sec  5.26 MBytes  44.1 Mbits/sec                  
+[  5]   5.01-6.00   sec  5.18 MBytes  43.6 Mbits/sec                  
+[  5]   6.00-7.00   sec  5.85 MBytes  49.1 Mbits/sec                  
+[  5]   7.00-8.01   sec  5.30 MBytes  44.4 Mbits/sec                  
+[  5]   8.01-9.00   sec  5.85 MBytes  49.4 Mbits/sec                  
+[  5]   9.00-10.00  sec  6.00 MBytes  50.1 Mbits/sec                  
+[  5]  10.00-11.00  sec  5.95 MBytes  50.0 Mbits/sec                  
+[  5]  11.00-12.00  sec  5.95 MBytes  50.1 Mbits/sec                  
+[  5]  12.00-13.00  sec  5.88 MBytes  49.3 Mbits/sec                  
+[  5]  13.00-14.00  sec  5.37 MBytes  44.9 Mbits/sec                  
+[  5]  14.00-15.00  sec  5.33 MBytes  44.6 Mbits/sec                  
+[  5]  15.00-16.00  sec  5.37 MBytes  45.1 Mbits/sec                  
+[  5]  16.00-17.01  sec  5.93 MBytes  49.2 Mbits/sec                  
+[  5]  17.01-18.01  sec  5.39 MBytes  45.5 Mbits/sec                  
+[  5]  18.01-19.00  sec  5.25 MBytes  44.4 Mbits/sec                  
+[  5]  19.00-20.01  sec  4.66 MBytes  38.9 Mbits/sec                  
+[  5]  20.01-21.00  sec  5.83 MBytes  49.0 Mbits/sec                  
+[  5]  21.00-22.00  sec  5.68 MBytes  47.8 Mbits/sec                  
+[  5]  22.00-23.00  sec  5.48 MBytes  46.0 Mbits/sec                  
+[  5]  23.00-24.00  sec  5.52 MBytes  46.4 Mbits/sec                  
+[  5]  24.00-25.01  sec  5.88 MBytes  49.0 Mbits/sec                  
+[  5]  25.01-26.01  sec  5.50 MBytes  46.0 Mbits/sec                  
+[  5]  26.01-27.01  sec  5.34 MBytes  44.8 Mbits/sec                  
+[  5]  27.01-28.00  sec  5.14 MBytes  43.4 Mbits/sec                  
+[  5]  28.00-29.00  sec  5.63 MBytes  47.2 Mbits/sec                  
+[  5]  29.00-30.01  sec  6.04 MBytes  50.6 Mbits/sec                  
+[  5]  30.01-31.01  sec  5.78 MBytes  48.5 Mbits/sec                  
+[  5]  31.01-32.00  sec  5.95 MBytes  50.2 Mbits/sec                  
+[  5]  32.00-33.00  sec  5.77 MBytes  48.4 Mbits/sec                  
+[  5]  33.00-34.00  sec  5.38 MBytes  45.1 Mbits/sec                  
+[  5]  34.00-35.00  sec  5.61 MBytes  46.9 Mbits/sec                  
+[  5]  35.00-36.00  sec  5.60 MBytes  47.2 Mbits/sec                  
+[  5]  36.00-37.00  sec  5.77 MBytes  48.2 Mbits/sec                  
+[  5]  37.00-38.01  sec  5.54 MBytes  46.2 Mbits/sec                  
+[  5]  38.01-39.01  sec  5.19 MBytes  43.6 Mbits/sec                  
+[  5]  39.01-40.00  sec  5.50 MBytes  46.5 Mbits/sec                  
+[  5]  40.00-40.04  sec   115 KBytes  27.6 Mbits/sec                  
+- - - - - - - - - - - - - - - - - - - - - - - - -
+[ ID] Interval           Transfer     Bandwidth
+[  5]   0.00-40.04  sec  0.00 Bytes  0.00 bits/sec                  sender
+[  5]   0.00-40.04  sec   219 MBytes  45.9 Mbits/sec                  receiver
+-----------------------------------------------------------
+Server listening on 5201
+-----------------------------------------------------------
 
 
 ```
+
+Меняем на TUN  в конфигах server.conf и server.conf(клиент) рестартуем демонов
+
+- systemctl restart openvpn-server@server - сервере
+
+- systemctl restart openvpn-server@server - на клиенте
+
+
+тесттируем TUN
+
+На сервере
+
+```
+[vagrant@server ~]$ sudo -i
+[root@server ~]# iperf3 -s &
+[1] 1078
+[root@server ~]# -----------------------------------------------------------
+Server listening on 5201
+-----------------------------------------------------------
+Accepted connection from 10.10.10.2, port 43994
+[  5] local 10.10.10.1 port 5201 connected to 10.10.10.2 port 43996
+[ ID] Interval           Transfer     Bandwidth
+[  5]   0.00-1.00   sec  4.69 MBytes  39.1 Mbits/sec                  
+[  5]   1.00-2.00   sec  5.13 MBytes  43.1 Mbits/sec                  
+[  5]   2.00-3.00   sec  4.48 MBytes  37.7 Mbits/sec                  
+[  5]   3.00-4.00   sec  5.21 MBytes  43.7 Mbits/sec                  
+[  5]   4.00-5.00   sec  5.77 MBytes  48.4 Mbits/sec                  
+[  5]   5.00-6.01   sec  6.07 MBytes  50.3 Mbits/sec                  
+[  5]   6.01-7.00   sec  5.37 MBytes  45.4 Mbits/sec                  
+[  5]   7.00-8.00   sec  5.44 MBytes  45.7 Mbits/sec                  
+[  5]   8.00-9.00   sec  5.41 MBytes  45.4 Mbits/sec                  
+[  5]   9.00-10.01  sec  5.84 MBytes  48.9 Mbits/sec                  
+[  5]  10.01-11.01  sec  5.76 MBytes  48.2 Mbits/sec                  
+[  5]  11.01-12.01  sec  6.05 MBytes  50.9 Mbits/sec                  
+[  5]  12.01-13.00  sec  5.77 MBytes  48.5 Mbits/sec                  
+[  5]  13.00-14.00  sec  5.83 MBytes  49.0 Mbits/sec                  
+[  5]  14.00-15.00  sec  5.87 MBytes  49.1 Mbits/sec                  
+[  5]  15.00-16.00  sec  5.50 MBytes  46.1 Mbits/sec                  
+[  5]  16.00-17.00  sec  4.96 MBytes  41.7 Mbits/sec                  
+[  5]  17.00-18.01  sec  5.85 MBytes  48.9 Mbits/sec                  
+[  5]  18.01-19.00  sec  5.55 MBytes  46.8 Mbits/sec                  
+[  5]  19.00-20.00  sec  5.60 MBytes  46.9 Mbits/sec                  
+[  5]  20.00-21.00  sec  5.34 MBytes  44.9 Mbits/sec                  
+[  5]  21.00-22.00  sec  5.64 MBytes  47.2 Mbits/sec                  
+[  5]  22.00-23.00  sec  5.18 MBytes  43.4 Mbits/sec                  
+[  5]  23.00-24.01  sec  6.14 MBytes  51.3 Mbits/sec                  
+[  5]  24.01-25.01  sec  5.52 MBytes  46.4 Mbits/sec                  
+[  5]  25.01-26.01  sec  5.45 MBytes  45.7 Mbits/sec                  
+[  5]  26.01-27.00  sec  5.43 MBytes  45.8 Mbits/sec                  
+[  5]  27.00-28.00  sec  5.74 MBytes  48.1 Mbits/sec                  
+[  5]  28.00-29.01  sec  5.23 MBytes  43.7 Mbits/sec                  
+[  5]  29.01-30.01  sec  5.10 MBytes  42.7 Mbits/sec                  
+[  5]  30.01-31.00  sec  5.84 MBytes  49.3 Mbits/sec                  
+[  5]  31.00-32.00  sec  5.97 MBytes  50.2 Mbits/sec                  
+[  5]  32.00-33.00  sec  5.49 MBytes  46.1 Mbits/sec                  
+[  5]  33.00-34.00  sec  5.42 MBytes  45.3 Mbits/sec                  
+[  5]  34.00-35.00  sec  5.69 MBytes  47.8 Mbits/sec                  
+[  5]  35.00-36.00  sec  5.76 MBytes  48.4 Mbits/sec                  
+[  5]  36.00-37.00  sec  5.59 MBytes  46.9 Mbits/sec                  
+[  5]  37.00-38.00  sec  5.21 MBytes  43.6 Mbits/sec                  
+[  5]  38.00-39.00  sec  5.04 MBytes  42.3 Mbits/sec                  
+[  5]  39.00-40.00  sec  5.11 MBytes  42.9 Mbits/sec                  
+[  5]  40.00-40.06  sec   283 KBytes  39.2 Mbits/sec                  
+- - - - - - - - - - - - - - - - - - - - - - - - -
+[ ID] Interval           Transfer     Bandwidth
+[  5]   0.00-40.06  sec  0.00 Bytes  0.00 bits/sec                  sender
+[  5]   0.00-40.06  sec   220 MBytes  46.1 Mbits/sec                  receiver
+-----------------------------------------------------------
+Server listening on 5201
+-----------------------------------------------------------
+```
+
+
+На клиенте
+
+```
+[root@client server]# iperf3 -c 10.10.10.1 -t 40 -i 5
+Connecting to host 10.10.10.1, port 5201
+[  4] local 10.10.10.2 port 43996 connected to 10.10.10.1 port 5201
+[ ID] Interval           Transfer     Bandwidth       Retr  Cwnd
+[  4]   0.00-5.00   sec  26.2 MBytes  43.9 Mbits/sec  191    128 KBytes       
+[  4]   5.00-10.01  sec  28.5 MBytes  47.8 Mbits/sec    9    155 KBytes       
+[  4]  10.01-15.01  sec  29.2 MBytes  49.0 Mbits/sec   38    127 KBytes       
+[  4]  15.01-20.00  sec  27.4 MBytes  45.9 Mbits/sec   15    158 KBytes       
+[  4]  20.00-25.00  sec  27.9 MBytes  46.8 Mbits/sec   16    178 KBytes       
+[  4]  25.00-30.00  sec  27.1 MBytes  45.5 Mbits/sec   64    149 KBytes       
+[  4]  30.00-35.00  sec  28.2 MBytes  47.3 Mbits/sec   12    178 KBytes       
+[  4]  35.00-40.01  sec  27.0 MBytes  45.2 Mbits/sec   61    140 KBytes       
+- - - - - - - - - - - - - - - - - - - - - - - - -
+[ ID] Interval           Transfer     Bandwidth       Retr
+[  4]   0.00-40.01  sec   221 MBytes  46.4 Mbits/sec  406             sender
+[  4]   0.00-40.01  sec   220 MBytes  46.2 Mbits/sec                  receiver
+
+iperf Done.
+[root@client server]# 
+
+```
+
+
+
+
+
+
 </details>
 
 
