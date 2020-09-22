@@ -59,6 +59,8 @@ freeipa.otus.lan
 
 <summary><code>Написать Ansible playbook для конфигурации клиента</code></summary>
 
+Здесь так же основную конфигурацию выполняет Ansible
+
 ```
 
 ```
@@ -81,6 +83,8 @@ freeipa.otus.lan
 
 <details>
 <summary><code>4**. Firewall должен быть включен на сервере и на клиенте.</code></summary>
+
+firewall включен как на сервере, так и на клиенте, task сервера:
 
 ```
 
