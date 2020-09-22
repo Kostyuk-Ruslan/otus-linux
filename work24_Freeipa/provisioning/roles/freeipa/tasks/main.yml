@@ -42,11 +42,11 @@
       state: disabled
 
 
-#  - name: start firewalld
-#    systemd:
-#      name: firewalld
-#      state: stopped
-#      enabled: no
+  - name: start firewalld
+    systemd:
+      name: firewalld
+      state: started
+      enabled: yes
 
   - name: open freeipa-ldap
     firewalld:
@@ -63,8 +63,8 @@
 
 
 
-  - name: "firewalld reload"
-    shell: "firewall-cmd --reload"
+  - name: firewalld reload
+    raw: firewall-cmd --reload
     ignore_errors: yes 
 
 

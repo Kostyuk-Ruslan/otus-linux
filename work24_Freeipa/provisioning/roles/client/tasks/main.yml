@@ -1,3 +1,8 @@
+  - name: set hostname
+    hostname:
+      name: client.otus.lan
+
+
 
   - name: Add multiple repositories 
     yum_repository:
@@ -16,6 +21,15 @@
     tags: install-packages
 
 
+  - name: Change hosts
+    replace:
+      path: /etc/hosts
+      regexp: '127.0.0.1.*'
+      replace: '192.168.100.160 freeipa.otus.lan freeipa'
+
+
+
+
   - name: Disable SELinux
     selinux:
       state: disabled
@@ -28,6 +42,28 @@
       enabled: yes
 
 
+  
+  - name: open freeipa-ldap
+    firewalld:
+      service: freeipa-ldap
+      permanent: yes
+      state: enabled
+
+
+  - name: open freeipa-ldaps
+    firewalld:
+      service: freeipa-ldaps
+      permanent: yes
+      state: enabled
+
+
+  - name: firewalld reload
+    raw: firewall-cmd --reload
+    ignore_errors: yes
+                
+            
+
+
   - name: install freeipa-client
     yum:
      name:
@@ -36,6 +72,7 @@
       - unzip
       - wget
       - mc
+      - vim
       - iperf3
       - ipa-client
 
