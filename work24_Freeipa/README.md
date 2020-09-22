@@ -11,7 +11,7 @@ Linux Administrator 2020
 
 Примчение:
 
-Предварительно попроавил hostname машины на 
+Предварительно поправил "hostname" машины на 
 
 ```
 freeipa.otus.lan
@@ -52,4 +52,43 @@ freeipa.otus.lan
 ```
 
 </details>
+
+
+
+<details>
+
+<summary><code>Написать Ansible playbook для конфигурации клиента</code></summary>
+
+```
+
+```
+
+</details>
+
+
+<details>
+<summary><code>3*. Настроить аутентификацию по SSH-ключам</code></summary>
+
+```
+
+
+```
+
+</details>
+
+
+
+
+<details>
+<summary><code>4**. Firewall должен быть включен на сервере и на клиенте.</code></summary>
+
+```
+
+
+```
+
+</details>
+
+
+
 
