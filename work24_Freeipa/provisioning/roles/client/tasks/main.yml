@@ -78,9 +78,9 @@
       - ipa-client
 
 
-  - name: joint domain otus.lan
+  - name: join domain otus.lan
     raw: ipa-client-install -d \
-        --domain=example.lan \
+        --domain=otus.lan \
         --server=freeipa.otus.lan \
         --realm=OTUS.LAN \
         --principal=admin \
