@@ -73,6 +73,16 @@
       - wget
       - mc
       - vim
+      - realmd
       - iperf3
       - ipa-client
 
+
+  - name: joint domain otus.lan
+    raw: ipa-client-install -d \
+        --domain=example.lan \
+        --server=freeipa.otus.lan \
+        --realm=OTUS.LAN \
+        --principal=admin \
+        --password=qwepoi123 \
+        --enable-dns-updates -U
