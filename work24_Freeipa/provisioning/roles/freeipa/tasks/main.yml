@@ -1,0 +1,100 @@
+  - name: set hostname
+    hostname:
+      name: freeipa.otus.lan
+          
+
+
+
+
+#  - name: repository freeipa-4-8
+#    yum_repository:
+#      name: freeipa.repo
+#      description: repo_freeipa
+#      baseurl: https://download.copr.fedorainfracloud.org/results/@freeipa/freeipa-4-8/fedora-$releasever-$basearch/
+#      skip_if_unavailable: yes
+#      gpgcheck: 1
+#      gpgkey: https://download.copr.fedorainfracloud.org/results/@freeipa/freeipa-4-8/pubkey.gpg
+#      enabled: yes
+
+
+
+
+
+  - name: Add multiple repositories 
+    yum_repository:
+      name: epel
+      description: EPEL YUM repo
+      file: external_repos
+      baseurl: https://download.fedoraproject.org/pub/epel/$releasever/$basearch/
+      gpgcheck: no
+
+
+  - name: install epel-release
+    yum:
+     name:
+      - epel-release
+     state: latest
+    tags: install-packages
+
+
+  - name: Disable SELinux
+    selinux:
+      state: disabled
+
+
+  - name: start firewalld
+    systemd:
+      name: firewalld
+      state: stopped
+      enabled: no
+
+#  - name: open freeipa-ldap
+#    firewalld:
+#      service: freeipa-ldap
+#      permanent: yes
+#      state: enabled
+
+
+#  - name: open freeipa-ldaps
+#    firewalld:
+#      service: freeipa-ldaps
+#      permanent: yes
+#      state: enabled
+
+
+
+#  - name: "firewalld reload"
+#    shell: "firewall-cmd --reload"
+#    ignore_errors: yes 
+
+
+  - name: install freeipa
+    yum:
+     name:
+      - net-tools
+      - vim
+      - wget
+      - mc
+      - ipa-server
+      - bind
+      - bind-dyndb-ldap
+      - ipa-server-dns      
+      
+  - name: Change hosts
+    replace:
+      path: /etc/hosts
+      regexp: '127.0.0.1.*'
+      replace: '192.168.100.160 freeipa.otus.lan freeipa'
+
+
+  - name: pass yes
+    replace:
+      path: /etc/ssh/sshd_config
+      regexp: 'PasswordAuthentication no'
+      replace: 'PasswordAuthentication yes'
+
+
+
+  - name: Install ipa server
+    raw: ipa-server-install  --domain=otus.lan --realm=OTUS.LAN --ds-password=qwepoi123 --admin-password=qwepoi123 --unattended
+    

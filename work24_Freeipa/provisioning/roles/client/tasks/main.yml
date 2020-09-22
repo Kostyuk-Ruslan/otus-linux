@@ -1,0 +1,41 @@
+
+  - name: Add multiple repositories 
+    yum_repository:
+      name: epel
+      description: EPEL YUM repo
+      file: external_repos
+      baseurl: https://download.fedoraproject.org/pub/epel/$releasever/$basearch/
+      gpgcheck: no
+
+
+  - name: install epel-release
+    yum:
+     name:
+      - epel-release
+     state: latest
+    tags: install-packages
+
+
+  - name: Disable SELinux
+    selinux:
+      state: disabled
+
+
+  - name: start firewalld
+    systemd:
+      name: firewalld
+      state: started
+      enabled: yes
+
+
+  - name: install freeipa-client
+    yum:
+     name:
+      - net-tools
+      - zip
+      - unzip
+      - wget
+      - mc
+      - iperf3
+      - ipa-client
+

@@ -1,0 +1,14 @@
+
+---
+
+- hosts: freeipa
+  become: true
+  roles:
+    - freeipa
+
+
+- hosts: client
+  become: true
+  roles:
+    - client
+
