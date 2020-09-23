@@ -11,13 +11,13 @@ Linux Administrator 2020
 
 Примчение:
 
-Предварительно поправил "hostname" машины на 
+Предварительно поправил "hostname" машины через ansible на 
 
 ```
 freeipa.otus.lan
 
 ```
-А так же занес соответсвующие записи в /etc/hosts
+А так же занес соответсвующие записи через ansible в /etc/hosts
 
 ```
 192.168.100.160 freeipa.otus.lan freeipa
