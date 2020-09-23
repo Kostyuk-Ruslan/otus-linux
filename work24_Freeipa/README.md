@@ -44,7 +44,6 @@ freeipa.otus.lan
 Настройку тоже за нас делает Ansible, но можно и в ручную в интеративном режиме <code>ipa-server-install</code>
 
 
-в итоге должно получиться такой успешный вывод
 
 После установки проверяем статус фриипы
 
@@ -277,8 +276,8 @@ tcp6       0      0 :::22                   :::*                    LISTEN      
 <details>
 <summary><code>4**. Firewall должен быть включен на сервере и на клиенте.</code></summary>
 
-Исходя из документации <code>https://www.freeipa.org/page/Quick_Start_Guide</code>  должны быть открыты следющие порты" 
-Один открывает Kerberos, HTTP, HTTPS, DNS, NTP и LDAP, другой - тот же самый, что и LDAPS вместо LDAP (вам из коробки нужен LDAP).
+Исходя из документации <code>https://www.freeipa.org/page/Quick_Start_Guide</code> Цитата:  должны быть открыты следющие порты
+Первое правило открывает Kerberos, HTTP, HTTPS, DNS, NTP и LDAP, а второе правило - то же самое, что и LDAPS вместо LDAP (вам из коробки нужен LDAP).
 
 Во всяком случае, с этими параметрами я смог подцепить клиента к серверу
 
