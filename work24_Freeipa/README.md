@@ -233,6 +233,30 @@ otus.lan
 
 ```
 
+Проверяем "ESTABLISHED" между клиентом (192.168.100.160) и сервером (192.168.100.161)
+
+```
+
+
+[root@client ~]# netstat -ntlpa
+Active Internet connections (servers and established)
+Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name    
+tcp        0      0 0.0.0.0:111             0.0.0.0:*               LISTEN      376/rpcbind         
+tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN      819/sshd            
+tcp        0      0 10.0.2.15:22            10.0.2.2:35168          ESTABLISHED 3400/sshd: vagrant  
+tcp        0      0 192.168.100.161:39980   192.168.100.160:389     ESTABLISHED 402/sssd_be         
+tcp6       0      0 ::1:25                  :::*                    LISTEN      1171/master         
+tcp6       0      0 :::111                  :::*                    LISTEN      376/rpcbind         
+tcp6       0      0 :::22                   :::*                    LISTEN      819/sshd            
+[root@client ~]# 
+
+```
+
+
+
+
+
+
 </details>
 
 
