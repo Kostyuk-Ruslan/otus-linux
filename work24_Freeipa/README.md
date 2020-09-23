@@ -26,6 +26,7 @@ freeipa.otus.lan
 
 Тут за нас все сделает ansible, собстно отрывок таска, а так достаточно установить два пакета
 <code>ipa-server и ipa-server-dns</code>
+Когда таск будет выполнятся на моменте <code> Install ipa server </code> -  это будет достаточно долго, просьба запастись терпением
 
 ```
  - name: install freeipa
@@ -269,7 +270,7 @@ tcp6       0      0 :::22                   :::*                    LISTEN      
 <details>
 <summary><code>3*. Настроить аутентификацию по SSH-ключам</code></summary>
 
-Для начала создадим пользователя "adm", сделаем с помощью ансибла
+Для начала создадим пользователя "rkostyuk", сделаем с помощью ансибла
 
 ```
 
@@ -298,11 +299,11 @@ tcp6       0      0 :::22                   :::*                    LISTEN      
 ---------------
 2 users matched
 ---------------
-  User login: adm
+  User login: rkostyuk
   First name: Ruslan
   Last name: Kostyuk
   Home directory: /home/adm
-  Login shell: /bin/bash
+  Login shell: /bin/sh
   Principal name: adm@OTUS.LAN
   Principal alias: adm@OTUS.LAN
   Email address: adm@otus.lan
@@ -327,7 +328,7 @@ Number of entries returned 2
 
 
 
-Проверяем роботоспособность ssh keys
+Проверяем роботоспособность ssh keys, попробуем приконектиться с клиента на сервер.
 
 ```
 [root@client ~]# ssh rkostyuk@192.168.100.160
@@ -406,5 +407,4 @@ public (active)
 </details>
 
 
-
-
+Итог поднимаются вм, автоматом устанавливаются ipa-server и ipa-client с включенным firewalld и авторизацией по ключу.
