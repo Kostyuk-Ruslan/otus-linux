@@ -315,6 +315,27 @@ firewall включен как на сервере, так и на клиент�
 
 ```
 
+```
+[vagrant@freeipa ~]$ sudo -i
+[root@freeipa ~]# firewall-cmd --list-all
+public (active)
+  target: default
+  icmp-block-inversion: no
+  interfaces: eth0 eth1
+  sources: 
+  services: dhcpv6-client freeipa-ldap freeipa-ldaps ssh
+  ports: 
+  protocols: 
+  masquerade: no
+  forward-ports: 
+  source-ports: 
+  icmp-blocks: 
+  rich rules: 
+	
+[root@freeipa ~]# 
+
+```
+
 </details>
 
 
