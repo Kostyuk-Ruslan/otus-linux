@@ -141,13 +141,6 @@ tcp6       0      0 192.168.100.160:636     192.168.100.160:59114   ESTABLISHED 
     tags: install-packages
 
 
-  - name: Change hosts         // прописываем в hosts ip и name фриипы ( не стал заморачиваться с днс)
-    replace:
-      path: /etc/hosts
-      regexp: '127.0.0.1.*'
-      replace: '192.168.100.160 freeipa.otus.lan freeipa'
-
-
 
 
   - name: Disable SELinux        // отключаем selinux ( в задании не сказано, что бы он был обязательно включен )))
@@ -209,6 +202,19 @@ tcp6       0      0 192.168.100.160:636     192.168.100.160:59114   ESTABLISHED 
 
 
 
+
+  - name: Copy ssh key   // Копируем заготовленные ssh ключи с /files на систему для авторизации по кдючу
+    copy:
+      src: files/{{ item }}
+      dest: /root/.ssh/{{ item }}
+      owner: root
+      group: root
+      mode: '0755'
+    loop:
+      - id_rsa
+      - id_rsa.pub
+
+
 ```
 
 Проверяем нашего клиента
@@ -263,11 +269,72 @@ tcp6       0      0 :::22                   :::*                    LISTEN      
 <details>
 <summary><code>3*. Настроить аутентификацию по SSH-ключам</code></summary>
 
+Для начала создадим пользователя "adm", сделаем с помощью ансибла
+
+```
+
+  - name: Create ipa user
+    ipa_user:
+      name: "{{ user_login_name }}"
+      givenname: "{{ user_first_name }}"
+      sn: "{{ user_surname }}"
+      displayname: "{{ user_displayname }}"
+      password: "{{ user_password }}"
+      krbpasswordexpiration: '20201231235959'
+      sshpubkey: "{{ user_sshpubkey }}"
+      loginshell: "{{ user_shell }}"
+      ipa_user: admin
+      ipa_pass: qwepoi123
+      ipa_host: freeipa.otus.lan
+      state: present
+    tags: test
+
+```
+там где sshpubkey  я указал содержимое ключ "id_rsa.pub" 
+
+
+```
+[root@freeipa ~]# ipa user-find adm
+---------------
+2 users matched
+---------------
+  User login: adm
+  First name: Ruslan
+  Last name: Kostyuk
+  Home directory: /home/adm
+  Login shell: /bin/bash
+  Principal name: adm@OTUS.LAN
+  Principal alias: adm@OTUS.LAN
+  Email address: adm@otus.lan
+  UID: 389800001
+  GID: 389800001
+  SSH public key fingerprint: SHA256:nQcOhgWjke2RsN/hByut8zJe6AyU7JMTM91S9HFNRRI root@client (ssh-rsa)
+  Account disabled: False
+
+  User login: admin
+  Last name: Administrator
+  Home directory: /home/admin
+  Login shell: /bin/bash
+  Principal alias: admin@OTUS.LAN
+  UID: 389800000
+  GID: 389800000
+  Account disabled: False
+----------------------------
+Number of entries returned 2
+----------------------------
+
 ```
 
 
-```
 
+Проверяем роботоспособность ssh keys
+
+```
+[root@client ~]# ssh rkostyuk@192.168.100.160
+Could not chdir to home directory /home/rkostyuk: No such file or directory
+-sh-4.2$ 
+
+```
 </details>
 
 

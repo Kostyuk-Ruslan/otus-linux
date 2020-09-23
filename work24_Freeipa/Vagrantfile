@@ -27,6 +27,7 @@ Vagrant.configure(2) do |config|
 # ansible.compatibility_mode = "2.0"
  ansible.playbook = "provisioning/switch.yml"
  ansible.become = "true"
+# ansible.tags="test"
 
      end
 end

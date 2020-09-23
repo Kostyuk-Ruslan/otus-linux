@@ -1,54 +1,8 @@
 
-ipaserver_hostname: freeipa.otus.lan
-ipaserver_alias: freeipa
-ipaserver_ipaddress: '192.168.10.10'
-ipaserver_domain: otus.lan
-ipaserver_realm: OTUS.LAN
-ipaserver_managerpassword: qwepoi123
-ipaserver_kerberospassword: qwepoi123
-ipaserver_adminspassword: qwepoi123
-ipaserver_forwarder: '8.8.8.8'
-ipaserver_admin: admin
-user_login_name: admin
+user_login_name: rkostyuk
 user_first_name: Ruslan
 user_surname: Kostyuk
 user_displayname: Ruslan Kostyuk
 user_password: qwepoi123
-user_sshpubkey: 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC4a52WJAhrbPzn2TiTNU84vA+egxxM/um5NpWbnos45Fh2KIKmvh79B10fQlPnD1zss/7+pHEEKjsjnU41Utax6R7oKeApo7ZI7GLrTmRSFyPlvkbBCf/SUPaj7A04tXF8boK06QHPDqD0Tgze/F7usuGEtq83sv2ScfKGwheau+6pjE8qGGifDK0pZNDiyzKHceZb30zAPkvE8u8u9hWCuUYgfqc7W5uqpPePwDYR0c2K5xtm8hrj5dSPbFowXxlFyIfz0LBs5/wuvlyfrcW+QyBTM1YKpzdcr6pgu43wywYaDHqb78c65+8Y41OQE3vckn3oKtQxMNf7tNcwF0kP vova@otus.lab'
-user_shell: '/bin/bash'
-
-#server FreeIPA variables
-freeipaserver_ip: 192.168.10.10
-freeipaserver_hostname: freeipa.otus.lan
-
-domain: otus.lan
-nameserver_ip: 8.8.8.8
-gateway_ip: 192.168.10.1
-server_password: OtusOtus123
-realm: 
-directory_manager_password: OtusOtus123
-
-ipa_admin: admin
-ipa_pass: Otus123Otus123
-ipa_server_name: freeipa.otus.lan
-ipa_server_ip: 192.168.10.10
-ipa_realm: OTUS.LAN
-
-#client FreeIPA variables
-client_hostname: client.lesson.loc
-client_address: 192.168.100.161
-#client connection
-principal_user: admin
-principal_password: OtusOtus123
-principal_user_password: Otus123Otus123
-
-
-dns_forwarder_1: 192.168.100.160
-dns_forwarder_2: 8.8.8.8
-
-#client /etc/sudo-ldap.conf variables
-dc1: lesson
-dc0: loc
-tls_cacertfile_path: /etc/ipa/ca.crt
-uri_LDAP: ldaps://dc.lesson.loc
-uri_LDAP: ldapi://%2fvar%2frun%2fslapd-LESSON-LOC.socket
+user_sshpubkey: 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDGRDXmpJdYfYGrOyMmdm24mpzx24Jmb7aO9Onvg4Z30AnTixZDs8593mwHGpxdu8lpVITHrVpdbu2rDpaz1FO5E1f0qWSVk0BFlTpvRMIWTultvyowPAGFhcJ+dWoodL9jBP3PdDj74iSMXnLwKWOWyh81XiOhQ1/TXZBmcLnkdT6zZAev+Y40OOiJ4T3nVkjVx1ILnQuHQ+AUKV7PETZJjZFTkRl/5sOlfDOOOXiOnXlt19p9TfIlmVWsBEjcjmSyK6+cYGe6C0pBvAFNu27hfauvyvO8Le+6toW+ax521Jq2S4s43SHZ3il+AcrDMk0RFWmNRarRj1XthdIwuYMT root@client.otus.lan'
+user_shell: '/bin/sh'

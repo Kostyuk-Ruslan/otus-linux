@@ -79,13 +79,18 @@
       - bind
       - bind-dyndb-ldap
       - ipa-server-dns      
-      
-  - name: Change hosts
-    replace:
-      path: /etc/hosts
-      regexp: '127.0.0.1.*'
-      replace: '192.168.100.160 freeipa.otus.lan freeipa'
 
+
+  - name: Creating /etc/hosts
+    template:
+      src: hosts.j2
+      dest: /etc/hosts
+      owner: root
+      group: root
+      mode: '0644'
+
+
+  
 
   - name: pass yes
     replace:
@@ -97,4 +102,24 @@
 
   - name: Install ipa server
     raw: ipa-server-install  --domain=otus.lan --realm=OTUS.LAN --ds-password=qwepoi123 --admin-password=qwepoi123 --unattended
-    
+   
+
+  - name: init admin
+    raw: echo qwepoi123 | kinit admin
+
+
+  - name: Create ipa user
+    ipa_user:
+      name: "{{ user_login_name }}"
+      givenname: "{{ user_first_name }}"
+      sn: "{{ user_surname }}"
+      displayname: "{{ user_displayname }}"
+      password: "{{ user_password }}"
+      krbpasswordexpiration: '20201231235959'
+      sshpubkey: "{{ user_sshpubkey }}"
+      loginshell: "{{ user_shell }}"
+      ipa_user: admin
+      ipa_pass: qwepoi123
+      ipa_host: freeipa.otus.lan
+      state: present 
+    tags: test

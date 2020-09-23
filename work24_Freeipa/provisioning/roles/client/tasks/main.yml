@@ -1,3 +1,5 @@
+---
+
   - name: set hostname
     hostname:
       name: client.otus.lan
@@ -86,3 +88,28 @@
         --principal=admin \
         --password=qwepoi123 \
         --enable-dns-updates -U
+
+
+  
+  - name: Create a directory .ssh
+    file:
+      path: /root/.ssh
+      state: directory
+      mode: '0755'
+    tags: test  
+
+
+
+
+  - name: Copy ssh key
+    copy:
+      src: files/{{ item }}
+      dest: /root/.ssh/{{ item }}
+      owner: root
+      group: root
+      mode: '0600'
+    loop:
+      - id_rsa
+      - id_rsa.pub
+    tags: test
+
