@@ -46,6 +46,24 @@ freeipa.otus.lan
 
 в итоге должно получиться такой успешный вывод
 
+После установки проверяем статус фриипы
+
+
+```
+[vagrant@freeipa ~]$ sudo -i
+[root@freeipa ~]# ipactl status
+Directory Service: RUNNING
+krb5kdc Service: RUNNING
+kadmin Service: RUNNING
+httpd Service: RUNNING
+ipa-custodia Service: RUNNING
+ntpd Service: RUNNING
+pki-tomcatd Service: RUNNING
+ipa-otpd Service: RUNNING
+ipa: INFO: The ipactl command was successful
+[root@freeipa ~]# 
+
+
 ```
 
 
@@ -101,6 +119,117 @@ tcp6       0      0 192.168.100.160:636     192.168.100.160:59114   ESTABLISHED 
 Здесь так же основную конфигурацию выполняет Ansible
 
 ```
+- name: set hostname
+    hostname:
+      name: client.otus.lan  // тут меняем наше имя с client на client.otus.lan
+
+
+
+  - name: Add multiple repositories
+    yum_repository:
+      name: epel
+      description: EPEL YUM repo
+      file: external_repos
+      baseurl: https://download.fedoraproject.org/pub/epel/$releasever/$basearch/
+      gpgcheck: no                                                                  // тут добавляем репу epel
+
+
+  - name: install epel-release
+    yum:
+     name:
+      - epel-release                         // устанавливаем репу
+     state: latest
+    tags: install-packages
+
+
+  - name: Change hosts         // прописываем в hosts ip и name фриипы ( не стал заморачиваться с днс)
+    replace:
+      path: /etc/hosts
+      regexp: '127.0.0.1.*'
+      replace: '192.168.100.160 freeipa.otus.lan freeipa'
+
+
+
+
+  - name: Disable SELinux        // отключаем selinux ( в задании не сказано, что бы он был обязательно включен )))
+    selinux:
+      state: disabled
+
+
+  - name: start firewalld       // стартуем firewalld и доб. в автозагрузку
+    systemd:
+      name: firewalld
+      state: started
+      enabled: yes
+
+
+
+  - name: open freeipa-ldap  // прописываем правла для фриипы
+    firewalld:
+      service: freeipa-ldap
+      permanent: yes
+      state: enabled
+
+
+  - name: open freeipa-ldaps
+    firewalld:
+      service: freeipa-ldaps
+      permanent: yes
+      state: enabled
+
+
+  - name: firewalld reload    // reload
+    raw: firewall-cmd --reload
+    ignore_errors: yes
+
+
+
+
+  - name: install freeipa-client   //установка необходимых пакетов
+    yum:
+     name:
+      - net-tools
+      - zip
+      - unzip
+      - wget
+      - mc
+      - vim
+      - realmd
+      - iperf3
+      - ipa-client
+
+
+  - name: join domain otus.lan     // добавляем клиента во фриипу ( можно было просто ipa-client-install) но я попробовал автоматизировать.
+    raw: ipa-client-install -d \
+        --domain=otus.lan \
+        --server=freeipa.otus.lan \
+        --realm=OTUS.LAN \
+        --principal=admin \
+        --password=qwepoi123 \
+        --enable-dns-updates -U
+
+
+
+```
+
+Проверяем нашего клиента
+
+```
+[root@client ~]# realm list
+otus.lan
+  type: kerberos
+  realm-name: OTUS.LAN
+  domain-name: example.lan
+  configured: kerberos-member
+  server-software: ipa
+  client-software: sssd
+  required-package: ipa-client
+  required-package: oddjob
+  required-package: oddjob-mkhomedir
+  required-package: sssd
+  login-formats: %U
+  login-policy: allow-realm-logins
+[root@client ~]# 
 
 ```
 
@@ -125,6 +254,8 @@ tcp6       0      0 192.168.100.160:636     192.168.100.160:59114   ESTABLISHED 
 
 Исходя из документации <code>https://www.freeipa.org/page/Quick_Start_Guide</code>  должны быть открыты следющие порты" 
 Один открывает Kerberos, HTTP, HTTPS, DNS, NTP и LDAP, другой - тот же самый, что и LDAPS вместо LDAP (вам из коробки нужен LDAP).
+
+Во всяком случае, с этими параметрами я смог подцепить клиента к серверу
 
 ```
 # firewall-cmd --add-service=freeipa-ldap --add-service=freeipa-ldaps
