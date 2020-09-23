@@ -106,7 +106,7 @@ tcp6       0      0 192.168.100.160:636     192.168.100.160:59160   ESTABLISHED 
 tcp6       0      0 192.168.100.160:636     192.168.100.160:59114   ESTABLISHED 11960/ns-slapd      
 [root@freeipa ~]# exit
 
-
+```
 
 </details>
 
@@ -234,6 +234,7 @@ otus.lan
 ```
 
 </details>
+
 
 
 <details>
