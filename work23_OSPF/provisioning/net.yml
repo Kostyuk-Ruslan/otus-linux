@@ -1,20 +1,20 @@
 
 ---
 
-- hosts: R1
+- hosts: r1
   become: true
   roles:
-    - R1
+    - r1
 
 
-- hosts: R2
+- hosts: r2
   become: true
   roles:
-    - R2
+    - r2
 
 
-- hosts: R3
+- hosts: r3
   become: true
   roles:
-    - R3
+    - r3
 
