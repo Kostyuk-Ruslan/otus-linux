@@ -73,8 +73,8 @@
 
   - name: Copy  ospfd.conf
     copy:
-      src:  files/ospf.conf
-      dest: /etc/quagga/ospf.conf
+      src:  files/ospfd.conf
+      dest: /etc/quagga/ospfd.conf
       group: root
       owner: root
       mode: '775'
@@ -82,7 +82,7 @@
 
 
 
-  - name: start and enablr ospfd
+  - name: start and enable ospfd
     systemd:
       name: ospfd
       state: started
