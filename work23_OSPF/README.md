@@ -81,7 +81,62 @@ O>* 10.20.0.0/30 [110/90] via 10.0.0.2, eth1, 04:40:12
 R1# 
 
 
+
 ```
+<details>
+<summary><code>sh run R1</code></summary>
+
+```
+R1# sh run
+Building configuration...
+
+Current configuration:
+!
+hostname R1
+hostname r1
+log file /var/log/quagga/ospfd.log
+log stdout
+!
+password zebra
+!
+interface eth0
+ ipv6 nd suppress-ra
+!
+interface eth1
+ ip ospf cost 45
+ ip ospf dead-interval 10
+ ip ospf hello-interval 5
+ ip ospf mtu-ignore
+ ip ospf network point-to-point
+ ipv6 nd suppress-ra
+!
+interface eth2
+ ip ospf cost 45
+ ip ospf dead-interval 10
+ ip ospf hello-interval 5
+ ip ospf mtu-ignore
+ ip ospf network point-to-point
+ ipv6 nd suppress-ra
+!
+interface lo
+!
+router ospf
+ redistribute connected
+ network 10.0.0.0/30 area 0.0.0.0
+ network 10.10.0.0/30 area 0.0.0.0
+ neighbor 10.0.0.2
+ neighbor 10.10.0.2
+!
+ip forwarding
+!
+line vty
+!
+end
+R1# 
+
+```
+</details>
+
 
 
 
@@ -150,6 +205,65 @@ O   10.20.0.0/30 [110/45] is directly connected, eth2, 06:20:54
 R2# 
 
 ```
+</details>
+
+<details>
+<code><summary>sh run R2</code></summary>
+```
+
+
+R2# sh run
+Building configuration...
+
+Current configuration:
+!
+hostname R2
+hostname r2
+log file /var/log/quagga/ospfd.log
+log stdout
+!
+password zebra
+!
+interface eth0
+ ipv6 nd suppress-ra
+!
+interface eth1
+ ip ospf cost 45
+ ip ospf dead-interval 10
+ ip ospf hello-interval 5
+ ip ospf mtu-ignore
+ ip ospf network point-to-point
+ ipv6 nd suppress-ra
+!
+interface eth2
+ ip ospf cost 45
+ ip ospf dead-interval 10
+ ip ospf hello-interval 5
+ ip ospf mtu-ignore
+ ip ospf network point-to-point
+ ipv6 nd suppress-ra
+!
+interface lo
+!
+router ospf
+ redistribute connected
+ network 10.0.0.0/30 area 0.0.0.0
+ network 10.20.0.0/30 area 0.0.0.0
+ neighbor 10.0.0.1
+ neighbor 10.20.0.1
+!
+ip forwarding
+!
+line vty
+!
+end
+R2# 
+
+
+```
+</details>
+
+
 
 
 
@@ -216,12 +330,62 @@ R3#
 
 
 ```
-
-
-
 </details>
 
+<details>
+<code><summary>sh run R3</code></summary>
+```
 
+R3# sh run
+Building configuration...
+
+Current configuration:
+!
+hostname R3
+hostname r3
+log file /var/log/quagga/ospfd.log
+log stdout
+!
+password zebra
+!
+interface eth0
+ ipv6 nd suppress-ra
+!
+interface eth1
+ ip ospf cost 45
+ ip ospf dead-interval 10
+ ip ospf hello-interval 5
+ ip ospf mtu-ignore
+ ip ospf network point-to-point
+ ipv6 nd suppress-ra
+!
+interface eth2
+ ip ospf cost 45
+ ip ospf dead-interval 10
+ ip ospf hello-interval 5
+ ip ospf mtu-ignore
+ ip ospf network point-to-point
+ ipv6 nd suppress-ra
+!
+interface lo
+!
+router ospf
+ redistribute connected
+ network 10.10.0.0/30 area 0.0.0.0
+ network 10.20.0.0/30 area 0.0.0.0
+ neighbor 10.10.0.1
+ neighbor 10.20.0.2
+!
+ip forwarding
+!
+line vty
+!
+end
+R3# 
+
+
+```
+</details>
 
 
 
