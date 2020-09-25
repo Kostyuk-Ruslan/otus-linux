@@ -83,8 +83,6 @@ R1#
 
 
 ```
-<details>
-<summary><code>sh run R1</code></summary>
 
 ```
 R1# sh run
@@ -205,10 +203,7 @@ O   10.20.0.0/30 [110/45] is directly connected, eth2, 06:20:54
 R2# 
 
 ```
-</details>
 
-<details>
-<code><summary>sh run R2</code></summary>
 ```
 
 
@@ -330,10 +325,8 @@ R3#
 
 
 ```
-</details>
 
-<details>
-<code><summary>sh run R3</code></summary>
+
 ```
 
 R3# sh run
