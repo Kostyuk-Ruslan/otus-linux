@@ -47,6 +47,7 @@
       - vim
       - zip
       - unzip
+      - mtr
       - traceroute
       - mc
       - tcpdump

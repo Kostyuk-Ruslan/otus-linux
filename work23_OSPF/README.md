@@ -378,11 +378,145 @@ R3#
 <details>
 <summary><code>2. Изобразить ассиметричный роутинг</code></summary>
 
+R1
+
+Пинганем соседний R3 -eth2 (10.20.0.1), убедимся что связь есть
+
+```
+
+[root@R1 quagga]# ping 10.20.0.1
+PING 10.20.0.1 (10.20.0.1) 56(84) bytes of data.
+64 bytes from 10.20.0.1: icmp_seq=1 ttl=63 time=3.57 ms
+64 bytes from 10.20.0.1: icmp_seq=2 ttl=63 time=3.48 ms
+64 bytes from 10.20.0.1: icmp_seq=3 ttl=63 time=4.01 ms
+64 bytes from 10.20.0.1: icmp_seq=4 ttl=63 time=4.48 ms
+64 bytes from 10.20.0.1: icmp_seq=5 ttl=63 time=4.10 ms
+64 bytes from 10.20.0.1: icmp_seq=6 ttl=63 time=3.73 ms
+64 bytes from 10.20.0.1: icmp_seq=7 ttl=63 time=3.81 ms
+^C
+--- 10.20.0.1 ping statistics ---
+7 packets transmitted, 7 received, 0% packet loss, time 6013ms
+rtt min/avg/max/mdev = 3.483/3.887/4.487/0.320 ms
+[root@R1 quagga]# 
+```
+Пинг есть, теперь посмотрим таблицу маршрутизации
+
+```
+[root@R1 ~]# ip ro
+default via 10.0.2.2 dev eth0 proto dhcp metric 100 
+10.0.0.0/30 dev eth1 proto kernel scope link src 10.0.0.1 metric 101 
+10.0.2.0/24 dev eth0 proto kernel scope link src 10.0.2.15 metric 100 
+10.10.0.0/30 dev eth2 proto kernel scope link src 10.10.0.1 metric 102 
+10.20.0.0/30 proto zebra metric 90 
+    nexthop via 10.0.0.2 dev eth1 weight 1 
+    nexthop via 10.10.0.2 dev eth2 weight 1 
+[root@R1 ~]# 
+	
+```
+После чего посмотрим через как маршрутизатор уходит на пакет
+
+<code>[root@R1 ~]# mtr -nt 10.20.0.1</code>
+
+<p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/work23_OSPF/photo/1.JPG"></p>
+
+На картинке видно, что пакет уходит  по самому короткому пути что и логично напрямую на 10.20.0.1
+
+
+
+Теперь попробуем изобразить вссемитричный роутинг, попробуем сделать так что бы пакет отправился по другому пути, с эмитируем обрыв линка.
+
+
+На R3
+
+Посмотрим наши интерфейсы
+```
+[root@R3 ~]# ifconfig
+eth0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 10.0.2.15  netmask 255.255.255.0  broadcast 10.0.2.255
+        inet6 fe80::5054:ff:fe8a:fee6  prefixlen 64  scopeid 0x20<link>
+        ether 52:54:00:8a:fe:e6  txqueuelen 1000  (Ethernet)
+        RX packets 165  bytes 17691 (17.2 KiB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 121  bytes 12991 (12.6 KiB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+eth1: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 10.10.0.2  netmask 255.255.255.252  broadcast 10.10.0.3
+        inet6 fe80::a00:27ff:fee8:9e5c  prefixlen 64  scopeid 0x20<link>
+        ether 08:00:27:e8:9e:5c  txqueuelen 1000  (Ethernet)
+        RX packets 204  bytes 16366 (15.9 KiB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 214  bytes 17270 (16.8 KiB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+eth2: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 10.20.0.1  netmask 255.255.255.252  broadcast 10.20.0.3
+        inet6 fe80::a00:27ff:fed0:90b7  prefixlen 64  scopeid 0x20<link>
+        ether 08:00:27:d0:90:b7  txqueuelen 1000  (Ethernet)
+        RX packets 62  bytes 5310 (5.1 KiB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 73  bytes 6030 (5.8 KiB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
 ```
 
 
+Положим наш интерйес "eth1"
+
+```
+[root@R3 ~]# ifdown eth1
+Device 'eth1' successfully disconnected.
+[root@R3 ~]# 
+
 ```
 
+
+После чего на R1 снова попробуем пингануть наш R3 и убедимся, что пинг до сих пор присуствует
+
+```
+[root@R1 ~]# ping 10.20.0.1
+PING 10.20.0.1 (10.20.0.1) 56(84) bytes of data.
+64 bytes from 10.20.0.1: icmp_seq=1 ttl=63 time=13.3 ms
+64 bytes from 10.20.0.1: icmp_seq=2 ttl=63 time=1.80 ms
+64 bytes from 10.20.0.1: icmp_seq=3 ttl=63 time=2.51 ms
+64 bytes from 10.20.0.1: icmp_seq=4 ttl=63 time=2.13 ms
+64 bytes from 10.20.0.1: icmp_seq=5 ttl=63 time=2.82 ms
+^C
+--- 10.20.0.1 ping statistics ---
+5 packets transmitted, 5 received, 0% packet loss, time 4013ms
+rtt min/avg/max/mdev = 1.807/4.517/13.304/4.406 ms
+[root@R1 ~]# 
+```
+
+
+Смотрим как теперь идет пакет
+```
+[root@R1 ~]# mtr -nt 10.20.0.1
+```
+
+<p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/work23_OSPF/photo/2.JPG"></p>
+
+
+Видим, что таблица маршрутизации перестроилась
+
+```
+[root@R1 ~]# ip ro
+default via 10.0.2.2 dev eth0 proto dhcp metric 100 
+10.0.0.0/30 dev eth1 proto kernel scope link src 10.0.0.1 metric 101 
+10.0.2.0/24 dev eth0 proto kernel scope link src 10.0.2.15 metric 100 
+10.10.0.0/30 dev eth2 proto kernel scope link src 10.10.0.1 metric 102 
+10.20.0.0/30 via 10.0.0.2 dev eth1 proto zebra metric 90 
+[root@R1 ~]# 
+
+
+```
+
+x2x2
+
+```
+
+
+
+```
 
 </details>
 

@@ -48,6 +48,7 @@
       - zip
       - unzip
       - traceroute
+      - mtr
       - mc
       - tcpdump
       - quagga
