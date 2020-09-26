@@ -391,7 +391,34 @@ R3#
 - Тут все делаем в ручную, без ansibl'a
 
 
-"R1"
+Для начала посмотрим на таблицу маршрутизации в ospf на "R1"
+
+```
+R1# sh ip ospf  ro
+============ OSPF network routing table ============
+N    10.0.0.0/30           [45] area: 0.0.0.0
+                           directly attached to eth1
+N    10.10.0.0/30          [45] area: 0.0.0.0
+                           directly attached to eth2
+N    10.20.0.0/30          [90] area: 0.0.0.0
+                           via 10.0.0.2, eth1
+                           via 10.10.0.2, eth2
+
+============ OSPF router routing table =============
+R    10.0.0.2              [45] area: 0.0.0.0, ASBR
+                           via 10.0.0.2, eth1
+R    10.10.0.2             [45] area: 0.0.0.0, ASBR
+                           via 10.10.0.2, eth2
+
+============ OSPF external routing table ===========
+N E2 10.0.2.0/24           [45/20] tag: 0
+                           via 10.0.0.2, eth1
+                           via 10.10.0.2, eth2
+
+R1# 
+
+```
+
 
 Посмотрим наши интерфейсы на "R1"
 
@@ -478,7 +505,7 @@ listening on eth2, link-type EN10MB (Ethernet), capture size 262144 bytes
 ```
 
 
-Посмотрим таблицу маршрутизации
+Посмотрим таблицу маршрутизации в linux'e
 ```
 [root@R1 ~]# ip ro
 default via 10.0.2.2 dev eth0 proto dhcp metric 100 
@@ -572,13 +599,32 @@ rtt min/avg/max/mdev = 1.807/4.517/13.304/4.406 ms
 [root@R1 ~]# 
 ```
 
-Стал один сосед
+Стал один сосед и изменилась табл. маршрутов в "ospf"
 
 ```
     Neighbor ID Pri State           Dead Time Address         Interface            RXmtL RqstL DBsmL
     10.0.0.2          1 Full/DROther       9.095s 10.0.0.2        eth1:10.0.0.1            0     0     0
     R1# 
     
+R1# sh ip ospf  ro
+============ OSPF network routing table ============
+N    10.0.0.0/30           [45] area: 0.0.0.0
+                           directly attached to eth1
+N    10.10.0.0/30          [45] area: 0.0.0.0
+                           directly attached to eth2
+N    10.20.0.0/30          [90] area: 0.0.0.0
+                           via 10.0.0.2, eth1
+
+============ OSPF router routing table =============
+R    10.0.0.2              [45] area: 0.0.0.0, ASBR
+                           via 10.0.0.2, eth1
+R    10.10.0.2             [90] area: 0.0.0.0, ASBR
+                           via 10.0.0.2, eth1
+
+============ OSPF external routing table ===========
+N E2 10.0.2.0/24           [45/20] tag: 0
+                           via 10.0.0.2, eth1
+
 
 
 ```
