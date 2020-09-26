@@ -674,7 +674,7 @@ listening on eth1, link-type EN10MB (Ethernet), capture size 262144 bytes
 <p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/work23_OSPF/photo/2.JPG"></p>
 
 
-Видим, что таблица маршрутизации перестроилась, теперь что бы папасть на 10.20.0.0 мы идем через 10.0.0.2
+Видим, что таблица маршрутизации в linux так же перестроилась, теперь что бы папасть на 10.20.0.0 мы идем через 10.0.0.2
 
 ```
 [root@R1 ~]# ip ro
@@ -692,6 +692,30 @@ cache
     
 
 ```
+Еще на все, точно такого же эффекта я добился если на "R3" сделать линк дорогим на "eth2 - 10.20.0.1"
+
+То есть заходим на "R3" ---> /etc/quagga/ospfd.conf
+
+и меняем на интерфейсе "eth2"  <code>ip ospf cost 100</code> то есть cost увеличиваем на "100"
+```
+interface eth1
+ip ospf mtu-ignore
+ip ospf network point-to-point
+ip ospf cost 45
+ip ospf hello-interval 5
+ip ospf dead-interval 10
+
+interface eth2
+ip ospf mtu-ignore
+ip ospf network point-to-point
+ip ospf cost 100
+ip ospf hello-interval 5
+ip ospf dead-interval 10
+
+```
+
+и обязательно перезапускаем демона "ospfd"
+<code>systemctl restart ospfd</code>
 
 
 </details>
@@ -704,10 +728,61 @@ cache
 
 Тут поднимаем наш интерфейс на "R3"  <code>ifup eth1</code> (из задания 2 ) и двигаемся дальше.
 
+На том же примере, будем развлекаться между "R1" и "R3", что бы восстановить семитричность роутинга, сделаем следующие:
+
+Заходим на "R3" и делаем дорогим линк "eth1-10.10.0.2" то есть сделаем наоборот.
+
+```
+interface eth1
+ip ospf mtu-ignore
+ip ospf network point-to-point
+ip ospf cost 100
+ip ospf hello-interval 5
+ip ospf dead-interval 10
+
+interface eth2
+ip ospf mtu-ignore
+ip ospf network point-to-point
+ip ospf cost 45
+ip ospf hello-interval 5
+ip ospf dead-interval 10
+
+
 ```
 
+Проверяем
 
+[root@R1 ~]# mtr -nt 10.20.0.1
 
+```
+<p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/work23_OSPF/photo/2.JPG"></p>
+```
+В соседнем окне на R1 запустил пинг до "R3" - 10.20.0.1
+и проверяем наличие пакетов  в tcpdump на интерфейсе "eth2"
+
+```
+[root@R1 quagga]# ip route get 10.20.0.1
+10.20.0.1 via 10.10.0.2 dev eth2 src 10.10.0.1 
+    cache 
+    [root@R1 quagga]# tcpdump -i eth2 -n
+    tcpdump: verbose output suppressed, use -v or -vv for full protocol decode
+    listening on eth2, link-type EN10MB (Ethernet), capture size 262144 bytes
+    21:54:42.126488 IP 10.10.0.1 > 10.20.0.1: ICMP echo request, id 24280, seq 8, length 64
+    21:54:42.128383 IP 10.20.0.1 > 10.10.0.1: ICMP echo reply, id 24280, seq 8, length 64
+    21:54:42.755177 IP 10.10.0.2 > 224.0.0.5: OSPFv2, Hello, length 48
+    21:54:43.129940 IP 10.10.0.1 > 10.20.0.1: ICMP echo request, id 24280, seq 9, length 64
+    21:54:43.132185 IP 10.20.0.1 > 10.10.0.1: ICMP echo reply, id 24280, seq 9, length 64
+    21:54:44.132851 IP 10.10.0.1 > 10.20.0.1: ICMP echo request, id 24280, seq 10, length 64
+    21:54:44.133860 IP 10.20.0.1 > 10.10.0.1: ICMP echo reply, id 24280, seq 10, length 64
+    21:54:45.138664 IP 10.10.0.1 > 10.20.0.1: ICMP echo request, id 24280, seq 11, length 64
+    21:54:45.139390 IP 10.20.0.1 > 10.10.0.1: ICMP echo reply, id 24280, seq 11, length 64
+    21:54:45.359570 IP 10.10.0.1 > 224.0.0.5: OSPFv2, Hello, length 48
+    ^C
+    10 packets captured
+    10 packets received by filter
+    0 packets dropped by kernel
+    [root@R1 quagga]# 
+    
 ```
 
 
