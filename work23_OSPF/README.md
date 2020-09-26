@@ -752,12 +752,13 @@ ip ospf dead-interval 10
 
 Проверяем
 
+```
 [root@R1 ~]# mtr -nt 10.20.0.1
 
 ```
-<p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/work23_OSPF/photo/2.JPG"></p>
-```
-В соседнем окне на R1 запустил пинг до "R3" - 10.20.0.1
+<p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/work23_OSPF/photo/3.JPG"></p>
+
+В соседнем окне на "R1" запустил пинг до "R3" - 10.20.0.1
 и проверяем наличие пакетов  в tcpdump на интерфейсе "eth2"
 
 ```
