@@ -11,6 +11,11 @@ Linux Administrator 2020
 
 <p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/work23_OSPF/photo/sheme.png"></p>
 
+Примечание: У меня почему то корректно заработало, тогда когда я перезагрузил "reboot" все r1, r2, r3 уж незнаю, с чем это связано, да и что то лень разбираться, вообщем  добавлять модуль
+перезагрузки в ансибл не стал. Вообщем если сразу не завелось, просьба перезагрузить все вм, а лучше сделать сразу после поднятия вм.
+
+
+
 <details>
 <summary><code>1. Поднять OSPF между машинами на базе Quagga</code></summary>
 
@@ -383,6 +388,9 @@ R3#
 <details>
 <summary><code>2. Изобразить ассиметричный роутинг</code></summary>
 
+- Тут все делаем в ручную, без ansibl'a
+
+
 "R1"
 
 Посмотрим наши интерфейсы на "R1"
@@ -564,8 +572,16 @@ rtt min/avg/max/mdev = 1.807/4.517/13.304/4.406 ms
 [root@R1 ~]# 
 ```
 
+Стал один сосед
+
+```
+    Neighbor ID Pri State           Dead Time Address         Interface            RXmtL RqstL DBsmL
+    10.0.0.2          1 Full/DROther       9.095s 10.0.0.2        eth1:10.0.0.1            0     0     0
+    R1# 
+    
 
 
+```
 Снова запускаем "tcpdump" и видим что, теперь пакеты приходят на "eth1"
 ```
 [root@R1 ~]# tcpdump -i eth2 -n
@@ -640,8 +656,9 @@ cache
 <details>
 <summary><code>3. Сделать один из линков "дорогим", но что бы при этом роутинг был симметричным</code></summary>
 
-```
+Тут поднимаем наш интерфейс на "R3"  <code>ifup eth1</code> (из задания 2 ) и двигаемся дальше.
 
+```
 
 
 
