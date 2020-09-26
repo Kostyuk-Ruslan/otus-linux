@@ -378,9 +378,43 @@ R3#
 <details>
 <summary><code>2. Изобразить ассиметричный роутинг</code></summary>
 
-R1
+"R1"
 
-Пинганем соседний R3 -eth2 (10.20.0.1), убедимся что связь есть
+Посмотрим наши интерфейсы на "R1"
+
+```
+[root@R1 ~]# ifconfig
+eth0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 10.0.2.15  netmask 255.255.255.0  broadcast 10.0.2.255
+        inet6 fe80::5054:ff:fe8a:fee6  prefixlen 64  scopeid 0x20<link>
+        ether 52:54:00:8a:fe:e6  txqueuelen 1000  (Ethernet)
+        RX packets 1663  bytes 123118 (120.2 KiB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 1328  bytes 125870 (122.9 KiB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+eth1: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 10.0.0.1  netmask 255.255.255.252  broadcast 10.0.0.3
+        inet6 fe80::a00:27ff:fe00:18af  prefixlen 64  scopeid 0x20<link>
+        ether 08:00:27:00:18:af  txqueuelen 1000  (Ethernet)
+        RX packets 1419  bytes 122554 (119.6 KiB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 1434  bytes 122840 (119.9 KiB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+eth2: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 10.10.0.1  netmask 255.255.255.252  broadcast 10.10.0.3
+        inet6 fe80::a00:27ff:fe23:cead  prefixlen 64  scopeid 0x20<link>
+        ether 08:00:27:23:ce:ad  txqueuelen 1000  (Ethernet)
+        RX packets 949  bytes 78896 (77.0 KiB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 1264  bytes 103854 (101.4 KiB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+```
+
+
+Пинганем соседний "R3" -eth2 (10.20.0.1), убедимся что связь есть
 
 ```
 
