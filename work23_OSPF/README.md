@@ -399,8 +399,39 @@ PING 10.20.0.1 (10.20.0.1) 56(84) bytes of data.
 rtt min/avg/max/mdev = 3.483/3.887/4.487/0.320 ms
 [root@R1 quagga]# 
 ```
-Пинг есть, теперь посмотрим таблицу маршрутизации
+Пинг есть, посмотрим на пакеты с помощью tcpdump
 
+
+
+Видим что пакеты уходят и приходят на тот же "eth2"
+```
+[root@R1 ~]# tcpdump -i eth2 -n
+tcpdump: verbose output suppressed, use -v or -vv for full protocol decode
+listening on eth2, link-type EN10MB (Ethernet), capture size 262144 bytes
+20:01:15.401538 IP 10.10.0.1 > 10.20.0.1: ICMP echo request, id 24141, seq 58, length 64
+20:01:15.403217 IP 10.20.0.1 > 10.10.0.1: ICMP echo reply, id 24141, seq 58, length 64
+20:01:16.403603 IP 10.10.0.1 > 10.20.0.1: ICMP echo request, id 24141, seq 59, length 64
+20:01:16.406875 IP 10.20.0.1 > 10.10.0.1: ICMP echo reply, id 24141, seq 59, length 64
+20:01:16.559087 IP 10.10.0.2 > 224.0.0.5: OSPFv2, Hello, length 48
+20:01:17.405575 IP 10.10.0.1 > 10.20.0.1: ICMP echo request, id 24141, seq 60, length 64
+20:01:17.406212 IP 10.20.0.1 > 10.10.0.1: ICMP echo reply, id 24141, seq 60, length 64
+20:01:18.407166 IP 10.10.0.1 > 10.20.0.1: ICMP echo request, id 24141, seq 61, length 64
+20:01:18.408946 IP 10.20.0.1 > 10.10.0.1: ICMP echo reply, id 24141, seq 61, length 64
+20:01:18.641176 IP 10.10.0.1 > 224.0.0.5: OSPFv2, Hello, length 48
+20:01:19.408773 IP 10.10.0.1 > 10.20.0.1: ICMP echo request, id 24141, seq 62, length 64
+20:01:19.409967 IP 10.20.0.1 > 10.10.0.1: ICMP echo reply, id 24141, seq 62, length 64
+20:01:20.410617 IP 10.10.0.1 > 10.20.0.1: ICMP echo request, id 24141, seq 63, length 64
+20:01:20.416922 IP 10.20.0.1 > 10.10.0.1: ICMP echo reply, id 24141, seq 63, length 64
+^C
+14 packets captured
+14 packets received by filter
+0 packets dropped by kernel
+[root@R1 ~]# 
+
+```
+
+
+Посмотрим таблицу маршрутизации
 ```
 [root@R1 ~]# ip ro
 default via 10.0.2.2 dev eth0 proto dhcp metric 100 
@@ -492,6 +523,45 @@ PING 10.20.0.1 (10.20.0.1) 56(84) bytes of data.
 5 packets transmitted, 5 received, 0% packet loss, time 4013ms
 rtt min/avg/max/mdev = 1.807/4.517/13.304/4.406 ms
 [root@R1 ~]# 
+```
+
+
+
+Снова запускаем tcpdump и видим что, теперь пакеты приходят на "eth1"
+```
+[root@R1 ~]# tcpdump -i eth2 -n
+tcpdump: verbose output suppressed, use -v or -vv for full protocol decode
+listening on eth2, link-type EN10MB (Ethernet), capture size 262144 bytes
+20:03:28.666217 IP 10.10.0.1 > 224.0.0.5: OSPFv2, Hello, length 44
+20:03:33.669068 IP 10.10.0.1 > 224.0.0.5: OSPFv2, Hello, length 44
+20:03:38.674656 IP 10.10.0.1 > 224.0.0.5: OSPFv2, Hello, length 44
+20:03:43.672375 IP 10.10.0.1 > 224.0.0.5: OSPFv2, Hello, length 44
+20:03:48.673922 IP 10.10.0.1 > 224.0.0.5: OSPFv2, Hello, length 44
+^C
+5 packets captured
+5 packets received by filter
+0 packets dropped by kernel
+[root@R1 ~]# tcpdump -i eth1 -n
+tcpdump: verbose output suppressed, use -v or -vv for full protocol decode
+listening on eth1, link-type EN10MB (Ethernet), capture size 262144 bytes
+20:03:52.106083 IP 10.0.0.1 > 10.20.0.1: ICMP echo request, id 24158, seq 34, length 64
+20:03:52.108530 IP 10.20.0.1 > 10.0.0.1: ICMP echo reply, id 24158, seq 34, length 64
+20:03:53.107692 IP 10.0.0.1 > 10.20.0.1: ICMP echo request, id 24158, seq 35, length 64
+20:03:53.110334 IP 10.20.0.1 > 10.0.0.1: ICMP echo reply, id 24158, seq 35, length 64
+20:03:53.675701 IP 10.0.0.1 > 224.0.0.5: OSPFv2, Hello, length 48
+20:03:54.086790 IP 10.0.0.2 > 224.0.0.5: OSPFv2, Hello, length 48
+20:03:54.109427 IP 10.0.0.1 > 10.20.0.1: ICMP echo request, id 24158, seq 36, length 64
+20:03:54.111023 IP 10.20.0.1 > 10.0.0.1: ICMP echo reply, id 24158, seq 36, length 64
+20:03:55.111864 IP 10.0.0.1 > 10.20.0.1: ICMP echo request, id 24158, seq 37, length 64
+20:03:55.114208 IP 10.20.0.1 > 10.0.0.1: ICMP echo reply, id 24158, seq 37, length 64
+20:03:56.114168 IP 10.0.0.1 > 10.20.0.1: ICMP echo request, id 24158, seq 38, length 64
+20:03:56.117719 IP 10.20.0.1 > 10.0.0.1: ICMP echo reply, id 24158, seq 38, length 64
+^C
+12 packets captured
+12 packets received by filter
+0 packets dropped by kernel
+[root@R1 ~]# 
+
 ```
 
 
