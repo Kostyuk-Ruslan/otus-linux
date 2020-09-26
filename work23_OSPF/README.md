@@ -6,6 +6,11 @@ Linux Administrator 2020
          
          
 
+
+Схема:
+
+<p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/work23_OSPF/photo/sheme.png"></p>
+
 <details>
 <summary><code>1. Поднять OSPF между машинами на базе Quagga</code></summary>
 
