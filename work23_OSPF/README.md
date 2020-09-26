@@ -545,7 +545,7 @@ eth2: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
 ```
 
 
-Положим наш интерйес "eth1"
+Положим наш интерйес "eth1"  на "R3"
 
 ```
 [root@R3 ~]# ifdown eth1
