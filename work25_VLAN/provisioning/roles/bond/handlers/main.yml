@@ -1,0 +1,8 @@
+---
+
+ - name: restart network
+   systemd:
+      name: network
+      state: restarted
+      enabled: yes
+

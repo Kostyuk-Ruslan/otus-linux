@@ -1,36 +1,21 @@
 
 ---
 
-- hosts: testServer1
+- hosts: testClient1, testClient2, testServer1, testServer2
   become: true
   roles:
-    - testServer1
+    - vlan
 
 
-- hosts: testClient1
+
+
+- hosts: centralRouter, inetRouter
   become: true
   roles:
-    - testClient1
+    - bond
 
-
-- hosts: testServer2
-  become: true
-  roles:
-    - testServer2
-
-- hosts: testClient2
-  become: true
-  roles:
-    - testClient2
-
-
-- hosts: centralRouter
-  become: true
-  roles:
-    - centralRouter
-
-- hosts: inetRouter
-  become: true
-  roles:
-    - inetRouter
+#- hosts: inetRouter
+#  become: true
+#  roles:
+#    - inetRouter
 
