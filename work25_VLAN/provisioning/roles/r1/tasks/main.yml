@@ -1,0 +1,90 @@
+---
+  
+ 
+#  - name: repo guagga
+#    yum_repository:
+#      name: guagga
+#      description: Quagga Official Repository - $basearch
+#      baseurl: https://download.savannah.gnu.org/$releasever/$basearch/
+#      gpgcheck: 0
+#      state: present
+
+
+
+  - name: Add multiple repositories 
+    yum_repository:
+      name: epel
+      description: EPEL YUM repo
+      file: external_repos
+      baseurl: https://download.fedoraproject.org/pub/epel/$releasever/$basearch/
+      gpgcheck: no
+
+
+  - name: install epel-release
+    yum:
+     name:
+      - epel-release
+     state: latest
+    tags: install-packages
+
+
+  - name: Disable SELinux
+    selinux:
+      state: disabled
+
+
+  - name: stop and disable firewalld
+    systemd:
+      name: firewalld
+      state: stopped
+      enabled: no
+
+
+  - name: install quagga
+    yum:
+     name:
+      - net-tools
+      - vim
+      - zip
+      - unzip
+      - mtr
+      - traceroute
+      - mc
+      - tcpdump
+      - quagga
+
+  - name: net.ipv4.ip_forward = 1
+    sysctl:
+      name: net.ipv4.ip_forward
+      value: '1'
+      sysctl_set: yes
+      state: present
+      reload: yes
+
+
+  - name: net.ipv4.conf.all.rp_filter = 2
+    sysctl:
+      name: net.ipv4.conf.all.rp_filter
+      value: '2'
+      sysctl_set: yes
+      state: present
+      reload: yes
+
+
+
+  - name: Copy  ospfd.conf
+    copy:
+      src:  files/ospfd.conf
+      dest: /etc/quagga/ospfd.conf
+      group: root
+      owner: root
+      mode: '775'
+
+
+
+
+  - name: start and enable ospfd
+    systemd:
+      name: ospfd
+      state: started
+      enabled: yes
