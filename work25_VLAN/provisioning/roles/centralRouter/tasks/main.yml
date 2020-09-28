@@ -40,7 +40,7 @@
       enabled: no
 
 
-  - name: install quagga
+  - name: install package
     yum:
      name:
       - net-tools
@@ -51,7 +51,7 @@
       - mtr
       - mc
       - tcpdump
-      - quagga
+
 
   - name: net.ipv4.ip_forward = 1
     sysctl:
@@ -62,29 +62,3 @@
       reload: yes
 
 
-  - name: net.ipv4.conf.all.rp_filter = 2
-    sysctl:
-      name: net.ipv4.conf.all.rp_filter
-      value: '2'
-      sysctl_set: yes
-      state: present
-      reload: yes
-
-
-
-  - name: Copy  ospfd.conf
-    copy:
-      src:  files/ospfd.conf
-      dest: /etc/quagga/ospfd.conf
-      group: root
-      owner: root
-      mode: '775'
-
-
-
-
-  - name: start and enable ospfd
-    systemd:
-      name: ospfd
-      state: started
-      enabled: yes

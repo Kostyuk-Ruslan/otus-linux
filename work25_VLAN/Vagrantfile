@@ -11,22 +11,22 @@ Vagrant.configure(2) do |config|
   end
 
   config.vm.define "testServer1" do |testServer1|
-    testServer1.vm.network "private_network", ip: "10.10.10.1", netmask: "255.255.255.0", virtualbox__intnet: "vlan1"
+    testServer1.vm.network "private_network", ip: "10.10.10.1", netmask: "255.255.255.0", virtualbox__intnet: "vlan10"
     testServer1.vm.hostname = "testServer1"
   end
 
   config.vm.define "testClient1" do |testClient1|
-    testClient1.vm.network "private_network", ip: "10.10.10.254", netmask: "255.255.255.0", virtualbox__intnet: "vlan1"
+    testClient1.vm.network "private_network", ip: "10.10.10.254", netmask: "255.255.255.0", virtualbox__intnet: "vlan10"
     testClient1.vm.hostname = "testClient1"
   end
 
   config.vm.define "testServer2" do |testServer2|
-    testServer2.vm.network "private_network", ip: "10.10.10.1", netmask: "255.255.255.0", virtualbox__intnet: "vlan254"
+    testServer2.vm.network "private_network", ip: "10.10.10.1", netmask: "255.255.255.0", virtualbox__intnet: "vlan20"
     testServer2.vm.hostname = "testServer2"
   end
 
   config.vm.define "testClient2" do |testClient2|
-    testClient2.vm.network "private_network", ip: "10.10.10.254", netmask: "255.255.255.0", virtualbox__intnet: "vlan254"
+    testClient2.vm.network "private_network", ip: "10.10.10.254", netmask: "255.255.255.0", virtualbox__intnet: "vlan20"
     testClient2.vm.hostname = "testClient2"
   end
 

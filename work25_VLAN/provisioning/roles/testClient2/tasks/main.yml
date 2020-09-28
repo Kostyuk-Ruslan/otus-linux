@@ -1,15 +1,6 @@
 ---
   
  
-#  - name: repo guagga
-#    yum_repository:
-#      name: guagga
-#      description: Quagga Official Repository - $basearch
-#      baseurl: https://download.savannah.gnu.org/$releasever/$basearch/
-#      gpgcheck: 0
-#      state: present
-
-
 
   - name: Add multiple repositories 
     yum_repository:
@@ -51,7 +42,7 @@
       - mtr
       - mc
       - tcpdump
-      - quagga
+
 
   - name: net.ipv4.ip_forward = 1
     sysctl:
@@ -62,29 +53,17 @@
       reload: yes
 
 
-  - name: net.ipv4.conf.all.rp_filter = 2
-    sysctl:
-      name: net.ipv4.conf.all.rp_filter
-      value: '2'
-      sysctl_set: yes
-      state: present
-      reload: yes
 
-
-
-  - name: Copy  ospfd.conf
+  - name: Copy eth1
     copy:
-      src:  files/ospfd.conf
-      dest: /etc/quagga/ospfd.conf
-      group: root
+      src: files/ifcfg-eth1.20
+      dest: /etc/sysconfig/network-scripts/ifcfg-eth1.20
       owner: root
-      mode: '775'
+      group: root
+      mode: '0755'
 
-
-
-
-  - name: start and enable ospfd
+  - name: restart network
     systemd:
-      name: ospfd
-      state: started
+      name: network
+      state: restarted
       enabled: yes
