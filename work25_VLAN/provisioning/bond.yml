@@ -24,13 +24,13 @@
     - testClient2
 
 
-#- hosts: centralRouter
-#  become: true
-#  roles:
-#    - centralRouter
+- hosts: centralRouter
+  become: true
+  roles:
+    - centralRouter
 
-#- hosts: inetRouter
-#  become: true
-#  roles:
-#    - inetRouter
+- hosts: inetRouter
+  become: true
+  roles:
+    - inetRouter
 

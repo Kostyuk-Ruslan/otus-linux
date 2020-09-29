@@ -30,18 +30,18 @@ Vagrant.configure(2) do |config|
     testClient2.vm.hostname = "testClient2"
   end
 
-#  config.vm.define "centralRouter" do |centralRouter|
-#    centralRouter.vm.network "private_network", ip: "10.10.10.2", netmask: "255.255.255.0", virtualbox__intnet: "virtual-switch"
-#    centralRouter.vm.network "private_network", ip: "", virtualbox__intnet: "link1"
-#    centralRouter.vm.network "private_network", ip: "", virtualbox__intnet: "link2"
-#    centralRouter.vm.hostname = "centralRouter"
-# end
+  config.vm.define "centralRouter" do |centralRouter|
+    centralRouter.vm.network "private_network", ip: "10.10.10.2", netmask: "255.255.255.0", virtualbox__intnet: "virtual-switch"
+    centralRouter.vm.network "private_network", ip: "", virtualbox__intnet: "link1"
+    centralRouter.vm.network "private_network", ip: "", virtualbox__intnet: "link2"
+    centralRouter.vm.hostname = "centralRouter"
+  end
 
-#  config.vm.define "inetRouter" do |inetRouter|
-#    inetRouter.vm.network "private_network", ip: "", virtualbox__intnet: "link1"
-#    inetRouter.vm.network "private_network", ip: "", virtualbox__intnet: "link2"
-#    inetRouter.vm.hostname = "inetRouter"
-# end
+  config.vm.define "inetRouter" do |inetRouter|
+    inetRouter.vm.network "private_network", ip: "", virtualbox__intnet: "link1"
+    inetRouter.vm.network "private_network", ip: "", virtualbox__intnet: "link2"
+    inetRouter.vm.hostname = "inetRouter"
+  end
   
   config.vm.provision "ansible" do |ansible|
     ansible.verbose = "v"
