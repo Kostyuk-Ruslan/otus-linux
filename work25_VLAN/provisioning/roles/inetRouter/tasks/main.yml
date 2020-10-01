@@ -52,23 +52,20 @@
       reload: yes
 
 
-#  - name: copy bond0
-#    template:
-#      src: ifcfg-eth1.j2
-#      dest: /etc/sysconfig/network-scripts/ifcfg-eth2
+  - name: copy bond0
+    copy:
+      src: files/{{ item }}
+      dest: /etc/sysconfig/network-scripts/{{ item }}
+      group: root
+      owner: root
+      mode: '644'
+    with_items:
+    - "ifcfg-bond0"
+    - "ifcfg-eth1"
+    - "ifcfg-eth2"
 
-#  - name: copy bond0
-#    template:
-#      src: ifcfg-eth2.j2
-#      dest: /etc/sysconfig/network-scripts/ifcfg-eth2
 
 
-
-
-#  - name: Create bond0 inetRouter
-#    template:
-#      src: ifcfg-bond0-ir.j2
-#      dest: /etc/sysconfig/network-scripts/ifcfg-bond0
 
 
   - name: restart network

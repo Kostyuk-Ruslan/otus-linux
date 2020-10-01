@@ -54,24 +54,17 @@
 
  
   
-#  - name: copy bond0
-#    template:
-#      src: ifcfg-eth2.j2
-#      dest: /etc/sysconfig/network-scripts/ifcfg-eth2
-
-#  - name: copy bond0
-#    template:
-#      src: ifcfg-eth3.j2
-#      dest: /etc/sysconfig/network-scripts/ifcfg-eth3
-
-
-
-
-#  - name: Create bond0 inetRouter
-#    template:
-#      src: ifcfg-bond0-cr.j2
-#      dest: /etc/sysconfig/network-scripts/ifcfg-bond0
-
+  - name: copy bond0
+    copy:
+      src: files/{{ item }}
+      dest: /etc/sysconfig/network-scripts/{{ item }}
+      group: root
+      owner: root
+      mode: '644'
+    with_items:
+    - "ifcfg-bond0"
+    - "ifcfg-eth2"
+    - "ifcfg-eth3"
 
   - name: restart network
     systemd:
