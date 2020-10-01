@@ -31,7 +31,7 @@
       enabled: no
 
 
-  - name: install quagga
+  - name: install package
     yum:
      name:
       - net-tools
