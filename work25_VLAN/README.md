@@ -247,6 +247,35 @@ PING 10.0.0.2 (10.0.0.2) 56(84) bytes of data.
 7 packets transmitted, 7 received, 0% packet loss, time 6015ms
 rtt min/avg/max/mdev = 1.741/1.834/2.090/0.113 ms
 [root@inetRouter ~]# 
+[root@inetRouter ~]# cat /proc/net/bonding/bond0
+Ethernet Channel Bonding Driver: v3.7.1 (April 27, 2011)
+
+Bonding Mode: fault-tolerance (active-backup) (fail_over_mac active)
+Primary Slave: None
+Currently Active Slave: eth1
+MII Status: up
+MII Polling Interval (ms): 100
+Up Delay (ms): 0
+Down Delay (ms): 0
+
+Slave Interface: eth1
+MII Status: up
+Speed: 1000 Mbps
+Duplex: full
+Link Failure Count: 0
+Permanent HW addr: 08:00:27:d8:d5:03
+Slave queue ID: 0
+
+Slave Interface: eth2
+MII Status: down
+Speed: 1000 Mbps
+Duplex: full
+Link Failure Count: 1
+Permanent HW addr: 08:00:27:05:5e:e8
+Slave queue ID: 0
+[root@inetRouter ~]# 
+
+
 
 ```
 
