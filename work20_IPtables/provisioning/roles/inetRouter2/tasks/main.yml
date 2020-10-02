@@ -52,12 +52,13 @@
       reload: yes
 
 
-  - name: ip r del default
-    raw: ip r del default
+  - name: проброс портов с 80 на 8080
+    raw:  iptables -t nat -A PREROUTING -i eth1 -p tcp --dport 8080 -j DNAT --to-destination 192.168.0.2:80
+    
+  - name: реализовать проход на 80й порт без маскарадинга
+    raw: iptables -t nat -A POSTROUTING -o eth1 -p tcp --dst 192.168.0.2 --dport 80 -j SNAT --to-source 192.168.254.1
 
 
-  - name: ip r add default
-    raw: ip r add default via 192.168.255.1
 
 
   - name: restart network

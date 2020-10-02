@@ -51,9 +51,9 @@
       state: present
       reload: yes
 
-
   - name: ip r del default
     raw: ip r del default
+
 
 
   - name: ip r add default
