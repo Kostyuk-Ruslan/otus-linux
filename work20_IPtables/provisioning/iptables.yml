@@ -1,10 +1,10 @@
 
 ---
 
-#- hosts: inetRouter
-#  become: true
-#  roles:
-#    - inetRouter
+- hosts: inetRouter
+  become: true
+  roles:
+    - inetRouter
 
 
 - hosts: inetRouter2
