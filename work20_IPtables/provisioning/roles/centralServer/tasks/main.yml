@@ -1,0 +1,73 @@
+---
+  
+ 
+
+  - name: Add multiple repositories 
+    yum_repository:
+      name: epel
+      description: EPEL YUM repo
+      file: external_repos
+      baseurl: https://download.fedoraproject.org/pub/epel/$releasever/$basearch/
+      gpgcheck: no
+
+
+  - name: install epel-release
+    yum:
+     name:
+      - epel-release
+     state: latest
+    tags: install-packages
+
+
+  - name: Disable SELinux
+    selinux:
+      state: disabled
+
+
+  - name: stop and disable firewalld
+    systemd:
+      name: firewalld
+      state: stopped
+      enabled: no
+
+
+  - name: install package
+    yum:
+     name:
+      - net-tools
+      - vim
+      - zip
+      - unzip
+      - traceroute
+      - mtr
+      - mc
+      - tcpdump
+      - nginx
+
+  - name: net.ipv4.ip_forward = 1
+    sysctl:
+      name: net.ipv4.ip_forward
+      value: '1'
+      sysctl_set: yes
+      state: present
+      reload: yes
+
+  - name: start nginx
+    systemd:
+      name: nginx
+      state: started
+      enabled: yes
+
+  - name: ip r del default
+    raw: ip r del default
+
+
+  - name: ip r add default
+    raw: ip r add default via 192.168.0.1
+
+
+  - name: restart network
+    systemd:
+      name: network
+      state: restarted
+      enabled: yes
