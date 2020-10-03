@@ -6,34 +6,28 @@ Vagrant.configure(2) do |config|
   config.vm.box = "centos/7"
   config.vm.box_version = "1905.1"
   config.vm.provider "virtualbox" do |v|
-    v.memory = "256"
+    v.memory = "1024"
     v.cpus = 1
   end
 
-  config.vm.define "inetRouter" do |inetRouter|
-    inetRouter.vm.network "private_network", ip: "192.168.255.1", netmask: "255.255.255.252", virtualbox__intnet: "router-inet"
-    inetRouter.vm.hostname = "inetRouter"
+  config.vm.define "inetRouer" do |inetRouer|
+    inetRouer.vm.network "private_network", ip: "10.0.0.1", virtualbox__intnet: "link1"
+    inetRouer.vm.hostname = "inetRouer"
   end
 
-  config.vm.define "inetRouter2" do |inetRouter2|
-    inetRouter2.vm.network "private_network", ip: "192.168.254.1", netmask: "255.255.255.252",  virtualbox__intnet: "router-net"
-    inetRouter2.vm.hostname = "inetRouter2"
-  end
-
-  config.vm.define "centralRouter" do |centralRouter|
-    centralRouter.vm.network "private_network", ip: "192.168.255.2", netmask: "255.255.255.252", virtualbox__intnet: "router-net"
-    centralRouter.vm.network "private_network", ip: "192.168.0.1", netmask: "255.255.255.240", virtualbox__intnet: "dir-net"
-    centralRouter.vm.hostname = "centralRouter"
+  config.vm.define "inetRouer2" do |inetRouer2|
+    inetRouer2.vm.network "private_network", ip: "10.0.0.2", virtualbox__intnet: "link1"
+    inetRouer2.vm.hostname = "inetRouer2"
   end
 
   config.vm.define "centralServer" do |centralServer|
-    centralServer.vm.network "private_network", ip: "192.168.0.1", netmask: "255.255.255.240", virtualbox__intnet: "dir-net"
+    centralServer.vm.network "private_network", ip: "10.0.0.3", virtualbox__intnet: "link1"
     centralServer.vm.hostname = "centralServer"
   end
-  
-  config.vm.provision "ansible" do |ansible|
-    ansible.verbose = "v"
-    ansible.playbook = "provisioning/iptables.yml"
-    ansible.become = "true"
-  end
+
+#  config.vm.provision "ansible" do |ansible|
+#    ansible.verbose = "v"
+#    ansible.playbook = "provisioning/iptables.yml"
+#    ansible.become = "true"
+#  end
 end
