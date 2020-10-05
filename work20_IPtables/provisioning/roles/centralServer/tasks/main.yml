@@ -58,12 +58,12 @@
       state: started
       enabled: yes
 
-#  - name: ip r del default
-#    raw: ip r del default
+  - name: ip r del default
+    raw: ip r del default
 
 
-#  - name: ip r add default
-#    raw: ip r add default via 192.168.0.1
+  - name: ip r add default
+    raw: ip r add default via 192.168.0.1
 
 
   - name: restart network

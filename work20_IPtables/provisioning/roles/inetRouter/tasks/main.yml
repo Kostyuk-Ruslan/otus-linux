@@ -52,11 +52,11 @@
       reload: yes
 
 
-#  - name: masquard
-#    raw:  iptables -t nat -A POSTROUTING ! -d 192.168.0.0/16 -o eth0 -j MASQUERADE
+  - name: masquard
+    raw:  iptables -t nat -A POSTROUTING ! -d 192.168.0.0/16 -o eth0 -j MASQUERADE
 
-#  - name:  ip r add 192.168.0.0/16 via 192.168.255.2
-#    raw:  ip r add 192.168.0.0/16 via 192.168.255.2
+  - name:  ip r add 192.168.0.0/16 via 192.168.255.2
+    raw:  ip r add 192.168.0.0/16 via 192.168.255.2
     
 
 

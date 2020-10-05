@@ -43,21 +43,21 @@
       - mc
       - tcpdump
 
-#  - name: net.ipv4.ip_forward = 1
-#    sysctl:
-#      name: net.ipv4.ip_forward
-#      value: '1'
-#      sysctl_set: yes
-#      state: present
-#      reload: yes
+  - name: net.ipv4.ip_forward = 1
+    sysctl:
+      name: net.ipv4.ip_forward
+      value: '1'
+      sysctl_set: yes
+      state: present
+      reload: yes
 
-#  - name: ip r del default
-#    raw: ip r del default
+  - name: ip r del default
+    raw: ip r del default
 
 
 
-#  - name: ip r add default
-#    raw: ip r add default via 192.168.255.1
+  - name: ip r add default
+    raw: ip r add default via 192.168.255.1
 
 
   - name: restart network

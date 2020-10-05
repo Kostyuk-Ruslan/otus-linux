@@ -7,10 +7,10 @@
     - inetRouter
 
 
-- hosts: inetRouter2
-  become: true
-  roles:
-    - inetRouter2
+#- hosts: inetRouter2
+#  become: true
+#  roles:
+#    - inetRouter2
 
 
 - hosts: centralRouter
