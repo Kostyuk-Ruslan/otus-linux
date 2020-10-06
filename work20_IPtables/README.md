@@ -8,7 +8,7 @@ Linux Administrator 2020
    
 Схема:
 
-<p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/work25_IPtables/photo/sheme.png"></p>
+<p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/work20_IPtables/photo/sheme.png"></p>
 
 
 
