@@ -10,8 +10,87 @@ Linux Administrator 2020
 
 <p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/work20_IPtables/photo/sheme.png"></p>
 
+После поднятия вагрант, сразу на локалхосте можно делать <code>curl localhost:8080</code>
+
+Выхлоп:
+
+```
+[root@node01 work20_IPtables]# curl localhost:8080
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <title>Welcome to CentOS</title>
+  <style rel="stylesheet" type="text/css"> 
+
+	html {
+	background-image:url(img/html-background.png);
+	background-color: white;
+	font-family: "DejaVu Sans", "Liberation Sans", sans-serif;
+	font-size: 0.85em;
+	line-height: 1.25em;
+	margin: 0 4% 0 4%;
+	}
+
+	body {
+	border: 10px solid #fff;
+	margin:0;
+	padding:0;
+	background: #fff;
+	}
+
+	/* Links */
+
+	a:link { border-bottom: 1px dotted #ccc; text-decoration: none; color: #204d92; }
+	a:hover { border-bottom:1px dotted #ccc; text-decoration: underline; color: green; }
+	a:active {  border-bottom:1px dotted #ccc; text-decoration: underline; color: #204d92; }
+	a:visited { border-bottom:1px dotted #ccc; text-decoration: none; color: #204d92; }
+	a:visited:hover { border-bottom:1px dotted #ccc; text-decoration: underline; color: green; }
+ 
+	.logo a:link,
+	.logo a:hover,
+	.logo a:visited { border-bottom: none; }
+
+	.mainlinks a:link { border-bottom: 1px dotted #ddd; text-decoration: none; color: #eee; }
+	.mainlinks a:hover { border-bottom:1px dotted #ddd; text-decoration: underline; color: white; }
+	.mainlinks a:active { border-bottom:1px dotted #ddd; text-decoration: underline; color: white; }
+	.mainlinks a:visited { border-bottom:1px dotted #ddd; text-decoration: none; color: white; }
+	.mainlinks a:visited:hover { border-bottom:1px dotted #ddd; text-decoration: underline; color: white; }
+
+	/* User interface styles */
+
+	#header {
+	margin:0;
+	padding: 0.5em;
+	background: #204D8C url(img/header-background.png);
+	text-align: left;
+
+и т.д.
+```
+Скриншот:
+<p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/work20_IPtables/photo/localhost.JPG"></p>
 
 
+Правила inetRouter2
+
+```
+
+[root@inetRouter2 ~]# iptables -nvL -t nat
+Chain PREROUTING (policy ACCEPT 4 packets, 1276 bytes)
+ pkts bytes target     prot opt in     out     source               destination         
+    1    44 DNAT       tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:8080 to:192.168.0.2:80
+
+Chain INPUT (policy ACCEPT 3 packets, 700 bytes)
+ pkts bytes target     prot opt in     out     source               destination         
+
+Chain OUTPUT (policy ACCEPT 75 packets, 5648 bytes)
+ pkts bytes target     prot opt in     out     source               destination         
+
+Chain POSTROUTING (policy ACCEPT 70 packets, 5348 bytes)
+ pkts bytes target     prot opt in     out     source               destination         
+    6   344 SNAT       tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:80 to:192.168.255.3
+[root@inetRouter2 ~]# 
+
+```
 
 </details>
 
@@ -244,6 +323,9 @@ Last login: Wed Sep  2 15:02:02 2020 from 192.168.255.2
 
 <details>
 <summary><code>дефолт в инет оставить через inetRouter</code></summary>
+
+тут важно добавить правило маршрутов ip route add 192.168.0.0/16 via 192.168.255.2
+
 
 ```
 Complete!
