@@ -232,7 +232,7 @@ Last login: Wed Sep  2 15:02:02 2020 from 192.168.255.2
 ```
 
 
-[root@inetRouter2 ~]# iptables -t nat -A PREROUTING -i eth2 -p tcp --dport 8080 -j DNAT --to 192.168.0.2:80
+[root@inetRouter2 ~]# iptables -t nat -A PREROUTING  -p tcp --dport 8080 -j DNAT --to 192.168.0.2:80
 
 ```
 </details>
@@ -281,7 +281,7 @@ traceroute to 8.8.8.8 (8.8.8.8), 30 hops max, 60 byte packets
 <summary><code> реализовать проход на 80й порт без маскарадинга</code></summary>
 
 ```
-iptables -t nat -A POSTROUTING -o eth2 -p tcp --dst 192.168.0.2 --dport 80 -j SNAT --to-source 192.168.255.3 
+ iptables -t nat -A POSTROUTING -p tcp -m tcp --dport 80 -j SNAT --to-source 192.168.255.3
  
 ``` 
  
