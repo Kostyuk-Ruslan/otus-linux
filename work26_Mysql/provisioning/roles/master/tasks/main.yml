@@ -56,25 +56,23 @@
 
 
 
+  - name: Copy MySQL conf files                                                                                                                                  
+    copy:                                                                                                                                                        
+      src: conf/conf.d/                                                                                                                                          
+      dest: /etc/my.cnf.d/                                                                                                                                       
+      owner: root                                                                                                                                                
+      group: root                                                                                                                                                
+      mode: '0644'     
 
 
-# - name: Copy conf mysql
-#    copy:
-#      src: files/{{ item }}
-#      dest: /etc/my.cnf.d/
+
+#  - name: Copy my.cnf
+#    template:
+#      src: my.cnf.j2
+#      dest: /etc/my.cnf
 #      owner: root
 #      group: root
-#      mode: '0775'
-
-
-
-  - name: Copy my.cnf
-    template:
-      src: my.cnf.j2
-      dest: /etc/my.cnf
-      owner: root
-      group: root
-      mode: '0600'
+#      mode: '0600'
 
 
   - name: start mysql
@@ -85,25 +83,26 @@
 
 
   - name: 
-    raw: cat /var/log/mysqld.log | grep 'root@localhost:' | awk '{print $11}'
+    shell: cat /var/log/mysqld.log | grep 'root@localhost:' | awk '{print $11}'
     register: current_password
         
-#  - debug:
-#      msg:
-#      - "{{ current_password.stdout_lines }}"
+  - debug:
+      msg:
+      - "{{ current_password.stdout_lines }}"
+      - "{{ mysql_password }}"
 
-
-#  - name: Set mysql password
-#    raw:  mysql --connect-expired-password -uroot -p"{{ current_password.stdout }}" -e 'ALTER USER USER() IDENTIFIED BY "ei7veeChu4&&Z"'
-#    ignore_errors: yes
+  - name: Set mysql password
+    shell: 
+      mysql --connect-expired-password -uroot -p'{{ current_password.stdout }}' -e 'ALTER USER USER() IDENTIFIED BY "{{ mysql_password }}"'
+    ignore_errors: yes
  
 
    
-  - mysql_user:
-      name: bob
-      password: 12345
-      priv: '*.*:ALL'
-      state: present 
+#  - mysql_user:
+#      name: bob
+#      password: 12345
+#      priv: '*.*:ALL'
+#      state: present 
     
     
     
