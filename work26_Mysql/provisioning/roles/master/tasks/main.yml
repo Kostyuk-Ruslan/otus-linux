@@ -97,6 +97,24 @@
     ignore_errors: yes
  
 
+
+  - name: Create db bet 
+    mysql_db:
+       login_user: root
+       login_password: "{{ mysql_password }}"
+       name: bet
+       state: present
+
+  - name: Import db bet
+    mysql_db:
+       login_user: root
+       login_password: "{{ mysql_password }}"
+       name: bet
+       state: import
+       target: /etc/my.cnf.d/bet.dmp
+
+
+
    
 #  - mysql_user:
 #      name: bob
