@@ -115,16 +115,25 @@
 
 
 
+  - name: Create db user replication
+    mysql_user:
+      login_user: root
+      login_password: "{{ mysql_password }}"
+      name: "repl"
+      password: "!OtusLinux2018"
+      host: '%'
+      priv: '*.*:ALL'
+      state: present
+
    
-#  - mysql_user:
-#      name: bob
-#      password: 12345
-#      priv: '*.*:ALL'
-#      state: present 
+  - name: Дампим бд 
+    shell:  mysqldump --all-databases --triggers --routines --master-data --ignore-table=bet.events_on_demand --ignore-table=bet.v_same_event -uroot -p'B29z3z4z4&&' > master.sql
     
-    
-    
-    
+  
+  - name: Store master.sql
+    fetch:
+      src: master.sql
+      dest: .  
     
     
     
