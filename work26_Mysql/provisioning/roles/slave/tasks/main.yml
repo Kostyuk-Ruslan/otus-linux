@@ -66,14 +66,6 @@
 
 
 
-#  - name: Copy my.cnf
-#    template:
-#      src: my.cnf.j2
-#      dest: /etc/my.cnf
-#      owner: root
-#      group: root
-#      mode: '0600'
-
 
   - name: start mysql
     systemd:
@@ -97,27 +89,30 @@
     ignore_errors: yes
  
 
-#  - name: Import db bet
-#    mysql_db:
-#       login_user: root
-#       login_password: "{{ mysql_password }}"
-#       name: bet
-#       state: import
-#       target: /etc/my.cnf.d/bet.dmp
+  - name: Copy master.sql
+    copy:
+      src: files/master/master.sql
+      dest: /mnt    
+    
+    
+    
+                                                                                                                                                
+  - name: Import db bet                                                                                                                         
+    mysql_db:                                                                                                                                   
+       login_user: root                                                                                                                         
+       login_password: B29z3z4z4&&                                                                                                  
+       name: all                                                                                                                                
+       state: import                                                                                                                            
+       target: /mnt/master.sql
+    
 
+  - name: Setup and run slave                                                                                                                                      
+    shell:                                                                                                                                                        
+      mysql -uroot -p'B29z3z4z4&&' -e 'CHANGE MASTER TO MASTER_HOST="192.168.11.150", MASTER_USER="repl", MASTER_PASSWORD="!OtusLinux2018", MASTER_AUTO_POSITION=1;'
 
-
-   
-#  - mysql_user:
-#      name: bob
-#      password: 12345
-#      priv: '*.*:ALL'
-#      state: present 
-    
-    
-    
-    
-    
-    
-    
-    
+  - name: Setup
+    shell:
+      mysql -uroot -p'B29z3z4z4&&' -e 'START SLAVE;'   
+ 
+#  - name: source /mnt/master.sql
+#    shell:   SOURCE /mnt/master.sql

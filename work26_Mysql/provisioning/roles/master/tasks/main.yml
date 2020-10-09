@@ -127,14 +127,12 @@
 
    
   - name: Дампим бд 
-    shell:  mysqldump --all-databases --triggers --routines --master-data --ignore-table=bet.events_on_demand --ignore-table=bet.v_same_event -uroot -p'B29z3z4z4&&' > master.sql
+    shell:  mysqldump --all-databases --set-gtid-purged=OFF --triggers --routines --master-data --ignore-table=bet.events_on_demand --ignore-table=bet.v_same_event -uroot -p'B29z3z4z4&&' > master.sql
     
   
   - name: Store master.sql
     fetch:
       src: master.sql
-      dest: .  
-    
-    
+      dest: ./roles/slave/files
     
     
