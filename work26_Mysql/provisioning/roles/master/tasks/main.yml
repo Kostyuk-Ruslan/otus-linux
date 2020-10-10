@@ -1,6 +1,6 @@
 ---
 
-  - name: "Add Percona yum repository"
+  - name: "Добавляем репозиторий Percona"
     yum:
       name: https://repo.percona.com/yum/percona-release-latest.noarch.rpm
       state: present
@@ -18,7 +18,7 @@
       gpgcheck: no
 
 
-  - name: install epel-release
+  - name: Устанавливаем  epel-release
     yum:
      name:
       - epel-release
@@ -75,14 +75,14 @@
 #      mode: '0600'
 
 
-  - name: start mysql
+  - name: start "mysql" daemon
     systemd:
       name: mysql
       state: started
       enabled: yes
 
 
-  - name: 
+  - name: Грепаем пароль mysql
     shell: cat /var/log/mysqld.log | grep 'root@localhost:' | awk '{print $11}'
     register: current_password
         
@@ -98,14 +98,14 @@
  
 
 
-  - name: Create db bet 
+  - name: Создаем бд "bet"
     mysql_db:
        login_user: root
        login_password: "{{ mysql_password }}"
        name: bet
        state: present
 
-  - name: Import db bet
+  - name: Импортируем дамп bet.dmp в бд "bet"
     mysql_db:
        login_user: root
        login_password: "{{ mysql_password }}"
@@ -115,7 +115,7 @@
 
 
 
-  - name: Create db user replication
+  - name: Создаем пользователя "repl" для репликации
     mysql_user:
       login_user: root
       login_password: "{{ mysql_password }}"
@@ -126,11 +126,11 @@
       state: present
 
    
-  - name: Дампим бд 
-    shell:  mysqldump --all-databases --set-gtid-purged=OFF --triggers --routines --master-data --ignore-table=bet.events_on_demand --ignore-table=bet.v_same_event -uroot -p'B29z3z4z4&&' > master.sql
+  - name: Дампим бд master.mysql
+    shell:  mysqldump --all-databases --triggers --routines --master-data --ignore-table=bet.events_on_demand --ignore-table=bet.v_same_event -uroot -p'3p*e}kAQo%1i' > master.sql
     
   
-  - name: Store master.sql
+  - name: Копируем master.sql на локалхост
     fetch:
       src: master.sql
       dest: ./roles/slave/files

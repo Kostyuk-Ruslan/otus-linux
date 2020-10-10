@@ -94,25 +94,36 @@
       src: files/master/master.sql
       dest: /mnt    
     
+
+#  - name: Create db bet.                                                                                                                                           
+#    mysql_db:                                                                                                                                                      
+#       login_user: root                                                                                                                                            
+#       login_password: "{{ mysql_password }}"                                                                                                                      
+#       name: bet                                                                                                                                                   
+#       state: present    
+ 
     
     
                                                                                                                                                 
-  - name: Import db bet                                                                                                                         
-    mysql_db:                                                                                                                                   
-       login_user: root                                                                                                                         
-       login_password: B29z3z4z4&&                                                                                                  
-       name: all                                                                                                                                
-       state: import                                                                                                                            
-       target: /mnt/master.sql
+#  - name: Import db bet                                                                                                                         
+#    mysql_db:                                                                                                                                   
+#       login_user: root                                                                                                                         
+#       login_password: B29z3z4z4&&                                                                                                  
+#       name: bet                                                                                                                                
+#       state: import                                                                                                                            
+#       target: /mnt/master.sql
     
 
-  - name: Setup and run slave                                                                                                                                      
-    shell:                                                                                                                                                        
-      mysql -uroot -p'B29z3z4z4&&' -e 'CHANGE MASTER TO MASTER_HOST="192.168.11.150", MASTER_USER="repl", MASTER_PASSWORD="!OtusLinux2018", MASTER_AUTO_POSITION=1;'
+#  - name: Setup and run slave                                                                                                                                      
+#    shell:                                                                                                                                                        
+#      mysql -uroot -p'B29z3z4z4&&' -e 'CHANGE MASTER TO MASTER_HOST="192.168.11.150", MASTER_USER="repl", MASTER_PASSWORD="!OtusLinux2018", MASTER_AUTO_POSITION=1;'
 
-  - name: Setup
-    shell:
-      mysql -uroot -p'B29z3z4z4&&' -e 'START SLAVE;'   
+#  - name: Setup
+#    shell:
+#      mysql -uroot -p'B29z3z4z4&&' -e 'START SLAVE;'   
  
-#  - name: source /mnt/master.sql
-#    shell:   SOURCE /mnt/master.sql
+  - name: Setup and run slave
+    shell: |
+      mysql -uroot -p'{{ mysql_password }}' -e 'CHANGE MASTER TO MASTER_HOST="192.168.11.150", MASTER_USER="{{ replication_user }}", MASTER_PASSWORD="{{ replication_password }}", MASTER_AUTO_POSITION=1;'
+      mysql -uroot -p'{{ mysql_password }}' -e 'START SLAVE;'
+
