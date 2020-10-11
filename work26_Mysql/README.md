@@ -148,7 +148,7 @@ mysql>
 ```
 
 
-На слейве проверяем бд
+На слейве проверяем бд "bet"
 
 ```
 mysql>  SHOW DATABASES LIKE 'bet';
@@ -250,3 +250,58 @@ Master_SSL_Verify_Server_Cert: No
 
 mysql> 
 ```
+
+
+<code>Проверяем работу репликации в действии:</code>
+
+На мастере:
+```
+mysql> USE bet;
+Database changed
+mysql>  INSERT INTO bookmaker (id,bookmaker_name) VALUES(1,'1xbet');
+Query OK, 1 row affected (0.29 sec)
+
+mysql> SELECT * FROM bookmaker;
++----+----------------+
+| id | bookmaker_name |
++----+----------------+
+|  1 | 1xbet          |
+|  4 | betway         |
+|  5 | bwin           |
+|  6 | ladbrokes      |
+|  3 | unibet         |
++----+----------------+
+5 rows in set (0.01 sec)
+
+```
+<p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/work26_Mysql/photo/master.JPG"></p>
+
+
+На слейве:
+
+
+```
+mysql> use bet;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+mysql> SELECT * FROM bookmaker;
++----+----------------+
+| id | bookmaker_name |
++----+----------------+
+|  1 | 1xbet          |
+|  4 | betway         |
+|  5 | bwin           |
+|  6 | ladbrokes      |
+|  3 | unibet         |
++----+----------------+
+5 rows in set (0.00 sec)
+
+mysql> Bye
+[root@slave ~]# logout
+[vagrant@slave ~]$ 
+```
+
+<p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/work26_Mysql/photo/slave.JPG"></p>
+
