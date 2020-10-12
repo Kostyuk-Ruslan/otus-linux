@@ -1,5 +1,16 @@
 ---
 
+  - name: Add repo postgresql
+    yum_repository:
+      name: pgdg-redhat-all.repo
+      description: repo add pgdg
+      file: pgdg-redhat-all.repo
+      baseurl: https://download.postgresql.org/pub/repos/yum/13/redhat/rhel-$releasever-$basearch
+      gpgcheck: 1
+      gpgkey: file:///etc/pki/rpm-gpg/RPM-GPG-KEY-PGDG
+      enabled: yes
+      
+      
 
   - name: Add multiple repositories 
     yum_repository:
@@ -41,5 +52,7 @@
       - mtr
       - mc
       - tcpdump
+      - postgresql-server
+
 
 
