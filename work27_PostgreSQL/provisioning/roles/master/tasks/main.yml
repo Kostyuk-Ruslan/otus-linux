@@ -1,0 +1,138 @@
+---
+
+  - name: "Добавляем репозиторий Percona"
+    yum:
+      name: https://repo.percona.com/yum/percona-release-latest.noarch.rpm
+      state: present
+ 
+
+
+  
+
+  - name: Add multiple repositories 
+    yum_repository:
+      name: epel
+      description: EPEL YUM repo
+      file: external_repos
+      baseurl: https://download.fedoraproject.org/pub/epel/$releasever/$basearch/
+      gpgcheck: no
+
+
+  - name: Устанавливаем  epel-release
+    yum:
+     name:
+      - epel-release
+     state: latest
+    tags: install-packages
+
+
+  - name: Disable SELinux
+    selinux:
+      state: disabled
+
+
+  - name: stop and disable firewalld
+    systemd:
+      name: firewalld
+      state: stopped
+      enabled: no
+
+
+  - name: install package
+    yum:
+     name:
+      - net-tools
+      - vim
+      - zip
+      - unzip
+      - traceroute
+      - mtr
+      - mc
+      - tcpdump
+      - Percona-Server-server-57
+      - python3-PyMySQL
+      - python3
+      - MySQL-python
+
+
+
+  - name: Copy MySQL conf files                                                                                                                                  
+    copy:                                                                                                                                                        
+      src: conf/conf.d/                                                                                                                                          
+      dest: /etc/my.cnf.d/                                                                                                                                       
+      owner: root                                                                                                                                                
+      group: root                                                                                                                                                
+      mode: '0644'     
+
+
+
+#  - name: Copy my.cnf
+#    template:
+#      src: my.cnf.j2
+#      dest: /etc/my.cnf
+#      owner: root
+#      group: root
+#      mode: '0600'
+
+
+  - name: start "mysql" daemon
+    systemd:
+      name: mysql
+      state: started
+      enabled: yes
+
+
+  - name: Грепаем пароль mysql
+    shell: cat /var/log/mysqld.log | grep 'root@localhost:' | awk '{print $11}'
+    register: current_password
+        
+  - debug:
+      msg:
+      - "{{ current_password.stdout_lines }}"
+      - "{{ mysql_password }}"
+
+  - name: Set mysql password
+    shell: 
+      mysql --connect-expired-password -uroot -p'{{ current_password.stdout }}' -e 'ALTER USER USER() IDENTIFIED BY "{{ mysql_password }}"'
+    ignore_errors: yes
+ 
+
+
+  - name: Создаем бд "bet"
+    mysql_db:
+       login_user: root
+       login_password: "{{ mysql_password }}"
+       name: bet
+       state: present
+
+  - name: Импортируем дамп bet.dmp в бд "bet"
+    mysql_db:
+       login_user: root
+       login_password: "{{ mysql_password }}"
+       name: bet
+       state: import
+       target: /etc/my.cnf.d/bet.dmp
+
+
+
+  - name: Создаем пользователя "repl" для репликации
+    mysql_user:
+      login_user: root
+      login_password: "{{ mysql_password }}"
+      name: "repl"
+      password: "!OtusLinux2018"
+      host: '%'
+      priv: '*.*:ALL'
+      state: present
+
+   
+  - name: Дампим бд master.mysql
+    shell:  mysqldump --all-databases --triggers --routines --master-data --ignore-table=bet.events_on_demand --ignore-table=bet.v_same_event -uroot -p'3p*e}kAQo%1i' > master.sql
+    
+  
+  - name: Копируем master.sql на локалхост
+    fetch:
+      src: master.sql
+      dest: ./roles/slave/files
+    
+    

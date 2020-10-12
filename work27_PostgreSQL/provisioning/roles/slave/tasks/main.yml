@@ -1,0 +1,129 @@
+---
+
+  - name: "Добавляем репозиторий Percona"
+    yum:
+      name: https://repo.percona.com/yum/percona-release-latest.noarch.rpm
+      state: present
+ 
+
+
+  
+
+  - name: Add multiple repositories 
+    yum_repository:
+      name: epel
+      description: EPEL YUM repo
+      file: external_repos
+      baseurl: https://download.fedoraproject.org/pub/epel/$releasever/$basearch/
+      gpgcheck: no
+
+
+  - name: Устанавливаем  epel-release
+    yum:
+     name:
+      - epel-release
+     state: latest
+    tags: install-packages
+
+
+  - name: Disable SELinux
+    selinux:
+      state: disabled
+
+
+  - name: stop and disable firewalld
+    systemd:
+      name: firewalld
+      state: stopped
+      enabled: no
+
+
+  - name: install package
+    yum:
+     name:
+      - net-tools
+      - vim
+      - zip
+      - unzip
+      - traceroute
+      - mtr
+      - mc
+      - tcpdump
+      - Percona-Server-server-57
+      - python3-PyMySQL
+      - python3
+      - MySQL-python
+
+
+
+  - name: Copy MySQL conf files                                                                                                                                  
+    copy:                                                                                                                                                        
+      src: conf/conf.d/                                                                                                                                          
+      dest: /etc/my.cnf.d/                                                                                                                                       
+      owner: root                                                                                                                                                
+      group: root                                                                                                                                                
+      mode: '0644'     
+
+
+
+
+  - name: start mysql
+    systemd:
+      name: mysql
+      state: started
+      enabled: yes
+
+
+  - name: Грепаем пароль mysql
+    shell: cat /var/log/mysqld.log | grep 'root@localhost:' | awk '{print $11}'
+    register: current_password
+        
+  - debug:
+      msg:
+      - "{{ current_password.stdout_lines }}"
+      - "{{ mysql_password }}"
+
+  - name: Set mysql password
+    shell: 
+      mysql --connect-expired-password -uroot -p'{{ current_password.stdout }}' -e 'ALTER USER USER() IDENTIFIED BY "{{ mysql_password }}"'
+    ignore_errors: yes
+ 
+
+  - name: Копируем дамп master.sql
+    copy:
+      src: files/master/master.sql
+      dest: /mnt    
+    
+
+#  - name: Create db bet.                                                                                                                                           
+#    mysql_db:                                                                                                                                                      
+#       login_user: root                                                                                                                                            
+#       login_password: "{{ mysql_password }}"                                                                                                                      
+#       name: bet                                                                                                                                                   
+#       state: present    
+ 
+    
+    
+                                                                                                                                                
+#  - name: Import db bet                                                                                                                         
+#    mysql_db:                                                                                                                                   
+#       login_user: root                                                                                                                         
+#       login_password: B29z3z4z4&&                                                                                                  
+#       name: bet                                                                                                                                
+#       state: import                                                                                                                            
+#       target: /mnt/master.sql
+    
+
+#  - name: Setup and run slave                                                                                                                                      
+#    shell:                                                                                                                                                        
+#      mysql -uroot -p'B29z3z4z4&&' -e 'CHANGE MASTER TO MASTER_HOST="192.168.11.150", MASTER_USER="repl", MASTER_PASSWORD="!OtusLinux2018", MASTER_AUTO_POSITION=1;'
+
+#  - name: Setup
+#    shell:
+#      mysql -uroot -p'B29z3z4z4&&' -e 'START SLAVE;'   
+ 
+  - name: Подключаем и запускаем slave
+    shell: |
+      mysql -uroot -p'{{ mysql_password }}' -e 'CHANGE MASTER TO MASTER_HOST="192.168.11.150", MASTER_USER="{{ replication_user }}", MASTER_PASSWORD="{{ replication_password }}", MASTER_AUTO_POSITION=1;'
+      mysql -uroot -p'{{ mysql_password }}' -e 'START SLAVE;'
+
