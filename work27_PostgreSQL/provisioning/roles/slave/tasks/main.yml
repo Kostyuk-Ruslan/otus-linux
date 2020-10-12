@@ -1,15 +1,9 @@
 ---
 
   - name: Add repo postgresql
-    yum_repository:
-      name: pgdg-redhat-all.repo
-      description: repo add pgdg
-      file: pgdg-redhat-all.repo
-      baseurl: https://download.postgresql.org/pub/repos/yum/13/redhat/rhel-$releasever-$basearch
-      gpgcheck: 1
-      gpgkey: file:///etc/pki/rpm-gpg/RPM-GPG-KEY-PGDG
-      enabled: yes
-      
+    yum:
+     name: https://download.postgresql.org/pub/repos/yum/reporpms/EL-7-x86_64/pgdg-redhat-repo-latest.noarch.rpm
+     state: present      
       
 
   - name: Add multiple repositories 
@@ -52,7 +46,17 @@
       - mtr
       - mc
       - tcpdump
-      - postgresql-server
+      - postgresql13-server
+
+
+  - name: Инициализируем бд
+    shell: postgresql-13-setup initdb
+
+  - name: start postgresql
+    systemd:
+      name: postgresql-13
+      state: started
+      enabled: yes
 
 
 
