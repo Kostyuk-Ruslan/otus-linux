@@ -54,12 +54,17 @@
     shell: postgresql-13-setup initdb
     ignore_errors: yes
     
-  - name: start postgresql
-    systemd:
-      name: postgresql-13
-      state: started
-      enabled: yes
 
+  - name: Copy MySQL conf files
+    copy:
+      src: files/{{ item }}
+      dest: /var/lib/pgsql/13/data/
+      owner: root
+      group: root
+      mode: '0644'
+    loop:
+      - pg_hba.conf
+      - postgresql.conf
 
 
 
@@ -75,3 +80,12 @@
 #        - { name: "{{ replica_username }}", password: "{{ replica_password }}", flags: REPLICATION,LOGIN}
 #        - { name: "{{ barman_username }}", password: "{{ barman_password }}", flags: SUPERUSER}
 #        - { name: "{{ streaming_barman }}", password: "{{ streaming_barman_password }}", flags: REPLICATION,
+
+
+
+  - name: start postgresql
+    systemd:
+      name: postgresql-13
+      state: started
+      enabled: yes
+
