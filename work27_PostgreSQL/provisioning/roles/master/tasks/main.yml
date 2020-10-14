@@ -6,6 +6,13 @@
      state: present      
       
 
+  - name: Add repo mamonsu
+    yum:
+     name: https://repo.postgrespro.ru/mamonsu/keys/centos.rpm
+     state: present      
+      
+
+
   - name: Add multiple repositories 
     yum_repository:
       name: epel
@@ -48,6 +55,8 @@
       - tcpdump
       - python-psycopg2
       - postgresql13-server
+      - mamonsu
+      - barman
 
 
   - name: Инициализируем бд
