@@ -1,5 +1,19 @@
 ---
 
+#  - name: Генерируем открытый и закрытый ключ rsa
+#    user:
+#      name: root
+#      generate_ssh_key: yes
+#      ssh_key_bits: 2048
+#      ssh_key_file: .ssh/id_rsa
+
+#  - name: Копируем id_rsa.pub в barman
+#    fetch:
+#      src: /root/.ssh/id_rsa.pub
+#      dest: ./roles/barman/files
+
+  
+
   - name: Add repo postgresql
     yum:
      name: https://download.postgresql.org/pub/repos/yum/reporpms/EL-7-x86_64/pgdg-redhat-repo-latest.noarch.rpm
@@ -56,7 +70,9 @@
       - python-psycopg2
       - postgresql13-server
       - mamonsu
-      - barman
+
+
+
 
 
   - name: Инициализируем бд
@@ -64,16 +80,24 @@
     ignore_errors: yes
     
 
-  - name: Copy MySQL conf files
+  - name: Copy Postgresq conf files
     copy:
       src: files/{{ item }}
       dest: /var/lib/pgsql/13/data/
-      owner: root
-      group: root
-      mode: '0644'
+      owner: postgres
+      group: postgres
+      mode: '0744'
     loop:
       - pg_hba.conf
       - postgresql.conf
+
+
+
+  - name: start postgresql
+    systemd:
+      name: postgresql-13
+      state: started
+      enabled: yes
 
 
 
@@ -95,6 +119,6 @@
   - name: start postgresql
     systemd:
       name: postgresql-13
-      state: started
+      state: restarted
       enabled: yes
 
