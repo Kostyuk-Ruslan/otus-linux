@@ -1,0 +1,70 @@
+---
+
+#  - name: Create a directory /var/backup
+#    file:
+#      path: /root/.ssh
+#      state: directory
+#      mode: '0700'
+
+
+
+#  - name: Copy id_rsa.pub
+#    copy:
+#      src: files/master/root/.ssh/id_rsa.pub
+#      dest: /root/.ssh/id_rsa.pub
+#      owner: root
+#      group: root
+#      mode: '0644'
+
+
+
+  - name: Add repo postgresql
+    yum:
+     name: https://download.postgresql.org/pub/repos/yum/reporpms/EL-7-x86_64/pgdg-redhat-repo-latest.noarch.rpm
+     state: present      
+      
+
+  - name: Add multiple repositories 
+    yum_repository:
+      name: epel
+      description: EPEL YUM repo
+      file: external_repos
+      baseurl: https://download.fedoraproject.org/pub/epel/$releasever/$basearch/
+      gpgcheck: no
+
+
+  - name: Устанавливаем  epel-release
+    yum:
+     name:
+      - epel-release
+     state: latest
+    tags: install-packages
+
+
+  - name: Disable SELinux
+    selinux:
+      state: disabled
+
+
+  - name: stop and disable firewalld
+    systemd:
+      name: firewalld
+      state: stopped
+      enabled: no
+
+
+  - name: install package
+    yum:
+     name:
+      - net-tools
+      - vim
+      - zip
+      - unzip
+      - traceroute
+      - mtr
+      - mc
+      - tcpdump
+      - python-psycopg2
+      - barman
+
+
