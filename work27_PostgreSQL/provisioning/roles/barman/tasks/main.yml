@@ -1,20 +1,27 @@
 ---
 
-#  - name: Create a directory /var/backup
-#    file:
-#      path: /root/.ssh
-#      state: directory
-#      mode: '0700'
+
+  - name: Create a directory /var/backup
+    file:
+      path: /root/.ssh
+      state: directory
+      mode: '0700'
+
+
+  - name: Copy id_rsa and authorized_keys
+    copy:
+      src: files/keys/
+      dest: /root/.ssh/
+      owner: root
+      group: root
+      mode: '0600'
 
 
 
-#  - name: Copy id_rsa.pub
-#    copy:
-#      src: files/master/root/.ssh/id_rsa.pub
-#      dest: /root/.ssh/id_rsa.pub
-#      owner: root
-#      group: root
-#      mode: '0644'
+  - name: restart sshd
+    systemd: 
+      name: sshd
+      state: restarted
 
 
 
