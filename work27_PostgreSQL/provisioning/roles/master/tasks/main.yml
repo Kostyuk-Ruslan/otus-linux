@@ -1,6 +1,6 @@
 ---
 
-  - name: Create a directory /var/backup
+  - name: Create a directory .ssh
     file:
       path: /root/.ssh
       state: directory
@@ -93,16 +93,24 @@
     ignore_errors: yes
     
 
-  - name: Copy Postgresq conf files
-    copy:
-      src: files/{{ item }}
+
+  - name: Copy pg_hba.conf
+    template:
+      src: pg_hba.conf.j2
       dest: /var/lib/pgsql/13/data/
       owner: postgres
       group: postgres
       mode: '0744'
-    loop:
-      - pg_hba.conf
-      - postgresql.conf
+
+
+  - name: Copy postgresql.conf
+    template:
+      src: postgresql.conf.j2
+      dest: /var/lib/pgsql/13/data/
+      owner: postgres
+      group: postgres
+      mode: '0744'
+
 
 
 
@@ -122,10 +130,28 @@
         role_attr_flags: SUPERUSER,LOGIN
     become: yes
     become_user: postgres
-#      with_items:
-#        - { name: "{{ replica_username }}", password: "{{ replica_password }}", flags: REPLICATION,LOGIN}
-#        - { name: "{{ barman_username }}", password: "{{ barman_password }}", flags: SUPERUSER}
-#        - { name: "{{ streaming_barman }}", password: "{{ streaming_barman_password }}", flags: REPLICATION,
+    with_items:
+        - { name: "{{ barman_username }}", password: "{{ barman_password }}", flags: SUPERUSER}
+        - { name: "{{ streaming_username }}", password: "{{ streaming_password }}", flags: REPLICATION,
+
+
+
+#  - name: Create users barman
+#    postgresql_user:
+#        db: postgres
+#        name: barman
+#        password: B29z3z4z4z1
+#        role_attr_flags: SUPERUSER
+#    become: yes
+
+
+#  - name: get db demo
+#    unarhive:
+#      src: https://edu.postgrespro.ru/demo_small.zip
+#      dest: /tmp
+  
+#  - name: load db demo
+#    shell:  psql -f /tmp/demo_small.sql 
 
 
 

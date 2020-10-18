@@ -1,7 +1,0 @@
----
-role: master
-mysql_password: 3p*e}kAQo%1i
-replication_user: repl
-replication_password: "!OtusLinux2018"
-server_id: 1
-

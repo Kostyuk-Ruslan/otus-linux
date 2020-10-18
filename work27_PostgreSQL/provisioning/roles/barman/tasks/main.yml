@@ -1,7 +1,7 @@
 ---
 
 
-  - name: Create a directory /var/backup
+  - name: Create a directory .ssh
     file:
       path: /root/.ssh
       state: directory
@@ -22,6 +22,14 @@
     systemd: 
       name: sshd
       state: restarted
+
+
+  - name: add "{{ ip }} {{ dns }}" to hosts
+    lineinfile:
+      path: /etc/hosts
+      state: present
+      line: '192.168.11.150  master'
+
 
 
 
@@ -75,3 +83,29 @@
       - barman
 
 
+  - name: set barman configuration
+    copy:
+      src: files/barman.conf
+      dest: /etc/barman.conf
+      mode: 0644
+
+  - name: set backup configuration
+    copy:
+      src: files/master.conf
+      dest: /etc/barman.d/master.conf
+      mode: 0644
+
+
+  - name: store connection info for barman
+    template:
+      src: templates/.pgpass
+      dest: /var/lib/barman/.pgpass
+      mode: 0600
+      owner: barman
+      group: barman
+
+
+  - name: barman switch-wal --force --archive master
+    shell: barman switch-wal --force --archive master
+    ignore_errors: yes
+            
