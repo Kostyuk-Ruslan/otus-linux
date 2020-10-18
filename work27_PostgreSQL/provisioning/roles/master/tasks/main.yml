@@ -82,13 +82,6 @@
       - postgresql13-server
       - mamonsu
 
-  - name: restart postgresql
-    systemd:
-      name: postgresql-13
-      state: started
-      enabled: yes
-
-
 
 
   - name: Инициализируем бд
@@ -99,21 +92,27 @@
 
   - name: Copy pg_hba.conf
     template:
-      src: pg_hba.conf.j2
+      src: pg_hba.conf
       dest: /var/lib/pgsql/13/data/
       owner: postgres
       group: postgres
-      mode: '0744'
+      mode: '0600'
 
 
   - name: Copy postgresql.conf
     template:
-      src: postgresql.conf.j2
+      src: postgresql.conf
       dest: /var/lib/pgsql/13/data/
       owner: postgres
       group: postgres
-      mode: '0744'
+      mode: '0600'
 
+
+  - name: restart postgresql
+    systemd:
+      name: postgresql-13
+      state: started
+      enabled: yes
 
 
 
@@ -147,3 +146,4 @@
   
 #  - name: load db demo
 #    shell:  psql -f /tmp/demo_small.sql 
+
