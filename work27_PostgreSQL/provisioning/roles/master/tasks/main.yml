@@ -23,8 +23,6 @@
       name: sshd
       state: restarted
 
-
-
   
 
   - name: Add repo postgresql
@@ -84,6 +82,11 @@
       - postgresql13-server
       - mamonsu
 
+  - name: restart postgresql
+    systemd:
+      name: postgresql-13
+      state: started
+      enabled: yes
 
 
 
@@ -114,14 +117,6 @@
 
 
 
-  - name: start postgresql
-    systemd:
-      name: postgresql-13
-      state: started
-      enabled: yes
-
-
-
   - name: Create database users
     postgresql_user:
         db: postgres
@@ -132,7 +127,7 @@
     become_user: postgres
     with_items:
         - { name: "{{ barman_username }}", password: "{{ barman_password }}", flags: SUPERUSER}
-        - { name: "{{ streaming_username }}", password: "{{ streaming_password }}", flags: REPLICATION,
+        - { name: "{{ streaming_username }}", password: "{{ streaming_password }}", flags: REPLICATION}
 
 
 
@@ -152,12 +147,3 @@
   
 #  - name: load db demo
 #    shell:  psql -f /tmp/demo_small.sql 
-
-
-
-  - name: start postgresql
-    systemd:
-      name: postgresql-13
-      state: restarted
-      enabled: yes
-
