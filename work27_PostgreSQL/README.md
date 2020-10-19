@@ -59,10 +59,9 @@ end
 ```
 </details>
 
-<details>
 
-<code>Установить postgres, сделать базовые настройки доступов
-Развернуть Barman и настроить резервное копирование postgres</code>
+Установить postgres, сделать базовые настройки доступов
+Развернуть Barman и настроить резервное копирование postgres
 
 Установку и настройку за нас сделает "ansible"
 
@@ -125,8 +124,76 @@ postgres=# \q
 Connection to 127.0.0.1 closed.
 [root@node01 work27_PostgreSQL]# vagrant ssh barman
 [vagrant@barman]
+[vagrant@barman ~]$ sudo -i
+[root@barman ~]# barman check master
+Server master:
+	PostgreSQL: OK
+	superuser or standard user with backup privileges: OK
+	PostgreSQL streaming: OK
+	wal_level: OK
+	replication slot: OK
+	directories: OK
+	retention policy settings: OK
+	backup maximum age: OK (no last_backup_maximum_age provided)
+	compression settings: OK
+	failed backups: OK (there are 0 failed backups)
+	minimum redundancy requirements: OK (have 0 backups, expected at least 0)
+	pg_basebackup: OK
+	pg_basebackup compatible: OK
+	pg_basebackup supports tablespaces mapping: OK
+	systemid coherence: OK (no system Id stored on disk)
+	pg_receivexlog: OK
+	pg_receivexlog compatible: OK
+	receive-wal running: OK
+	archive_mode: OK
+	archive_command: OK
+	archiver errors: OK
+[root@barman ~]# 
+root@barman ~]# barman replication-status master
+Status of streaming clients for server 'master':
+  Current LSN on master: 0/2000140
+  Number of streaming clients: 1
+
+  1. Async WAL streamer
+     Application name: barman_receive_wal
+     Sync stage      : 3/3 Remote write
+     Communication   : TCP/IP
+     IP Address      : 192.168.11.151 / Port: 34200 / Host: -
+     User name       : barman
+     Current state   : streaming (async)
+     Replication slot: barman
+     WAL sender PID  : 8859
+     Started at      : 2020-10-19 22:57:54.113257+03:00
+     Sent LSN   : 0/2000140 (diff: 0 B)
+     Write LSN  : 0/2000140 (diff: 0 B)
+     Flush LSN  : 0/2000000 (diff: -320 B)
+[root@barman ~]# 
+[root@barman ~]# barman status master
+Server master:
+	Description: Backup from master
+	Active: True
+	Disabled: False
+	PostgreSQL version: 11.9
+	Cluster state: in production
+	pgespresso extension: Not available
+	Current data size: 30.2 MiB
+	PostgreSQL Data directory: /var/lib/pgsql/11/data
+	Current WAL segment: 000000010000000000000002
+	PostgreSQL 'archive_command' setting: barman-wal-archive barman master %p
+	Last archived WAL: No WAL segment shipped yet
+	Failures of WAL archiver: 144 (000000010000000000000001 at Mon Oct 19 23:45:33 2020)
+	Passive node: False
+	Retention policies: not enforced
+	No. of available backups: 0
+	First available backup: None
+	Last available backup: None
+	Minimum redundancy requirements: satisfied (0/0)
+[root@barman ~]# 
 
 
+
+
+```
 
 <details>
 <summary><code>С помощью mamonsu подогнать конфиг сервера под ресурсы машины</code></summary>
