@@ -30,6 +30,12 @@
       state: present
       line: '192.168.11.150  master'
 
+  - name: add "{{ ip }} {{ dns }}" to hosts
+    lineinfile:
+      path: /etc/hosts
+      state: present
+      line: '192.168.11.152  slave'
+
 
 
 
@@ -81,6 +87,8 @@
       - tcpdump
       - python-psycopg2
       - barman
+      - barman-cli
+      - postgresql11
 
 
   - name: set barman configuration
@@ -104,6 +112,19 @@
       owner: barman
       group: barman
 
+
+  - name: create replication slot
+    shell: >
+      barman receive-wal --create-slot {{ master_hostname }} &&
+      touch /var/log/barman/slot-created
+    args:
+      creates: /var/log/barman/slot-created
+    ignore_errors: yes                 
+
+
+  - name: barman cron
+    shell: barman cron
+                                                                                                                                                                  
 
   - name: barman switch-wal --force --archive master
     shell: barman switch-wal --force --archive master

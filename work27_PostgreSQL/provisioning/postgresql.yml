@@ -8,6 +8,13 @@
 #  vars: 
 #    ansible_python_interpreter: python3
 
+- hosts: slave
+  become: true
+  roles:
+    - slave
+
+
+
 
 - hosts: barman
   become: true

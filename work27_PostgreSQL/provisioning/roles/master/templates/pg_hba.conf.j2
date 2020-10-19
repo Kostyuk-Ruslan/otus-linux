@@ -1,4 +1,4 @@
 # TYPE  DATABASE        USER                     ADDRESS                 METHOD
 local   all             all                                              peer
-host    all             all                      {{ allowed_network }}   md5
-host    replication     {{ streaming_username }} {{ allowed_network }}   md5
+host    all             all                      {{ allowed_network }}   trust
+host    replication     {{ streaming_username }} {{ allowed_network }}   trust
