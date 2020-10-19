@@ -91,42 +91,44 @@
       - postgresql11
 
 
-  - name: set barman configuration
-    copy:
-      src: files/barman.conf
-      dest: /etc/barman.conf
-      mode: 0644
 
-  - name: set backup configuration
-    copy:
-      src: files/master.conf
-      dest: /etc/barman.d/master.conf
-      mode: 0644
-
-
-  - name: store connection info for barman
+  - name: Create .pgpass
     template:
-      src: templates/.pgpass
+      src: .pgpass.j2
       dest: /var/lib/barman/.pgpass
       mode: 0600
       owner: barman
       group: barman
 
+  - name: Create barman.conf
+    template:
+      src: barman.conf.j2
+      dest: /etc/barman.conf
+      mode: 0644
 
-  - name: create replication slot
-    shell: >
-      barman receive-wal --create-slot {{ master_hostname }} &&
-      touch /var/log/barman/slot-created
-    args:
-      creates: /var/log/barman/slot-created
-    ignore_errors: yes                 
+  - name: Create pg.conf
+    template:
+      src: pg.conf.j2
+      dest: /etc/barman.d/master.conf
+      mode: 0644
 
 
-  - name: barman cron
-    shell: barman cron
-                                                                                                                                                                  
-
-  - name: barman switch-wal --force --archive master
-    shell: barman switch-wal --force --archive master
+  - name: Create slot
     ignore_errors: yes
-            
+    shell: barman receive-wal --create-slot {{ master_hostname }}
+
+  - name:  Start barman cron
+    ignore_errors: yes
+    shell: barman cron
+
+  - name:  Start barman switch-wal
+    ignore_errors: yes
+    shell: barman switch-wal --force --archive {{ master_hostname }}
+
+  - name: Create wals directory
+    file:
+      path: "{{ backup_dir }}"
+      state: directory
+      owner: barman
+      group: barman
+

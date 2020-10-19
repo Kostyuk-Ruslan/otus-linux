@@ -95,6 +95,7 @@
       - tcpdump
       - python-psycopg2
       - postgresql11-server
+      - postgresql11-contrib
       - postgresql11
       - mamonsu
       - barman-cli
@@ -104,19 +105,15 @@
   - name: Инициализируем бд
     shell: /usr/pgsql-11/bin/postgresql-11-setup initdb
     ignore_errors: yes
-    
 
 
-  - name: Copy pg_hba.conf
-    template:
-      src: pg_hba.conf.j2
-      dest: /var/lib/pgsql/11/data/pg_hba.conf
-      owner: postgres
-      group: postgres
-      mode: '0600'
+#  - name: Init database
+#    command: /usr/pgsql-11/bin/postgresql-11-setup initdb
+#    args:
+#      creates: "{{ pg_data }}/postgresql.conf"
+          
 
-
-  - name: Copy postgresql.conf
+  - name: Config postgresql.conf
     template:
       src: postgresql.conf.j2
       dest: /var/lib/pgsql/11/data/postgresql.conf
@@ -124,54 +121,34 @@
       group: postgres
       mode: '0600'
 
+  - name: Config pg_hba.conf
+    template:
+      src: pg_hba.conf.j2
+      dest: /var/lib/pgsql/11/data/pg_hba.conf
+      owner: postgres
+      group: postgres
+      mode: '0600'
 
-  - name: restart postgresql
+  - name: Restart postgres
     systemd:
       name: postgresql-11
-      state: started
+      state: restarted
       enabled: yes
 
-
-
-  - name: check barman user
+  - name: Create user replication
     become_user: postgres
-    command: psql postgres -tAc "SELECT 1 from pg_roles where rolname='{{ barman_username }}'"
-    register: barman_user_exists
+    command: psql postgres -c "CREATE USER {{ repl_user }} WITH REPLICATION PASSWORD '{{ repl_password }}'"
 
-  - name: create barman user
+  - name: Create slot
     become_user: postgres
-    command: psql postgres -c "CREATE USER {{ barman_username }} WITH SUPERUSER PASSWORD '{{ barman_password }}'"
-    when: barman_user_exists.stdout != "1"
+    command: psql postgres -c "SELECT * FROM pg_create_physical_replication_slot('{{ replication_slot }}');"
 
-  - name: check streaming user
+
+  - name: Create user barman
     become_user: postgres
-    command: psql postgres -tAc "SELECT 1 from pg_roles where rolname='{{ streaming_username }}'"
-    register: streaming_user_exists
-
-  - name: create streaming user
-    become_user: postgres
-    command: psql postgres -c "CREATE USER {{ streaming_username }} WITH REPLICATION PASSWORD '{{ streaming_password }}'"
-    when: streaming_user_exists.stdout != "1"
-
-
-
-
-
-
-#  - name: Create users barman
-#    postgresql_user:
-#        db: postgres
-#        name: barman
-#        password: B29z3z4z4z1
-#        role_attr_flags: SUPERUSER
-#    become: yes
-
-
-#  - name: get db demo
-#    unarhive:
-#      src: https://edu.postgrespro.ru/demo_small.zip
-#      dest: /tmp
+    command: psql postgres -c "CREATE USER {{ barman_user }} WITH REPLICATION PASSWORD '{{ barman_password }}' ; alter role barman superuser ; "
   
-#  - name: load db demo
-#    shell:  psql -f /tmp/demo_small.sql 
+  - name: Create DB
+    become_user: postgres
+    command: psql postgres -c "CREATE DATABASE {{ base }} ; "
 

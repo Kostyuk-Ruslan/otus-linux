@@ -88,37 +88,46 @@
       - tcpdump
       - python-psycopg2
       - postgresql11-server
+      - postgresql11-contrib
+      - barman-cli
+      
+
+  - name: Init database
+    command: /usr/pgsql-11/bin/postgresql-11-setup initdb
+    args:
+      creates: "{{ pg_data }}/postgresql.conf"
+                
+      
 
 
+  - name: Remove pgdata
+    file:
+      path: /var/lib/pgsql/11/data
+      state: absent
 
-  - name: Инициализируем бд
-    shell: /usr/pgsql-11/bin/postgresql-11-setup initdb
-    ignore_errors: yes
-    
+  - name: Create DB pgdata
+    file:
+      path: /var/lib/pgsql/11/data
+      state: directory
+      owner: postgres
+      group: postgres
+      mode: '0700'
 
-#  - name: init database
-#    command: /usr/pgsql-13/bin/postgresql-13-setup initdb
-#    args:
-#      creates: /var/lib/pgsql/13/data/postgresql.conf
+  - name: Sync DB
+    command: pg_basebackup -X stream -h {{ master_ip }} -D /var/lib/pgsql/11/data/ -P -U replication
+    become: yes
+    become_user: postgres
 
+  - name: Create recovery.conf
+    template:
+      src: recovery.conf.j2
+      dest: /var/lib/pgsql/11/data/recovery.conf
+      owner: postgres
+      group: postgres
+      mode: '0600'
 
-
-  - name: restart postgresql
+  - name: Restart PostgreSQL
     systemd:
       name: postgresql-11
-      state: started
-      enabled: yes
+      state: restarted
 
-
-
-
-
-  - name: copy slave configuration file                                                                                                                              
-    template:                                                                                                                                                        
-      src: templates/recovery.conf                                                                                                                                   
-      dest: /var/lib/pgsql/11/data/recovery.conf                                                                                                                     
-      mode: 0600                                                                                                                                                     
-      owner: postgres                                                                                                                                                
-      group: postgres                                                                                                                                                
-    notify: restart postgresql                                                                                                                                       
-                                 

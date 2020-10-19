@@ -24,9 +24,22 @@ Vagrant.configure(2) do |config|
  vb.cpus = "1"
  end
  end
+
+
  config.vm.define "slave" do |subconfig|
  subconfig.vm.box = "centos/7"
  subconfig.vm.hostname="slave"
+ subconfig.vm.network :private_network, ip: "192.168.11.152"
+ subconfig.vm.provider "virtualbox" do |vb|
+ vb.memory = "256"
+ vb.cpus = "1"
+ end
+ end
+
+
+ config.vm.define "barman" do |subconfig|
+ subconfig.vm.box = "centos/7"
+ subconfig.vm.hostname="barman"
  subconfig.vm.network :private_network, ip: "192.168.11.151"
  subconfig.vm.provider "virtualbox" do |vb|
  vb.memory = "256"
@@ -35,14 +48,18 @@ Vagrant.configure(2) do |config|
  end
  config.vm.provision "ansible" do |ansible|
 # ansible.compatibility_mode = "2.0"
- ansible.playbook = "provisioning/mysql.yml"
+ ansible.playbook = "provisioning/postgresql.yml"
  ansible.become = "true"
 # ansible.tags="test"
 
      end
 end
-
+            
 
 ```
 </details>
+
+Установку и настройку за нас сделает "ansible"
+
+Настроена репликация
 
