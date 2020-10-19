@@ -123,7 +123,7 @@
 
   - name:  Start barman switch-wal
     ignore_errors: yes
-    shell: barman switch-wal --force --archive {{ master_hostname }}
+    shell: barman switch-wal --force {{ master_hostname }}
 
   - name: Create wals directory
     file:
