@@ -189,7 +189,23 @@ Server master:
 	Last available backup: None
 	Minimum redundancy requirements: satisfied (0/0)
 [root@barman ~]# 
-
+[root@master mamonsu]# netstat -ntlpa
+Active Internet connections (servers and established)
+Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name    
+tcp        0      0 0.0.0.0:111             0.0.0.0:*               LISTEN      343/rpcbind         
+tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN      6717/sshd           
+tcp        0      0 0.0.0.0:5432            0.0.0.0:*               LISTEN      8177/postmaster     
+tcp        0      0 127.0.0.1:25            0.0.0.0:*               LISTEN      991/master          
+tcp        0      0 10.0.2.15:22            10.0.2.2:42450          ESTABLISHED 2582/sshd: vagrant  
+tcp        0      0 192.168.11.150:33446    192.168.11.151:22       TIME_WAIT   -                   
+tcp        0      0 192.168.11.150:5432     192.168.11.151:34200    ESTABLISHED 8859/postgres: wals 
+tcp        0      0 192.168.11.150:33442    192.168.11.151:22       TIME_WAIT   -                   
+tcp        0      0 192.168.11.150:33444    192.168.11.151:22       TIME_WAIT   -                   
+tcp6       0      0 :::111                  :::*                    LISTEN      343/rpcbind         
+tcp6       0      0 :::22                   :::*                    LISTEN      6717/sshd           
+tcp6       0      0 :::5432                 :::*                    LISTEN      8177/postmaster     
+tcp6       0      0 ::1:25                  :::*                    LISTEN      991/master          
+[root@master mamonsu]# 
 
 
 
@@ -199,7 +215,8 @@ Server master:
 <summary><code>С помощью mamonsu подогнать конфиг сервера под ресурсы машины</code></summary>
 
 ansible его установит по умолчанию и запустит, честно говоря конфиг оставил по умолчанию, в  принципе с этими параметрами по умолчанию, он должен
-подключиться по умолчанию и метрики вполне приемлоимые по умолчанию, могу ошибаться
+подключиться к postgresql по умолчанию и метрики вполне приемлимые по умолчанию, могу ошибаться :) единственное нужно помен
+<code>/etc/mamonsu/agent.conf</code>
 
 ```
 [postgres]
