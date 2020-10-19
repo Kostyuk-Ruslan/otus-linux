@@ -1,0 +1,124 @@
+---
+
+  - name: Create a directory .ssh
+    file:
+      path: /root/.ssh
+      state: directory
+      mode: '0700'
+
+
+
+  
+  - name: Copy id_rsa ans authorized_keys
+    copy:
+      src: files/keys/
+      dest: /root/.ssh/
+      owner: root
+      group: root
+      mode: '0600'
+
+
+  - name: restart sshd
+    systemd:
+      name: sshd
+      state: restarted
+
+
+  - name: add "{{ ip }} {{ dns }}" to hosts
+    lineinfile:
+      path: /etc/hosts
+      state: present
+      line: '192.168.11.150  master'
+
+  - name: add "{{ ip }} {{ dns }}" to hosts
+    lineinfile:
+      path: /etc/hosts
+      state: present
+      line: '192.168.11.151  barman'
+
+
+  
+
+  - name: Add repo postgresql
+    yum:
+     name: https://download.postgresql.org/pub/repos/yum/reporpms/EL-7-x86_64/pgdg-redhat-repo-latest.noarch.rpm
+     state: present      
+      
+
+
+  - name: Add multiple repositories 
+    yum_repository:
+      name: epel
+      description: EPEL YUM repo
+      file: external_repos
+      baseurl: https://download.fedoraproject.org/pub/epel/$releasever/$basearch/
+      gpgcheck: no
+
+
+  - name: Устанавливаем  epel-release
+    yum:
+     name:
+      - epel-release
+     state: latest
+    tags: install-packages
+
+
+  - name: Disable SELinux
+    selinux:
+      state: disabled
+
+
+  - name: stop and disable firewalld
+    systemd:
+      name: firewalld
+      state: stopped
+      enabled: no
+
+
+  - name: install package
+    yum:
+     name:
+      - net-tools
+      - vim
+      - zip
+      - unzip
+      - traceroute
+      - mtr
+      - mc
+      - tcpdump
+      - python-psycopg2
+      - postgresql11-server
+
+
+
+  - name: Инициализируем бд
+    shell: /usr/pgsql-11/bin/postgresql-11-setup initdb
+    ignore_errors: yes
+    
+
+#  - name: init database
+#    command: /usr/pgsql-13/bin/postgresql-13-setup initdb
+#    args:
+#      creates: /var/lib/pgsql/13/data/postgresql.conf
+
+
+
+  - name: restart postgresql
+    systemd:
+      name: postgresql-11
+      state: started
+      enabled: yes
+
+
+
+
+
+  - name: copy slave configuration file                                                                                                                              
+    template:                                                                                                                                                        
+      src: templates/recovery.conf                                                                                                                                   
+      dest: /var/lib/pgsql/11/data/recovery.conf                                                                                                                     
+      mode: 0600                                                                                                                                                     
+      owner: postgres                                                                                                                                                
+      group: postgres                                                                                                                                                
+    notify: restart postgresql                                                                                                                                       
+                                 
