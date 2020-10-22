@@ -1,9 +1,9 @@
 
 ---
 
-- hosts: web
+- hosts: all
   become: true
   roles:
-    - web
+    - nginx
 
 
