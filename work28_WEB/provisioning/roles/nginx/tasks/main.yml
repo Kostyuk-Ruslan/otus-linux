@@ -51,4 +51,11 @@
       - mc
       - tcpdump
       - nginx      
-      
+      - php-fpm, php-cli     
+
+  - name: restart nginx
+    systemd:
+      name: nginx
+      state: restarted
+      enabled: yes
+ 
