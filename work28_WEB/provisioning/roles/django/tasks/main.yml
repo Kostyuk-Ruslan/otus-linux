@@ -1,0 +1,49 @@
+---
+
+  - name: install pip django
+    shell: python3 -m pip install Django
+
+
+  - name: install django
+    shell: django-admin startproject dj
+    args:
+      chdir: /
+    ignore_errors: yes
+
+
+#  - name: install pip django
+#    shell: python manage.py migrate
+
+  - name: copy default.conf for django
+    copy:
+      src: files/request.py
+      dest: /usr/lib/python2.7/site-packages/django/http/request.py
+      owner: root
+      group: root
+      mode: 0755
+
+
+  - name: copy settings for nginx
+    copy:
+      src: files/settings.py
+      dest: /dj/dj/settings.py
+      owner: root
+      group: root
+      mode: 0755
+
+
+  
+  
+ # - name: install pip django
+#    shell: python manage.py runserver 0.0.0.0:8000
+
+
+  - name: copy uwsgi.conf for nginx
+    copy:
+      src: files/django.conf
+      dest: /etc/nginx/conf.d/django.conf
+      owner: root
+      group: root
+      mode: 0644
+    notify:
+      - restart nginx
