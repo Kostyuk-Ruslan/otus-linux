@@ -71,6 +71,11 @@
       - nginx      
       - php-fpm
       - php-mysql
+      - python3-PyMySQL
+      - python3
+      - MySQL-python
+      - mariadb-server
+      - mysql
 
   - name: copy default.conf for nginx
     copy:
@@ -102,13 +107,51 @@
 
 
 
-
   - name: Extract wordpress into /var/www
     unarchive:
       src: wordpress.zip
       dest: /var/www/
     notify:
       - restart php-fpm
+
+
+
+  - name: copy wp-config.php
+    copy:
+      src: files/wp-config.php
+      dest: /var/www/wordpress/wp-config.php
+      owner: root
+      group: root
+      mode: 0644
+    notify:
+      - restart nginx
+
+
+
+
+
+  - name: restart mysql
+    systemd:
+      name: mariadb
+      state: restarted
+      enabled: yes
+                
+
+
+  - name: Create a new database with name 'wordpress'
+    mysql_db:
+      name: wordpress
+      state: present
+      
+  - name: add username and password  
+    mysql_user:
+      name: username
+      password: password
+      priv: '*.*:ALL,GRANT'
+      state: present
+    notify:
+      - restart mariadb
+
 
 
 
