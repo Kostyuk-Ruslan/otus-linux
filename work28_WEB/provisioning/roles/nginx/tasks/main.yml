@@ -70,6 +70,7 @@
       - tcpdump
       - nginx      
       - php-fpm
+      - php-mysql
 
   - name: copy default.conf for nginx
     copy:
