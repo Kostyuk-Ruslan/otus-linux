@@ -76,9 +76,6 @@
       - MySQL-python
       - mariadb-server
       - mysql
-      - uwsgi 
-      - uwsgi-plugin-python3
-      - django
 
   - name: copy default.conf for nginx
     copy:
