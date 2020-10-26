@@ -85,26 +85,22 @@
       - restart nginx
 
 
-  - name: Create a directory if it does not exist
-    file:
-      path: /var/log/uwsgi/
-      state: directory
-      mode: '0755'
+  - name: copy uwsgi.service
+    copy:
+      src: files/uwsgi.service
+      dest: /etc/systemd/system/uwsgi.service
+      owner: root
+      group: root
+      mode: 0755
 
-  
-
-  - name: Touch a file, using symbolic modes to set the permissions (equivalent to 0644)
-    file:
-      path: /var/log/uwsgi/dj.log
-      state: touch
-      mode: '0755'
+  - name: systemctl daemon-reload
+    shell: systemctl daemon-reload
 
 
 
-
-
-  - name: run django
-    shell: uwsgi dj.ini --daemonize=/var/log/uwsgi/dj.log
-    args:
-      chdir: /dj
-    
+  - name: start  uwsgi
+    systemd:
+      name: uwsgi
+      state: started
+      enabled: yes
+                

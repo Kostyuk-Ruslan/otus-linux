@@ -1,0 +1,14 @@
+[Unit]
+Description=uWSGI Emperor
+
+
+[Service]
+ExecStart=/bin/uwsgi --ini /dj/dj.ini
+# Requires systemd version 211 or newer
+#RuntimeDirectory=uwsgi
+Restart=always
+KillSignal=SIGQUIT
+Type=notify
+
+[Install]
+WantedBy=multi-user.target
