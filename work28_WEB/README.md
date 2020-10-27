@@ -16,11 +16,16 @@ Linux Administrator 2020
 <code>деплой через docker-compose</code>
 
 
-С вашего позволения я решил сделать приближенный вариант ( на хостовой системе через конфиги в /etc )
+С вашего позволения я решил сделать приближенный вариант к выбору ( на хостовой системе через конфиги в /etc )
 
-<code>nginx + php-fpm (laravel/wordpress) + python (flask/django) + js(react/angular)</code>
 
-Все за нас делает ansible, достаточно написать "Vagrant up"
+За сонову взять этот проект  <code>nginx + php-fpm (laravel/wordpress) + python (flask/django) + js(react/angular)</code>
+
+Все за нас делает ansible, достаточно написать "vagrant up"
+
+- nginx + php будет работать на 80 порту через nginx
+- django будет работать на 8080 порту через nginx
+- angular будет работать на 8081 порт через nginx
 
 
 Проверка
