@@ -1,13 +1,19 @@
 
 ---
 
-- hosts: all
-  become: true
-  roles:
-    - nginx
+#- hosts: all
+#  become: true
+#  roles:
+#    - nginx
+
+
+#- hosts: all
+#  become: true
+#  roles:
+#    - django
 
 
 - hosts: all
   become: true
   roles:
-    - django
+    - angular

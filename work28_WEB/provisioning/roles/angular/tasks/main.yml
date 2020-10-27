@@ -1,0 +1,35 @@
+---
+
+  - name: install package python
+    yum:
+     name:
+      - npm
+
+
+  - name: setup dcript nodejs
+    shell: curl -sL https://rpm.nodesource.com/setup_15.x | bash -
+
+
+  - name: install angular-cli
+    shell: npm install -g @angular/cli
+
+
+  - name: install nodejs
+    yum:
+     name:
+      - nodejs
+      - gcc-c++ 
+      - make
+
+
+  - name: copy dist angular
+    copy:
+      src: files/html
+      dest: /var/www/html
+      owner: root
+      group: root
+      mode: 0644
+    notify:
+      - restart nginx
+
+

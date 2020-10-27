@@ -76,6 +76,7 @@
       - MySQL-python
       - mariadb-server
       - mysql
+      - npm
 
   - name: copy default.conf for nginx
     copy:
