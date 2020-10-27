@@ -31,7 +31,7 @@
     shell: python -m pip install "django<2"
 
 
-  - name: install django
+  - name: install project django
     shell: django-admin startproject dj
     args:
       chdir: /
@@ -74,15 +74,15 @@
 #    shell: python manage.py runserver 0.0.0.0:8000
 
 
-  - name: copy uwsgi.conf for nginx
-    copy:
-      src: files/default.conf
-      dest: /etc/nginx/conf.d/django.conf
-      owner: root
-      group: root
-      mode: 0644
-    notify:
-      - restart nginx
+#  - name: copy uwsgi.conf for nginx
+#    copy:
+#      src: files/default.conf
+#      dest: /etc/nginx/conf.d/django.conf
+#      owner: root
+#      group: root
+#      mode: 0644
+#    notify:
+#      - restart nginx
 
 
   - name: copy uwsgi.service

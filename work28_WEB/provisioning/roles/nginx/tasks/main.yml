@@ -88,7 +88,7 @@
     notify:
       - restart nginx
 
-  - name: create and change ownership of a www-directory
+  - name: create www directory
     file:
       path: /var/www
       state: directory
