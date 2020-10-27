@@ -31,12 +31,13 @@ Linux Administrator 2020
 
 После того как vagrant (web)  поднялся и "ansible отработал" проверяем доступность веб приложений на раздных портах в браузере:
 
+<p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/work28_WEB/photo/80_1.jpg"></p>
+
+
+
 
 <p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/work28_WEB/photo/80.JPG"></p>
 
-
-
-<p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/work28_WEB/photo/80_1.jpg"></p>
 
 
 
