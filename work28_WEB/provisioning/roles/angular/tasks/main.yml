@@ -32,7 +32,7 @@
   - name: copy dist angular
     copy:
       src: files/html
-      dest: /var/www/html
+      dest: /var/www/
       owner: root
       group: root
       mode: 0644
