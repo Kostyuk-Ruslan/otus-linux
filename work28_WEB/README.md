@@ -9,26 +9,28 @@ Linux Administrator 2020
 По условию задачи был выбор сделать реализацию на выбор:
 
 Реализации на выбор
-<code>- на хостовой системе через конфиги в /etc</code>
+
+<code>На хостовой системе через конфиги в /etc</code>
 
 или
 
-<code>деплой через docker-compose</code>
+<code>Деплой через docker-compose</code>
 
 
 С вашего позволения я решил сделать приближенный вариант к выбору ( на хостовой системе через конфиги в /etc )
 
 
-За сонову взять этот проект  <code>nginx + php-fpm (laravel/wordpress) + python (flask/django) + js(react/angular)</code>
+За основу взял этот проект  <code>nginx + php-fpm (laravel/wordpress) + python (flask/django) + js(react/angular)</code>
 
 Все за нас делает ansible, достаточно написать "vagrant up"
 
-- nginx + php будет работать на 80 порту через nginx
-- django будет работать на 8080 порту через nginx
-- angular будет работать на 8081 порт через nginx
+- "nginx + php" будет работать на 80 порту через nginx
+- "django" будет работать на 8080 порту через nginx
+- "angular" будет работать на 8081 порт через nginx
 
 
-Проверка
+После того как vagrant (web)  поднялся и "ansible отработал" проверяем доступность веб приложений на раздных портах в браузере:
+
 
 
 <p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/work20_IPtables/photo/sheme.png"></p>
@@ -40,3 +42,10 @@ Linux Administrator 2020
 ```
 
 ```
+
+
+Так же можно проверить на хостовой машине доступность через <code>curl 192.168.1.240:8080</code>,<code>curl 192.168.1.240:8081</code> и т.д.
+
+
+
+
