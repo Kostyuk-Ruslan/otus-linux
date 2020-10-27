@@ -44,11 +44,13 @@ Linux Administrator 2020
 
 
 
-<p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/work28_WEB/photo/8081.JPG"></p>
-
-
 
 <p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/work28_WEB/photo/8080_1.JPG"></p>
+
+
+
+
+<p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/work28_WEB/photo/8081.JPG"></p>
 
 
 
