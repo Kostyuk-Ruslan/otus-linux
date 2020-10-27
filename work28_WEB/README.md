@@ -32,8 +32,25 @@ Linux Administrator 2020
 После того как vagrant (web)  поднялся и "ansible отработал" проверяем доступность веб приложений на раздных портах в браузере:
 
 
+<p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/work28_WEB/photo/80.JPG"></p>
 
-<p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/work20_IPtables/photo/sheme.png"></p>
+
+
+<p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/work28_WEB/photo/80_1.jpg"></p>
+
+
+
+<p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/work28_WEB/photo/8080.JPG"></p>
+
+
+
+<p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/work28_WEB/photo/8081.JPG"></p>
+
+
+
+<p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/work28_WEB/photo/8080_1.JPG"></p>
+
+
 
 После поднятия вагрант, сразу на локалхосте можно делать <code>curl localhost:8080</code>
 
