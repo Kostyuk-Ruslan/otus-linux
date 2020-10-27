@@ -1,8 +1,15 @@
 ---
 
+  
+  - name: install epel-release
+    shell: yum --enablerepo=extras install epel-release -y
+        
+
+
   - name: install package python
     yum:
      name:
+      - epel-release
       - npm
 
 
