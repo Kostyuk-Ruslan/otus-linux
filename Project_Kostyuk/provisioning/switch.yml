@@ -1,10 +1,10 @@
 
 ---
 
-#- hosts: web
-#  become: true
-#  roles:
-#    - web
+- hosts: web
+  become: true
+  roles:
+    - web
 
 - hosts: backup
   become: true

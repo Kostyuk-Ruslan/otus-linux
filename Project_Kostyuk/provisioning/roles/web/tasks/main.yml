@@ -1,0 +1,191 @@
+---
+
+  - name: Add multiple repositories 
+    yum_repository:
+      name: epel
+      description: EPEL YUM repo
+      file: external_repos
+      baseurl: https://download.fedoraproject.org/pub/epel/$releasever/$basearch/
+      gpgcheck: no
+
+  
+  - name: Add repo nginx
+    yum_repository:
+      name: nginx
+      description: nginx
+      baseurl: http://nginx.org/packages/centos/$releasever/$basearch/
+      gpgcheck: 1
+      enabled: 1
+      gpgkey: https://nginx.org/keys/nginx_signing.key
+
+
+  - name: add remi
+    shell: | 
+      rpm -Uvh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+      rpm -Uvh http://rpms.remirepo.net/enterprise/remi-release-7.rpm
+    ignore_errors: yes
+
+  - name: Add repo php-fpm
+    yum_repository:
+      name: remi-php74
+      description: remi-php74.repo
+      mirrorlist: http://cdn.remirepo.net/enterprise/7/php74/mirror
+      enabled: 1
+      gpgcheck: 0
+      gpgkey: file://etc/pki/rpm-gpg/RPM-GPG-KEY-remi
+
+
+
+  - name: wget bareos repos
+    get_url:
+      url: http://download.bareos.org/bareos/release/latest/CentOS_7/bareos.repo
+      dest: /etc/yum.repos.d/bareos.repo
+
+
+
+
+
+  - name: install epel-release
+    yum:
+     name:
+      - epel-release
+     state: latest
+    tags: install-packages
+
+
+  - name: Disable SELinux
+    selinux:
+      state: disabled
+
+
+  - name: stop and disable firewalld
+    systemd:
+      name: firewalld
+      state: stopped
+      enabled: no
+
+
+  - name: install package
+    yum:
+     name:
+      - net-tools
+      - vim
+      - zip
+      - unzip
+      - traceroute
+      - mtr
+      - mc
+      - tcpdump
+      - nginx      
+      - php-fpm
+      - php-mysql
+      - python3-PyMySQL
+      - python3
+      - MySQL-python
+      - mariadb-server
+      - mysql
+      - npm
+      - bareos-fd
+
+
+  - name: replace pass bareos-fd
+    replace:
+      path: /etc/bareos/bareos-fd.d/director/bareos-dir.conf
+      regexp: '(?i)Password = (.*)$'
+      replace: 'Password = "bapUaOfXWQKHSV7DH/Fn0goFfWyDGulOffsst4xDM9GQ"'
+    register: results
+
+
+
+  - name: copy default.conf for nginx
+    copy:
+      src: files/default.conf
+      dest: /etc/nginx/conf.d/default.conf
+      owner: root
+      group: root
+      mode: 0644
+    notify:
+      - restart nginx
+
+  - name: create www directory
+    file:
+      path: /var/www
+      state: directory
+      mode: '0755'
+      owner: root
+      group: root
+
+  - name: copy default.conf for nginx
+    copy:
+      src: files/wordpress.zip
+      dest: /var/www/
+      owner: root
+      group: root
+      mode: 0644
+    notify:
+      - restart nginx
+
+
+
+  - name: Extract wordpress into /var/www
+    unarchive:
+      src: wordpress.zip
+      dest: /var/www/
+    notify:
+      - restart php-fpm
+
+
+
+  - name: copy wp-config.php
+    copy:
+      src: files/wp-config.php
+      dest: /var/www/wordpress/wp-config.php
+      owner: root
+      group: root
+      mode: 0644
+    notify:
+      - restart nginx
+
+
+
+
+
+  - name: restart mysql
+    systemd:
+      name: mariadb
+      state: restarted
+      enabled: yes
+                
+
+
+  - name: Create a new database with name 'wordpress'
+    mysql_db:
+      name: wordpress
+      state: present
+      
+  - name: add username and password  
+    mysql_user:
+      name: username
+      password: password
+      priv: '*.*:ALL,GRANT'
+      state: present
+    notify:
+      - restart mariadb
+
+
+
+
+  - name: restart nginx
+    systemd:
+      name: nginx
+      state: restarted
+      enabled: yes
+ 
+
+
+  - name: start bareos-fd
+    systemd:
+      name: bareos-fd
+      state: started
+      enabled: yes
+
