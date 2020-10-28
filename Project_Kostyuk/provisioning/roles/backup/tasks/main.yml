@@ -1,0 +1,75 @@
+
+- name: Add multiple repositories
+  yum_repository:
+    name: epel
+    description: EPEL YUM repo
+    file: external_repos
+    baseurl: https://download.fedoraproject.org/pub/epel/$releasever/$basearch/
+    gpgcheck: no
+
+
+- name: install epel-release
+  yum:
+    name:
+      - epel-release
+    state: latest
+                    
+
+
+- name: wget bareos repos
+  get_url:
+    url: http://download.bareos.org/bareos/release/latest/CentOS_7/bareos.repo
+    dest: /etc/yum.repos.d/bareos.repo
+  tags: install-packages
+
+- name: install packages bareos-fd
+  yum:
+    name:
+      - mariadb-server
+      - mariadb
+      - mc
+      - vim
+      - bareos
+
+- name: restart mariadb
+  systemd:
+    name: mariadb
+    state: restarted
+    enabled: yes
+
+
+
+
+- name: run script create db,tables,privileges
+  shell: |
+    /usr/lib/bareos/scripts/create_bareos_database
+    /usr/lib/bareos/scripts/make_bareos_tables
+    /usr/lib/bareos/scripts/grant_bareos_privileges
+
+
+- name: start bareos-fd
+  systemd:
+    name: bareos-dir
+    state: started
+    enabled: yes
+  tags: bareos-dir
+
+
+ 
+
+
+
+
+
+
+#- name: replace pass bareos-fd
+#  replace:
+#    path: /etc/bareos/bareos-fd.d/director/bareos-dir.conf
+#    regexp: '(?i)Password = (.*)$'
+#    replace: 'Password = "bapUaOfXWQKHSV7DH/Fn0goFfWyDGulOffsst4xDM9GQ"'
+#  register: results
+#  tags: password
+
+#- debug:
+#    var: results
+
