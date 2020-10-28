@@ -52,7 +52,13 @@
     name: bareos-dir
     state: started
     enabled: yes
-  tags: bareos-dir
+
+
+- name: start bareos-sd
+  systemd:
+    name: bareos-sd
+    state: started
+    enabled: yes
 
 
  
