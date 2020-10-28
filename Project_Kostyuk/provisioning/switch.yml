@@ -1,0 +1,23 @@
+
+---
+
+- hosts: web
+  become: true
+  roles:
+    - web
+
+- hosts: backup
+  become: true
+  roles:
+    - backup
+
+- hosts: elk
+  become: true
+  roles:
+    - elk
+
+
+- hosts: zabbix
+  become: true
+  roles:
+    - zabbix
