@@ -25,11 +25,40 @@
 - name: install packages bareos-fd
   yum:
     name:
+      - net-tools
       - mariadb-server
       - mariadb
       - mc
       - vim
       - bareos
+
+
+
+- name: Create a directory /storage/backup
+  file:
+    path: /storage/backup
+    state: directory
+    owner: 'bareos'
+    group: 'bareos'
+    mode: '0755'
+  
+    
+#- name: Create filesystem xfs /dev/sdb
+#  filesystem:
+#    fstype: xfs
+#    dev: /dev/sdb
+        
+    
+#- name: Mount /storage/backup
+#  mount:
+#    path: /storage/backup
+#    src: /dev/sdb
+#    opts: rw
+#    state: mounted
+#    fstype: xfs
+
+
+
 
 - name: restart mariadb
   systemd:
@@ -47,21 +76,30 @@
     /usr/lib/bareos/scripts/grant_bareos_privileges
 
 
-- name: start bareos-fd
+- name: start bareos-dir
   systemd:
     name: bareos-dir
     state: started
     enabled: yes
 
 
+
+- name: copy bareos conf
+  copy:
+    src: files/bareos
+    dest: /etc/
+    owner: bareos
+    group: bareos
+    mode: 0755
+  notify:
+    - restart bareos-dir
+ 
+
 - name: start bareos-sd
   systemd:
     name: bareos-sd
     state: started
     enabled: yes
-
-
- 
 
 
 

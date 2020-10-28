@@ -20,6 +20,11 @@ Vagrant.configure(2) do |config|
  subconfig.vm.provider "virtualbox" do |vb|
  vb.memory = "256"
  vb.cpus = "1"
+# second_disk = "/tmp/disk2.vmdk"
+# unless File.exist?('/tmp/disk2.vmdk')
+# vb.customize ['createhd', '--filename', second_disk, '--variant', 'Fixed', '--size', 5 * 1024]
+# end
+# vb.customize ['storageattach', :id, '--storagectl', 'IDE', '--port', 1, '--device', 0, '--type', 'hdd', '--medium', second_disk]
  end
  end
  config.vm.define "elk" do |subconfig|

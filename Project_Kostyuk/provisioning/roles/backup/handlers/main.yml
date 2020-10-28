@@ -6,3 +6,10 @@
     name: mariadb
     state: restarted
     enabled: yes
+
+
+- name: restart bareos-dir
+  systemd:
+    name: bareos-dir
+    state: restarted
+    enabled: yes
