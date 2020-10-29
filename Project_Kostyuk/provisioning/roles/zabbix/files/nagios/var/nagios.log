@@ -1,0 +1,95 @@
+[1603961463] Nagios 4.4.5 starting... (PID=29166)
+[1603961463] Local time is Thu Oct 29 08:51:03 UTC 2020
+[1603961463] LOG VERSION: 2.0
+[1603961463] qh: Socket '/usr/local/nagios/var/rw/nagios.qh' successfully initialized
+[1603961463] qh: core query handler registered
+[1603961463] qh: echo service query handler registered
+[1603961463] qh: help for the query handler registered
+[1603961463] wproc: Successfully registered manager as @wproc with query handler
+[1603961463] wproc: Registry request: name=Core Worker 29169;pid=29169
+[1603961463] wproc: Registry request: name=Core Worker 29170;pid=29170
+[1603961463] wproc: Registry request: name=Core Worker 29171;pid=29171
+[1603961463] wproc: Registry request: name=Core Worker 29168;pid=29168
+[1603961463] Successfully launched command file worker with pid 29184
+[1603961464] HOST ALERT: localhost;DOWN;SOFT;1;(No output on stdout) stderr: execvp(/usr/local/nagios/libexec/check_ping, ...) failed. errno is 2: No such file or directory
+[1603961500] SERVICE ALERT: localhost;Current Load;CRITICAL;HARD;1;(No output on stdout) stderr: execvp(/usr/local/nagios/libexec/check_load, ...) failed. errno is 2: No such file or directory
+[1603961524] HOST ALERT: localhost;DOWN;SOFT;2;(No output on stdout) stderr: execvp(/usr/local/nagios/libexec/check_ping, ...) failed. errno is 2: No such file or directory
+[1603961538] SERVICE ALERT: localhost;Current Users;CRITICAL;HARD;1;(No output on stdout) stderr: execvp(/usr/local/nagios/libexec/check_users, ...) failed. errno is 2: No such file or directory
+[1603961575] SERVICE ALERT: localhost;HTTP;CRITICAL;HARD;1;(No output on stdout) stderr: execvp(/usr/local/nagios/libexec/check_http, ...) failed. errno is 2: No such file or directory
+[1603961584] HOST ALERT: localhost;DOWN;SOFT;3;(No output on stdout) stderr: execvp(/usr/local/nagios/libexec/check_ping, ...) failed. errno is 2: No such file or directory
+[1603961613] SERVICE ALERT: localhost;PING;CRITICAL;HARD;1;(No output on stdout) stderr: execvp(/usr/local/nagios/libexec/check_ping, ...) failed. errno is 2: No such file or directory
+[1603961644] HOST ALERT: localhost;DOWN;SOFT;4;(No output on stdout) stderr: execvp(/usr/local/nagios/libexec/check_ping, ...) failed. errno is 2: No such file or directory
+[1603961650] SERVICE ALERT: localhost;Root Partition;CRITICAL;HARD;1;(No output on stdout) stderr: execvp(/usr/local/nagios/libexec/check_disk, ...) failed. errno is 2: No such file or directory
+[1603961688] SERVICE ALERT: localhost;SSH;CRITICAL;HARD;1;(No output on stdout) stderr: execvp(/usr/local/nagios/libexec/check_ssh, ...) failed. errno is 2: No such file or directory
+[1603961704] HOST ALERT: localhost;DOWN;SOFT;5;(No output on stdout) stderr: execvp(/usr/local/nagios/libexec/check_ping, ...) failed. errno is 2: No such file or directory
+[1603961725] SERVICE ALERT: localhost;Swap Usage;CRITICAL;HARD;1;(No output on stdout) stderr: execvp(/usr/local/nagios/libexec/check_swap, ...) failed. errno is 2: No such file or directory
+[1603961763] SERVICE ALERT: localhost;Total Processes;CRITICAL;HARD;1;(No output on stdout) stderr: execvp(/usr/local/nagios/libexec/check_procs, ...) failed. errno is 2: No such file or directory
+[1603961764] HOST ALERT: localhost;DOWN;SOFT;6;(No output on stdout) stderr: execvp(/usr/local/nagios/libexec/check_ping, ...) failed. errno is 2: No such file or directory
+[1603961824] HOST ALERT: localhost;DOWN;SOFT;7;(No output on stdout) stderr: execvp(/usr/local/nagios/libexec/check_ping, ...) failed. errno is 2: No such file or directory
+[1603961884] HOST ALERT: localhost;DOWN;SOFT;8;(No output on stdout) stderr: execvp(/usr/local/nagios/libexec/check_ping, ...) failed. errno is 2: No such file or directory
+[1603961944] HOST ALERT: localhost;DOWN;SOFT;9;(No output on stdout) stderr: execvp(/usr/local/nagios/libexec/check_ping, ...) failed. errno is 2: No such file or directory
+[1603962004] HOST NOTIFICATION: nagiosadmin;localhost;DOWN;notify-host-by-email;(No output on stdout) stderr: execvp(/usr/local/nagios/libexec/check_ping, ...) failed. errno is 2: No such file or directory
+[1603962004] HOST ALERT: localhost;DOWN;HARD;10;(No output on stdout) stderr: execvp(/usr/local/nagios/libexec/check_ping, ...) failed. errno is 2: No such file or directory
+[1603962004] wproc: NOTIFY job 6 from worker Core Worker 29169 is a non-check helper but exited with return code 75
+[1603962004] wproc:   host=localhost; service=(none); contact=nagiosadmin
+[1603962004] wproc:   early_timeout=0; exited_ok=1; wait_status=19200; error_code=0;
+[1603962004] wproc:   stderr line 01: sendmail: invalid option -- 's'
+[1603962004] wproc:   stderr line 02: sendmail: invalid option -- 's'
+[1603962004] wproc:   stderr line 03: sendmail: fatal: usage: sendmail [options]
+[1603964125] SERVICE ALERT: localhost;Swap Usage;OK;HARD;4;SWAP OK - 98% free (2000 MB out of 2047 MB)
+[1603964129] HOST NOTIFICATION: nagiosadmin;localhost;UP;notify-host-by-email;PING OK - Packet loss = 0%, RTA = 0.09 ms
+[1603964129] HOST ALERT: localhost;UP;HARD;1;PING OK - Packet loss = 0%, RTA = 0.09 ms
+[1603964129] wproc: NOTIFY job 22 from worker Core Worker 29171 is a non-check helper but exited with return code 75
+[1603964129] wproc:   host=localhost; service=(none); contact=nagiosadmin
+[1603964129] wproc:   early_timeout=0; exited_ok=1; wait_status=19200; error_code=0;
+[1603964129] wproc:   stderr line 01: sendmail: invalid option -- 's'
+[1603964129] wproc:   stderr line 02: sendmail: invalid option -- 's'
+[1603964129] wproc:   stderr line 03: sendmail: fatal: usage: sendmail [options]
+[1603964163] SERVICE ALERT: localhost;Total Processes;OK;SOFT;1;PROCS OK: 35 processes with STATE = RSZDT
+[1603964200] SERVICE ALERT: localhost;Current Load;OK;SOFT;1;OK - load average: 1.52, 1.35, 0.84
+[1603964238] SERVICE ALERT: localhost;Current Users;OK;SOFT;1;USERS OK - 1 users currently logged in
+[1603964275] SERVICE ALERT: localhost;HTTP;WARNING;SOFT;1;HTTP WARNING: HTTP/1.1 403 Forbidden - 5179 bytes in 0.220 second response time
+[1603964317] SERVICE ALERT: localhost;PING;OK;SOFT;1;PING OK - Packet loss = 0%, RTA = 0.23 ms
+[1603964350] SERVICE ALERT: localhost;Root Partition;OK;SOFT;1;DISK OK - free space: / 36891 MB (90.11% inode=100%):
+[1603964388] SERVICE ALERT: localhost;SSH;OK;SOFT;1;SSH OK - OpenSSH_7.4 (protocol 2.0)
+[1603964418] Caught SIGTERM, shutting down...
+[1603964418] Caught SIGTERM, shutting down...
+[1603964418] Caught SIGTERM, shutting down...
+[1603964418] Successfully shutdown... (PID=29166)
+[1603964418] Nagios 4.4.5 starting... (PID=21786)
+[1603964418] Local time is Thu Oct 29 09:40:18 UTC 2020
+[1603964418] LOG VERSION: 2.0
+[1603964418] qh: Socket '/usr/local/nagios/var/rw/nagios.qh' successfully initialized
+[1603964418] qh: core query handler registered
+[1603964418] qh: echo service query handler registered
+[1603964418] qh: help for the query handler registered
+[1603964418] wproc: Successfully registered manager as @wproc with query handler
+[1603964418] wproc: Registry request: name=Core Worker 21788;pid=21788
+[1603964418] wproc: Registry request: name=Core Worker 21789;pid=21789
+[1603964418] wproc: Registry request: name=Core Worker 21790;pid=21790
+[1603964418] wproc: Registry request: name=Core Worker 21787;pid=21787
+[1603964418] Successfully launched command file worker with pid 21791
+[1603964455] SERVICE ALERT: localhost;HTTP;WARNING;SOFT;2;HTTP WARNING: HTTP/1.1 403 Forbidden - 5179 bytes in 0.020 second response time
+[1603964516] SERVICE ALERT: localhost;HTTP;WARNING;SOFT;3;HTTP WARNING: HTTP/1.1 403 Forbidden - 5179 bytes in 0.010 second response time
+[1603964576] SERVICE ALERT: localhost;HTTP;WARNING;HARD;4;HTTP WARNING: HTTP/1.1 403 Forbidden - 5179 bytes in 0.012 second response time
+[1603968018] Auto-save of retention data completed successfully.
+[1603971618] Auto-save of retention data completed successfully.
+[1603972951] Caught SIGTERM, shutting down...
+[1603972951] Caught SIGTERM, shutting down...
+[1603972951] Caught SIGTERM, shutting down...
+[1603972951] Successfully shutdown... (PID=21786)
+[1603973175] Nagios 4.4.5 starting... (PID=30826)
+[1603973175] Local time is Thu Oct 29 12:06:15 UTC 2020
+[1603973175] LOG VERSION: 2.0
+[1603973175] qh: Socket '/usr/local/nagios/var/rw/nagios.qh' successfully initialized
+[1603973175] qh: core query handler registered
+[1603973175] qh: echo service query handler registered
+[1603973175] qh: help for the query handler registered
+[1603973175] wproc: Successfully registered manager as @wproc with query handler
+[1603973175] wproc: Registry request: name=Core Worker 30827;pid=30827
+[1603973175] wproc: Registry request: name=Core Worker 30828;pid=30828
+[1603973175] wproc: Registry request: name=Core Worker 30829;pid=30829
+[1603973175] wproc: Registry request: name=Core Worker 30830;pid=30830
+[1603973175] Successfully launched command file worker with pid 30831
+[1603973255] SERVICE ALERT: web;Process SSH;CRITICAL;SOFT;1;(No output on stdout) stderr: connect to address 192.168.4.240 port 5666: Connection refused
+[1603973309] SERVICE ALERT: web;Processes Total;CRITICAL;SOFT;1;(No output on stdout) stderr: connect to address 192.168.4.240 port 5666: Connection refused

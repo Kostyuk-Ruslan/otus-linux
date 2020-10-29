@@ -1,0 +1,103 @@
+
+  - name: Add multiple repositories
+    yum_repository:
+      name: epel
+      description: EPEL YUM repo
+      file: external_repos
+      baseurl: https://download.fedoraproject.org/pub/epel/$releasever/$basearch/
+      gpgcheck: no
+
+
+  - name: seliux
+    shell: setenforce 0
+
+  - name: install epel-release
+    yum:
+      name:
+       - epel-release
+      state: latest
+
+
+
+
+  - name: set up docker stable repo
+    command: yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+    tags: docker
+
+  - name: install docker
+    yum:
+     name:
+      - docker-ce
+      - mc
+      - vim
+      - htop
+      - net-tools
+    ignore_errors: yes
+    tags: docker
+
+
+  - name: Download docker-compose
+    raw: curl -L "https://github.com/docker/compose/releases/download/1.26.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+    args:
+        chdir: /tmp
+
+  - name: start docker
+    systemd:
+      name: docker
+      state: started
+      enabled: yes
+
+
+
+
+
+  - name: chmod +x /usr/local/bin/docker-compose
+    file:
+      path: /usr/local/bin/docker-compose
+      owner: root
+      group: root
+      mode: '0755'
+
+
+  - name: Create a symbolic link docker
+    file:
+      src: /usr/local/bin/docker-compose
+      dest: /usr/bin/docker-compose
+      owner: root
+      group: root
+      state: link
+
+
+
+  - name: Create a directory containers
+    file:
+      path: /opt/containers
+      state: directory
+      mode: '0775'
+    
+      
+      
+  - name: copy docker files
+    copy:
+      src: files/elk_docker
+      dest: /opt/containers/
+      owner: 1000
+      group: 1000
+      mode: 0775
+      
+      
+  - name: heartbeat permission
+    file:
+      path: /opt/containers/elk_docker/heartbeat/heartbeat.yml
+      owner: 1000
+      group: 1000
+      mode: '0644'
+    
+     
+      
+     
+  - name: docker-compose up
+    shell: docker-compose -f docker-compose.yml up -d
+    args:
+      chdir: /opt/containers/elk_docker
+

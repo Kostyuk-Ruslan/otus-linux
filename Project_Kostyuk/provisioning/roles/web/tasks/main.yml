@@ -88,6 +88,9 @@
       - bareos-fd
       - nrpe
       - nagios-plugins-nrpe
+      - nagios-plugins-all
+      - nagios-plugins
+      - htop
 
 
   - name: replace pass bareos-fd

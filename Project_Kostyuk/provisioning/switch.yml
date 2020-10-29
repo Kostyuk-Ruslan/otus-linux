@@ -11,10 +11,10 @@
   roles:
     - backup
 
-#- hosts: elk
-#  become: true
-#  roles:
-#    - elk
+- hosts: elk
+  become: true
+  roles:
+    - elk
 
 
 - hosts: zabbix
