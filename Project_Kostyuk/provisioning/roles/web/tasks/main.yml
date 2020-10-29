@@ -86,6 +86,8 @@
       - mysql
       - npm
       - bareos-fd
+      - nrpe
+      - nagios-plugins-nrpe
 
 
   - name: replace pass bareos-fd
@@ -186,6 +188,13 @@
   - name: start bareos-fd
     systemd:
       name: bareos-fd
+      state: started
+      enabled: yes
+
+
+  - name: start nrpe
+    systemd:
+      name: nrpe
       state: started
       enabled: yes
 

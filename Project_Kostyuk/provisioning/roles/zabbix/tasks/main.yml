@@ -56,6 +56,10 @@
       - net-snmp
       - net-snmp-utils
       - perl-Net-SNMP
+      - nagios-plugins-all
+      - nagios-plugins
+      
+      
       
       
       
@@ -176,3 +180,7 @@
     state: started
     enabled: yes
               
+#/usr/local/nagios/bin/nagios -v /usr/local/nagios/etc/nagios.cfg
+
+
+
