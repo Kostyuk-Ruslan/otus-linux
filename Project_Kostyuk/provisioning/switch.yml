@@ -17,7 +17,7 @@
 #    - elk
 
 
-#- hosts: zabbix
-#  become: true
-#  roles:
-#    - zabbix
+- hosts: zabbix
+  become: true
+  roles:
+    - zabbix
