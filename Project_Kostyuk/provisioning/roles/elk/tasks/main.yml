@@ -32,8 +32,27 @@
       - vim
       - htop
       - net-tools
+      - nrpe
+      - nagios-plugins-nrpe
+      - nagios-plugins-all
+      - nagios-plugins
+      - bc
+                                        
     ignore_errors: yes
     tags: docker
+
+
+
+  - name: copy nrpe.cfg for nagios
+    copy:
+      src: files/nrpe.cfg
+      dest: /etc/nagios/nrpe.cfg
+      owner: root
+      group: root
+      mode: 0644
+
+
+
 
 
   - name: Download docker-compose
@@ -100,4 +119,15 @@
     shell: docker-compose -f docker-compose.yml up -d
     args:
       chdir: /opt/containers/elk_docker
+
+
+
+  - name: start nrpe
+    systemd:
+      name: nrpe
+      state: started
+      enabled: yes
+
+
+
 

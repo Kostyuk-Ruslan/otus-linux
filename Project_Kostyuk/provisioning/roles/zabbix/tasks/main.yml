@@ -60,8 +60,30 @@
       - nagios-plugins
       - htop
       
-      
-      
+
+
+
+- name: add web hosts
+  lineinfile:
+    path: /etc/hosts
+    state: present
+    line: '192.168.1.240  web'
+
+- name: add backup hosts
+  lineinfile:
+    path: /etc/hosts
+    state: present
+    line: '192.168.1.241  backup'
+
+
+- name: add elk hosts
+  lineinfile:
+    path: /etc/hosts
+    state: present
+    line: '192.168.1.242  elk'
+
+
+
       
 - name: wget nagios src
   get_url:

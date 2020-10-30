@@ -94,6 +94,18 @@
       - bc
 
 
+
+  - name: copy nrpe.cfg for nagios
+    copy:
+      src: files/nrpe.cfg
+      dest: /etc/nagios/nrpe.cfg
+      owner: root
+      group: root
+      mode: 0644
+
+
+
+
   - name: replace pass bareos-fd
     replace:
       path: /etc/bareos/bareos-fd.d/director/bareos-dir.conf
