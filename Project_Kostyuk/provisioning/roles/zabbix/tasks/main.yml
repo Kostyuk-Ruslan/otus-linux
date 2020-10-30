@@ -63,10 +63,10 @@
       
       
       
-- name: wget nagios
+- name: wget nagios src
   get_url:
-    url: https://github.com/NagiosEnterprises/nagioscore/archive/nagios-4.4.5.tar.gz
-    dest: /tmp/nagios-4.4.5.tar.gz
+    url: https://github.com/NagiosEnterprises/nagioscore/archive/nagios-4.4.6.tar.gz
+    dest: /tmp/nagioscore-nagios-4.4.6.tar.gz
 
 
 - name: wget nagios-plugins
@@ -76,9 +76,9 @@
 
 
 
-- name: Unarchive nagios-4.4.5.tar.gz
+- name: Unarchive nagios-4.4.6.tar.gz
   unarchive:
-    src: /tmp/nagios-4.4.5.tar.gz
+    src: /tmp/nagioscore-nagios-4.4.6.tar.gz
     dest: /tmp
     remote_src: yes
     
@@ -120,12 +120,12 @@
 - name: Compile
   shell: ./configure
   args: 
-    chdir: /tmp/nagioscore-nagios-4.4.5
+    chdir: /tmp/nagioscore-nagios-4.4.6
     
     
 - name: Run 'make all' target as root
   make:
-    chdir: /tmp/nagioscore-nagios-4.4.5
+    chdir: /tmp/nagioscore-nagios-4.4.6
     target: all
   become: yes
             
@@ -133,26 +133,26 @@
 - name: make install-groups-users
   shell: make install-groups-users
   args:
-    chdir: /tmp/nagioscore-nagios-4.4.5
+    chdir: /tmp/nagioscore-nagios-4.4.6
     
 
 - name: usermod -a -G nagios apache
   shell: usermod -a -G nagios apache
   args:
-    chdir: /tmp/nagioscore-nagios-4.4.5
+    chdir: /tmp/nagioscore-nagios-4.4.6
     
 
     
 - name: Run 'make install' target as root
   make:
-    chdir: /tmp/nagioscore-nagios-4.4.5
+    chdir: /tmp/nagioscore-nagios-4.4.6
     target: install
   become: yes
     
 - name: make install-daemoninit
   shell: make install-daemoninit
   args:
-    chdir: /tmp/nagioscore-nagios-4.4.5
+    chdir: /tmp/nagioscore-nagios-4.4.6
     
     
 - name: install module
@@ -161,7 +161,7 @@
     make install-config
     make install-webconf
   args:
-    chdir: /tmp/nagioscore-nagios-4.4.5
+    chdir: /tmp/nagioscore-nagios-4.4.6
     
 
 - name: htpasswd add nagiosadmin

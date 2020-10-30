@@ -91,6 +91,7 @@
       - nagios-plugins-all
       - nagios-plugins
       - htop
+      - bc
 
 
   - name: replace pass bareos-fd
