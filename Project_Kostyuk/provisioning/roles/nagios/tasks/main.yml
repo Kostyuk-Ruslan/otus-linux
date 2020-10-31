@@ -1,0 +1,225 @@
+
+- name: Add multiple repositories
+  yum_repository:
+    name: epel
+    description: EPEL YUM repo
+    file: external_repos
+    baseurl: https://download.fedoraproject.org/pub/epel/$releasever/$basearch/
+    gpgcheck: no
+
+
+- name: seliux 
+  shell: setenforce 0
+
+- name: install epel-release
+  yum:
+    name:
+      - epel-release
+    state: latest
+                    
+
+
+- name: wget bareos repos
+  get_url:
+    url: http://download.bareos.org/bareos/release/latest/CentOS_7/bareos.repo
+    dest: /etc/yum.repos.d/bareos.repo
+  tags: install-packages
+
+
+
+- name: install packages 
+  yum:
+    name:
+      - net-tools
+      - mariadb-server
+      - mariadb
+      - mc
+      - vim
+      - gcc
+      - glibc
+      - glibc-common
+      - wget
+      - unzip
+      - httpd
+      - php
+      - gd
+      - gd-devel
+      - perl
+      - postfix
+      - bareos-fd
+      - make
+      - gettext
+      - nc
+      - autoconf
+      - automake
+      - openssl-devel
+      - net-snmp
+      - net-snmp-utils
+      - perl-Net-SNMP
+      - nagios-plugins-all
+      - nagios-plugins
+      - htop
+      
+
+
+
+- name: add web hosts
+  lineinfile:
+    path: /etc/hosts
+    state: present
+    line: '192.168.1.240  web'
+
+- name: add backup hosts
+  lineinfile:
+    path: /etc/hosts
+    state: present
+    line: '192.168.1.241  backup'
+
+
+- name: add elk hosts
+  lineinfile:
+    path: /etc/hosts
+    state: present
+    line: '192.168.1.242  elk'
+
+
+
+      
+- name: wget nagios src
+  get_url:
+    url: https://github.com/NagiosEnterprises/nagioscore/archive/nagios-4.4.6.tar.gz
+    dest: /tmp/nagioscore-nagios-4.4.6.tar.gz
+
+
+- name: wget nagios-plugins
+  get_url:
+    url: https://github.com/nagios-plugins/nagios-plugins/archive/release-2.2.1.tar.gz
+    dest: /tmp/release-2.2.1.tar.gz
+
+
+
+- name: Unarchive nagios-4.4.6.tar.gz
+  unarchive:
+    src: /tmp/nagioscore-nagios-4.4.6.tar.gz
+    dest: /tmp
+    remote_src: yes
+    
+
+- name: Unarchive nagios-plugins-release-2.2.1
+  unarchive:
+    src: /tmp/release-2.2.1.tar.gz
+    dest: /tmp
+    remote_src: yes
+
+    
+- name: ./tools/setup  nagios-plugins-release
+  shell: ./tools/setup
+  args: 
+    chdir: /tmp/nagios-plugins-release-2.2.1
+    
+
+
+- name: ./configure nagios-plugins-release
+  shell: ./configure
+  args: 
+    chdir: /tmp/nagios-plugins-release-2.2.1
+    
+
+
+- name: make nagios-plugins-release-2.2.1
+  make:
+    chdir: /tmp/nagios-plugins-release-2.2.1
+
+
+
+- name: Run 'install' nagios-plugins-release-2.2.1
+  make:
+    chdir: /tmp/nagios-plugins-release-2.2.1
+    target: install
+
+
+    
+- name: Compile
+  shell: ./configure
+  args: 
+    chdir: /tmp/nagioscore-nagios-4.4.6
+    
+    
+- name: Run 'make all' target as root
+  make:
+    chdir: /tmp/nagioscore-nagios-4.4.6
+    target: all
+  become: yes
+            
+
+- name: make install-groups-users
+  shell: make install-groups-users
+  args:
+    chdir: /tmp/nagioscore-nagios-4.4.6
+    
+
+- name: usermod -a -G nagios apache
+  shell: usermod -a -G nagios apache
+  args:
+    chdir: /tmp/nagioscore-nagios-4.4.6
+    
+
+    
+- name: Run 'make install' target as root
+  make:
+    chdir: /tmp/nagioscore-nagios-4.4.6
+    target: install
+  become: yes
+    
+- name: make install-daemoninit
+  shell: make install-daemoninit
+  args:
+    chdir: /tmp/nagioscore-nagios-4.4.6
+    
+    
+- name: install module
+  shell: |
+    make install-commandmode
+    make install-config
+    make install-webconf
+  args:
+    chdir: /tmp/nagioscore-nagios-4.4.6
+    
+
+- name: start nagios
+  systemd:
+    name: nagios
+    state: started
+    enabled: yes
+
+
+
+- name: copy directory nagios                                                                                                                                   
+  copy:                                                                                                                                                            
+    src: files/nagios                                                                                                                                            
+    dest: /usr/local/
+    owner: nagios                                                                                                                                                    
+    group: nagios                                                                                                                                                  
+    mode: 0644  
+
+
+
+
+- name: htpasswd add nagiosadmin
+  shell: htpasswd -c -b /usr/local/nagios/etc/htpasswd.users nagiosadmin qwepoi123
+
+
+
+                                                                                                                                                                
+
+
+- name: start httpd
+  systemd:
+    name: httpd
+    state: started
+    enabled: yes
+              
+#/usr/local/nagios/bin/nagios -v /usr/local/nagios/etc/nagios.cfg
+
+
+
