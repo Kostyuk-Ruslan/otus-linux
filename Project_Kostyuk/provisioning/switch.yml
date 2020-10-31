@@ -6,18 +6,20 @@
   roles:
     - web
 
-#- hosts: backup
-#  become: true
-#  roles:
-#    - backup
-
-#- hosts: elk
-#  become: true
-#  roles:
-#    - elk
-
-
-- hosts: zabbix
+- hosts: backup
   become: true
   roles:
-    - zabbix
+    - backup
+
+
+- hosts: nagios
+  become: true
+  roles:
+    - nagios
+
+
+- hosts: elk
+  become: true
+  roles:
+    - elk
+

@@ -2,13 +2,13 @@ heartbeat.monitors:
 - type: http
   schedule: '@every 5s'
   urls:
-    - http://"{{ elk-server }}":9200
-    - http://"{{ elk-server }}":5601
+    - http://"192.168.1.242":9200
+    - http://"192.168.1.242":5601
 
 
 output.elasticsearch:
-  hosts: ["192.168.4.242:9200"]
+  hosts: ["192.168.1.242:9200"]
   username: "elastic"
   password: "changeme"
 setup.kibana:
-  host: "192.168.4.242:5601"
+  host: "192.168.1.242:5601"

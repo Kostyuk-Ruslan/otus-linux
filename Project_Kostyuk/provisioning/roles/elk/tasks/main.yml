@@ -121,7 +121,6 @@
       chdir: /opt/containers/elk_docker
 
 
-
   - name: start nrpe
     systemd:
       name: nrpe

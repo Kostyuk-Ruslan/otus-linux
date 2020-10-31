@@ -2,7 +2,7 @@ cluster.name: "docker_cluster_cross_master"
 node.name: "node_master"
 network.host: 0.0.0.0
 network.bind_host: 0.0.0.0
-network.publish_host: "{{ elk-server }}"
+network.publish_host: "192.168.1.242"
 
 xpack.license.self_generated.type : basic
 xpack.monitoring.collection.enabled : true
