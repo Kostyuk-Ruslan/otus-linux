@@ -1,0 +1,8 @@
+
+---
+
+- name: restart nrpe
+  systemd:
+    name: nrpe
+    state: restarted
+    enabled: yes
