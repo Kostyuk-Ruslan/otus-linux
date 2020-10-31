@@ -59,6 +59,11 @@
       - nagios-plugins-all
       - nagios-plugins
       - htop
+      - rrdtool
+      - perl-rrdtool
+      - perl-Time-HiRes
+      - php-gd
+       
       
 
 
@@ -91,6 +96,12 @@
     dest: /tmp/nagioscore-nagios-4.4.6.tar.gz
 
 
+- name: wget pnp4nagios
+  get_url:
+    url: https://github.com/lingej/pnp4nagios/archive/0.6.26.tar.gz
+    dest: /tmp/pnp4nagios-0.6.26.tar.gz
+
+
 - name: wget nagios-plugins
   get_url:
     url: https://github.com/nagios-plugins/nagios-plugins/archive/release-2.2.1.tar.gz
@@ -111,6 +122,14 @@
     dest: /tmp
     remote_src: yes
 
+
+- name: Unarchive pnp4nagios-0.6.26.tar.gz
+  unarchive:
+    src: /tmp/pnp4nagios-0.6.26.tar.gz
+    dest: /tmp
+    remote_src: yes
+    
+
     
 - name: ./tools/setup  nagios-plugins-release
   shell: ./tools/setup
@@ -124,6 +143,45 @@
   args: 
     chdir: /tmp/nagios-plugins-release-2.2.1
     
+
+
+- name: ./configure pnp4nagios-0.6.26
+  shell: ./configure
+  args: 
+    chdir: /tmp/pnp4nagios-0.6.26
+    
+
+
+- name: Run 'make all' pnp4nagios-0.6.26
+  make:
+    chdir: /tmp/pnp4nagios-0.6.26
+    target: all
+  become: yes
+
+- name: Run 'install' pnp4nagios-0.6.26
+  make:
+    chdir: /tmp/pnp4nagios-0.6.26
+    target: install
+
+
+- name: Run 'install-webconf' pnp4nagios-0.6.26
+  make:
+    chdir: /tmp/pnp4nagios-0.6.26
+    target: install-webconf
+
+
+- name: Run 'install-config' pnp4nagios-0.6.26
+  make:
+    chdir: /tmp/pnp4nagios-0.6.26
+    target: install-config
+
+
+- name: Run 'install-init' pnp4nagios-0.6.26
+  make:
+    chdir: /tmp/pnp4nagios-0.6.26
+    target: install-init
+
+
 
 
 - name: make nagios-plugins-release-2.2.1
@@ -200,7 +258,7 @@
     dest: /usr/local/
     owner: nagios                                                                                                                                                    
     group: nagios                                                                                                                                                  
-    mode: 0644  
+    mode: 0775  
 
 
 
@@ -218,6 +276,13 @@
     name: httpd
     state: started
     enabled: yes
+
+- name: start npcd
+  systemd:
+    name: npcd
+    state: started
+    enabled: yes
+
               
 #/usr/local/nagios/bin/nagios -v /usr/local/nagios/etc/nagios.cfg
 

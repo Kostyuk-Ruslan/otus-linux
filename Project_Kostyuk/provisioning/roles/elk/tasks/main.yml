@@ -53,6 +53,21 @@
 
 
 
+  - name: copy default.conf for nginx
+    copy:                    
+      src: files/plugins/{{ items }} 
+      dest: /usr/lib64/nagios/plugins/    
+      owner: root            
+      group: root            
+      mode: 0755             
+    with_items:
+      - check_cpu
+      - check_ram
+    notify:                  
+      - restart nrpe
+
+
+
 
 
   - name: Download docker-compose
@@ -113,12 +128,12 @@
       mode: '0644'
     
      
-      
-     
-  - name: docker-compose up
-    shell: docker-compose -f docker-compose.yml up -d
-    args:
-      chdir: /opt/containers/elk_docker
+
+  - name: start docker
+    systemd:
+      name: docker
+      state: restarted
+      enabled: yes
 
 
   - name: start nrpe
@@ -126,6 +141,13 @@
       name: nrpe
       state: started
       enabled: yes
+
+
+      
+  - name: docker-compose up
+    shell: docker-compose -f docker-compose.yml up -d
+    args:
+      chdir: /opt/containers/elk_docker
 
 
 

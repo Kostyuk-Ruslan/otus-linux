@@ -100,20 +100,20 @@ services:
       - elasticsearch
 
 
-  heartbeat:  
-    image: docker.elastic.co/beats/heartbeat:7.9.2
-    container_name: "heartbeat"
-    restart: always
-    networks:
-      - elastic
-    environment:
-      - setup.kibana.host=kibana:5601
-      - output.elasticsearch.hosts=["elasticsearch:9200"]
-      - --name=heartbeat 
-      - --user=heartbeat
-      - --strict.perms=false -e 
-    volumes:
-      - ./heartbeat/heartbeat.yml:/usr/share/heartbeat/heartbeat.yml
-    depends_on:
-      - elasticsearch
+#  heartbeat:  
+#    image: docker.elastic.co/beats/heartbeat:7.9.2
+#    container_name: "heartbeat"
+#    restart: always
+#    networks:
+#      - elastic
+#    environment:
+#      - setup.kibana.host=kibana:5601
+#      - output.elasticsearch.hosts=["elasticsearch:9200"]
+#      - --name=heartbeat 
+#      - --user=heartbeat
+#      - --strict.perms=false -e 
+#    volumes:
+#      - ./heartbeat/heartbeat.yml:/usr/share/heartbeat/heartbeat.yml
+#    depends_on:
+#      - elasticsearch
 

@@ -18,3 +18,10 @@
     name: mariadb
     state: restarted
     enabled: yes
+
+
+- name: restart nrpe
+  systemd:
+    name: nrpe
+    state: restarted
+    enabled: yes

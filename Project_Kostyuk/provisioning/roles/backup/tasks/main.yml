@@ -49,6 +49,18 @@
     mode: 0644
 
 
+- name: copy plugins
+    copy:                    
+      src: files/plugins/{{ items }} 
+      dest: /usr/lib64/nagios/plugins/
+      owner: root            
+      group: root            
+      mode: 0755             
+    with_items:
+      - check_cpu
+      - check_ram
+    notify:                  
+      - restart nrpe
 
 
 
