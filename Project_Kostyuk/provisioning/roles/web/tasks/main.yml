@@ -110,6 +110,8 @@
 
 
 
+
+
   - name: copy nrpe.cfg for nagios
     copy:
       src: files/nrpe.cfg
@@ -229,19 +231,26 @@
       mode: '0755'
 
 
+  - name: server.key
+    openssl_privatekey:
+      path: /etc/nginx/ssl/server.key
+      size: 2048 
 
-  - name: copy ssl server.key and server.crt
-    copy:
-      src: files/{{ item }}
-      dest: /etc/nginx/ssl/
-      owner: root
-      group: root
-      mode: 0755
-    with_items:
-      - server.key
-      - server.crt
+  
+  - name: server.csr
+    openssl_csr:
+      path: /etc/nginx/ssl/server.csr
+      privatekey_path: /etc/nginx/ssl/server.key
+      common_name: server
 
 
+
+  - name: sign sertificate server.key and server.key
+    openssl_certificate:
+      path: /etc/nginx/ssl/server.crt
+      privatekey_path: /etc/nginx/ssl/server.key
+      csr_path: /etc/nginx/ssl/server.csr
+      provider: selfsigned
 
 
   - name: restart nginx
