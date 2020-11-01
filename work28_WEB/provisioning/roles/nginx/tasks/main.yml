@@ -154,8 +154,6 @@
       - restart mariadb
 
 
-
-
   - name: restart nginx
     systemd:
       name: nginx

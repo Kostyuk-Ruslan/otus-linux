@@ -63,6 +63,7 @@
       - perl-rrdtool
       - perl-Time-HiRes
       - php-gd
+      - sendmall
        
       
 

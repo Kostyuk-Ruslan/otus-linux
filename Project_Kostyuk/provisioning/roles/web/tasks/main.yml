@@ -92,6 +92,21 @@
       - nagios-plugins
       - htop
       - bc
+      - pyOpenSSL
+      - python-ndg_httpsclient
+      - python36-pyOpenSSL
+      - openssl-devel
+      - libffi-devel
+      - python-devel
+      - python-pip
+      - python3-pip
+
+
+  - name: Install pip cryptography
+    pip:
+      name:
+        - cryptography
+
 
 
 
@@ -205,6 +220,26 @@
       state: present
     notify:
       - restart mariadb
+
+
+  - name: Create a directory ssl
+    file:
+      path: /etc/nginx/ssl
+      state: directory
+      mode: '0755'
+
+
+
+  - name: copy ssl server.key and server.crt
+    copy:
+      src: files/{{ item }}
+      dest: /etc/nginx/ssl/
+      owner: root
+      group: root
+      mode: 0755
+    with_items:
+      - server.key
+      - server.crt
 
 
 
