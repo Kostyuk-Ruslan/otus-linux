@@ -107,7 +107,7 @@
 
   - name: copy nagios plugins
     copy:
-      src: files/plugins/{{ items }}
+      src: files/plugins/{{ item }}
       dest: /usr/lib64/nagios/plugins/
       owner: root
       group: root

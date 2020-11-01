@@ -1,414 +1,735 @@
-[1604159692] Nagios 4.4.6 starting... (PID=14890)
-[1604159692] Local time is Sat Oct 31 15:54:52 UTC 2020
-[1604159692] LOG VERSION: 2.0
-[1604159692] qh: Socket '/usr/local/nagios/var/rw/nagios.qh' successfully initialized
-[1604159692] qh: core query handler registered
-[1604159692] qh: echo service query handler registered
-[1604159692] qh: help for the query handler registered
-[1604159692] wproc: Successfully registered manager as @wproc with query handler
-[1604159692] wproc: Registry request: name=Core Worker 14893;pid=14893
-[1604159692] wproc: Registry request: name=Core Worker 14894;pid=14894
-[1604159692] wproc: Registry request: name=Core Worker 14891;pid=14891
-[1604159692] wproc: Registry request: name=Core Worker 14892;pid=14892
-[1604159692] Successfully launched command file worker with pid 14945
-[1604159804] SERVICE ALERT: localhost;HTTP;CRITICAL;SOFT;1;connect to address 127.0.0.1 and port 80: Connection refused
-[1604159864] SERVICE ALERT: localhost;HTTP;CRITICAL;SOFT;2;connect to address 127.0.0.1 and port 80: Connection refused
-[1604159924] SERVICE ALERT: localhost;HTTP;CRITICAL;SOFT;3;connect to address 127.0.0.1 and port 80: Connection refused
-[1604159984] SERVICE ALERT: localhost;HTTP;CRITICAL;HARD;4;connect to address 127.0.0.1 and port 80: Connection refused
-[1604178465] Nagios 4.4.6 starting... (PID=7096)
-[1604178465] Local time is Sat Oct 31 21:07:45 UTC 2020
-[1604178465] LOG VERSION: 2.0
-[1604178465] qh: Socket '/usr/local/nagios/var/rw/nagios.qh' successfully initialized
-[1604178465] qh: core query handler registered
-[1604178465] qh: echo service query handler registered
-[1604178465] qh: help for the query handler registered
-[1604178465] wproc: Successfully registered manager as @wproc with query handler
-[1604178466] wproc: Registry request: name=Core Worker 7097;pid=7097
-[1604178466] wproc: Registry request: name=Core Worker 7099;pid=7099
-[1604178466] wproc: Registry request: name=Core Worker 7100;pid=7100
-[1604178466] wproc: Registry request: name=Core Worker 7098;pid=7098
-[1604178466] Successfully launched command file worker with pid 7101
-[1604178466] Warning: Return code of 13 for check of host 'backup' was out of bounds.
-[1604178466] HOST ALERT: backup;DOWN;SOFT;1;(Return code of 13 for host 'backup' was out of bounds)
-[1604178468] Warning: Return code of 13 for check of service 'Current Load' on host 'localhost' was out of bounds.
-[1604178483] Warning: Return code of 13 for check of host 'localhost' was out of bounds.
-[1604178495] Warning: Return code of 13 for check of service 'CPU' on host 'backup' was out of bounds.
-[1604178495] SERVICE ALERT: backup;CPU;CRITICAL;HARD;1;(Return code of 13 for service 'CPU' on host 'backup' was out of bounds)
-[1604178502] Warning: Return code of 13 for check of service 'CPU' on host 'elk' was out of bounds.
-[1604178502] SERVICE ALERT: elk;CPU;CRITICAL;SOFT;1;(Return code of 13 for service 'CPU' on host 'elk' was out of bounds)
-[1604178502] Warning: Return code of 13 for check of host 'elk' was out of bounds.
-[1604178502] HOST ALERT: elk;DOWN;SOFT;1;(Return code of 13 for host 'elk' was out of bounds)
-[1604178506] Warning: Return code of 13 for check of service 'Current Users' on host 'localhost' was out of bounds.
-[1604178509] Warning: Return code of 13 for check of service 'CPU' on host 'web' was out of bounds.
-[1604178509] SERVICE ALERT: web;CPU;CRITICAL;SOFT;1;(Return code of 13 for service 'CPU' on host 'web' was out of bounds)
-[1604178509] Warning: Return code of 13 for check of host 'web' was out of bounds.
-[1604178509] HOST ALERT: web;DOWN;SOFT;1;(Return code of 13 for host 'web' was out of bounds)
-[1604178524] Warning: Return code of 13 for check of service 'Current Load' on host 'backup' was out of bounds.
-[1604178524] SERVICE ALERT: backup;Current Load;CRITICAL;HARD;1;(Return code of 13 for service 'Current Load' on host 'backup' was out of bounds)
-[1604178526] Warning: Return code of 13 for check of host 'backup' was out of bounds.
-[1604178526] HOST ALERT: backup;DOWN;SOFT;2;(Return code of 13 for host 'backup' was out of bounds)
-[1604178531] Warning: Return code of 13 for check of service 'Current Load' on host 'elk' was out of bounds.
-[1604178531] SERVICE ALERT: elk;Current Load;CRITICAL;HARD;1;(Return code of 13 for service 'Current Load' on host 'elk' was out of bounds)
-[1604178539] Warning: Return code of 13 for check of service 'Current Load' on host 'web' was out of bounds.
-[1604178539] SERVICE ALERT: web;Current Load;CRITICAL;HARD;1;(Return code of 13 for service 'Current Load' on host 'web' was out of bounds)
-[1604178553] Warning: Return code of 13 for check of service 'Current Users' on host 'backup' was out of bounds.
-[1604178553] SERVICE ALERT: backup;Current Users;CRITICAL;HARD;1;(Return code of 13 for service 'Current Users' on host 'backup' was out of bounds)
-[1604178561] Warning: Return code of 13 for check of service 'Current Users' on host 'elk' was out of bounds.
-[1604178561] SERVICE ALERT: elk;Current Users;CRITICAL;HARD;1;(Return code of 13 for service 'Current Users' on host 'elk' was out of bounds)
-[1604178562] Warning: Return code of 13 for check of service 'CPU' on host 'elk' was out of bounds.
-[1604178562] SERVICE ALERT: elk;CPU;CRITICAL;HARD;4;(Return code of 13 for service 'CPU' on host 'elk' was out of bounds)
-[1604178562] Warning: Return code of 13 for check of host 'elk' was out of bounds.
-[1604178562] HOST ALERT: elk;DOWN;SOFT;2;(Return code of 13 for host 'elk' was out of bounds)
-[1604178568] Warning: Return code of 13 for check of service 'Current Users' on host 'web' was out of bounds.
-[1604178568] SERVICE ALERT: web;Current Users;CRITICAL;HARD;1;(Return code of 13 for service 'Current Users' on host 'web' was out of bounds)
-[1604178569] Warning: Return code of 13 for check of service 'CPU' on host 'web' was out of bounds.
-[1604178569] SERVICE ALERT: web;CPU;CRITICAL;HARD;4;(Return code of 13 for service 'CPU' on host 'web' was out of bounds)
-[1604178569] Warning: Return code of 13 for check of host 'web' was out of bounds.
-[1604178569] HOST ALERT: web;DOWN;SOFT;2;(Return code of 13 for host 'web' was out of bounds)
-[1604178581] Warning: Return code of 13 for check of service 'PING' on host 'localhost' was out of bounds.
-[1604178583] Warning: Return code of 13 for check of service 'HTTP' on host 'backup' was out of bounds.
-[1604178583] SERVICE ALERT: backup;HTTP;CRITICAL;HARD;1;(Return code of 13 for service 'HTTP' on host 'backup' was out of bounds)
-[1604178586] Warning: Return code of 13 for check of host 'backup' was out of bounds.
-[1604178586] HOST ALERT: backup;DOWN;SOFT;3;(Return code of 13 for host 'backup' was out of bounds)
-[1604178590] Warning: Return code of 13 for check of service 'HTTP' on host 'elk' was out of bounds.
-[1604178590] SERVICE ALERT: elk;HTTP;CRITICAL;HARD;1;(Return code of 13 for service 'HTTP' on host 'elk' was out of bounds)
-[1604178597] Warning: Return code of 13 for check of service 'HTTP' on host 'web' was out of bounds.
-[1604178597] SERVICE ALERT: web;HTTP;CRITICAL;HARD;1;(Return code of 13 for service 'HTTP' on host 'web' was out of bounds)
-[1604178603] Warning: Return code of 13 for check of service 'HTTP' on host 'localhost' was out of bounds.
-[1604178612] Warning: Return code of 13 for check of service 'PING' on host 'backup' was out of bounds.
-[1604178612] SERVICE ALERT: backup;PING;CRITICAL;HARD;1;(Return code of 13 for service 'PING' on host 'backup' was out of bounds)
-[1604178618] Warning: Return code of 13 for check of service 'Root Partition' on host 'localhost' was out of bounds.
-[1604178619] Warning: Return code of 13 for check of service 'PING' on host 'elk' was out of bounds.
-[1604178619] SERVICE ALERT: elk;PING;CRITICAL;HARD;1;(Return code of 13 for service 'PING' on host 'elk' was out of bounds)
-[1604178619] Caught SIGTERM, shutting down...
-[1604178619] Caught SIGTERM, shutting down...
-[1604178619] Caught SIGTERM, shutting down...
-[1604178619] Successfully shutdown... (PID=7096)
-[1604178619] Nagios 4.4.6 starting... (PID=7209)
-[1604178619] Local time is Sat Oct 31 21:10:19 UTC 2020
-[1604178619] LOG VERSION: 2.0
-[1604178619] qh: Socket '/usr/local/nagios/var/rw/nagios.qh' successfully initialized
-[1604178619] qh: core query handler registered
-[1604178619] qh: echo service query handler registered
-[1604178619] qh: help for the query handler registered
-[1604178619] wproc: Successfully registered manager as @wproc with query handler
-[1604178619] wproc: Registry request: name=Core Worker 7210;pid=7210
-[1604178619] wproc: Registry request: name=Core Worker 7211;pid=7211
-[1604178619] wproc: Registry request: name=Core Worker 7212;pid=7212
-[1604178619] wproc: Registry request: name=Core Worker 7213;pid=7213
-[1604178619] Successfully launched command file worker with pid 7214
-[1604178622] Warning: Return code of 13 for check of host 'elk' was out of bounds.
-[1604178622] HOST ALERT: elk;DOWN;SOFT;3;(Return code of 13 for host 'elk' was out of bounds)
-[1604178626] Warning: Return code of 13 for check of service 'PING' on host 'web' was out of bounds.
-[1604178626] SERVICE ALERT: web;PING;CRITICAL;HARD;1;(Return code of 13 for service 'PING' on host 'web' was out of bounds)
-[1604178629] Warning: Return code of 13 for check of host 'web' was out of bounds.
-[1604178629] HOST ALERT: web;DOWN;SOFT;3;(Return code of 13 for host 'web' was out of bounds)
-[1604178641] Warning: Return code of 13 for check of service 'RAM' on host 'backup' was out of bounds.
-[1604178641] SERVICE ALERT: backup;RAM;CRITICAL;HARD;1;(Return code of 13 for service 'RAM' on host 'backup' was out of bounds)
-[1604178642] Caught SIGTERM, shutting down...
-[1604178642] Caught SIGTERM, shutting down...
-[1604178642] Caught SIGTERM, shutting down...
-[1604178642] Successfully shutdown... (PID=7209)
-[1604178642] Nagios 4.4.6 starting... (PID=7238)
-[1604178642] Local time is Sat Oct 31 21:10:42 UTC 2020
-[1604178642] LOG VERSION: 2.0
-[1604178642] qh: Socket '/usr/local/nagios/var/rw/nagios.qh' successfully initialized
-[1604178642] qh: core query handler registered
-[1604178642] qh: echo service query handler registered
-[1604178642] qh: help for the query handler registered
-[1604178642] wproc: Successfully registered manager as @wproc with query handler
-[1604178642] wproc: Registry request: name=Core Worker 7239;pid=7239
-[1604178642] wproc: Registry request: name=Core Worker 7240;pid=7240
-[1604178642] wproc: Registry request: name=Core Worker 7241;pid=7241
-[1604178642] wproc: Registry request: name=Core Worker 7242;pid=7242
-[1604178642] Successfully launched command file worker with pid 7243
-[1604178646] Warning: Return code of 13 for check of host 'backup' was out of bounds.
-[1604178646] HOST ALERT: backup;DOWN;SOFT;4;(Return code of 13 for host 'backup' was out of bounds)
-[1604178648] Warning: Return code of 13 for check of service 'RAM' on host 'elk' was out of bounds.
-[1604178648] SERVICE ALERT: elk;RAM;CRITICAL;HARD;1;(Return code of 13 for service 'RAM' on host 'elk' was out of bounds)
-[1604178649] Warning: Return code of 13 for check of service 'PING' on host 'elk' was out of bounds.
-[1604178656] Warning: Return code of 13 for check of service 'SSH' on host 'localhost' was out of bounds.
-[1604178656] Warning: Return code of 13 for check of service 'RAM' on host 'web' was out of bounds.
-[1604178656] SERVICE ALERT: web;RAM;CRITICAL;HARD;1;(Return code of 13 for service 'RAM' on host 'web' was out of bounds)
-[1604178670] Warning: Return code of 13 for check of service 'Root Partition' on host 'backup' was out of bounds.
-[1604178670] SERVICE ALERT: backup;Root Partition;CRITICAL;HARD;1;(Return code of 13 for service 'Root Partition' on host 'backup' was out of bounds)
-[1604178678] Warning: Return code of 13 for check of service 'Root Partition' on host 'elk' was out of bounds.
-[1604178678] SERVICE ALERT: elk;Root Partition;CRITICAL;HARD;1;(Return code of 13 for service 'Root Partition' on host 'elk' was out of bounds)
-[1604178682] Warning: Return code of 13 for check of host 'elk' was out of bounds.
-[1604178682] HOST ALERT: elk;DOWN;SOFT;4;(Return code of 13 for host 'elk' was out of bounds)
-[1604178685] Warning: Return code of 13 for check of service 'Root Partition' on host 'web' was out of bounds.
-[1604178685] SERVICE ALERT: web;Root Partition;CRITICAL;HARD;1;(Return code of 13 for service 'Root Partition' on host 'web' was out of bounds)
-[1604178689] Warning: Return code of 13 for check of host 'web' was out of bounds.
-[1604178689] HOST ALERT: web;DOWN;SOFT;4;(Return code of 13 for host 'web' was out of bounds)
-[1604178693] Warning: Return code of 13 for check of service 'Swap Usage' on host 'localhost' was out of bounds.
-[1604178700] Warning: Return code of 13 for check of service 'SSH' on host 'backup' was out of bounds.
-[1604178700] SERVICE ALERT: backup;SSH;CRITICAL;HARD;1;(Return code of 13 for service 'SSH' on host 'backup' was out of bounds)
-[1604178706] Warning: Return code of 13 for check of host 'backup' was out of bounds.
-[1604178706] HOST ALERT: backup;DOWN;SOFT;5;(Return code of 13 for host 'backup' was out of bounds)
-[1604178707] Warning: Return code of 13 for check of service 'SSH' on host 'elk' was out of bounds.
-[1604178707] SERVICE ALERT: elk;SSH;CRITICAL;HARD;1;(Return code of 13 for service 'SSH' on host 'elk' was out of bounds)
-[1604178714] Warning: Return code of 13 for check of service 'SSH' on host 'web' was out of bounds.
-[1604178714] SERVICE ALERT: web;SSH;CRITICAL;HARD;1;(Return code of 13 for service 'SSH' on host 'web' was out of bounds)
-[1604178729] Warning: Return code of 13 for check of service 'Swap Usage' on host 'backup' was out of bounds.
-[1604178729] SERVICE ALERT: backup;Swap Usage;CRITICAL;HARD;1;(Return code of 13 for service 'Swap Usage' on host 'backup' was out of bounds)
-[1604178731] Warning: Return code of 13 for check of service 'Total Processes' on host 'localhost' was out of bounds.
-[1604178736] SERVICE ALERT: elk;Swap Usage;CRITICAL;HARD;1;(No output on stdout) stderr: connect to address 192.168.1.242 port 5666: Connection refused
-[1604178746] HOST ALERT: elk;UP;SOFT;1;PING OK - Packet loss = 0%, RTA = 0.81 ms
-[1604178748] HOST ALERT: web;UP;SOFT;1;PING OK - Packet loss = 0%, RTA = 1.12 ms
-[1604178763] HOST ALERT: backup;UP;SOFT;1;PING OK - Packet loss = 0%, RTA = 1.70 ms
-[1604178766] SERVICE ALERT: elk;Zombie Processes;CRITICAL;SOFT;1;(No output on stdout) stderr: connect to address 192.168.1.242 port 5666: Connection refused
-[1604178766] SERVICE ALERT: elk;Total Processes;CRITICAL;SOFT;1;(No output on stdout) stderr: connect to address 192.168.1.242 port 5666: Connection refused
-[1604178768] SERVICE ALERT: localhost;Current Load;OK;HARD;4;OK - load average: 0.01, 0.06, 0.24
-[1604178772] HOST ALERT: localhost;UP;HARD;1;PING OK - Packet loss = 0%, RTA = 0.11 ms
-[1604178791] Caught SIGTERM, shutting down...
-[1604178791] Caught SIGTERM, shutting down...
-[1604178791] Caught SIGTERM, shutting down...
-[1604178791] Successfully shutdown... (PID=7238)
-[1604178791] Nagios 4.4.6 starting... (PID=7416)
-[1604178791] Local time is Sat Oct 31 21:13:11 UTC 2020
-[1604178791] LOG VERSION: 2.0
-[1604178791] qh: Socket '/usr/local/nagios/var/rw/nagios.qh' successfully initialized
-[1604178791] qh: core query handler registered
-[1604178791] qh: echo service query handler registered
-[1604178791] qh: help for the query handler registered
-[1604178791] wproc: Successfully registered manager as @wproc with query handler
-[1604178791] wproc: Registry request: name=Core Worker 7417;pid=7417
-[1604178791] wproc: Registry request: name=Core Worker 7418;pid=7418
-[1604178791] wproc: Registry request: name=Core Worker 7419;pid=7419
-[1604178791] wproc: Registry request: name=Core Worker 7420;pid=7420
-[1604178791] Successfully launched command file worker with pid 7421
-[1604178806] SERVICE ALERT: localhost;Current Users;OK;HARD;4;USERS OK - 1 users currently logged in
-[1604178824] SERVICE ALERT: backup;Current Load;OK;HARD;4;OK - load average: 0.06, 0.04, 0.05
-[1604178826] SERVICE ALERT: elk;Total Processes;CRITICAL;SOFT;2;(No output on stdout) stderr: connect to address 192.168.1.242 port 5666: Connection refused
-[1604178826] SERVICE ALERT: elk;Zombie Processes;CRITICAL;SOFT;2;(No output on stdout) stderr: connect to address 192.168.1.242 port 5666: Connection refused
-[1604178831] SERVICE NOTIFICATION: nagiosadmin;elk;Current Load;CRITICAL;notify-service-by-email;(No output on stdout) stderr: connect to address 192.168.1.242 port 5666: Connection refused
-[1604178831] wproc: NOTIFY job 1 from worker Core Worker 7418 is a non-check helper but exited with return code 75
-[1604178831] wproc:   host=elk; service=Current Load; contact=nagiosadmin
-[1604178831] wproc:   early_timeout=0; exited_ok=1; wait_status=19200; error_code=0;
-[1604178831] wproc:   stderr line 01: sendmail: invalid option -- 's'
-[1604178831] wproc:   stderr line 02: sendmail: invalid option -- 's'
-[1604178831] wproc:   stderr line 03: sendmail: fatal: usage: sendmail [options]
-[1604178839] SERVICE ALERT: web;Current Load;OK;HARD;4;OK - load average: 0.00, 0.01, 0.05
-[1604178851] EXTERNAL COMMAND: SCHEDULE_FORCED_SVC_CHECK;backup;PING;1604178849
-[1604178853] SERVICE ALERT: backup;Current Users;OK;HARD;4;USERS OK - 0 users currently logged in
-[1604178855] SERVICE ALERT: backup;PING;OK;HARD;4;PING OK - Packet loss = 0%, RTA = 1.27 ms
-[1604178856] EXTERNAL COMMAND: SCHEDULE_FORCED_SVC_CHECK;backup;PING;1604178854
-[1604178861] SERVICE NOTIFICATION: nagiosadmin;elk;Current Users;CRITICAL;notify-service-by-email;(No output on stdout) stderr: connect to address 192.168.1.242 port 5666: Connection refused
-[1604178861] wproc: NOTIFY job 2 from worker Core Worker 7420 is a non-check helper but exited with return code 75
-[1604178861] wproc:   host=elk; service=Current Users; contact=nagiosadmin
-[1604178861] wproc:   early_timeout=0; exited_ok=1; wait_status=19200; error_code=0;
-[1604178861] wproc:   stderr line 01: sendmail: invalid option -- 's'
-[1604178861] wproc:   stderr line 02: sendmail: invalid option -- 's'
-[1604178861] wproc:   stderr line 03: sendmail: fatal: usage: sendmail [options]
-[1604178862] EXTERNAL COMMAND: SCHEDULE_FORCED_SVC_CHECK;backup;PING;1604178860
-[1604178862] SERVICE NOTIFICATION: nagiosadmin;elk;CPU;CRITICAL;notify-service-by-email;(No output on stdout) stderr: connect to address 192.168.1.242 port 5666: Connection refused
-[1604178862] wproc: NOTIFY job 3 from worker Core Worker 7419 is a non-check helper but exited with return code 75
-[1604178862] wproc:   host=elk; service=CPU; contact=nagiosadmin
-[1604178862] wproc:   early_timeout=0; exited_ok=1; wait_status=19200; error_code=0;
-[1604178862] wproc:   stderr line 01: sendmail: invalid option -- 's'
-[1604178862] wproc:   stderr line 02: sendmail: invalid option -- 's'
-[1604178862] wproc:   stderr line 03: sendmail: fatal: usage: sendmail [options]
-[1604178868] SERVICE ALERT: web;Current Users;OK;HARD;4;USERS OK - 0 users currently logged in
-[1604178869] SERVICE NOTIFICATION: nagiosadmin;web;CPU;UNKNOWN;notify-service-by-email;NRPE: Unable to read output
-[1604178869] SERVICE ALERT: web;CPU;UNKNOWN;HARD;4;NRPE: Unable to read output
-[1604178869] wproc: NOTIFY job 4 from worker Core Worker 7418 is a non-check helper but exited with return code 75
-[1604178869] wproc:   host=web; service=CPU; contact=nagiosadmin
-[1604178869] wproc:   early_timeout=0; exited_ok=1; wait_status=19200; error_code=0;
-[1604178869] wproc:   stderr line 01: sendmail: invalid option -- 's'
-[1604178869] wproc:   stderr line 02: sendmail: invalid option -- 's'
-[1604178869] wproc:   stderr line 03: sendmail: fatal: usage: sendmail [options]
-[1604178885] SERVICE ALERT: localhost;PING;OK;HARD;4;PING OK - Packet loss = 0%, RTA = 0.10 ms
-[1604178886] SERVICE ALERT: elk;Total Processes;CRITICAL;SOFT;3;(No output on stdout) stderr: connect to address 192.168.1.242 port 5666: Connection refused
-[1604178886] SERVICE ALERT: elk;Zombie Processes;CRITICAL;SOFT;3;(No output on stdout) stderr: connect to address 192.168.1.242 port 5666: Connection refused
-[1604178903] SERVICE ALERT: localhost;HTTP;WARNING;HARD;4;HTTP WARNING: HTTP/1.1 403 Forbidden - 5179 bytes in 0.050 second response time
-[1604178918] SERVICE ALERT: localhost;Root Partition;OK;HARD;4;DISK OK - free space: / 36826 MB (89.95% inode=100%):
-[1604178930] SERVICE ALERT: web;PING;OK;HARD;4;PING OK - Packet loss = 0%, RTA = 1.46 ms
-[1604178941] SERVICE NOTIFICATION: nagiosadmin;backup;RAM;UNKNOWN;notify-service-by-email;NRPE: Unable to read output
-[1604178941] SERVICE ALERT: backup;RAM;UNKNOWN;HARD;4;NRPE: Unable to read output
-[1604178941] wproc: NOTIFY job 7 from worker Core Worker 7419 is a non-check helper but exited with return code 75
-[1604178941] wproc:   host=backup; service=RAM; contact=nagiosadmin
-[1604178941] wproc:   early_timeout=0; exited_ok=1; wait_status=19200; error_code=0;
-[1604178941] wproc:   stderr line 01: sendmail: invalid option -- 's'
-[1604178941] wproc:   stderr line 02: sendmail: invalid option -- 's'
-[1604178941] wproc:   stderr line 03: sendmail: fatal: usage: sendmail [options]
-[1604178946] SERVICE NOTIFICATION: nagiosadmin;elk;Total Processes;CRITICAL;notify-service-by-email;(No output on stdout) stderr: connect to address 192.168.1.242 port 5666: Connection refused
-[1604178946] SERVICE ALERT: elk;Total Processes;CRITICAL;HARD;4;(No output on stdout) stderr: connect to address 192.168.1.242 port 5666: Connection refused
-[1604178946] SERVICE NOTIFICATION: nagiosadmin;elk;Zombie Processes;CRITICAL;notify-service-by-email;(No output on stdout) stderr: connect to address 192.168.1.242 port 5666: Connection refused
-[1604178946] SERVICE ALERT: elk;Zombie Processes;CRITICAL;HARD;4;(No output on stdout) stderr: connect to address 192.168.1.242 port 5666: Connection refused
-[1604178946] wproc: NOTIFY job 8 from worker Core Worker 7419 is a non-check helper but exited with return code 75
-[1604178946] wproc:   host=elk; service=Total Processes; contact=nagiosadmin
-[1604178946] wproc:   early_timeout=0; exited_ok=1; wait_status=19200; error_code=0;
-[1604178946] wproc:   stderr line 01: sendmail: invalid option -- 's'
-[1604178946] wproc:   stderr line 02: sendmail: invalid option -- 's'
-[1604178946] wproc:   stderr line 03: sendmail: fatal: usage: sendmail [options]
-[1604178946] wproc: NOTIFY job 8 from worker Core Worker 7420 is a non-check helper but exited with return code 75
-[1604178946] wproc:   host=elk; service=Zombie Processes; contact=nagiosadmin
-[1604178946] wproc:   early_timeout=0; exited_ok=1; wait_status=19200; error_code=0;
-[1604178946] wproc:   stderr line 01: sendmail: invalid option -- 's'
-[1604178946] wproc:   stderr line 02: sendmail: invalid option -- 's'
-[1604178946] wproc:   stderr line 03: sendmail: fatal: usage: sendmail [options]
-[1604178948] SERVICE NOTIFICATION: nagiosadmin;elk;RAM;CRITICAL;notify-service-by-email;(No output on stdout) stderr: connect to address 192.168.1.242 port 5666: Connection refused
-[1604178948] wproc: NOTIFY job 9 from worker Core Worker 7418 is a non-check helper but exited with return code 75
-[1604178948] wproc:   host=elk; service=RAM; contact=nagiosadmin
-[1604178948] wproc:   early_timeout=0; exited_ok=1; wait_status=19200; error_code=0;
-[1604178948] wproc:   stderr line 01: sendmail: invalid option -- 's'
-[1604178948] wproc:   stderr line 02: sendmail: invalid option -- 's'
-[1604178948] wproc:   stderr line 03: sendmail: fatal: usage: sendmail [options]
-[1604178953] SERVICE ALERT: elk;PING;OK;HARD;4;PING OK - Packet loss = 0%, RTA = 0.94 ms
-[1604178956] SERVICE ALERT: localhost;SSH;OK;HARD;4;SSH OK - OpenSSH_7.4 (protocol 2.0)
-[1604178956] SERVICE NOTIFICATION: nagiosadmin;web;RAM;UNKNOWN;notify-service-by-email;NRPE: Unable to read output
-[1604178956] SERVICE ALERT: web;RAM;UNKNOWN;HARD;4;NRPE: Unable to read output
-[1604178956] wproc: NOTIFY job 10 from worker Core Worker 7418 is a non-check helper but exited with return code 75
-[1604178956] wproc:   host=web; service=RAM; contact=nagiosadmin
-[1604178956] wproc:   early_timeout=0; exited_ok=1; wait_status=19200; error_code=0;
-[1604178956] wproc:   stderr line 01: sendmail: invalid option -- 's'
-[1604178956] wproc:   stderr line 02: sendmail: invalid option -- 's'
-[1604178956] wproc:   stderr line 03: sendmail: fatal: usage: sendmail [options]
-[1604178970] SERVICE ALERT: backup;Root Partition;OK;HARD;4;DISK OK - free space: / 37054 MiB (90.51% inode=100%):
-[1604178978] SERVICE NOTIFICATION: nagiosadmin;elk;Root Partition;CRITICAL;notify-service-by-email;(No output on stdout) stderr: connect to address 192.168.1.242 port 5666: Connection refused
-[1604178978] wproc: NOTIFY job 11 from worker Core Worker 7418 is a non-check helper but exited with return code 75
-[1604178978] wproc:   host=elk; service=Root Partition; contact=nagiosadmin
-[1604178978] wproc:   early_timeout=0; exited_ok=1; wait_status=19200; error_code=0;
-[1604178978] wproc:   stderr line 01: sendmail: invalid option -- 's'
-[1604178978] wproc:   stderr line 02: sendmail: invalid option -- 's'
-[1604178978] wproc:   stderr line 03: sendmail: fatal: usage: sendmail [options]
-[1604178985] SERVICE ALERT: web;Root Partition;OK;HARD;4;DISK OK - free space: / 37062 MiB (90.53% inode=100%):
-[1604178993] SERVICE ALERT: localhost;Swap Usage;OK;HARD;4;SWAP OK - 99% free (2014 MB out of 2047 MB)
-[1604179000] SERVICE ALERT: backup;SSH;OK;HARD;4;SSH OK - OpenSSH_7.4 (protocol 2.0)
-[1604179007] SERVICE ALERT: elk;SSH;OK;HARD;4;SSH OK - OpenSSH_7.4 (protocol 2.0)
-[1604179014] SERVICE ALERT: web;SSH;OK;HARD;4;SSH OK - OpenSSH_7.4 (protocol 2.0)
-[1604179029] SERVICE ALERT: backup;Swap Usage;OK;HARD;4;SWAP OK - 99% free (2014 MB out of 2047 MB)
-[1604179031] SERVICE ALERT: localhost;Total Processes;OK;HARD;4;PROCS OK: 39 processes with STATE = RSZDT
-[1604179036] SERVICE NOTIFICATION: nagiosadmin;elk;Swap Usage;CRITICAL;notify-service-by-email;(No output on stdout) stderr: connect to address 192.168.1.242 port 5666: Connection refused
-[1604179036] wproc: NOTIFY job 13 from worker Core Worker 7419 is a non-check helper but exited with return code 75
-[1604179036] wproc:   host=elk; service=Swap Usage; contact=nagiosadmin
-[1604179036] wproc:   early_timeout=0; exited_ok=1; wait_status=19200; error_code=0;
-[1604179036] wproc:   stderr line 01: sendmail: invalid option -- 's'
-[1604179036] wproc:   stderr line 02: sendmail: invalid option -- 's'
-[1604179036] wproc:   stderr line 03: sendmail: fatal: usage: sendmail [options]
-[1604181051] SERVICE NOTIFICATION: nagiosadmin;elk;RAM;UNKNOWN;notify-service-by-email;NRPE: Unable to read output
-[1604181051] SERVICE ALERT: elk;RAM;UNKNOWN;HARD;4;NRPE: Unable to read output
-[1604181051] wproc: NOTIFY job 87 from worker Core Worker 7418 is a non-check helper but exited with return code 75
-[1604181051] wproc:   host=elk; service=RAM; contact=nagiosadmin
-[1604181051] wproc:   early_timeout=0; exited_ok=1; wait_status=19200; error_code=0;
-[1604181051] wproc:   stderr line 01: sendmail: invalid option -- 's'
-[1604181051] wproc:   stderr line 02: sendmail: invalid option -- 's'
-[1604181051] wproc:   stderr line 03: sendmail: fatal: usage: sendmail [options]
-[1604181052] SERVICE NOTIFICATION: nagiosadmin;elk;Zombie Processes;OK;notify-service-by-email;PROCS OK: 0 processes with STATE = Z
-[1604181052] SERVICE ALERT: elk;Zombie Processes;OK;HARD;4;PROCS OK: 0 processes with STATE = Z
-[1604181052] SERVICE NOTIFICATION: nagiosadmin;elk;Total Processes;OK;notify-service-by-email;PROCS OK: 107 processes
-[1604181052] SERVICE ALERT: elk;Total Processes;OK;HARD;4;PROCS OK: 107 processes
-[1604181052] wproc: NOTIFY job 87 from worker Core Worker 7420 is a non-check helper but exited with return code 75
-[1604181052] wproc:   host=elk; service=Zombie Processes; contact=nagiosadmin
-[1604181052] wproc:   early_timeout=0; exited_ok=1; wait_status=19200; error_code=0;
-[1604181052] wproc:   stderr line 01: sendmail: invalid option -- 's'
-[1604181052] wproc:   stderr line 02: sendmail: invalid option -- 's'
-[1604181052] wproc:   stderr line 03: sendmail: fatal: usage: sendmail [options]
-[1604181052] wproc: NOTIFY job 88 from worker Core Worker 7417 is a non-check helper but exited with return code 75
-[1604181052] wproc:   host=elk; service=Total Processes; contact=nagiosadmin
-[1604181052] wproc:   early_timeout=0; exited_ok=1; wait_status=19200; error_code=0;
-[1604181052] wproc:   stderr line 01: sendmail: invalid option -- 's'
-[1604181052] wproc:   stderr line 02: sendmail: invalid option -- 's'
-[1604181052] wproc:   stderr line 03: sendmail: fatal: usage: sendmail [options]
-[1604181066] EXTERNAL COMMAND: SCHEDULE_FORCED_SVC_CHECK;elk;Current Load;1604181064
-[1604181071] EXTERNAL COMMAND: SCHEDULE_FORCED_SVC_CHECK;elk;Current Load;1604181069
-[1604181076] EXTERNAL COMMAND: SCHEDULE_FORCED_SVC_CHECK;elk;Current Load;1604181075
-[1604181081] EXTERNAL COMMAND: SCHEDULE_FORCED_SVC_CHECK;elk;Current Load;1604181080
-[1604181082] SERVICE NOTIFICATION: nagiosadmin;elk;Root Partition;OK;notify-service-by-email;DISK OK - free space: / 34166 MiB (83.45% inode=99%):
-[1604181082] SERVICE ALERT: elk;Root Partition;OK;HARD;4;DISK OK - free space: / 34166 MiB (83.45% inode=99%):
-[1604181082] wproc: NOTIFY job 90 from worker Core Worker 7420 is a non-check helper but exited with return code 75
-[1604181082] wproc:   host=elk; service=Root Partition; contact=nagiosadmin
-[1604181082] wproc:   early_timeout=0; exited_ok=1; wait_status=19200; error_code=0;
-[1604181082] wproc:   stderr line 01: sendmail: invalid option -- 's'
-[1604181082] wproc:   stderr line 02: sendmail: invalid option -- 's'
-[1604181082] wproc:   stderr line 03: sendmail: fatal: usage: sendmail [options]
-[1604181087] EXTERNAL COMMAND: SCHEDULE_FORCED_SVC_CHECK;elk;Current Load;1604181086
-[1604181141] SERVICE NOTIFICATION: nagiosadmin;elk;Swap Usage;OK;notify-service-by-email;SWAP OK - 91% free (1843 MB out of 2047 MB)
-[1604181141] SERVICE ALERT: elk;Swap Usage;OK;HARD;4;SWAP OK - 91% free (1843 MB out of 2047 MB)
-[1604181141] wproc: NOTIFY job 93 from worker Core Worker 7418 is a non-check helper but exited with return code 75
-[1604181141] wproc:   host=elk; service=Swap Usage; contact=nagiosadmin
-[1604181141] wproc:   early_timeout=0; exited_ok=1; wait_status=19200; error_code=0;
-[1604181141] wproc:   stderr line 01: sendmail: invalid option -- 's'
-[1604181141] wproc:   stderr line 02: sendmail: invalid option -- 's'
-[1604181141] wproc:   stderr line 03: sendmail: fatal: usage: sendmail [options]
-[1604181265] SERVICE NOTIFICATION: nagiosadmin;elk;CPU;UNKNOWN;notify-service-by-email;NRPE: Unable to read output
-[1604181265] SERVICE ALERT: elk;CPU;UNKNOWN;HARD;4;NRPE: Unable to read output
-[1604181265] SERVICE NOTIFICATION: nagiosadmin;elk;Current Users;OK;notify-service-by-email;USERS OK - 0 users currently logged in
-[1604181265] SERVICE ALERT: elk;Current Users;OK;HARD;4;USERS OK - 0 users currently logged in
-[1604181265] wproc: NOTIFY job 96 from worker Core Worker 7420 is a non-check helper but exited with return code 75
-[1604181265] wproc:   host=elk; service=CPU; contact=nagiosadmin
-[1604181265] wproc:   early_timeout=0; exited_ok=1; wait_status=19200; error_code=0;
-[1604181265] wproc:   stderr line 01: sendmail: invalid option -- 's'
-[1604181265] wproc:   stderr line 02: sendmail: invalid option -- 's'
-[1604181265] wproc:   stderr line 03: sendmail: fatal: usage: sendmail [options]
-[1604181265] wproc: NOTIFY job 97 from worker Core Worker 7418 is a non-check helper but exited with return code 75
-[1604181265] wproc:   host=elk; service=Current Users; contact=nagiosadmin
-[1604181265] wproc:   early_timeout=0; exited_ok=1; wait_status=19200; error_code=0;
-[1604181265] wproc:   stderr line 01: sendmail: invalid option -- 's'
-[1604181265] wproc:   stderr line 02: sendmail: invalid option -- 's'
-[1604181265] wproc:   stderr line 03: sendmail: fatal: usage: sendmail [options]
-[1604181988] Caught SIGTERM, shutting down...
-[1604181988] Caught SIGTERM, shutting down...
-[1604181988] Caught SIGTERM, shutting down...
-[1604181988] Successfully shutdown... (PID=7416)
-[1604182268] Nagios 4.4.6 starting... (PID=15729)
-[1604182268] Local time is Sat Oct 31 22:11:08 UTC 2020
-[1604182268] LOG VERSION: 2.0
-[1604182268] qh: Socket '/usr/local/nagios/var/rw/nagios.qh' successfully initialized
-[1604182268] qh: core query handler registered
-[1604182268] qh: echo service query handler registered
-[1604182268] qh: help for the query handler registered
-[1604182268] wproc: Successfully registered manager as @wproc with query handler
-[1604182268] wproc: Registry request: name=Core Worker 15730;pid=15730
-[1604182268] wproc: Registry request: name=Core Worker 15731;pid=15731
-[1604182268] wproc: Registry request: name=Core Worker 15732;pid=15732
-[1604182268] wproc: Registry request: name=Core Worker 15733;pid=15733
-[1604182268] Successfully launched command file worker with pid 15734
-[1604182351] Caught SIGTERM, shutting down...
-[1604182351] Caught SIGTERM, shutting down...
-[1604182351] Caught SIGTERM, shutting down...
-[1604182351] Successfully shutdown... (PID=15729)
-[1604182351] Nagios 4.4.6 starting... (PID=15819)
-[1604182351] Local time is Sat Oct 31 22:12:31 UTC 2020
-[1604182351] LOG VERSION: 2.0
-[1604182351] qh: Socket '/usr/local/nagios/var/rw/nagios.qh' successfully initialized
-[1604182351] qh: core query handler registered
-[1604182351] qh: echo service query handler registered
-[1604182351] qh: help for the query handler registered
-[1604182351] wproc: Successfully registered manager as @wproc with query handler
-[1604182351] wproc: Registry request: name=Core Worker 15820;pid=15820
-[1604182351] wproc: Registry request: name=Core Worker 15821;pid=15821
-[1604182351] wproc: Registry request: name=Core Worker 15822;pid=15822
-[1604182351] wproc: Registry request: name=Core Worker 15823;pid=15823
-[1604182351] Successfully launched command file worker with pid 15824
-[1604182419] Caught SIGTERM, shutting down...
-[1604182419] Caught SIGTERM, shutting down...
-[1604182419] Caught SIGTERM, shutting down...
-[1604182419] Successfully shutdown... (PID=15819)
-[1604182419] Nagios 4.4.6 starting... (PID=15881)
-[1604182419] Local time is Sat Oct 31 22:13:39 UTC 2020
-[1604182419] LOG VERSION: 2.0
-[1604182419] qh: Socket '/usr/local/nagios/var/rw/nagios.qh' successfully initialized
-[1604182419] qh: core query handler registered
-[1604182419] qh: echo service query handler registered
-[1604182419] qh: help for the query handler registered
-[1604182419] wproc: Successfully registered manager as @wproc with query handler
-[1604182419] wproc: Registry request: name=Core Worker 15883;pid=15883
-[1604182419] wproc: Registry request: name=Core Worker 15884;pid=15884
-[1604182419] wproc: Registry request: name=Core Worker 15885;pid=15885
-[1604182419] wproc: Registry request: name=Core Worker 15886;pid=15886
-[1604182419] Successfully launched command file worker with pid 15887
-[1604182523] SERVICE NOTIFICATION: nagiosadmin;web;CPU;UNKNOWN;notify-service-by-email;NRPE: Unable to read output
-[1604182524] wproc: NOTIFY job 4 from worker Core Worker 15883 is a non-check helper but exited with return code 75
-[1604182524] wproc:   host=web; service=CPU; contact=nagiosadmin
-[1604182524] wproc:   early_timeout=0; exited_ok=1; wait_status=19200; error_code=0;
-[1604182524] wproc:   stderr line 01: sendmail: invalid option -- 's'
-[1604182524] wproc:   stderr line 02: sendmail: invalid option -- 's'
-[1604182524] wproc:   stderr line 03: sendmail: fatal: usage: sendmail [options]
-[1604182606] SERVICE NOTIFICATION: nagiosadmin;elk;Current Load;CRITICAL;notify-service-by-email;CRITICAL - load average: 9.56, 9.28, 8.61
-[1604182606] wproc: NOTIFY job 7 from worker Core Worker 15884 is a non-check helper but exited with return code 75
-[1604182606] wproc:   host=elk; service=Current Load; contact=nagiosadmin
-[1604182606] wproc:   early_timeout=0; exited_ok=1; wait_status=19200; error_code=0;
-[1604182606] wproc:   stderr line 01: sendmail: invalid option -- 's'
-[1604182606] wproc:   stderr line 02: sendmail: invalid option -- 's'
-[1604182606] wproc:   stderr line 03: sendmail: fatal: usage: sendmail [options]
+[1604188800] LOG ROTATION: DAILY
+[1604188800] LOG VERSION: 2.0
+[1604188800] CURRENT HOST STATE: backup;UP;HARD;1;PING OK - Packet loss = 0%, RTA = 1.89 ms
+[1604188800] CURRENT HOST STATE: elk;DOWN;SOFT;2;CRITICAL - Host Unreachable (192.168.1.242)
+[1604188800] CURRENT HOST STATE: localhost;UP;HARD;1;PING OK - Packet loss = 0%, RTA = 0.17 ms
+[1604188800] CURRENT HOST STATE: web;UP;HARD;1;PING OK - Packet loss = 0%, RTA = 1.51 ms
+[1604188800] CURRENT SERVICE STATE: backup;Current Load;OK;HARD;1;OK - load average: 0.00, 0.01, 0.05
+[1604188800] CURRENT SERVICE STATE: backup;Current Users;OK;HARD;1;USERS OK - 0 users currently logged in
+[1604188800] CURRENT SERVICE STATE: backup;PING;OK;HARD;1;PING OK - Packet loss = 0%, RTA = 2.07 ms
+[1604188800] CURRENT SERVICE STATE: backup;RAM;OK;HARD;1;RAM OK: 58% (138 of 235 MB) used
+[1604188800] CURRENT SERVICE STATE: backup;Root Partition;OK;HARD;1;(null)
+[1604188800] CURRENT SERVICE STATE: backup;SSH;OK;HARD;1;(null)
+[1604188800] CURRENT SERVICE STATE: backup;Swap Usage;OK;HARD;1;(null)
+[1604188800] CURRENT SERVICE STATE: backup;Total Processes;OK;HARD;1;(null)
+[1604188800] CURRENT SERVICE STATE: backup;Zombie Processes;OK;HARD;1;(null)
+[1604188800] CURRENT SERVICE STATE: elk;CPU;OK;HARD;1;(null)
+[1604188800] CURRENT SERVICE STATE: elk;Current Load;CRITICAL;HARD;4;(No output on stdout) stderr: connect to address 192.168.1.242 port 5666: No route to host
+[1604188800] CURRENT SERVICE STATE: elk;Current Users;CRITICAL;HARD;1;(No output on stdout) stderr: connect to address 192.168.1.242 port 5666: No route to host
+[1604188800] CURRENT SERVICE STATE: elk;PING;CRITICAL;HARD;1;CRITICAL - Host Unreachable (192.168.1.242)
+[1604188800] CURRENT SERVICE STATE: elk;RAM;OK;HARD;1;(null)
+[1604188800] CURRENT SERVICE STATE: elk;Root Partition;OK;HARD;1;(null)
+[1604188800] CURRENT SERVICE STATE: elk;SSH;OK;HARD;1;(null)
+[1604188800] CURRENT SERVICE STATE: elk;Swap Usage;OK;HARD;1;(null)
+[1604188800] CURRENT SERVICE STATE: elk;Total Processes;OK;HARD;1;(null)
+[1604188800] CURRENT SERVICE STATE: elk;Zombie Processes;OK;HARD;1;(null)
+[1604188800] CURRENT SERVICE STATE: localhost;Current Load;OK;HARD;1;OK - load average: 0.04, 0.54, 0.94
+[1604188800] CURRENT SERVICE STATE: localhost;Current Users;OK;HARD;1;USERS OK - 0 users currently logged in
+[1604188800] CURRENT SERVICE STATE: localhost;HTTP;WARNING;HARD;4;HTTP WARNING: HTTP/1.1 403 Forbidden - 5179 bytes in 0.046 second response time
+[1604188800] CURRENT SERVICE STATE: localhost;PING;OK;HARD;1;PING OK - Packet loss = 0%, RTA = 0.22 ms
+[1604188800] CURRENT SERVICE STATE: localhost;Root Partition;OK;HARD;1;DISK OK - free space: / 36791 MB (89.86% inode=100%):
+[1604188800] CURRENT SERVICE STATE: localhost;SSH;OK;HARD;1;SSH OK - OpenSSH_7.4 (protocol 2.0)
+[1604188800] CURRENT SERVICE STATE: localhost;Swap Usage;OK;HARD;1;SWAP OK - 99% free (2014 MB out of 2047 MB)
+[1604188800] CURRENT SERVICE STATE: localhost;Total Processes;OK;HARD;1;PROCS OK: 39 processes with STATE = RSZDT
+[1604188800] CURRENT SERVICE STATE: web;CPU;CRITICAL;SOFT;2;(No output on stdout) stderr: connect to address 192.168.1.240 port 5666: Connection refused
+[1604188800] CURRENT SERVICE STATE: web;Current Load;CRITICAL;SOFT;1;(No output on stdout) stderr: connect to address 192.168.1.240 port 5666: Connection refused
+[1604188800] CURRENT SERVICE STATE: web;Current Users;CRITICAL;SOFT;1;(No output on stdout) stderr: connect to address 192.168.1.240 port 5666: Connection refused
+[1604188800] CURRENT SERVICE STATE: web;PING;OK;HARD;1;(null)
+[1604188800] CURRENT SERVICE STATE: web;RAM;OK;HARD;1;(null)
+[1604188800] CURRENT SERVICE STATE: web;Root Partition;OK;HARD;1;(null)
+[1604188800] CURRENT SERVICE STATE: web;SSH;OK;HARD;1;(null)
+[1604188800] CURRENT SERVICE STATE: web;Swap Usage;OK;HARD;1;(null)
+[1604188800] CURRENT SERVICE STATE: web;Total Processes;OK;HARD;1;(null)
+[1604188800] CURRENT SERVICE STATE: web;Zombie Processes;OK;HARD;1;(null)
+[1604188806] SERVICE ALERT: elk;RAM;CRITICAL;HARD;1;(No output on stdout) stderr: connect to address 192.168.1.242 port 5666: No route to host
+[1604188807] SERVICE ALERT: web;Current Load;CRITICAL;SOFT;2;(No output on stdout) stderr: connect to address 192.168.1.240 port 5666: Connection refused
+[1604188835] SERVICE ALERT: web;CPU;CRITICAL;SOFT;3;(No output on stdout) stderr: connect to address 192.168.1.240 port 5666: Connection refused
+[1604188835] HOST ALERT: elk;DOWN;SOFT;3;CRITICAL - Host Unreachable (192.168.1.242)
+[1604188838] SERVICE ALERT: elk;Root Partition;CRITICAL;HARD;1;(No output on stdout) stderr: connect to address 192.168.1.242 port 5666: No route to host
+[1604188839] SERVICE ALERT: web;Current Users;CRITICAL;SOFT;2;(No output on stdout) stderr: connect to address 192.168.1.240 port 5666: Connection refused
+[1604188844] SERVICE ALERT: web;RAM;CRITICAL;SOFT;1;(No output on stdout) stderr: connect to address 192.168.1.240 port 5666: Connection refused
+[1604188868] SERVICE ALERT: web;Current Load;CRITICAL;SOFT;3;(No output on stdout) stderr: connect to address 192.168.1.240 port 5666: Connection refused
+[1604188871] SERVICE ALERT: elk;SSH;CRITICAL;HARD;1;connect to address 192.168.1.242 and port 22: No route to host
+[1604188876] SERVICE ALERT: web;Root Partition;CRITICAL;SOFT;1;(No output on stdout) stderr: connect to address 192.168.1.240 port 5666: Connection refused
+[1604188895] SERVICE NOTIFICATION: nagiosadmin;web;CPU;CRITICAL;notify-service-by-email;(No output on stdout) stderr: connect to address 192.168.1.240 port 5666: Connection refused
+[1604188895] SERVICE ALERT: web;CPU;CRITICAL;HARD;4;(No output on stdout) stderr: connect to address 192.168.1.240 port 5666: Connection refused
+[1604188895] wproc: NOTIFY job 10 from worker Core Worker 10902 is a non-check helper but exited with return code 75
+[1604188895] wproc:   host=web; service=CPU; contact=nagiosadmin
+[1604188895] wproc:   early_timeout=0; exited_ok=1; wait_status=19200; error_code=0;
+[1604188895] wproc:   stderr line 01: sendmail: invalid option -- 's'
+[1604188895] wproc:   stderr line 02: sendmail: invalid option -- 's'
+[1604188895] wproc:   stderr line 03: sendmail: fatal: usage: sendmail [options]
+[1604188898] HOST ALERT: elk;DOWN;SOFT;4;CRITICAL - Host Unreachable (192.168.1.242)
+[1604188899] SERVICE ALERT: web;Current Users;CRITICAL;SOFT;3;(No output on stdout) stderr: connect to address 192.168.1.240 port 5666: Connection refused
+[1604188902] SERVICE ALERT: elk;Swap Usage;CRITICAL;HARD;1;(No output on stdout) stderr: connect to address 192.168.1.242 port 5666: No route to host
+[1604188904] SERVICE ALERT: web;RAM;CRITICAL;SOFT;2;(No output on stdout) stderr: connect to address 192.168.1.240 port 5666: Connection refused
+[1604188928] SERVICE NOTIFICATION: nagiosadmin;web;Current Load;CRITICAL;notify-service-by-email;(No output on stdout) stderr: connect to address 192.168.1.240 port 5666: Connection refused
+[1604188928] SERVICE ALERT: web;Current Load;CRITICAL;HARD;4;(No output on stdout) stderr: connect to address 192.168.1.240 port 5666: Connection refused
+[1604188928] wproc: NOTIFY job 12 from worker Core Worker 10904 is a non-check helper but exited with return code 75
+[1604188928] wproc:   host=web; service=Current Load; contact=nagiosadmin
+[1604188928] wproc:   early_timeout=0; exited_ok=1; wait_status=19200; error_code=0;
+[1604188928] wproc:   stderr line 01: sendmail: invalid option -- 's'
+[1604188928] wproc:   stderr line 02: sendmail: invalid option -- 's'
+[1604188928] wproc:   stderr line 03: sendmail: fatal: usage: sendmail [options]
+[1604188936] SERVICE ALERT: elk;Total Processes;CRITICAL;HARD;1;(No output on stdout) stderr: connect to address 192.168.1.242 port 5666: No route to host
+[1604188937] SERVICE ALERT: web;Root Partition;CRITICAL;SOFT;2;(No output on stdout) stderr: connect to address 192.168.1.240 port 5666: Connection refused
+[1604188941] SERVICE ALERT: web;Swap Usage;CRITICAL;SOFT;1;(No output on stdout) stderr: connect to address 192.168.1.240 port 5666: Connection refused
+[1604188959] SERVICE NOTIFICATION: nagiosadmin;web;Current Users;CRITICAL;notify-service-by-email;(No output on stdout) stderr: connect to address 192.168.1.240 port 5666: Connection refused
+[1604188959] SERVICE ALERT: web;Current Users;CRITICAL;HARD;4;(No output on stdout) stderr: connect to address 192.168.1.240 port 5666: Connection refused
+[1604188960] wproc: NOTIFY job 14 from worker Core Worker 10905 is a non-check helper but exited with return code 75
+[1604188960] wproc:   host=web; service=Current Users; contact=nagiosadmin
+[1604188960] wproc:   early_timeout=0; exited_ok=1; wait_status=19200; error_code=0;
+[1604188960] wproc:   stderr line 01: sendmail: invalid option -- 's'
+[1604188960] wproc:   stderr line 02: sendmail: invalid option -- 's'
+[1604188960] wproc:   stderr line 03: sendmail: fatal: usage: sendmail [options]
+[1604188962] HOST ALERT: elk;DOWN;SOFT;5;CRITICAL - Host Unreachable (192.168.1.242)
+[1604188964] SERVICE ALERT: web;RAM;CRITICAL;SOFT;3;(No output on stdout) stderr: connect to address 192.168.1.240 port 5666: Connection refused
+[1604188967] SERVICE ALERT: web;Total Processes;CRITICAL;SOFT;1;(No output on stdout) stderr: connect to address 192.168.1.240 port 5666: Connection refused
+[1604188967] SERVICE ALERT: web;Zombie Processes;CRITICAL;SOFT;1;(No output on stdout) stderr: connect to address 192.168.1.240 port 5666: Connection refused
+[1604188969] SERVICE ALERT: elk;CPU;CRITICAL;HARD;1;(No output on stdout) stderr: connect to address 192.168.1.242 port 5666: No route to host
+[1604188969] SERVICE ALERT: elk;Zombie Processes;CRITICAL;HARD;1;(No output on stdout) stderr: connect to address 192.168.1.242 port 5666: No route to host
+[1604188997] SERVICE ALERT: web;Root Partition;CRITICAL;SOFT;3;(No output on stdout) stderr: connect to address 192.168.1.240 port 5666: Connection refused
+[1604189001] SERVICE ALERT: web;Swap Usage;CRITICAL;SOFT;2;(No output on stdout) stderr: connect to address 192.168.1.240 port 5666: Connection refused
+[1604189024] SERVICE NOTIFICATION: nagiosadmin;web;RAM;CRITICAL;notify-service-by-email;(No output on stdout) stderr: connect to address 192.168.1.240 port 5666: Connection refused
+[1604189024] SERVICE ALERT: web;RAM;CRITICAL;HARD;4;(No output on stdout) stderr: connect to address 192.168.1.240 port 5666: Connection refused
+[1604189025] HOST ALERT: elk;DOWN;SOFT;6;CRITICAL - Host Unreachable (192.168.1.242)
+[1604189025] wproc: NOTIFY job 18 from worker Core Worker 10904 is a non-check helper but exited with return code 75
+[1604189025] wproc:   host=web; service=RAM; contact=nagiosadmin
+[1604189025] wproc:   early_timeout=0; exited_ok=1; wait_status=19200; error_code=0;
+[1604189025] wproc:   stderr line 01: sendmail: invalid option -- 's'
+[1604189025] wproc:   stderr line 02: sendmail: invalid option -- 's'
+[1604189025] wproc:   stderr line 03: sendmail: fatal: usage: sendmail [options]
+[1604189027] SERVICE ALERT: web;Total Processes;CRITICAL;SOFT;2;(No output on stdout) stderr: connect to address 192.168.1.240 port 5666: Connection refused
+[1604189027] SERVICE ALERT: web;Zombie Processes;CRITICAL;SOFT;2;(No output on stdout) stderr: connect to address 192.168.1.240 port 5666: Connection refused
+[1604189057] SERVICE NOTIFICATION: nagiosadmin;web;Root Partition;CRITICAL;notify-service-by-email;(No output on stdout) stderr: connect to address 192.168.1.240 port 5666: Connection refused
+[1604189057] SERVICE ALERT: web;Root Partition;CRITICAL;HARD;4;(No output on stdout) stderr: connect to address 192.168.1.240 port 5666: Connection refused
+[1604189057] wproc: NOTIFY job 20 from worker Core Worker 10902 is a non-check helper but exited with return code 75
+[1604189057] wproc:   host=web; service=Root Partition; contact=nagiosadmin
+[1604189057] wproc:   early_timeout=0; exited_ok=1; wait_status=19200; error_code=0;
+[1604189057] wproc:   stderr line 01: sendmail: invalid option -- 's'
+[1604189057] wproc:   stderr line 02: sendmail: invalid option -- 's'
+[1604189057] wproc:   stderr line 03: sendmail: fatal: usage: sendmail [options]
+[1604189061] SERVICE ALERT: web;Swap Usage;CRITICAL;SOFT;3;(No output on stdout) stderr: connect to address 192.168.1.240 port 5666: Connection refused
+[1604189087] SERVICE ALERT: web;Total Processes;CRITICAL;SOFT;3;(No output on stdout) stderr: connect to address 192.168.1.240 port 5666: Connection refused
+[1604189087] SERVICE ALERT: web;Zombie Processes;CRITICAL;SOFT;3;(No output on stdout) stderr: connect to address 192.168.1.240 port 5666: Connection refused
+[1604189088] HOST ALERT: elk;DOWN;SOFT;7;CRITICAL - Host Unreachable (192.168.1.242)
+[1604189122] SERVICE NOTIFICATION: nagiosadmin;web;Swap Usage;CRITICAL;notify-service-by-email;(No output on stdout) stderr: connect to address 192.168.1.240 port 5666: Connection refused
+[1604189122] SERVICE ALERT: web;Swap Usage;CRITICAL;HARD;4;(No output on stdout) stderr: connect to address 192.168.1.240 port 5666: Connection refused
+[1604189122] wproc: NOTIFY job 23 from worker Core Worker 10904 is a non-check helper but exited with return code 75
+[1604189122] wproc:   host=web; service=Swap Usage; contact=nagiosadmin
+[1604189122] wproc:   early_timeout=0; exited_ok=1; wait_status=19200; error_code=0;
+[1604189122] wproc:   stderr line 01: sendmail: invalid option -- 's'
+[1604189122] wproc:   stderr line 02: sendmail: invalid option -- 's'
+[1604189122] wproc:   stderr line 03: sendmail: fatal: usage: sendmail [options]
+[1604189147] SERVICE NOTIFICATION: nagiosadmin;web;Total Processes;CRITICAL;notify-service-by-email;(No output on stdout) stderr: connect to address 192.168.1.240 port 5666: Connection refused
+[1604189147] SERVICE ALERT: web;Total Processes;CRITICAL;HARD;4;(No output on stdout) stderr: connect to address 192.168.1.240 port 5666: Connection refused
+[1604189147] SERVICE NOTIFICATION: nagiosadmin;web;Zombie Processes;CRITICAL;notify-service-by-email;(No output on stdout) stderr: connect to address 192.168.1.240 port 5666: Connection refused
+[1604189147] SERVICE ALERT: web;Zombie Processes;CRITICAL;HARD;4;(No output on stdout) stderr: connect to address 192.168.1.240 port 5666: Connection refused
+[1604189147] wproc: NOTIFY job 24 from worker Core Worker 10905 is a non-check helper but exited with return code 75
+[1604189147] wproc:   host=web; service=Total Processes; contact=nagiosadmin
+[1604189147] wproc:   early_timeout=0; exited_ok=1; wait_status=19200; error_code=0;
+[1604189147] wproc:   stderr line 01: sendmail: invalid option -- 's'
+[1604189147] wproc:   stderr line 02: sendmail: invalid option -- 's'
+[1604189147] wproc:   stderr line 03: sendmail: fatal: usage: sendmail [options]
+[1604189147] wproc: NOTIFY job 25 from worker Core Worker 10902 is a non-check helper but exited with return code 75
+[1604189147] wproc:   host=web; service=Zombie Processes; contact=nagiosadmin
+[1604189147] wproc:   early_timeout=0; exited_ok=1; wait_status=19200; error_code=0;
+[1604189147] wproc:   stderr line 01: sendmail: invalid option -- 's'
+[1604189147] wproc:   stderr line 02: sendmail: invalid option -- 's'
+[1604189147] wproc:   stderr line 03: sendmail: fatal: usage: sendmail [options]
+[1604189152] HOST ALERT: elk;UP;SOFT;1;PING OK - Packet loss = 0%, RTA = 1.54 ms
+[1604189169] SERVICE ALERT: elk;SSH;OK;SOFT;1;SSH OK - OpenSSH_7.4 (protocol 2.0)
+[1604189201] SERVICE NOTIFICATION: nagiosadmin;elk;Swap Usage;CRITICAL;notify-service-by-email;(No output on stdout) stderr: connect to address 192.168.1.242 port 5666: Connection refused
+[1604189201] wproc: NOTIFY job 27 from worker Core Worker 10903 is a non-check helper but exited with return code 75
+[1604189201] wproc:   host=elk; service=Swap Usage; contact=nagiosadmin
+[1604189201] wproc:   early_timeout=0; exited_ok=1; wait_status=19200; error_code=0;
+[1604189201] wproc:   stderr line 01: sendmail: invalid option -- 's'
+[1604189201] wproc:   stderr line 02: sendmail: invalid option -- 's'
+[1604189201] wproc:   stderr line 03: sendmail: fatal: usage: sendmail [options]
+[1604189233] SERVICE NOTIFICATION: nagiosadmin;elk;Total Processes;CRITICAL;notify-service-by-email;(No output on stdout) stderr: connect to address 192.168.1.242 port 5666: Connection refused
+[1604189234] wproc: NOTIFY job 29 from worker Core Worker 10903 is a non-check helper but exited with return code 75
+[1604189234] wproc:   host=elk; service=Total Processes; contact=nagiosadmin
+[1604189234] wproc:   early_timeout=0; exited_ok=1; wait_status=19200; error_code=0;
+[1604189234] wproc:   stderr line 01: sendmail: invalid option -- 's'
+[1604189234] wproc:   stderr line 02: sendmail: invalid option -- 's'
+[1604189234] wproc:   stderr line 03: sendmail: fatal: usage: sendmail [options]
+[1604189267] SERVICE NOTIFICATION: nagiosadmin;elk;Zombie Processes;CRITICAL;notify-service-by-email;(No output on stdout) stderr: connect to address 192.168.1.242 port 5666: Connection refused
+[1604189267] SERVICE NOTIFICATION: nagiosadmin;elk;CPU;CRITICAL;notify-service-by-email;(No output on stdout) stderr: connect to address 192.168.1.242 port 5666: Connection refused
+[1604189267] wproc: NOTIFY job 31 from worker Core Worker 10904 is a non-check helper but exited with return code 75
+[1604189267] wproc:   host=elk; service=CPU; contact=nagiosadmin
+[1604189267] wproc:   early_timeout=0; exited_ok=1; wait_status=19200; error_code=0;
+[1604189267] wproc:   stderr line 01: sendmail: invalid option -- 's'
+[1604189267] wproc:   stderr line 02: sendmail: invalid option -- 's'
+[1604189267] wproc:   stderr line 03: sendmail: fatal: usage: sendmail [options]
+[1604189267] wproc: NOTIFY job 31 from worker Core Worker 10902 is a non-check helper but exited with return code 75
+[1604189267] wproc:   host=elk; service=Zombie Processes; contact=nagiosadmin
+[1604189267] wproc:   early_timeout=0; exited_ok=1; wait_status=19200; error_code=0;
+[1604189267] wproc:   stderr line 01: sendmail: invalid option -- 's'
+[1604189267] wproc:   stderr line 02: sendmail: invalid option -- 's'
+[1604189267] wproc:   stderr line 03: sendmail: fatal: usage: sendmail [options]
+[1604189338] SERVICE NOTIFICATION: nagiosadmin;elk;Current Users;CRITICAL;notify-service-by-email;(No output on stdout) stderr: connect to address 192.168.1.242 port 5666: Connection refused
+[1604189339] wproc: NOTIFY job 33 from worker Core Worker 10902 is a non-check helper but exited with return code 75
+[1604189339] wproc:   host=elk; service=Current Users; contact=nagiosadmin
+[1604189339] wproc:   early_timeout=0; exited_ok=1; wait_status=19200; error_code=0;
+[1604189339] wproc:   stderr line 01: sendmail: invalid option -- 's'
+[1604189339] wproc:   stderr line 02: sendmail: invalid option -- 's'
+[1604189339] wproc:   stderr line 03: sendmail: fatal: usage: sendmail [options]
+[1604189369] SERVICE NOTIFICATION: nagiosadmin;elk;Current Load;CRITICAL;notify-service-by-email;(No output on stdout) stderr: connect to address 192.168.1.242 port 5666: Connection refused
+[1604189370] wproc: NOTIFY job 34 from worker Core Worker 10902 is a non-check helper but exited with return code 75
+[1604189370] wproc:   host=elk; service=Current Load; contact=nagiosadmin
+[1604189370] wproc:   early_timeout=0; exited_ok=1; wait_status=19200; error_code=0;
+[1604189370] wproc:   stderr line 01: sendmail: invalid option -- 's'
+[1604189370] wproc:   stderr line 02: sendmail: invalid option -- 's'
+[1604189370] wproc:   stderr line 03: sendmail: fatal: usage: sendmail [options]
+[1604189376] SERVICE ALERT: elk;PING;OK;SOFT;1;PING OK - Packet loss = 0%, RTA = 0.87 ms
+[1604189403] SERVICE NOTIFICATION: nagiosadmin;elk;RAM;CRITICAL;notify-service-by-email;(No output on stdout) stderr: connect to address 192.168.1.242 port 5666: Connection refused
+[1604189404] wproc: NOTIFY job 35 from worker Core Worker 10903 is a non-check helper but exited with return code 75
+[1604189404] wproc:   host=elk; service=RAM; contact=nagiosadmin
+[1604189404] wproc:   early_timeout=0; exited_ok=1; wait_status=19200; error_code=0;
+[1604189404] wproc:   stderr line 01: sendmail: invalid option -- 's'
+[1604189404] wproc:   stderr line 02: sendmail: invalid option -- 's'
+[1604189404] wproc:   stderr line 03: sendmail: fatal: usage: sendmail [options]
+[1604189436] SERVICE NOTIFICATION: nagiosadmin;elk;Root Partition;CRITICAL;notify-service-by-email;(No output on stdout) stderr: connect to address 192.168.1.242 port 5666: Connection refused
+[1604189436] wproc: NOTIFY job 36 from worker Core Worker 10905 is a non-check helper but exited with return code 75
+[1604189436] wproc:   host=elk; service=Root Partition; contact=nagiosadmin
+[1604189436] wproc:   early_timeout=0; exited_ok=1; wait_status=19200; error_code=0;
+[1604189436] wproc:   stderr line 01: sendmail: invalid option -- 's'
+[1604189436] wproc:   stderr line 02: sendmail: invalid option -- 's'
+[1604189436] wproc:   stderr line 03: sendmail: fatal: usage: sendmail [options]
+[1604189913] Caught SIGTERM, shutting down...
+[1604189913] Successfully shutdown... (PID=10900)
+[1604189946] Nagios 4.4.6 starting... (PID=11516)
+[1604189946] Local time is Sun Nov 01 00:19:06 UTC 2020
+[1604189946] LOG VERSION: 2.0
+[1604189946] qh: Socket '/usr/local/nagios/var/rw/nagios.qh' successfully initialized
+[1604189946] qh: core query handler registered
+[1604189946] qh: echo service query handler registered
+[1604189946] qh: help for the query handler registered
+[1604189946] wproc: Successfully registered manager as @wproc with query handler
+[1604189946] wproc: Registry request: name=Core Worker 11520;pid=11520
+[1604189947] wproc: Registry request: name=Core Worker 11517;pid=11517
+[1604189947] wproc: Registry request: name=Core Worker 11518;pid=11518
+[1604189947] wproc: Registry request: name=Core Worker 11519;pid=11519
+[1604189947] Error: Module '/usr/local/pnp4nagios/lib/npcdmod.o' is using an old or unspecified version of the event broker API.  Module will be unloaded.
+[1604189947] Event broker module '/usr/local/pnp4nagios/lib/npcdmod.o' deinitialized successfully.
+[1604189947] Error: Failed to load module '/usr/local/pnp4nagios/lib/npcdmod.o'.
+[1604189947] Error: Module loading failed. Aborting.
+[1604189958] Nagios 4.4.6 starting... (PID=11534)
+[1604189958] Local time is Sun Nov 01 00:19:18 UTC 2020
+[1604189958] LOG VERSION: 2.0
+[1604189958] qh: Socket '/usr/local/nagios/var/rw/nagios.qh' successfully initialized
+[1604189958] qh: core query handler registered
+[1604189958] qh: echo service query handler registered
+[1604189958] qh: help for the query handler registered
+[1604189958] wproc: Successfully registered manager as @wproc with query handler
+[1604189958] wproc: Registry request: name=Core Worker 11537;pid=11537
+[1604189958] wproc: Registry request: name=Core Worker 11538;pid=11538
+[1604189958] wproc: Registry request: name=Core Worker 11535;pid=11535
+[1604189958] wproc: Registry request: name=Core Worker 11536;pid=11536
+[1604189958] Error: Module '/usr/local/pnp4nagios/lib/npcdmod.o' is using an old or unspecified version of the event broker API.  Module will be unloaded.
+[1604189958] Event broker module '/usr/local/pnp4nagios/lib/npcdmod.o' deinitialized successfully.
+[1604189958] Error: Failed to load module '/usr/local/pnp4nagios/lib/npcdmod.o'.
+[1604189958] Error: Module loading failed. Aborting.
+[1604190046] Nagios 4.4.6 starting... (PID=11592)
+[1604190046] Local time is Sun Nov 01 00:20:46 UTC 2020
+[1604190046] LOG VERSION: 2.0
+[1604190046] qh: Socket '/usr/local/nagios/var/rw/nagios.qh' successfully initialized
+[1604190046] qh: core query handler registered
+[1604190046] qh: echo service query handler registered
+[1604190046] qh: help for the query handler registered
+[1604190046] wproc: Successfully registered manager as @wproc with query handler
+[1604190047] wproc: Registry request: name=Core Worker 11593;pid=11593
+[1604190047] wproc: Registry request: name=Core Worker 11594;pid=11594
+[1604190047] wproc: Registry request: name=Core Worker 11595;pid=11595
+[1604190047] wproc: Registry request: name=Core Worker 11596;pid=11596
+[1604190047] Warning: Host performance file processing command 'process-host-perfdata-file' was not found - host performance data file will not be processed!
+[1604190047] Warning: Service performance file processing command 'process-service-perfdata-file' was not found - service performance data file will not be processed!
+[1604190047] Successfully launched command file worker with pid 11597
+[1604190081] EXTERNAL COMMAND: SCHEDULE_FORCED_SVC_CHECK;elk;RAM;1604190079
+[1604190081] SERVICE NOTIFICATION: nagiosadmin;elk;RAM;OK;notify-service-by-email;RAM OK: 49% (116 of 235 MB) used
+[1604190081] SERVICE ALERT: elk;RAM;OK;HARD;4;RAM OK: 49% (116 of 235 MB) used
+[1604190081] wproc: NOTIFY job 1 from worker Core Worker 11595 is a non-check helper but exited with return code 75
+[1604190081] wproc:   host=elk; service=RAM; contact=nagiosadmin
+[1604190081] wproc:   early_timeout=0; exited_ok=1; wait_status=19200; error_code=0;
+[1604190081] wproc:   stderr line 01: sendmail: invalid option -- 's'
+[1604190081] wproc:   stderr line 02: sendmail: invalid option -- 's'
+[1604190081] wproc:   stderr line 03: sendmail: fatal: usage: sendmail [options]
+[1604190085] EXTERNAL COMMAND: SCHEDULE_FORCED_SVC_CHECK;elk;RAM;1604190084
+[1604190089] EXTERNAL COMMAND: SCHEDULE_FORCED_SVC_CHECK;elk;RAM;1604190088
+[1604190103] SERVICE NOTIFICATION: nagiosadmin;elk;Swap Usage;OK;notify-service-by-email;SWAP OK - 95% free (1935 MB out of 2047 MB)
+[1604190103] SERVICE ALERT: elk;Swap Usage;OK;HARD;4;SWAP OK - 95% free (1935 MB out of 2047 MB)
+[1604190103] wproc: NOTIFY job 3 from worker Core Worker 11595 is a non-check helper but exited with return code 75
+[1604190103] wproc:   host=elk; service=Swap Usage; contact=nagiosadmin
+[1604190103] wproc:   early_timeout=0; exited_ok=1; wait_status=19200; error_code=0;
+[1604190103] wproc:   stderr line 01: sendmail: invalid option -- 's'
+[1604190103] wproc:   stderr line 02: sendmail: invalid option -- 's'
+[1604190103] wproc:   stderr line 03: sendmail: fatal: usage: sendmail [options]
+[1604190134] SERVICE NOTIFICATION: nagiosadmin;elk;Total Processes;OK;notify-service-by-email;PROCS OK: 96 processes
+[1604190134] SERVICE ALERT: elk;Total Processes;OK;HARD;4;PROCS OK: 96 processes
+[1604190134] wproc: NOTIFY job 6 from worker Core Worker 11593 is a non-check helper but exited with return code 75
+[1604190134] wproc:   host=elk; service=Total Processes; contact=nagiosadmin
+[1604190134] wproc:   early_timeout=0; exited_ok=1; wait_status=19200; error_code=0;
+[1604190134] wproc:   stderr line 01: sendmail: invalid option -- 's'
+[1604190134] wproc:   stderr line 02: sendmail: invalid option -- 's'
+[1604190134] wproc:   stderr line 03: sendmail: fatal: usage: sendmail [options]
+[1604190167] SERVICE NOTIFICATION: nagiosadmin;elk;Zombie Processes;OK;notify-service-by-email;PROCS OK: 0 processes with STATE = Z
+[1604190167] SERVICE ALERT: elk;Zombie Processes;OK;HARD;4;PROCS OK: 0 processes with STATE = Z
+[1604190167] wproc: NOTIFY job 8 from worker Core Worker 11595 is a non-check helper but exited with return code 75
+[1604190167] wproc:   host=elk; service=Zombie Processes; contact=nagiosadmin
+[1604190167] wproc:   early_timeout=0; exited_ok=1; wait_status=19200; error_code=0;
+[1604190167] wproc:   stderr line 01: sendmail: invalid option -- 's'
+[1604190167] wproc:   stderr line 02: sendmail: invalid option -- 's'
+[1604190167] wproc:   stderr line 03: sendmail: fatal: usage: sendmail [options]
+[1604190234] Caught SIGTERM, shutting down...
+[1604190234] Caught SIGTERM, shutting down...
+[1604190234] Successfully shutdown... (PID=11592)
+[1604190234] Nagios 4.4.6 starting... (PID=11718)
+[1604190234] Local time is Sun Nov 01 00:23:54 UTC 2020
+[1604190234] LOG VERSION: 2.0
+[1604190234] qh: Socket '/usr/local/nagios/var/rw/nagios.qh' successfully initialized
+[1604190234] qh: core query handler registered
+[1604190234] qh: echo service query handler registered
+[1604190234] qh: help for the query handler registered
+[1604190234] wproc: Successfully registered manager as @wproc with query handler
+[1604190234] wproc: Registry request: name=Core Worker 11719;pid=11719
+[1604190234] wproc: Registry request: name=Core Worker 11720;pid=11720
+[1604190234] wproc: Registry request: name=Core Worker 11721;pid=11721
+[1604190234] wproc: Registry request: name=Core Worker 11722;pid=11722
+[1604190234] Successfully launched command file worker with pid 11723
+[1604190270] SERVICE NOTIFICATION: nagiosadmin;elk;Current Users;OK;notify-service-by-email;USERS OK - 1 users currently logged in
+[1604190270] SERVICE ALERT: elk;Current Users;OK;HARD;4;USERS OK - 1 users currently logged in
+[1604190270] wproc: NOTIFY job 0 from worker Core Worker 11722 is a non-check helper but exited with return code 75
+[1604190270] wproc:   host=elk; service=Current Users; contact=nagiosadmin
+[1604190270] wproc:   early_timeout=0; exited_ok=1; wait_status=19200; error_code=0;
+[1604190270] wproc:   stderr line 01: sendmail: invalid option -- 's'
+[1604190270] wproc:   stderr line 02: sendmail: invalid option -- 's'
+[1604190270] wproc:   stderr line 03: sendmail: fatal: usage: sendmail [options]
+[1604190349] SERVICE NOTIFICATION: nagiosadmin;elk;Root Partition;OK;notify-service-by-email;DISK OK - free space: / 34330 MiB (83.85% inode=99%):
+[1604190349] SERVICE ALERT: elk;Root Partition;OK;HARD;4;DISK OK - free space: / 34330 MiB (83.85% inode=99%):
+[1604190349] wproc: NOTIFY job 2 from worker Core Worker 11720 is a non-check helper but exited with return code 75
+[1604190349] wproc:   host=elk; service=Root Partition; contact=nagiosadmin
+[1604190349] wproc:   early_timeout=0; exited_ok=1; wait_status=19200; error_code=0;
+[1604190349] wproc:   stderr line 01: sendmail: invalid option -- 's'
+[1604190349] wproc:   stderr line 02: sendmail: invalid option -- 's'
+[1604190349] wproc:   stderr line 03: sendmail: fatal: usage: sendmail [options]
+[1604190394] Caught SIGTERM, shutting down...
+[1604190394] Successfully shutdown... (PID=11718)
+[1604190394] Nagios 4.4.6 starting... (PID=11885)
+[1604190394] Local time is Sun Nov 01 00:26:34 UTC 2020
+[1604190394] LOG VERSION: 2.0
+[1604190394] qh: Socket '/usr/local/nagios/var/rw/nagios.qh' successfully initialized
+[1604190394] qh: core query handler registered
+[1604190394] qh: echo service query handler registered
+[1604190394] qh: help for the query handler registered
+[1604190394] wproc: Successfully registered manager as @wproc with query handler
+[1604190394] wproc: Registry request: name=Core Worker 11886;pid=11886
+[1604190394] wproc: Registry request: name=Core Worker 11888;pid=11888
+[1604190394] wproc: Registry request: name=Core Worker 11889;pid=11889
+[1604190394] wproc: Registry request: name=Core Worker 11887;pid=11887
+[1604190394] Successfully launched command file worker with pid 11890
+[1604190834] Caught SIGTERM, shutting down...
+[1604190834] Caught SIGTERM, shutting down...
+[1604190834] Caught SIGTERM, shutting down...
+[1604190834] Successfully shutdown... (PID=11885)
+[1604190834] Nagios 4.4.6 starting... (PID=12848)
+[1604190834] Local time is Sun Nov 01 00:33:54 UTC 2020
+[1604190834] LOG VERSION: 2.0
+[1604190834] qh: Socket '/usr/local/nagios/var/rw/nagios.qh' successfully initialized
+[1604190834] qh: core query handler registered
+[1604190834] qh: echo service query handler registered
+[1604190834] qh: help for the query handler registered
+[1604190834] wproc: Successfully registered manager as @wproc with query handler
+[1604190834] wproc: Registry request: name=Core Worker 12853;pid=12853
+[1604190834] wproc: Registry request: name=Core Worker 12854;pid=12854
+[1604190834] wproc: Registry request: name=Core Worker 12851;pid=12851
+[1604190834] wproc: Registry request: name=Core Worker 12852;pid=12852
+[1604190834] Successfully launched command file worker with pid 12855
+[1604190878] Caught SIGTERM, shutting down...
+[1604190878] Caught SIGTERM, shutting down...
+[1604190878] Caught SIGTERM, shutting down...
+[1604190878] Successfully shutdown... (PID=12848)
+[1604191128] Nagios 4.4.6 starting... (PID=12990)
+[1604191128] Local time is Sun Nov 01 00:38:48 UTC 2020
+[1604191128] LOG VERSION: 2.0
+[1604191128] qh: Socket '/usr/local/nagios/var/rw/nagios.qh' successfully initialized
+[1604191128] qh: core query handler registered
+[1604191128] qh: echo service query handler registered
+[1604191128] qh: help for the query handler registered
+[1604191128] wproc: Successfully registered manager as @wproc with query handler
+[1604191128] wproc: Registry request: name=Core Worker 12991;pid=12991
+[1604191128] wproc: Registry request: name=Core Worker 12992;pid=12992
+[1604191128] wproc: Registry request: name=Core Worker 12993;pid=12993
+[1604191128] wproc: Registry request: name=Core Worker 12994;pid=12994
+[1604191128] Successfully launched command file worker with pid 12995
+[1604191645] Caught SIGTERM, shutting down...
+[1604191645] Successfully shutdown... (PID=12990)
+[1604222430] Nagios 4.4.6 starting... (PID=725)
+[1604222430] Local time is Sun Nov 01 09:20:30 UTC 2020
+[1604222430] LOG VERSION: 2.0
+[1604222430] qh: Socket '/usr/local/nagios/var/rw/nagios.qh' successfully initialized
+[1604222430] qh: core query handler registered
+[1604222430] qh: echo service query handler registered
+[1604222430] qh: help for the query handler registered
+[1604222430] wproc: Successfully registered manager as @wproc with query handler
+[1604222430] wproc: Registry request: name=Core Worker 734;pid=734
+[1604222430] wproc: Registry request: name=Core Worker 736;pid=736
+[1604222430] wproc: Registry request: name=Core Worker 733;pid=733
+[1604222430] wproc: Registry request: name=Core Worker 735;pid=735
+[1604222430] Successfully launched command file worker with pid 742
+[1604222472] SERVICE NOTIFICATION: nagiosadmin;elk;CPU;CRITICAL;notify-service-by-email;(No output on stdout) stderr: connect to address 192.168.1.242 port 5666: No route to host
+[1604222472] wproc: NOTIFY job 0 from worker Core Worker 735 is a non-check helper but exited with return code 75
+[1604222472] wproc:   host=elk; service=CPU; contact=nagiosadmin
+[1604222472] wproc:   early_timeout=0; exited_ok=1; wait_status=19200; error_code=0;
+[1604222472] wproc:   stderr line 01: sendmail: invalid option -- 's'
+[1604222472] wproc:   stderr line 02: sendmail: invalid option -- 's'
+[1604222472] wproc:   stderr line 03: sendmail: fatal: usage: sendmail [options]
+[1604222485] SERVICE NOTIFICATION: nagiosadmin;web;Current Users;CRITICAL;notify-service-by-email;(No output on stdout) stderr: connect to address 192.168.1.240 port 5666: Connection refused
+[1604222485] wproc: NOTIFY job 1 from worker Core Worker 733 is a non-check helper but exited with return code 75
+[1604222485] wproc:   host=web; service=Current Users; contact=nagiosadmin
+[1604222485] wproc:   early_timeout=0; exited_ok=1; wait_status=19200; error_code=0;
+[1604222485] wproc:   stderr line 01: sendmail: invalid option -- 's'
+[1604222485] wproc:   stderr line 02: sendmail: invalid option -- 's'
+[1604222485] wproc:   stderr line 03: sendmail: fatal: usage: sendmail [options]
+[1604222493] SERVICE ALERT: backup;Current Load;CRITICAL;SOFT;1;CRITICAL - load average: 0.11, 0.34, 0.18
+[1604222504] SERVICE NOTIFICATION: nagiosadmin;elk;Current Load;CRITICAL;notify-service-by-email;(No output on stdout) stderr: connect to address 192.168.1.242 port 5666: No route to host
+[1604222504] wproc: NOTIFY job 2 from worker Core Worker 733 is a non-check helper but exited with return code 75
+[1604222504] wproc:   host=elk; service=Current Load; contact=nagiosadmin
+[1604222504] wproc:   early_timeout=0; exited_ok=1; wait_status=19200; error_code=0;
+[1604222504] wproc:   stderr line 01: sendmail: invalid option -- 's'
+[1604222504] wproc:   stderr line 02: sendmail: invalid option -- 's'
+[1604222504] wproc:   stderr line 03: sendmail: fatal: usage: sendmail [options]
+[1604222507] HOST ALERT: elk;DOWN;SOFT;1;CRITICAL - Host Unreachable (192.168.1.242)
+[1604222535] SERVICE ALERT: elk;Current Users;CRITICAL;HARD;1;(No output on stdout) stderr: connect to address 192.168.1.242 port 5666: No route to host
+[1604222548] SERVICE NOTIFICATION: nagiosadmin;web;RAM;CRITICAL;notify-service-by-email;(No output on stdout) stderr: connect to address 192.168.1.240 port 5666: Connection refused
+[1604222548] wproc: NOTIFY job 4 from worker Core Worker 733 is a non-check helper but exited with return code 75
+[1604222548] wproc:   host=web; service=RAM; contact=nagiosadmin
+[1604222548] wproc:   early_timeout=0; exited_ok=1; wait_status=19200; error_code=0;
+[1604222548] wproc:   stderr line 01: sendmail: invalid option -- 's'
+[1604222548] wproc:   stderr line 02: sendmail: invalid option -- 's'
+[1604222548] wproc:   stderr line 03: sendmail: fatal: usage: sendmail [options]
+[1604222554] SERVICE ALERT: backup;Current Load;CRITICAL;SOFT;2;CRITICAL - load average: 0.04, 0.28, 0.17
+[1604222567] SERVICE ALERT: elk;PING;CRITICAL;HARD;1;CRITICAL - Host Unreachable (192.168.1.242)
+[1604222570] HOST ALERT: elk;DOWN;SOFT;2;CRITICAL - Host Unreachable (192.168.1.242)
+[1604222580] SERVICE NOTIFICATION: nagiosadmin;web;Root Partition;CRITICAL;notify-service-by-email;(No output on stdout) stderr: connect to address 192.168.1.240 port 5666: Connection refused
+[1604222580] wproc: NOTIFY job 6 from worker Core Worker 733 is a non-check helper but exited with return code 75
+[1604222580] wproc:   host=web; service=Root Partition; contact=nagiosadmin
+[1604222580] wproc:   early_timeout=0; exited_ok=1; wait_status=19200; error_code=0;
+[1604222580] wproc:   stderr line 01: sendmail: invalid option -- 's'
+[1604222580] wproc:   stderr line 02: sendmail: invalid option -- 's'
+[1604222580] wproc:   stderr line 03: sendmail: fatal: usage: sendmail [options]
+[1604222600] HOST ALERT: elk;UP;SOFT;1;PING OK - Packet loss = 0%, RTA = 2.53 ms
+[1604222614] SERVICE ALERT: backup;Current Load;CRITICAL;SOFT;3;CRITICAL - load average: 0.11, 0.26, 0.17
+[1604222643] SERVICE NOTIFICATION: nagiosadmin;web;Swap Usage;CRITICAL;notify-service-by-email;(No output on stdout) stderr: connect to address 192.168.1.240 port 5666: Connection refused
+[1604222643] wproc: NOTIFY job 9 from worker Core Worker 736 is a non-check helper but exited with return code 75
+[1604222643] wproc:   host=web; service=Swap Usage; contact=nagiosadmin
+[1604222643] wproc:   early_timeout=0; exited_ok=1; wait_status=19200; error_code=0;
+[1604222643] wproc:   stderr line 01: sendmail: invalid option -- 's'
+[1604222643] wproc:   stderr line 02: sendmail: invalid option -- 's'
+[1604222643] wproc:   stderr line 03: sendmail: fatal: usage: sendmail [options]
+[1604222674] SERVICE NOTIFICATION: nagiosadmin;web;Total Processes;CRITICAL;notify-service-by-email;(No output on stdout) stderr: connect to address 192.168.1.240 port 5666: Connection refused
+[1604222674] wproc: NOTIFY job 10 from worker Core Worker 735 is a non-check helper but exited with return code 75
+[1604222674] wproc:   host=web; service=Total Processes; contact=nagiosadmin
+[1604222674] wproc:   early_timeout=0; exited_ok=1; wait_status=19200; error_code=0;
+[1604222674] wproc:   stderr line 01: sendmail: invalid option -- 's'
+[1604222674] wproc:   stderr line 02: sendmail: invalid option -- 's'
+[1604222674] wproc:   stderr line 03: sendmail: fatal: usage: sendmail [options]
+[1604222674] SERVICE NOTIFICATION: nagiosadmin;backup;Current Load;WARNING;notify-service-by-email;WARNING - load average: 0.04, 0.21, 0.15
+[1604222674] SERVICE ALERT: backup;Current Load;WARNING;HARD;4;WARNING - load average: 0.04, 0.21, 0.15
+[1604222674] wproc: NOTIFY job 11 from worker Core Worker 736 is a non-check helper but exited with return code 75
+[1604222674] wproc:   host=backup; service=Current Load; contact=nagiosadmin
+[1604222674] wproc:   early_timeout=0; exited_ok=1; wait_status=19200; error_code=0;
+[1604222674] wproc:   stderr line 01: sendmail: invalid option -- 's'
+[1604222674] wproc:   stderr line 02: sendmail: invalid option -- 's'
+[1604222674] wproc:   stderr line 03: sendmail: fatal: usage: sendmail [options]
+[1604222706] SERVICE NOTIFICATION: nagiosadmin;web;Zombie Processes;CRITICAL;notify-service-by-email;(No output on stdout) stderr: connect to address 192.168.1.240 port 5666: Connection refused
+[1604222706] wproc: NOTIFY job 12 from worker Core Worker 735 is a non-check helper but exited with return code 75
+[1604222706] wproc:   host=web; service=Zombie Processes; contact=nagiosadmin
+[1604222706] wproc:   early_timeout=0; exited_ok=1; wait_status=19200; error_code=0;
+[1604222706] wproc:   stderr line 01: sendmail: invalid option -- 's'
+[1604222706] wproc:   stderr line 02: sendmail: invalid option -- 's'
+[1604222706] wproc:   stderr line 03: sendmail: fatal: usage: sendmail [options]
+[1604222730] SERVICE NOTIFICATION: nagiosadmin;web;Current Load;CRITICAL;notify-service-by-email;(No output on stdout) stderr: connect to address 192.168.1.240 port 5666: Connection refused
+[1604222730] SERVICE NOTIFICATION: nagiosadmin;web;CPU;CRITICAL;notify-service-by-email;(No output on stdout) stderr: connect to address 192.168.1.240 port 5666: Connection refused
+[1604222730] wproc: NOTIFY job 14 from worker Core Worker 733 is a non-check helper but exited with return code 75
+[1604222730] wproc:   host=web; service=Current Load; contact=nagiosadmin
+[1604222730] wproc:   early_timeout=0; exited_ok=1; wait_status=19200; error_code=0;
+[1604222730] wproc:   stderr line 01: sendmail: invalid option -- 's'
+[1604222730] wproc:   stderr line 02: sendmail: invalid option -- 's'
+[1604222730] wproc:   stderr line 03: sendmail: fatal: usage: sendmail [options]
+[1604222730] wproc: NOTIFY job 14 from worker Core Worker 735 is a non-check helper but exited with return code 75
+[1604222730] wproc:   host=web; service=CPU; contact=nagiosadmin
+[1604222730] wproc:   early_timeout=0; exited_ok=1; wait_status=19200; error_code=0;
+[1604222730] wproc:   stderr line 01: sendmail: invalid option -- 's'
+[1604222730] wproc:   stderr line 02: sendmail: invalid option -- 's'
+[1604222730] wproc:   stderr line 03: sendmail: fatal: usage: sendmail [options]
+[1604222833] SERVICE FLAPPING ALERT: elk;Current Users;STARTED; Service appears to have started flapping (22.8% change >= 20.0% threshold)
+[1604222833] SERVICE ALERT: elk;Current Users;OK;SOFT;1;USERS OK - 1 users currently logged in
+[1604222868] SERVICE FLAPPING ALERT: elk;PING;STARTED; Service appears to have started flapping (22.8% change >= 20.0% threshold)
+[1604222868] SERVICE ALERT: elk;PING;OK;SOFT;1;PING OK - Packet loss = 0%, RTA = 3.13 ms
+[1604222981] Caught SIGTERM, shutting down...
+[1604222981] Successfully shutdown... (PID=725)
+[1604222981] Nagios 4.4.6 starting... (PID=3461)
+[1604222981] Local time is Sun Nov 01 09:29:41 UTC 2020
+[1604222981] LOG VERSION: 2.0
+[1604222981] qh: Socket '/usr/local/nagios/var/rw/nagios.qh' successfully initialized
+[1604222981] qh: core query handler registered
+[1604222981] qh: echo service query handler registered
+[1604222981] qh: help for the query handler registered
+[1604222981] wproc: Successfully registered manager as @wproc with query handler
+[1604222981] wproc: Registry request: name=Core Worker 3463;pid=3463
+[1604222981] wproc: Registry request: name=Core Worker 3464;pid=3464
+[1604222981] wproc: Registry request: name=Core Worker 3465;pid=3465
+[1604222981] wproc: Registry request: name=Core Worker 3466;pid=3466
+[1604222981] SERVICE FLAPPING ALERT: elk;Current Users;STARTED; Service appears to have started flapping (22.8% change >= 20.0% threshold)
+[1604222981] SERVICE FLAPPING ALERT: elk;PING;STARTED; Service appears to have started flapping (22.8% change >= 20.0% threshold)
+[1604222981] Warning: Host performance file processing command 'process-host-perfdata-file-bulk-npcd' was not found - host performance data file will not be processed!
+[1604222981] Warning: Service performance file processing command 'process-service-perfdata-file-bulk-npcd' was not found - service performance data file will not be processed!
+[1604222981] Successfully launched command file worker with pid 3467
+[1604223106] Caught SIGTERM, shutting down...
+[1604223106] Caught SIGTERM, shutting down...
+[1604223106] Caught SIGTERM, shutting down...
+[1604223106] Successfully shutdown... (PID=3461)
+[1604223106] Nagios 4.4.6 starting... (PID=3544)
+[1604223106] Local time is Sun Nov 01 09:31:46 UTC 2020
+[1604223106] LOG VERSION: 2.0
+[1604223106] qh: Socket '/usr/local/nagios/var/rw/nagios.qh' successfully initialized
+[1604223106] qh: core query handler registered
+[1604223106] qh: echo service query handler registered
+[1604223106] qh: help for the query handler registered
+[1604223106] wproc: Successfully registered manager as @wproc with query handler
+[1604223107] wproc: Registry request: name=Core Worker 3545;pid=3545
+[1604223107] wproc: Registry request: name=Core Worker 3546;pid=3546
+[1604223107] wproc: Registry request: name=Core Worker 3547;pid=3547
+[1604223107] wproc: Registry request: name=Core Worker 3548;pid=3548
+[1604223107] SERVICE FLAPPING ALERT: elk;Current Users;STARTED; Service appears to have started flapping (22.8% change >= 20.0% threshold)
+[1604223107] SERVICE FLAPPING ALERT: elk;PING;STARTED; Service appears to have started flapping (22.8% change >= 20.0% threshold)
+[1604223107] Successfully launched command file worker with pid 3549
+[1604223319] Caught SIGTERM, shutting down...
+[1604223319] Caught SIGTERM, shutting down...
+[1604223319] Caught SIGTERM, shutting down...
+[1604223319] Successfully shutdown... (PID=3544)
+[1604223319] Nagios 4.4.6 starting... (PID=3730)
+[1604223319] Local time is Sun Nov 01 09:35:19 UTC 2020
+[1604223319] LOG VERSION: 2.0
+[1604223319] qh: Socket '/usr/local/nagios/var/rw/nagios.qh' successfully initialized
+[1604223319] qh: core query handler registered
+[1604223319] qh: echo service query handler registered
+[1604223319] qh: help for the query handler registered
+[1604223319] wproc: Successfully registered manager as @wproc with query handler
+[1604223319] wproc: Registry request: name=Core Worker 3731;pid=3731
+[1604223319] wproc: Registry request: name=Core Worker 3732;pid=3732
+[1604223319] wproc: Registry request: name=Core Worker 3733;pid=3733
+[1604223319] wproc: Registry request: name=Core Worker 3734;pid=3734
+[1604223319] SERVICE FLAPPING ALERT: elk;Current Users;STARTED; Service appears to have started flapping (22.2% change >= 20.0% threshold)
+[1604223319] SERVICE FLAPPING ALERT: elk;PING;STARTED; Service appears to have started flapping (22.2% change >= 20.0% threshold)
+[1604223319] Successfully launched command file worker with pid 3735
+[1604223446] Caught SIGTERM, shutting down...
+[1604223446] Caught SIGTERM, shutting down...
+[1604223446] Caught SIGTERM, shutting down...
+[1604223446] Successfully shutdown... (PID=3730)
+[1604223446] Nagios 4.4.6 starting... (PID=3936)
+[1604223446] Local time is Sun Nov 01 09:37:26 UTC 2020
+[1604223446] LOG VERSION: 2.0
+[1604223446] qh: Socket '/usr/local/nagios/var/rw/nagios.qh' successfully initialized
+[1604223446] qh: core query handler registered
+[1604223446] qh: echo service query handler registered
+[1604223446] qh: help for the query handler registered
+[1604223446] wproc: Successfully registered manager as @wproc with query handler
+[1604223446] wproc: Registry request: name=Core Worker 3940;pid=3940
+[1604223446] wproc: Registry request: name=Core Worker 3937;pid=3937
+[1604223446] wproc: Registry request: name=Core Worker 3938;pid=3938
+[1604223446] wproc: Registry request: name=Core Worker 3939;pid=3939
+[1604223446] SERVICE FLAPPING ALERT: elk;Current Users;STARTED; Service appears to have started flapping (21.7% change >= 20.0% threshold)
+[1604223446] SERVICE FLAPPING ALERT: elk;PING;STARTED; Service appears to have started flapping (22.2% change >= 20.0% threshold)
+[1604223446] Successfully launched command file worker with pid 3941
+[1604223874] SERVICE NOTIFICATION: nagiosadmin;backup;Current Load;OK;notify-service-by-email;OK - load average: 0.01, 0.03, 0.05
+[1604223874] SERVICE ALERT: backup;Current Load;OK;HARD;4;OK - load average: 0.01, 0.03, 0.05
+[1604223875] wproc: NOTIFY job 16 from worker Core Worker 3940 is a non-check helper but exited with return code 75
+[1604223875] wproc:   host=backup; service=Current Load; contact=nagiosadmin
+[1604223875] wproc:   early_timeout=0; exited_ok=1; wait_status=19200; error_code=0;
+[1604223875] wproc:   stderr line 01: sendmail: invalid option -- 's'
+[1604223875] wproc:   stderr line 02: sendmail: invalid option -- 's'
+[1604223875] wproc:   stderr line 03: sendmail: fatal: usage: sendmail [options]
+[1604223938] SERVICE ALERT: elk;Total Processes;CRITICAL;SOFT;1;CRITICAL - Plugin timed out
+[1604223999] SERVICE ALERT: elk;Total Processes;OK;SOFT;2;PROCS OK: 101 processes
+[1604224505] Caught SIGTERM, shutting down...
+[1604224505] Caught SIGTERM, shutting down...
+[1604224505] Caught SIGTERM, shutting down...
+[1604224505] Successfully shutdown... (PID=3936)
+[1604224506] Nagios 4.4.6 starting... (PID=5029)
+[1604224506] Local time is Sun Nov 01 09:55:06 UTC 2020
+[1604224506] LOG VERSION: 2.0
+[1604224506] qh: Socket '/usr/local/nagios/var/rw/nagios.qh' successfully initialized
+[1604224506] qh: core query handler registered
+[1604224506] qh: echo service query handler registered
+[1604224506] qh: help for the query handler registered
+[1604224506] wproc: Successfully registered manager as @wproc with query handler
+[1604224506] wproc: Registry request: name=Core Worker 5032;pid=5032
+[1604224506] wproc: Registry request: name=Core Worker 5033;pid=5033
+[1604224506] wproc: Registry request: name=Core Worker 5034;pid=5034
+[1604224506] wproc: Registry request: name=Core Worker 5031;pid=5031
+[1604224506] SERVICE FLAPPING ALERT: elk;Current Users;STARTED; Service appears to have started flapping (20.1% change >= 20.0% threshold)
+[1604224506] SERVICE FLAPPING ALERT: elk;PING;STARTED; Service appears to have started flapping (20.1% change >= 20.0% threshold)
+[1604224506] Successfully launched command file worker with pid 5035
+[1604225053] Caught SIGTERM, shutting down...
+[1604225053] Successfully shutdown... (PID=5029)
+[1604225088] Nagios 4.4.6 starting... (PID=726)
+[1604225089] Local time is Sun Nov 01 10:04:49 UTC 2020
+[1604225089] LOG VERSION: 2.0
+[1604225089] qh: Socket '/usr/local/nagios/var/rw/nagios.qh' successfully initialized
+[1604225089] qh: core query handler registered
+[1604225089] qh: echo service query handler registered
+[1604225089] qh: help for the query handler registered
+[1604225089] wproc: Successfully registered manager as @wproc with query handler
+[1604225089] wproc: Registry request: name=Core Worker 730;pid=730
+[1604225089] wproc: Registry request: name=Core Worker 733;pid=733
+[1604225089] wproc: Registry request: name=Core Worker 731;pid=731
+[1604225089] wproc: Registry request: name=Core Worker 732;pid=732
+[1604225089] Successfully launched command file worker with pid 737
+[1604225094] SERVICE ALERT: elk;Swap Usage;CRITICAL;SOFT;1;CHECK_NRPE: Error - Could not connect to 192.168.1.242: Connection reset by peer
+[1604225130] SERVICE ALERT: elk;Zombie Processes;CRITICAL;SOFT;1;(No output on stdout) stderr: connect to address 192.168.1.242 port 5666: Connection refused
+[1604225170] SERVICE ALERT: elk;Swap Usage;OK;SOFT;2;SWAP OK - 100% free (2047 MB out of 2047 MB)
+[1604225191] SERVICE ALERT: elk;Zombie Processes;OK;SOFT;2;PROCS OK: 0 processes with STATE = Z
+[1604226082] SERVICE NOTIFICATION: nagiosadmin;elk;CPU;CRITICAL;notify-service-by-email;CRITICAL - user: 0.50, nice: 0.50, sys: 7.64, iowait: 4.36, irq: 0.50, softirq: 89.48 idle: 0.50
+[1604226083] wproc: NOTIFY job 36 from worker Core Worker 733 is a non-check helper but exited with return code 75
+[1604226083] wproc:   host=elk; service=CPU; contact=nagiosadmin
+[1604226083] wproc:   early_timeout=0; exited_ok=1; wait_status=19200; error_code=0;
+[1604226083] wproc:   stderr line 01: sendmail: invalid option -- 's'
+[1604226083] wproc:   stderr line 02: sendmail: invalid option -- 's'
+[1604226083] wproc:   stderr line 03: sendmail: fatal: usage: sendmail [options]
+[1604226085] SERVICE NOTIFICATION: nagiosadmin;web;Current Users;CRITICAL;notify-service-by-email;(No output on stdout) stderr: connect to address 192.168.1.240 port 5666: Connection refused
+[1604226085] wproc: NOTIFY job 37 from worker Core Worker 730 is a non-check helper but exited with return code 75
+[1604226085] wproc:   host=web; service=Current Users; contact=nagiosadmin
+[1604226085] wproc:   early_timeout=0; exited_ok=1; wait_status=19200; error_code=0;
+[1604226085] wproc:   stderr line 01: sendmail: invalid option -- 's'
+[1604226085] wproc:   stderr line 02: sendmail: invalid option -- 's'
+[1604226085] wproc:   stderr line 03: sendmail: fatal: usage: sendmail [options]
+[1604226140] SERVICE NOTIFICATION: nagiosadmin;elk;Current Load;CRITICAL;notify-service-by-email;CRITICAL - load average: 6.53, 6.48, 4.40
+[1604226140] wproc: NOTIFY job 39 from worker Core Worker 730 is a non-check helper but exited with return code 75
+[1604226140] wproc:   host=elk; service=Current Load; contact=nagiosadmin
+[1604226140] wproc:   early_timeout=0; exited_ok=1; wait_status=19200; error_code=0;
+[1604226140] wproc:   stderr line 01: sendmail: invalid option -- 's'
+[1604226140] wproc:   stderr line 02: sendmail: invalid option -- 's'
+[1604226140] wproc:   stderr line 03: sendmail: fatal: usage: sendmail [options]
+[1604226148] SERVICE NOTIFICATION: nagiosadmin;web;RAM;CRITICAL;notify-service-by-email;(No output on stdout) stderr: connect to address 192.168.1.240 port 5666: Connection refused
+[1604226148] wproc: NOTIFY job 40 from worker Core Worker 730 is a non-check helper but exited with return code 75
+[1604226148] wproc:   host=web; service=RAM; contact=nagiosadmin
+[1604226148] wproc:   early_timeout=0; exited_ok=1; wait_status=19200; error_code=0;
+[1604226148] wproc:   stderr line 01: sendmail: invalid option -- 's'
+[1604226148] wproc:   stderr line 02: sendmail: invalid option -- 's'
+[1604226148] wproc:   stderr line 03: sendmail: fatal: usage: sendmail [options]
+[1604226180] SERVICE NOTIFICATION: nagiosadmin;web;Root Partition;CRITICAL;notify-service-by-email;(No output on stdout) stderr: connect to address 192.168.1.240 port 5666: Connection refused
+[1604226180] wproc: NOTIFY job 42 from worker Core Worker 730 is a non-check helper but exited with return code 75
+[1604226180] wproc:   host=web; service=Root Partition; contact=nagiosadmin
+[1604226180] wproc:   early_timeout=0; exited_ok=1; wait_status=19200; error_code=0;
+[1604226180] wproc:   stderr line 01: sendmail: invalid option -- 's'
+[1604226180] wproc:   stderr line 02: sendmail: invalid option -- 's'
+[1604226180] wproc:   stderr line 03: sendmail: fatal: usage: sendmail [options]
+[1604226221] Caught SIGTERM, shutting down...
+[1604226221] Caught SIGTERM, shutting down...
+[1604226221] Caught SIGTERM, shutting down...
+[1604226221] Successfully shutdown... (PID=726)
+[1604226221] Nagios 4.4.6 starting... (PID=2548)
+[1604226221] Local time is Sun Nov 01 10:23:41 UTC 2020
+[1604226221] LOG VERSION: 2.0
+[1604226221] qh: Socket '/usr/local/nagios/var/rw/nagios.qh' successfully initialized
+[1604226221] qh: core query handler registered
+[1604226221] qh: echo service query handler registered
+[1604226221] qh: help for the query handler registered
+[1604226221] wproc: Successfully registered manager as @wproc with query handler
+[1604226221] wproc: Registry request: name=Core Worker 2550;pid=2550
+[1604226221] wproc: Registry request: name=Core Worker 2551;pid=2551
+[1604226221] wproc: Registry request: name=Core Worker 2552;pid=2552
+[1604226221] wproc: Registry request: name=Core Worker 2549;pid=2549
+[1604226221] Successfully launched command file worker with pid 2553
+[1604226243] SERVICE NOTIFICATION: nagiosadmin;web;Swap Usage;CRITICAL;notify-service-by-email;(No output on stdout) stderr: connect to address 192.168.1.240 port 5666: Connection refused
+[1604226243] wproc: NOTIFY job 0 from worker Core Worker 2549 is a non-check helper but exited with return code 75
+[1604226243] wproc:   host=web; service=Swap Usage; contact=nagiosadmin
+[1604226243] wproc:   early_timeout=0; exited_ok=1; wait_status=19200; error_code=0;
+[1604226243] wproc:   stderr line 01: sendmail: invalid option -- 's'
+[1604226243] wproc:   stderr line 02: sendmail: invalid option -- 's'
+[1604226243] wproc:   stderr line 03: sendmail: fatal: usage: sendmail [options]
+[1604226330] SERVICE NOTIFICATION: nagiosadmin;web;Current Load;CRITICAL;notify-service-by-email;(No output on stdout) stderr: connect to address 192.168.1.240 port 5666: Connection refused
+[1604226330] SERVICE NOTIFICATION: nagiosadmin;web;CPU;CRITICAL;notify-service-by-email;(No output on stdout) stderr: connect to address 192.168.1.240 port 5666: Connection refused
+[1604226330] wproc: NOTIFY job 3 from worker Core Worker 2551 is a non-check helper but exited with return code 75
+[1604226330] wproc:   host=web; service=Current Load; contact=nagiosadmin
+[1604226330] wproc:   early_timeout=0; exited_ok=1; wait_status=19200; error_code=0;
+[1604226330] wproc:   stderr line 01: sendmail: invalid option -- 's'
+[1604226330] wproc:   stderr line 02: sendmail: invalid option -- 's'
+[1604226330] wproc:   stderr line 03: sendmail: fatal: usage: sendmail [options]
+[1604226330] wproc: NOTIFY job 3 from worker Core Worker 2552 is a non-check helper but exited with return code 75
+[1604226330] wproc:   host=web; service=CPU; contact=nagiosadmin
+[1604226330] wproc:   early_timeout=0; exited_ok=1; wait_status=19200; error_code=0;
+[1604226330] wproc:   stderr line 01: sendmail: invalid option -- 's'
+[1604226330] wproc:   stderr line 02: sendmail: invalid option -- 's'
+[1604226330] wproc:   stderr line 03: sendmail: fatal: usage: sendmail [options]
+[1604226337] SERVICE NOTIFICATION: nagiosadmin;web;Zombie Processes;CRITICAL;notify-service-by-email;(No output on stdout) stderr: connect to address 192.168.1.240 port 5666: Connection refused
+[1604226337] wproc: NOTIFY job 4 from worker Core Worker 2550 is a non-check helper but exited with return code 75
+[1604226337] wproc:   host=web; service=Zombie Processes; contact=nagiosadmin
+[1604226337] wproc:   early_timeout=0; exited_ok=1; wait_status=19200; error_code=0;
+[1604226337] wproc:   stderr line 01: sendmail: invalid option -- 's'
+[1604226337] wproc:   stderr line 02: sendmail: invalid option -- 's'
+[1604226337] wproc:   stderr line 03: sendmail: fatal: usage: sendmail [options]
+[1604226446] SERVICE NOTIFICATION: nagiosadmin;web;Total Processes;CRITICAL;notify-service-by-email;(No output on stdout) stderr: connect to address 192.168.1.240 port 5666: Connection refused
+[1604226446] wproc: NOTIFY job 8 from worker Core Worker 2551 is a non-check helper but exited with return code 75
+[1604226446] wproc:   host=web; service=Total Processes; contact=nagiosadmin
+[1604226446] wproc:   early_timeout=0; exited_ok=1; wait_status=19200; error_code=0;
+[1604226446] wproc:   stderr line 01: sendmail: invalid option -- 's'
+[1604226446] wproc:   stderr line 02: sendmail: invalid option -- 's'
+[1604226446] wproc:   stderr line 03: sendmail: fatal: usage: sendmail [options]
+[1604227143] SERVICE NOTIFICATION: nagiosadmin;web;Swap Usage;OK;notify-service-by-email;SWAP OK - 99% free (2012 MB out of 2047 MB)
+[1604227143] SERVICE ALERT: web;Swap Usage;OK;HARD;4;SWAP OK - 99% free (2012 MB out of 2047 MB)
+[1604227143] wproc: NOTIFY job 33 from worker Core Worker 2552 is a non-check helper but exited with return code 75
+[1604227143] wproc:   host=web; service=Swap Usage; contact=nagiosadmin
+[1604227143] wproc:   early_timeout=0; exited_ok=1; wait_status=19200; error_code=0;
+[1604227143] wproc:   stderr line 01: sendmail: invalid option -- 's'
+[1604227143] wproc:   stderr line 02: sendmail: invalid option -- 's'
+[1604227143] wproc:   stderr line 03: sendmail: fatal: usage: sendmail [options]
+[1604227232] SERVICE NOTIFICATION: nagiosadmin;web;CPU;OK;notify-service-by-email;OK - user: 1.45, nice: 0.50, sys: 4.30, iowait: 0.50, irq: 0.50, softirq: 1.45 idle: 94.78
+[1604227232] SERVICE ALERT: web;CPU;OK;HARD;4;OK - user: 1.45, nice: 0.50, sys: 4.30, iowait: 0.50, irq: 0.50, softirq: 1.45 idle: 94.78
+[1604227232] wproc: NOTIFY job 36 from worker Core Worker 2550 is a non-check helper but exited with return code 75
+[1604227232] wproc:   host=web; service=CPU; contact=nagiosadmin
+[1604227232] wproc:   early_timeout=0; exited_ok=1; wait_status=19200; error_code=0;
+[1604227232] wproc:   stderr line 01: sendmail: invalid option -- 's'
+[1604227232] wproc:   stderr line 02: sendmail: invalid option -- 's'
+[1604227232] wproc:   stderr line 03: sendmail: fatal: usage: sendmail [options]
+[1604227237] SERVICE NOTIFICATION: nagiosadmin;web;Zombie Processes;OK;notify-service-by-email;PROCS OK: 0 processes with STATE = Z
+[1604227237] SERVICE ALERT: web;Zombie Processes;OK;HARD;4;PROCS OK: 0 processes with STATE = Z
+[1604227237] wproc: NOTIFY job 36 from worker Core Worker 2552 is a non-check helper but exited with return code 75
+[1604227237] wproc:   host=web; service=Zombie Processes; contact=nagiosadmin
+[1604227237] wproc:   early_timeout=0; exited_ok=1; wait_status=19200; error_code=0;
+[1604227237] wproc:   stderr line 01: sendmail: invalid option -- 's'
+[1604227237] wproc:   stderr line 02: sendmail: invalid option -- 's'
+[1604227237] wproc:   stderr line 03: sendmail: fatal: usage: sendmail [options]
+[1604227285] SERVICE NOTIFICATION: nagiosadmin;web;Current Users;OK;notify-service-by-email;USERS OK - 0 users currently logged in
+[1604227285] SERVICE ALERT: web;Current Users;OK;HARD;4;USERS OK - 0 users currently logged in
+[1604227285] wproc: NOTIFY job 38 from worker Core Worker 2552 is a non-check helper but exited with return code 75
+[1604227285] wproc:   host=web; service=Current Users; contact=nagiosadmin
+[1604227285] wproc:   early_timeout=0; exited_ok=1; wait_status=19200; error_code=0;
+[1604227285] wproc:   stderr line 01: sendmail: invalid option -- 's'
+[1604227285] wproc:   stderr line 02: sendmail: invalid option -- 's'
+[1604227285] wproc:   stderr line 03: sendmail: fatal: usage: sendmail [options]
+[1604227346] SERVICE NOTIFICATION: nagiosadmin;web;Total Processes;OK;notify-service-by-email;PROCS OK: 91 processes
+[1604227346] SERVICE ALERT: web;Total Processes;OK;HARD;4;PROCS OK: 91 processes
+[1604227346] wproc: NOTIFY job 41 from worker Core Worker 2550 is a non-check helper but exited with return code 75
+[1604227346] wproc:   host=web; service=Total Processes; contact=nagiosadmin
+[1604227346] wproc:   early_timeout=0; exited_ok=1; wait_status=19200; error_code=0;
+[1604227346] wproc:   stderr line 01: sendmail: invalid option -- 's'
+[1604227346] wproc:   stderr line 02: sendmail: invalid option -- 's'
+[1604227346] wproc:   stderr line 03: sendmail: fatal: usage: sendmail [options]
+[1604227348] SERVICE NOTIFICATION: nagiosadmin;web;RAM;OK;notify-service-by-email;RAM OK: 59% (140 of 235 MB) used
+[1604227348] SERVICE ALERT: web;RAM;OK;HARD;4;RAM OK: 59% (140 of 235 MB) used
+[1604227348] wproc: NOTIFY job 41 from worker Core Worker 2552 is a non-check helper but exited with return code 75
+[1604227348] wproc:   host=web; service=RAM; contact=nagiosadmin
+[1604227348] wproc:   early_timeout=0; exited_ok=1; wait_status=19200; error_code=0;
+[1604227348] wproc:   stderr line 01: sendmail: invalid option -- 's'
+[1604227348] wproc:   stderr line 02: sendmail: invalid option -- 's'
+[1604227348] wproc:   stderr line 03: sendmail: fatal: usage: sendmail [options]
+[1604227380] SERVICE NOTIFICATION: nagiosadmin;web;Root Partition;OK;notify-service-by-email;DISK OK - free space: / 37061 MiB (90.52% inode=100%):
+[1604227380] SERVICE ALERT: web;Root Partition;OK;HARD;4;DISK OK - free space: / 37061 MiB (90.52% inode=100%):
+[1604227380] wproc: NOTIFY job 43 from worker Core Worker 2552 is a non-check helper but exited with return code 75
+[1604227380] wproc:   host=web; service=Root Partition; contact=nagiosadmin
+[1604227380] wproc:   early_timeout=0; exited_ok=1; wait_status=19200; error_code=0;
+[1604227380] wproc:   stderr line 01: sendmail: invalid option -- 's'
+[1604227380] wproc:   stderr line 02: sendmail: invalid option -- 's'
+[1604227380] wproc:   stderr line 03: sendmail: fatal: usage: sendmail [options]

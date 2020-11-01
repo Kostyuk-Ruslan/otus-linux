@@ -55,7 +55,7 @@
 
   - name: copy default.conf for nginx
     copy:                    
-      src: files/plugins/{{ items }} 
+      src: files/plugins/{{ item }} 
       dest: /usr/lib64/nagios/plugins/    
       owner: root            
       group: root            
@@ -127,6 +127,12 @@
       group: 1000
       mode: '0644'
     
+     
+  - name: export docker timeout
+    shell: |
+      export DOCKER_CLIENT_TIMEOUT=120
+      export COMPOSE_HTTP_TIMEOUT=120     
+     
      
 
   - name: start docker
