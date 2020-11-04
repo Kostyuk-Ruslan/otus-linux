@@ -1,0 +1,120 @@
+
+  - name: Add Elasticsearch GPG key.
+    rpm_key:
+      key: https://packages.elastic.co/GPG-KEY-elasticsearch
+      state: present
+
+  - name: Add multiple repositories into the same file (2/2)
+    yum_repository:
+      name: rpmforge
+      description: RPMforge YUM repo
+      file: elastic
+      baseurl: https://artifacts.elastic.co/packages/7.x/yum
+      gpgcheck: 1
+      gpgkey: https://artifacts.elastic.co/GPG-KEY-elasticsearch
+      enabled: yes
+
+
+
+
+  - name: Add multiple repositories
+    yum_repository:
+      name: epel
+      description: EPEL YUM repo
+      file: external_repos
+      baseurl: https://download.fedoraproject.org/pub/epel/$releasever/$basearch/
+      gpgcheck: no
+
+
+  - name: seliux
+    shell: setenforce 0
+
+  - name: install epel-release
+    yum:
+      name:
+       - epel-release
+      state: latest
+
+
+
+
+
+  - name: install package
+    yum:
+     name:
+      - mc
+      - vim
+      - htop
+      - net-tools
+      - nrpe
+      - nagios-plugins-nrpe
+      - nagios-plugins-all
+      - nagios-plugins
+      - bc
+      - rsyslog
+      - telnet
+                                        
+    ignore_errors: yes
+
+
+
+
+  - name: copy nrpe.cfg for nagios
+    copy:
+      src: files/nrpe.cfg
+      dest: /etc/nagios/nrpe.cfg
+      owner: root
+      group: root
+      mode: 0644
+
+
+
+  - name: copy default.conf for nginx
+    copy:                    
+      src: files/plugins/{{ item }} 
+      dest: /usr/lib64/nagios/plugins/    
+      owner: root            
+      group: root            
+      mode: 0755             
+    with_items:
+      - check_cpu
+      - check_ram
+    notify:                  
+      - restart nrpe
+
+
+  - name: copy rsyslog.conf
+    copy:                    
+      src: files/rsyslog.conf
+      dest: /etc/rsyslog.conf
+      owner: root            
+      group: root            
+      mode: 0755             
+    notify:                  
+      - restart rsyslog
+
+
+
+  - name: copy all_crit_local.log
+    copy:                    
+      src: files/all_crit_local.conf
+      dest: /etc/rsyslog.d/all_crit_local.conf
+      owner: root            
+      group: root            
+      mode: 0755             
+
+
+
+  - name: start nrpe
+    systemd:
+      name: nrpe
+      state: started
+      enabled: yes
+
+  - name: restart rsyslog
+    systemd:
+      name: rsyslog
+      state: restarted
+      enabled: yes
+
+

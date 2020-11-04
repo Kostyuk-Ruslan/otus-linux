@@ -18,8 +18,8 @@
     - nagios
 
 
-- hosts: elk
+- hosts: logs
   become: true
   roles:
-    - elk
+    - logs
 
