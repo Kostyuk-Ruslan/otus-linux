@@ -200,6 +200,18 @@
 
 
 
+  - name: copy audit_remote.conf
+    copy:
+      src: files/audit_remote.conf
+      dest: /etc/rsyslog.d/audit_remote.conf
+      owner: root
+      group: root
+      mode: 0755
+    notify:
+      - restart rsyslog
+
+
+
 
 
   - name: restart mysql
