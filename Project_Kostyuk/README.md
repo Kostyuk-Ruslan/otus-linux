@@ -208,7 +208,7 @@ end
 
 Можно так же смотреть графики
 
-<p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/Project_Kostyuk/photo/nagios0.JPG"></p>  
+<p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/Project_Kostyuk/photo/nagos0.JPG"></p>  
 
 Если что то превышает "trashhold" то идет отправка алертов на почту
 
