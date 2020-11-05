@@ -95,15 +95,6 @@
 
 
 
-  - name: copy all_crit_local.log
-    copy:                    
-      src: files/all_crit_local.conf
-      dest: /etc/rsyslog.d/all_crit_local.conf
-      owner: root            
-      group: root            
-      mode: 0755             
-
-
 
   - name: start nrpe
     systemd:

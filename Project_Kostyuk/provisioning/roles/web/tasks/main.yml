@@ -69,6 +69,7 @@
     yum:
      name:
       - net-tools
+      - rsyslog
       - vim
       - zip
       - unzip
@@ -100,7 +101,7 @@
       - python-devel
       - python-pip
       - python3-pip
-      - rsyslog
+
 
 
   - name: Install pip cryptography
@@ -202,8 +203,8 @@
 
   - name: copy audit_remote.conf
     copy:
-      src: files/audit_remote.conf
-      dest: /etc/rsyslog.d/audit_remote.conf
+      src: files/audit.conf
+      dest: /etc/rsyslog.d/all.conf
       owner: root
       group: root
       mode: 0755
