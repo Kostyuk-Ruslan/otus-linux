@@ -1,10 +1,5 @@
 Linux Administrator 2020 Ruslan Kostyuk
 
-##############################################################################################################################################################
-#    Проектная работа на тему: Автоматизация развертывания типового проекта на примере cms wordpress , резервное копирование и востановление после сбоев     #
-##############################################################################################################################################################
-
-         
 
 <details>
 <summary><code>Рабочий Vagrantfile</code></summary>
@@ -80,7 +75,7 @@ end
 
 Техническая документация:
 
-<code>Примечание: Ansibele разворачивает инфраструктуру, очень долго, около часа, просьба запастись терпением</code>
+<code>Примечание: Ansible разворачивает инфраструктуру, очень долго, около часа, просьба запастись терпением</code>
 
 
 Всю инфраструктуру поднимает ansible, достаточнео сделать просто "vagrant up"
@@ -133,25 +128,45 @@ end
 
 2) Bareos -  Высоконадежное сетевое кроссплатформенное программное  обеспечение для резервного копирования, архивирования и восстновления данных. Является fork проекта Backula
 
-Описание работы:
+<code>Краткое описание работы:</code>
 
 Необходимо убедиться, что на стороне клиента установлен, настроен и включаен <code>bareos-fd</code> - это агент
+
+<p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/Project_Kostyuk/photo/bareos-fd.JPG"></p>  
 
 
 На стороне сервера:
 
+Зайдем в <code>bconsole</code>  и проверим связь с вм <code>web</code> которого и будем бэкапить
 
--
+<p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/Project_Kostyuk/photo/1.JPG"></p>  
 
--
+Связь есть ! Теперь попробуем запустить наш бэкап, вид бэкапа будет "FULL"
+Бэкапим следующие каталоги: - /etc
+                            - /usr
+                            - /var
+                            - /opt
 
--
+<p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/Project_Kostyuk/photo/2.JPG"></p>  
 
--
+как видим бэкап в статусе "running"
+Смотрим за процессом
+<p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/Project_Kostyuk/photo/process2.JPG"></p>  
+
+
+По завершению проверяем, без ошибок ли выполнился бэкап ( Буква "T" означает, что ошибок не найдено )
+<p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/Project_Kostyuk/photo/list jobs.JPG"></p>  
+
+Теперь попробуем восстановить наш бэкап
+
+
+
 
 Принцип работы:
 
 На клиента в нашем случае "web"  ставим агент "bareos-fd" который соеденяется в свою очередь с сервером (backup ==> bareos-dir ),после чего bareos-fd стягивает данные и передает их на сервер backup 
+
+
 
 
 
