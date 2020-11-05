@@ -216,9 +216,16 @@ end
 
 
 
-
-
 4) Rsyslog  - многопоточная быстрый сервисобработки логов ( fork проекта syslog ), с помощью этого инструмента организован централизованный сбор логов вм "web"
 
+На стороне клиента (web), говорим, что бы отправлял все сообщения на удаленный сервер <code>*.* @@192.168.1.242:514</code>
+в /etc/rsyslog.d/all.conf
 
+На стороне сервера (logs) прописано правило
+
+<p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/Project_Kostyuk/photo/rsyslog-logs.JPG"></p>  
+
+Проверяем логи на сервере от "web"
+
+<p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/Project_Kostyuk/photo/rsyslogs-logs2.JPG"></p>  
 
