@@ -75,7 +75,12 @@ end
 
 Техническая документация:
 
-<code>Примечание: Ansible разворачивает инфраструктуру, очень долго, около часа, просьба запастись терпением</code>
+<code>Примечание: Ansible разворачивает инфраструктуру, очень долго, около часа, просьба запастись терпением (самый долгий task - это copy nagios</code>
+
+<code>Примечание: в нагиосе пароль qwepoi123 ( если что можно посмотреть в таске )</code>
+
+<code>Примечание: nagios подтягивает и обновляет хсоты не сразу, нужно запастить терпением пока он опросит все хосты</code>
+
 
 
 Всю инфраструктуру поднимает ansible, достаточнео сделать просто "vagrant up"
@@ -130,6 +135,9 @@ end
 
 <code>Краткое описание работы:</code>
 
+
+На клиента в нашем случае "web"  ставим агент "bareos-fd" который соеденяется в свою очередь с сервером (backup ==> bareos-dir ),после чего bareos-fd стягивает данные и передает их на сервер backup 
+
 Необходимо убедиться, что на стороне клиента установлен, настроен и включаен <code>bareos-fd</code> - это агент
 
 <p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/Project_Kostyuk/photo/bareos-fd.JPG"></p>  
@@ -173,13 +181,7 @@ end
 
 <p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/Project_Kostyuk/photo/restore-finish.JPG"></p>  
 
-
-
-
-
-Принцип работы:
-
-На клиента в нашем случае "web"  ставим агент "bareos-fd" который соеденяется в свою очередь с сервером (backup ==> bareos-dir ),после чего bareos-fd стягивает данные и передает их на сервер backup 
+Вот и получили выхлоп файлы в /etc/ так можно восстанавливать данные из бэкапа
 
 
 
@@ -194,7 +196,23 @@ end
 
 - backup
 
-- logs
+- logs (забыл переименовать, сейчас стоит elk) , но это не elk, а rsyslog (elk не завелся)
+
+Логин: nagiosadmin
+Пароль: qwepoi123
+
+Видим все наши хосты: 
+<p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/Project_Kostyuk/photo/nagios1.JPG"></p>  
+
+Сервисы на хостах
+
+<p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/Project_Kostyuk/photo/nagios2.JPG"></p>  
+
+Если что то превышает "trashhold" то идет отправка алертов на почту
+
+<p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/Project_Kostyuk/photo/nagios3.JPG"></p>  
+
+данные можно поменять на свои в конфиге нагиоса "commands.conf"
 
 
 
