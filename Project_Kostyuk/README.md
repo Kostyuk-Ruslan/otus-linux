@@ -112,9 +112,9 @@ end
 
 После развертывания Доступен по 443 порты с вкл. https
 
-фото
+p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/Project_Kostyuk/photo/web1.JPG"></p>  
 
-
+p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/Project_Kostyuk/photo/web2.JPG"></p>  
 
 
 
