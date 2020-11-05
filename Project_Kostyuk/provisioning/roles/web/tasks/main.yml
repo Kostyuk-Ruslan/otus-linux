@@ -53,10 +53,6 @@
     tags: install-packages
 
 
-  - name: Disable SELinux
-    selinux:
-      state: disabled
-
 
   - name: stop and disable firewalld
     systemd:

@@ -8,8 +8,6 @@
     gpgcheck: no
 
 
-- name: seliux 
-  shell: setenforce 0
 
 - name: install epel-release
   yum:
