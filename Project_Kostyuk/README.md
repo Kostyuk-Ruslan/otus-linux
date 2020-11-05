@@ -112,12 +112,12 @@ end
 
 
 
-После развертывания Доступен по 443 порты с вкл. https
+После развертывания web доступен по 443 порту с вкл. https
 
 Предупреждает, что "подключение к сайту не защищено", но мы соглашаемся
 <p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/Project_Kostyuk/photo/web1.JPG"></p>  
 
-Страница установки, вводим свои данные и устанавливаем
+Страница установки, вводим свои данные и устанавливаем wordpress
 <p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/Project_Kostyuk/photo/web2.JPG"></p>  
 
 по итогу, так должно получиться
