@@ -112,8 +112,13 @@ end
 
 После развертывания Доступен по 443 порты с вкл. https
 
+Предупреждает, что "подключение к сайту не защищено", но мы соглашаемся
 p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/Project_Kostyuk/photo/web1.JPG"></p>  
 
+Страница установки, вводим свои данные и устанавливаем
+p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/Project_Kostyuk/photo/web2.JPG"></p>  
+
+по итогу, так должно получиться
 p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/Project_Kostyuk/photo/web2.JPG"></p>  
 
 
