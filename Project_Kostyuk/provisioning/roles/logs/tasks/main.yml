@@ -51,10 +51,11 @@
       - nagios-plugins-all
       - nagios-plugins
       - bc
-      - rsyslog
       - telnet
                                         
     ignore_errors: yes
+
+
 
 
 
@@ -101,6 +102,13 @@
       name: nrpe
       state: started
       enabled: yes
+
+
+  - name: install package
+    yum:
+     name:
+      - rsyslog
+
 
   - name: restart rsyslog
     systemd:
