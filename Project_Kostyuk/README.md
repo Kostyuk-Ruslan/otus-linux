@@ -149,6 +149,8 @@ end
                             - /var
                             - /opt
 
+Каталоги резервного копирования прописываются в файле /fileset
+
 <p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/Project_Kostyuk/photo/2.JPG"></p>  
 
 как видим бэкап в статусе "running"
@@ -184,6 +186,8 @@ end
 3) Nagios core - программа мониторинга открытым исходным кодом, предназначенная для мониторинга компьютерных систем и сетей: наблюдения, контроля состояния вычислительных узлов и служб, а так же оповещает
 администратор в том, случае, если какие то службы или хосты прекращают свою работу ( в нашем случае, алерт настроен на отправку уведомлений на почту )
 
+сслыка <code>http://192.168.1.243/nagios/</code>
+
 В нашем случае nagios core собирает стандартные метрики  (CPU, RAM, Partition /, SWAP и т.д.) трех вм
 
 - web
@@ -201,6 +205,10 @@ end
 Сервисы на хостах
 
 <p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/Project_Kostyuk/photo/nagios2.JPG"></p>  
+
+Можно так же смотреть графики
+
+<p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/Project_Kostyuk/photo/nagios0.JPG"></p>  
 
 Если что то превышает "trashhold" то идет отправка алертов на почту
 
@@ -224,3 +232,4 @@ end
 
 <p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/Project_Kostyuk/photo/rsyslogs-logs2.JPG"></p>  
 
+Все логирует
