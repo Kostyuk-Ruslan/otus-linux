@@ -65,6 +65,57 @@
        
       
 
+- name: start and enable firewalld
+  systemd:
+    name: firewalld
+    state: started
+    enabled: yes
+
+
+
+
+- name: "firewalld 443 tcp"
+  firewalld: 
+    port: 443/tcp
+    permanent: yes
+    state: enabled
+
+
+
+- name: "firewalld 80 tcp"
+  firewalld:
+    port: 80/tcp
+    permanent: yes
+    state: enabled
+
+- name: "firewalld 5666 tcp" 
+  firewalld:
+    port: 5666/tcp
+    permanent: yes
+    state: enabled
+
+- name: "firewalld 111 tcp" 
+  firewalld:
+    port: 111/tcp
+    permanent: yes
+    state: enabled
+
+
+- name: "firewalld 25 tcp" 
+  firewalld:
+    port: 25/tcp
+    permanent: yes
+    state: enabled
+
+
+
+
+- name: "firewalld reload"
+  shell: "firewall-cmd --reload"
+
+
+
+
 
 
 - name: add web hosts

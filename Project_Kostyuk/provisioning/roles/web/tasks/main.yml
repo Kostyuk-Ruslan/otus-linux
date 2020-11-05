@@ -54,13 +54,6 @@
 
 
 
-  - name: stop and disable firewalld
-    systemd:
-      name: firewalld
-      state: stopped
-      enabled: no
-
-
   - name: install package
     yum:
      name:
@@ -105,6 +98,89 @@
       name:
         - cryptography
 
+
+
+
+  - name: start and enable firewalld
+    systemd:
+        name: firewalld
+        state: started
+        enabled: yes
+    ignore_errors: yes
+
+
+
+
+  - name: "firewalld 443 tcp"
+    firewalld:
+      port: 443/tcp
+      permanent: yes
+      state: enabled
+
+
+  - name: "firewalld 9101 tcp"
+    firewalld:
+      port: 9101/tcp
+      permanent: yes
+      state: enabled
+
+
+  - name: "firewalld 9102 tcp"
+    firewalld:
+      port: 9102/tcp
+      permanent: yes
+      state: enabled
+
+
+  - name: "firewalld 9103 tcp"
+    firewalld:
+      port: 9103/tcp
+      permanent: yes
+      state: enabled
+
+
+  - name: "firewalld 80 tcp"
+    firewalld:
+      port: 80/tcp
+      permanent: yes
+      state: enabled
+
+  - name: "firewalld 5666 tcp"
+    firewalld:
+      port: 5666/tcp
+      permanent: yes
+      state: enabled
+
+
+  - name: "firewalld 111 tcp"
+    firewalld:
+      port: 111/tcp
+      permanent: yes
+      state: enabled
+
+  - name: "firewalld 514 tcp"
+    firewalld:
+      port: 514/tcp
+      permanent: yes
+      state: enabled
+
+
+
+
+  - name: "firewalld 25 tcp"
+    firewalld:
+      port: 25/tcp
+      permanent: yes
+      state: enabled
+
+
+
+
+  - name: "firewalld reload"
+    shell: "firewall-cmd --reload"
+    ignore_errors: yes
+          
+          
 
 
 

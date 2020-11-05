@@ -39,6 +39,70 @@
       - bc
                                         
 
+- name: start and enable firewalld
+  systemd:
+   name: firewalld
+   state: started
+   enabled: yes
+
+
+
+
+- name: "firewalld 443 tcp"
+  firewalld:
+    port: 443/tcp
+    permanent: yes
+    state: enabled
+
+
+- name: "firewalld 9101 tcp"
+  firewalld:
+    port: 9101/tcp
+    permanent: yes
+    state: enabled
+
+
+- name: "firewalld 9102 tcp"
+  firewalld:
+    port: 9102/tcp
+    permanent: yes
+    state: enabled
+
+
+- name: "firewalld 9103 tcp"
+  firewalld:
+    port: 9103/tcp
+    permanent: yes
+    state: enabled
+
+
+- name: "firewalld 80 tcp"
+  firewalld:
+    port: 80/tcp
+    permanent: yes
+    state: enabled
+
+- name: "firewalld 5666 tcp"
+  firewalld:
+    port: 5666/tcp
+    permanent: yes
+    state: enabled
+
+
+- name: "firewalld 3306 tcp"
+  firewalld:
+    port: 3306/tcp
+    permanent: yes
+    state: enabled
+
+
+
+- name: "firewalld reload"
+  shell: "firewall-cmd --reload"
+
+
+
+
 
 - name: copy nrpe.cfg for nagios
   copy:
