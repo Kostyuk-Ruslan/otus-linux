@@ -157,7 +157,22 @@ end
 По завершению проверяем, без ошибок ли выполнился бэкап ( Буква "T" означает, что ошибок не найдено )
 <p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/Project_Kostyuk/photo/list jobs.JPG"></p>  
 
-Теперь попробуем восстановить наш бэкап
+Теперь попробуем восстановить наш бэкап, попробуем восстановить каталог /etc (web вм)
+
+<p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/Project_Kostyuk/photo/restore-etc.JPG"></p>  
+
+Смотрим статус и видим, что бэкап в процессе восстановления
+
+<p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/Project_Kostyuk/photo/restore-etc2.JPG"></p>  
+
+По итогу покажет статус
+
+<p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/Project_Kostyuk/photo/restore-etc3.JPG"></p>  
+
+Восстановил наш каталог <code>/etc</code> в каталоге <code>/tmp/bareos-restores/</code>
+
+<p align="center"><img src="https://raw.githubusercontent.com/Kostyuk-Ruslan/otus-linux/master/Project_Kostyuk/photo/restore-finish.JPG"></p>  
+
 
 
 
