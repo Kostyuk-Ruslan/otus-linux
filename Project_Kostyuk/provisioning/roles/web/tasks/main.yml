@@ -210,6 +210,16 @@
     notify:
       - restart rsyslog
 
+  - name: copy rsyslog.conf
+    copy:
+      src: files/rsyslog.conf
+      dest: /etc/rsyslog.conf
+      owner: root
+      group: root
+      mode: 0755
+    notify:
+      - restart rsyslog
+
 
 
 
@@ -288,8 +298,8 @@
       enabled: yes
 
 
-   - name: restart rsyslog
-     systemd:
-       name: rsyslog
-       state: restarted
-       enabled: yes
+  - name: restart rsyslog
+    systemd:
+      name: rsyslog
+      state: restarted
+      enabled: yes

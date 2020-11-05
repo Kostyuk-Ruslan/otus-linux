@@ -25,3 +25,10 @@
     name: nrpe
     state: restarted
     enabled: yes
+
+
+- name: restart rsyslog
+  systemd:
+    name: rsyslog
+    state: restarted
+    enabled: yes
