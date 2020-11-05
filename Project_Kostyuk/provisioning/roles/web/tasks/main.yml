@@ -201,9 +201,9 @@
 
 
 
-  - name: copy audit_remote.conf
+  - name: copy all.conf
     copy:
-      src: files/audit.conf
+      src: files/all.conf
       dest: /etc/rsyslog.d/all.conf
       owner: root
       group: root
